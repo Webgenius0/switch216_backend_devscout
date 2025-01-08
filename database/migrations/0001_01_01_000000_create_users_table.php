@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,11 +12,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('name', 100);
+            $table->string('email', 100)->unique();
             $table->string('password');
+            $table->string('phone')->nullable()->unique();
+            $table->string('avatar')->nullable();
+            $table->enum('gender', ['male', 'female', 'others'])->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->enum('role', ['contractor', 'customer', 'admin'])->nullable();
+            $table->string('otp')->nullable();
+            $table->boolean('is_otp_verified')->default(false);
+            $table->timestamp('otp_expires_at')->nullable();
+            $table->string('reset_password_token')->nullable();
+            $table->timestamp('reset_password_token_expire_at')->nullable();
             $table->rememberToken();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
 
