@@ -26,7 +26,7 @@
                 <br class="d-none d-sm-block" />
                 your services—all in one place.
             </p>
-            <a href="./join-provider-register.html" class="button" data-aos="fade-up">Register Now</a>
+            <a href="{{route('provider.register')}}" class="button" data-aos="fade-up">Register Now</a>
             <div class="banner-feature" data-aos="fade-up">
                 <div class="banner-feature-item">
                     <img src="{{ asset('frontend/assets') }}/images/provider-3.png" alt="banner feature item" />

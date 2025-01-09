@@ -1,22 +1,22 @@
 function authStepForm() {
-  const authStepForm = document.querySelector('.auth-step-form');
+  const authStepForm = document.querySelector(".auth-step-form");
 
   if (authStepForm) {
-    const steps = authStepForm.querySelectorAll('.step-content');
-    const nextButtons = authStepForm.querySelectorAll('.button-next');
-    const prevButtons = authStepForm.querySelectorAll('.button-prev');
+    const steps = authStepForm.querySelectorAll(".step-content");
+    const nextButtons = authStepForm.querySelectorAll(".button-next");
+    const prevButtons = authStepForm.querySelectorAll(".button-prev");
 
     let currentStep = 0;
 
     const updateStep = (stepIndex) => {
       steps.forEach((step, index) => {
-        step.classList.toggle('active', index === stepIndex);
+        step.classList.toggle("active", index === stepIndex);
       });
     };
 
     // Add event listeners to Next buttons
     nextButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener("click", () => {
         if (currentStep < steps.length - 1) {
           currentStep++;
           updateStep(currentStep);
@@ -26,7 +26,7 @@ function authStepForm() {
 
     // Add event listeners to Previous buttons
     prevButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener("click", () => {
         if (currentStep > 0) {
           currentStep--;
           updateStep(currentStep);
@@ -41,26 +41,26 @@ function authStepForm() {
 
 function profileUpload(profileUploadBox) {
   const fileInput = profileUploadBox.querySelector("input[type='file']");
-  const content = profileUploadBox.querySelector('div.content');
+  const content = profileUploadBox.querySelector("div.content");
 
-  profileUploadBox.addEventListener('click', function (e) {
+  profileUploadBox.addEventListener("click", function (e) {
     e.stopPropagation();
     fileInput.click();
   });
 
-  fileInput.addEventListener('change', function (e) {
+  fileInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     if (file) {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
 
       const reader = new FileReader();
 
       reader.onload = function (e) {
-        img.setAttribute('src', e.target.result);
+        img.setAttribute("src", e.target.result);
       };
 
       reader.readAsDataURL(file);
-      content.innerHTML = '';
+      content.innerHTML = "";
       content.appendChild(img);
     }
   });
@@ -68,63 +68,89 @@ function profileUpload(profileUploadBox) {
 
 function fileUpload(fileUploadContainer) {
   const fileInput = fileUploadContainer.querySelector("input[type='file']");
-  const content = fileUploadContainer.querySelector('div.content');
+  const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
-  fileUploadContainer.addEventListener('click', function (e) {
+  fileUploadContainer.addEventListener("click", function (e) {
     e.stopPropagation();
     fileInput.click();
   });
 
-  fileInput.addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    if (file) {
-      const img = document.createElement('img');
+  fileInput.addEventListener("change", function (e) {
+    const files = e.target.files;
+    handleFiles(files);
 
+    // Reset the file input after handling files to allow the same files to be selected again
+    fileInput.value = ''; // This will clear the input so the same files can be uploaded again
+  });
+
+  fileUploadContainer.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    if (!fileUploadContainer.classList.contains("dragover")) {
+      fileUploadContainer.classList.add("dragover");
+    }
+  });
+
+  fileUploadContainer.addEventListener("dragleave", function (e) {
+    e.preventDefault();
+    fileUploadContainer.classList.remove("dragover");
+  });
+
+  fileUploadContainer.addEventListener("drop", function (e) {
+    e.preventDefault();
+    fileUploadContainer.classList.remove("dragover");
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+  });
+
+  function handleFiles(files) {
+    // Clear the image preview container before adding new previews
+    imagePreviewContainer.innerHTML = ''; // Remove all previous previews
+
+    // Loop through all the files and create an image preview for each
+    Array.from(files).forEach((file) => {
+      const imgContainer = document.createElement("div");
+      imgContainer.setAttribute("class", "image-container");
+
+      const img = document.createElement("img");
       const reader = new FileReader();
 
       reader.onload = function (e) {
-        img.setAttribute('src', e.target.result);
+        img.setAttribute("src", e.target.result);
+        img.setAttribute("class", "preview-img");
+
+        // Apply CSS directly in JavaScript to control width, height, and aspect ratio
+        img.style.width = "300px"; // Set a fixed width
+        img.style.height = "200px"; // Set a fixed height (same as width to maintain square aspect ratio)
+        img.style.objectFit = "cover"; // Ensures images fill the container while maintaining their aspect ratio
+        img.style.margin = "5px"; // Adjust margin as needed
+
+        // Create the close button
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "×";  // The "×" symbol for close
+        closeButton.setAttribute("class", "close-btn");
+        closeButton.setAttribute("type", "button");
+
+        // Add close button functionality
+        closeButton.addEventListener("click", function () {
+          imgContainer.remove();  // Remove the image container and the image itself
+        });
+
+        // Append the image and the close button to the container
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(closeButton);
+
+        // Append the container to the image preview container
+        imagePreviewContainer.appendChild(imgContainer);
       };
 
       reader.readAsDataURL(file);
-      content.innerHTML = '';
-      content.appendChild(img);
-    }
-  });
-
-  fileUploadContainer.addEventListener('dragover', function (e) {
-    e.preventDefault();
-    if (!fileUploadContainer.classList.contains('dragover')) {
-      fileUploadContainer.classList.add('dragover');
-    }
-  });
-
-  fileUploadContainer.addEventListener('dragleave', function (e) {
-    e.preventDefault();
-    fileUploadContainer.classList.remove('dragover');
-  });
-
-  fileUploadContainer.addEventListener('drop', function (e) {
-    e.preventDefault();
-    fileUploadContainer.classList.remove('dragover');
-    const files = e.dataTransfer.files;
-    if (files[0]) {
-      const img = document.createElement('img');
-
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        img.setAttribute('src', e.target.result);
-      };
-
-      reader.readAsDataURL(files[0]);
-      content.innerHTML = '';
-      content.appendChild(img);
-    }
-  });
+    });
+  }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+
+
+document.addEventListener("DOMContentLoaded", function () {
   // initial aos animation start
   AOS.init({
     disable: () => window.innerWidth < 768,
@@ -135,114 +161,114 @@ document.addEventListener('DOMContentLoaded', function () {
 
   authStepForm();
 
-  const profileUploadBox = document.querySelector('.profile-upload-box');
+  const profileUploadBox = document.querySelector(".profile-upload-box");
   if (profileUploadBox) profileUpload(profileUploadBox);
 
-  const fileUploadContainer = document.querySelector('.file-upload-container');
+  const fileUploadContainer = document.querySelector(".file-upload-container");
   if (fileUploadContainer) fileUpload(fileUploadContainer);
 
   // nice select start
-  $('.select').niceSelect();
+  $(".select").niceSelect();
   // nice select end
 
   // navbar start
-  const navbar = document.querySelector('nav.navbar');
+  const navbar = document.querySelector("nav.navbar");
   if (navbar) {
-    window.addEventListener('scroll', function () {
+    window.addEventListener("scroll", function () {
       if (window.scrollY >= 100) {
-        navbar.classList.add('sticky');
+        navbar.classList.add("sticky");
       } else {
-        navbar.classList.remove('sticky');
+        navbar.classList.remove("sticky");
       }
     });
   }
   // navbar end
 
   // mobile menu start
-  const menuOpen = document.querySelector('.menu-open');
-  const menuClose = document.querySelector('.menu-close');
-  const mobileMenu = document.querySelector('.mobile-navbar');
+  const menuOpen = document.querySelector(".menu-open");
+  const menuClose = document.querySelector(".menu-close");
+  const mobileMenu = document.querySelector(".mobile-navbar");
 
   if (mobileMenu && menuOpen && menuClose) {
-    menuOpen.addEventListener('click', function (e) {
+    menuOpen.addEventListener("click", function (e) {
       e.stopPropagation();
-      mobileMenu.classList.add('show');
-      document.body.classList.add('no-scroll');
+      mobileMenu.classList.add("show");
+      document.body.classList.add("no-scroll");
     });
-    menuClose.addEventListener('click', function (e) {
+    menuClose.addEventListener("click", function (e) {
       e.stopPropagation();
-      mobileMenu.classList.remove('show');
-      document.body.classList.remove('no-scroll');
+      mobileMenu.classList.remove("show");
+      document.body.classList.remove("no-scroll");
     });
-    document.addEventListener('click', function (e) {
+    document.addEventListener("click", function (e) {
       // Check if the click target is outside the mobile menu
       if (!mobileMenu.contains(e.target) && !menuOpen.contains(e.target)) {
-        mobileMenu.classList.remove('show');
-        document.body.classList.remove('no-scroll');
+        mobileMenu.classList.remove("show");
+        document.body.classList.remove("no-scroll");
       }
     });
   }
   // mobile menu end
 
   // all pasword field show and hide password
-  const passwordWrappers = $('.password-wrapper');
+  const passwordWrappers = $(".password-wrapper");
 
   if (Object.keys(passwordWrappers).length > 0) {
     for (let wrapper of passwordWrappers) {
       const passwordWrapper = $(wrapper);
 
       const passField = $("input[type='password']", passwordWrapper);
-      const passBtn = $('button.pass-show-btn', passwordWrapper);
-      const passShowBtnIcon = $('span.show-eye', passBtn);
-      const passHideBtnIcon = $('span.hide-eye', passBtn);
+      const passBtn = $("button.pass-show-btn", passwordWrapper);
+      const passShowBtnIcon = $("span.show-eye", passBtn);
+      const passHideBtnIcon = $("span.hide-eye", passBtn);
 
-      passBtn.on('click', function (e) {
+      passBtn.on("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (passwordWrapper.hasClass('show-pass')) {
-          passField.attr('type', 'password');
-          passwordWrapper.removeClass('show-pass');
+        if (passwordWrapper.hasClass("show-pass")) {
+          passField.attr("type", "password");
+          passwordWrapper.removeClass("show-pass");
 
-          passShowBtnIcon.addClass('hide-icon');
-          passHideBtnIcon.removeClass('hide-icon');
+          passShowBtnIcon.addClass("hide-icon");
+          passHideBtnIcon.removeClass("hide-icon");
         } else {
-          passField.attr('type', 'text');
-          passwordWrapper.addClass('show-pass');
+          passField.attr("type", "text");
+          passwordWrapper.addClass("show-pass");
 
-          passHideBtnIcon.addClass('hide-icon');
-          passShowBtnIcon.removeClass('hide-icon');
+          passHideBtnIcon.addClass("hide-icon");
+          passShowBtnIcon.removeClass("hide-icon");
         }
       });
     }
   }
 
   // banner slide start
-  const banner = document.querySelector('.banner');
+  const banner = document.querySelector(".banner");
   if (banner) {
-    const slides = banner.querySelectorAll('.slide-item');
-    const trackerItems = banner.querySelectorAll('.tracker-item');
-    const thumbnailItems = banner.querySelectorAll('.thumbnail-item');
-    const nextBtn = banner.querySelector('#slide-next-btn');
-    const prevBtn = banner.querySelector('#slide-prev-btn');
+    const slides = banner.querySelectorAll(".slide-item");
+    const trackerItems = banner.querySelectorAll(".tracker-item");
+    const thumbnailItems = banner.querySelectorAll(".thumbnail-item");
+    const nextBtn = banner.querySelector("#slide-next-btn");
+    const prevBtn = banner.querySelector("#slide-prev-btn");
 
     let currentIndex = 0;
     let intervalId;
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
+        slide.classList.toggle("active", i === index);
       });
       trackerItems.forEach((item, i) => {
-        item.classList.toggle('active', i === index);
+        item.classList.toggle("active", i === index);
       });
       thumbnailItems.forEach((item, i) => {
-        item.classList.toggle('active', i === index);
+        item.classList.toggle("active", i === index);
       });
       currentIndex = index;
     }
 
     function moveActiveThumbnailToFirst() {
-      const activeThumbnail = document.querySelector('.thumbnail-item.active');
+      const activeThumbnail = document.querySelector(".thumbnail-item.active");
       const thumbnailContainer = activeThumbnail.parentNode;
 
       // Move active thumbnail to the first position
@@ -264,25 +290,25 @@ document.addEventListener('DOMContentLoaded', function () {
       moveActiveThumbnailToFirst();
     }
 
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener("click", () => {
       nextSlide();
       resetInterval();
     });
 
-    prevBtn.addEventListener('click', () => {
+    prevBtn.addEventListener("click", () => {
       prevSlide();
       resetInterval();
     });
 
     trackerItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
+      item.addEventListener("click", () => {
         showSlide(index);
         resetInterval();
       });
     });
 
     thumbnailItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
+      item.addEventListener("click", () => {
         showSlide(index);
         resetInterval();
       });
@@ -302,44 +328,44 @@ document.addEventListener('DOMContentLoaded', function () {
   // banner slide end
 
   // work video start
-  const videoContainers = document.querySelectorAll('.video-container');
+  const videoContainers = document.querySelectorAll(".video-container");
   if (videoContainers.length > 0) {
     videoContainers.forEach((videoContainer) => {
-      const videoItem = videoContainer.querySelector('video');
-      const playButton = videoContainer.querySelector('.play-button');
+      const videoItem = videoContainer.querySelector("video");
+      const playButton = videoContainer.querySelector(".play-button");
 
-      playButton.addEventListener('click', () => {
+      playButton.addEventListener("click", () => {
         if (videoItem.paused) {
           videoItem.play();
-          playButton.style.display = 'none';
+          playButton.style.display = "none";
         } else {
           videoItem.pause();
-          playButton.style.display = 'block';
+          playButton.style.display = "block";
         }
       });
 
-      videoItem.addEventListener('click', () => {
+      videoItem.addEventListener("click", () => {
         if (videoItem.paused) {
           videoItem.play();
-          playButton.style.display = 'none';
+          playButton.style.display = "none";
         } else {
           videoItem.pause();
-          playButton.style.display = 'block';
+          playButton.style.display = "block";
         }
       });
 
-      videoItem.addEventListener('play', () => {
-        playButton.style.display = 'none';
+      videoItem.addEventListener("play", () => {
+        playButton.style.display = "none";
       });
 
-      videoItem.addEventListener('pause', () => {
-        playButton.style.display = 'block';
+      videoItem.addEventListener("pause", () => {
+        playButton.style.display = "block";
       });
     });
   }
 
   // user review start
-  const userReviewCarousel = $('.user-review-carousel');
+  const userReviewCarousel = $(".user-review-carousel");
 
   if (userReviewCarousel.length > 0) {
     userReviewCarousel.owlCarousel({
@@ -374,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // user review end
 
   // testimonial carousel start
-  const testimonialCarousel = $('.testimonial-carousel');
+  const testimonialCarousel = $(".testimonial-carousel");
 
   if (testimonialCarousel.length > 0) {
     testimonialCarousel.owlCarousel({
@@ -403,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // testimonial carousel end
 
   // counter animation start
-  const counterItems = document.querySelectorAll('.count');
+  const counterItems = document.querySelectorAll(".count");
   if (counterItems.length > 0) {
     let speed = 2000;
     counterItems.forEach((counterItem) => {
@@ -417,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const counter = setInterval(() => {
         startValue++;
         // current.textContent = startValue.toLocaleString("en-US");
-        counterItem.textContent = startValue.toLocaleString('en-US');
+        counterItem.textContent = startValue.toLocaleString("en-US");
         if (startValue === endValue) {
           clearInterval(counter);
         }
@@ -427,16 +453,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // counter animation end
 
   // choose item select start
-  const chooseItems = document.querySelectorAll('.choose-item');
+  const chooseItems = document.querySelectorAll(".choose-item");
   chooseItems.forEach((item) => {
-    item.addEventListener('click', function () {
-      if (item.classList.contains('active')) {
-        item.classList.remove('active');
+    item.addEventListener("click", function () {
+      if (item.classList.contains("active")) {
+        item.classList.remove("active");
       } else {
         chooseItems.forEach((subItem) => {
-          subItem.classList.remove('active');
+          subItem.classList.remove("active");
         });
-        item.classList.add('active');
+        item.classList.add("active");
         const link = item.dataset.link;
         window.location.href = link;
       }
@@ -445,10 +471,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // choose item select end
 
   // item link start
-  const itemLinks = document.querySelectorAll('.item-link');
+  const itemLinks = document.querySelectorAll(".item-link");
   if (itemLinks.length > 0) {
     itemLinks.forEach((itemLink) => {
-      itemLink.addEventListener('click', function (e) {
+      itemLink.addEventListener("click", function (e) {
         e.stopPropagation();
         const link = itemLink.dataset.href;
         window.location.href = link;
@@ -456,4 +482,98 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
   // item link end
+});
+
+// input otp
+
+// Function to get all OTP values at once
+function getOtpValues() {
+  return [
+    document.getElementById("otp-input-1").value,
+    document.getElementById("otp-input-2").value,
+    document.getElementById("otp-input-3").value,
+    document.getElementById("otp-input-4").value,
+  ];
+}
+
+// Function to move to the next input
+function moveToNext(event, currentInput) {
+  const inputValue = event.target.value;
+
+  if (inputValue && currentInput < 4) {
+    const nextInput = document.getElementById(`otp-input-${currentInput + 1}`);
+    nextInput.focus();
+  }
+
+  if (!inputValue && currentInput > 1) {
+    const prevInput = document.getElementById(`otp-input-${currentInput - 1}`);
+    prevInput.focus();
+  }
+
+  const otpValues = getOtpValues(); // Get all OTP values
+  const submitButton = document.querySelector('button[type="submit"]');
+  submitButton.disabled = otpValues.some((value) => value === ""); // Disable if any field is empty
+}
+
+function handlePaste(event) {
+  const pasteData = event.clipboardData.getData("Text");
+
+  if (pasteData.length === 4 && /^\d{4}$/.test(pasteData)) {
+    for (let i = 0; i < pasteData.length; i++) {
+      const inputField = document.getElementById(`otp-input-${i + 1}`);
+      inputField.value = pasteData.charAt(i);
+    }
+  }
+
+  event.preventDefault();
+
+  const otpValues = getOtpValues(); // Get all OTP values
+  const submitButton = document.querySelector('button[type="submit"]');
+  submitButton.disabled = otpValues.some((value) => value === "");
+}
+
+// Example of how to get the OTP values when you need them (e.g., before submitting)
+function getOtpValuesForSubmission() {
+  const otpValues = getOtpValues();
+  return otpValues.join("");
+}
+
+// password and confirm passowrd check
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector(".auth-form");
+  const passwordField = document.querySelector("#userPassword");
+  const confirmPasswordField = document.querySelector("#userConfirmPassword");
+  const submitButton = document.querySelector(".button");
+
+  // Only proceed if all necessary elements exist
+  if (form && passwordField && confirmPasswordField && submitButton) {
+    // Function to validate password match
+    function validatePasswordMatch() {
+      const password = passwordField.value;
+      const confirmPassword = confirmPasswordField.value;
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        submitButton.disabled = true; // Disable submit button
+        confirmPasswordField.setCustomValidity("Passwords do not match");
+      } else {
+        submitButton.disabled = false; // Enable submit button
+        confirmPasswordField.setCustomValidity(""); // Reset custom validity
+      }
+    }
+
+    // Event listener to check password match on input change
+    passwordField.addEventListener("input", validatePasswordMatch);
+    confirmPasswordField.addEventListener("input", validatePasswordMatch);
+
+    // Event listener for form submission
+    form.addEventListener("submit", function (event) {
+      // Validate again before form submission
+      if (passwordField.value !== confirmPasswordField.value) {
+        event.preventDefault();
+        alert("Passwords do not match. Please try again.");
+      }
+    });
+  }
 });
