@@ -8,5 +8,24 @@
 <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/nice-select.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropdownContainer = document.querySelector(".profile-dropdown-container1");
+      const dropdown = document.querySelector(".profile-dropdown1");
+
+      dropdownContainer.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevent click event from propagating to the document
+        dropdown.classList.toggle("active");
+
+        console.log("hi")
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", () => {
+        dropdown.classList.remove("active");
+      });
+    });
+  </script>
+
 @stack('scripts')
 
