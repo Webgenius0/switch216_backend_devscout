@@ -53,20 +53,18 @@
           <div class="auth-card">
             <div class="auth-title">Email your account</div>
             <div class="se--new-user">
-              {{-- <p>New user?</p> --}}
-              {{-- <a href="">Create an Account</a> --}}
+              <p>New user?</p>
+              <a href="{{route('register')}}">Create an Account</a>
 
             </div>
             <form class="auth-form" method="POST" action="{{ route('password.email') }}">
               @csrf
               <fieldset class="input-wrapper">
                 <label for="userEmail" class="input-label">Email</label>
-                <input type="email" id="userEmail" class="input-field" placeholder="switch@gmail.com" required name="email" :value="old('email')"  autofocus autocomplete="username" />
+                <input type="email" id="userEmail" class="input-field" placeholder="kolchie@mail.com" required name="email" :value="old('email')"  autofocus autocomplete="username" />
               </fieldset>
-
               <button type="submit" class="button w-100">Continue</button>
             </form>
-
           </div>
         </div>
       </div>

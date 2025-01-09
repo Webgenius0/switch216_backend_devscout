@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
                     <figure class="auth-img">
-                        <img src="{{ asset('frontend/assets') }}/images/auth.png" alt="auth image" />
+                        <img src="{{ asset('frontend/assets/images/auth.png') }}" alt="auth image" />
                     </figure>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
@@ -34,7 +34,7 @@
                                 <label for="userEmail" class="input-label">Email</label>
                                 <input type="email" id="userEmail" class="input-field" placeholder="Enter your Email"
                                     required name="email" :value="old('email')"  autofocus autocomplete="username" />
-                            <span class="text-red-600 text-sm">{{ $errors->first('email') }}</span> 
+                            <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('email') }}</span> 
                             </fieldset>
                             <fieldset class="input-wrapper password-wrapper">
                                 <label for="userPassword" class="input-label">Password</label>
@@ -94,7 +94,7 @@
                             <button type="submit" class="button w-100">Sign In</button>
                         </form>
                         <div class="auth-des auth-bottom text-center">
-                            Don't have any account? <a href="./sign-up.html">Sign Up</a>
+                            Don't have any account? <a href="{{ route('register') }}">Sign Up</a>
                         </div>
                         <div class="text-separator">
                             <div class="bar"></div>
@@ -102,11 +102,11 @@
                             <div class="bar"></div>
                         </div>
                         <button type="button" class="social-auth-btn" id="google-auth-btn">
-                            <img src="{{ asset('frontend/assets') }}/images/google-logo-9808 1.png" alt="google logo" />
+                            <img src="{{ asset('frontend/assets/images/google-logo-9808 1.png') }}" alt="google logo" />
                             <span>Sign In Google account</span>
                         </button>
                         <button type="button" class="social-auth-btn" id="facebook-auth-btn">
-                            <img src="{{ asset('frontend/assets') }}/images/logos_facebook.png" alt="facebook logo" />
+                            <img src="{{ asset('frontend/assets/images/logos_facebook.png') }}" alt="facebook logo" />
                             <span>Sign In Facebook account</span>
                         </button>
                     </div>
