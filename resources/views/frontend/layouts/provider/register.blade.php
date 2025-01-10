@@ -190,12 +190,13 @@
                                     <div class="circle active"></div>
                                     <div class="line active"></div>
                                     <div class="circle active"></div>
-                                    <div class="line active "></div>
-                                    <div class="circle active "></div>
+                                    <div class="line active"></div>
+                                    <div class="circle active"></div>
                                 </div>
-                                <!-- step header start -->
+                                <!-- step header end -->
                                 <div class="form-group">
                                     <label for="">Upload gallery image</label>
+                                    <div class="se--set" id="imagePreviewContainer"></div>
                                     <div class="file-upload-container">
                                         <div class="content">
                                             <div class="drag-container">
@@ -225,14 +226,17 @@
                                                 <span>Supported file types: .jpg, .jpeg, .png.</span>
                                             </div>
                                         </div>
-                                        <input type="file" accept="image/*" hidden />
+                                        <input type="file" accept="image/*" multiple id="fileInput" hidden />
+
+
                                     </div>
                                 </div>
+
+
+
                                 <div class="form-navigation">
-                                    <button type="button" class="button-prev">Pervious</button>
-                                    <button type="submit" class="button-next">
-                                        Save
-                                    </button>
+                                    <button type="button" class="button-prev">Previous</button>
+                                    <button type="submit" class="button-next">Save</button>
                                 </div>
                             </div>
                         </form>

@@ -70,6 +70,12 @@ function fileUpload(fileUploadContainer) {
   const fileInput = fileUploadContainer.querySelector("input[type='file']");
   const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
+  const galleryInput = document.createElement("input");
+  galleryInput.setAttribute("type", "hidden");
+  galleryInput.setAttribute("name", "gallery_images[]");
+  galleryInput.setAttribute("multiple", true);
+  fileUploadContainer.appendChild(galleryInput);
+
   fileUploadContainer.addEventListener("click", function (e) {
     e.stopPropagation();
     fileInput.click();
@@ -80,7 +86,7 @@ function fileUpload(fileUploadContainer) {
     handleFiles(files);
 
     // Reset the file input after handling files to allow the same files to be selected again
-    fileInput.value = ''; // This will clear the input so the same files can be uploaded again
+    fileInput.value = '';
   });
 
   fileUploadContainer.addEventListener("dragover", function (e) {
@@ -104,7 +110,10 @@ function fileUpload(fileUploadContainer) {
 
   function handleFiles(files) {
     // Clear the image preview container before adding new previews
-    imagePreviewContainer.innerHTML = ''; // Remove all previous previews
+    // imagePreviewContainer.innerHTML = ''; // Remove all previous previews
+
+    // Prepare the `galleryInput` to hold the new list of files
+    // galleryInput.value = '';
 
     // Loop through all the files and create an image preview for each
     Array.from(files).forEach((file) => {
@@ -119,20 +128,23 @@ function fileUpload(fileUploadContainer) {
         img.setAttribute("class", "preview-img");
 
         // Apply CSS directly in JavaScript to control width, height, and aspect ratio
-        img.style.width = "300px"; // Set a fixed width
-        img.style.height = "200px"; // Set a fixed height (same as width to maintain square aspect ratio)
-        img.style.objectFit = "cover"; // Ensures images fill the container while maintaining their aspect ratio
-        img.style.margin = "5px"; // Adjust margin as needed
+        img.style.width = "300px";
+        img.style.height = "200px";
+        img.style.objectFit = "cover";
+        img.style.margin = "5px";
 
         // Create the close button
         const closeButton = document.createElement("button");
-        closeButton.textContent = "×";  // The "×" symbol for close
+        closeButton.textContent = "×";
         closeButton.setAttribute("class", "close-btn");
         closeButton.setAttribute("type", "button");
 
         // Add close button functionality
         closeButton.addEventListener("click", function () {
-          imgContainer.remove();  // Remove the image container and the image itself
+          imgContainer.remove();
+          // Update the `galleryInput` value after removing a file
+          const updatedFiles = Array.from(files).filter((f) => f !== file);
+          updateGalleryInput(updatedFiles);
         });
 
         // Append the image and the close button to the container
@@ -144,9 +156,17 @@ function fileUpload(fileUploadContainer) {
       };
 
       reader.readAsDataURL(file);
+      console.log(file);
+      // Add the file to the `galleryInput` value
+      galleryInput.value += `${file},`; 
     });
   }
+
+  function updateGalleryInput(files) {
+    galleryInput.value = files.map((f) => f).join(',');
+  }
 }
+
 
 
 
