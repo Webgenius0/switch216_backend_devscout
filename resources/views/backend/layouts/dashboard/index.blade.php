@@ -1,368 +1,573 @@
-@extends('frontend.dashboard.app')
+@extends('backend.app')
 
 @section('title')
-    Dashboard Contrator
+    Dashboard
 @endsection
-@section('header')
-    @include('frontend.dashboard.partials.header')
-@endsection
+
 @push('styles')
 @endpush
 
 @section('content')
-    <!-- dashboard content start -->
-    <div class="dashboard-main-content ">
-        <!-- dashboard-banner-content start -->
-        <div class="dashboard-banner-content">
-            <div class="title">
-                Hello, <span>{{ Auth::user()->name ?? 'Mr. John Doe' }}</span> ! Let's get started on your multi services
+    <div class="main-content-container overflow-hidden">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="mb-4">
+                    <h3 class="fs-20 fw-semibold mb-1">Welcome Back, <span class="text-primary">Olivia!</span>
+                    </h3>
+                    <p style="line-height: 1.4;">Monitor and manage employee performance, attendance and more
+                        in one place.</p>
+                </div>
             </div>
-            <div class="text mt-3">
-                Start now to connect with multi-service professionals, book appointments, and manage your
-                documents—all in
-                one place for a smooth preparation experience.
-            </div>
-
-            <!-- search container start -->
-            <form class="banner-search-container">
-                <div class="item">
-                    <div class="label-title">Location</div>
-                    <input placeholder="Search" type="text">
+            <div class="col-md-5">
+                <div class="d-flex flex-wrap gap-2 justify-content-md-end mb-4">
+                    <a href="pricing-plan.html" class="btn d-flex align-items-center gap-1"
+                        style="background-color: #F3E8FF; color: #7C24CC; padding: 3.5px 11px;">
+                        <i class="ri-vip-crown-line fs-18 lh-1" style="color: #7C24CC;"></i>
+                        <span>Plan Upgrade</span>
+                    </a>
+                    <button class="btn d-flex align-items-center gap-1"
+                        style="background-color: #FFE8D4; color: #C52B09; padding: 3.5px 11px;">
+                        <i class="ri-file-download-line fs-18 lh-1 position-relative top-1" style="color: #C52B09;"></i>
+                        <span>Export Reports</span>
+                    </button>
                 </div>
-                <div class="item">
-                    <div class="label-title">Service Type</div>
-                    <select style="height: 56px; background-color: #fff; border-color: #424242;" class="form-select type"
-                        aria-label="Default select example">
-                        <option value="">Select</option>
-                        <option value="1">Party events</option>
-                        <option value="1">Houses for sale and rent</option>
-                        <option value="1">Food</option>
-                        <option value="1">Repair</option>
-                        <option value="1">Beauty and wellness</option>
-                        <option value="1">Education and childcare</option>
-                        <option value="1">IT service</option>
-                    </select>
-                </div>
-                <button class="search-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                        fill="none">
-                        <path
-                            d="M13.5938 23.4375C19.0303 23.4375 23.4375 19.0303 23.4375 13.5938C23.4375 8.1572 19.0303 3.75 13.5938 3.75C8.1572 3.75 3.75 8.1572 3.75 13.5938C3.75 19.0303 8.1572 23.4375 13.5938 23.4375Z"
-                            stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20.5547 20.5547L26.2501 26.2501" stroke="white" stroke-width="3" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-            </form>
-            <!-- search container end -->
-
-        </div>
-        <!-- dashboard-banner-content end -->
-
-        <!-- dashboard appointments start -->
-        <div class="section-title mt-5">Upcoming Appointments</div>
-        <div class="dashboard-appointments mt-5">
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17"
-                                    fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17"
-                                    fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17"
-                                    fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
-                                    viewBox="0 0 16 17" fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
-                                    viewBox="0 0 16 17" fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
-                                    viewBox="0 0 16 17" fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
-                                    viewBox="0 0 16 17" fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
-            </div>
-            <div class="item">
-                <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
-                    <div class="profile d-flex gap-2 flex-wrap">
-                        <div class="profile-img">
-                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-title">
-                                Danial David
-                            </div>
-                            <div class="profile-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
-                                    viewBox="0 0 16 17" fill="none">
-                                    <path
-                                        d="M7.99992 9.45334C9.14867 9.45334 10.0799 8.52209 10.0799 7.37334C10.0799 6.22458 9.14867 5.29333 7.99992 5.29333C6.85117 5.29333 5.91992 6.22458 5.91992 7.37334C5.91992 8.52209 6.85117 9.45334 7.99992 9.45334Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                    <path
-                                        d="M2.4133 6.16004C3.72664 0.386709 12.28 0.393376 13.5866 6.16671C14.3533 9.55338 12.2466 12.42 10.4 14.1934C9.05997 15.4867 6.93997 15.4867 5.5933 14.1934C3.7533 12.42 1.64664 9.54671 2.4133 6.16004Z"
-                                        stroke="#BDBDBD" stroke-width="1.5" />
-                                </svg>
-                                <span>
-                                    Spain
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date">
-                        17 Aug, 2024
-                    </div>
-                </div>
-                <div class="text mt-3">
-                    Professional DJ with 10 years of experience in weddings and corporate events.
-                </div>
-                <a class="action mt-5" href="">
-                    Reschedule
-                </a>
             </div>
         </div>
-        <!-- dashboard appointments end -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="card border-0 rounded-3 bg-white mb-4">
+                    <div class="custom-padding-30 position-relative">
+                        <div class="d-flex align-items-center mb-4 pb-2">
+                            <div class="flex-shrink-0">
+                                <div class="text-center rounded-2 bg-primary-50"
+                                    style="width: 44px; height: 44px; line-height: 44px;">
+                                    <img src="{{ asset('backend/admin/assets') }}/images/icon-employees.svg"
+                                        alt="icon-employees">
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <span class="d-block mb-1">Total Employees</span>
+                                <h3 class="fw-medium fs-20 mb-0">15,720</h3>
+                            </div>
+                        </div>
 
+                        <div class="d-flex align-items-center">
+                            <i class="ri-arrow-right-up-line d-inline-block text-center rounded-1 fs-18 text-success-50"
+                                style="width: 26px; height: 26px; line-height: 26px; background-color: #D8FFC8;"></i>
+                            <p class="ms-2"><span class="text-secondary fw-medium">+12%</span> last year</p>
+                        </div>
+
+                        <div id="total_employees" class="chart-position top-50 translate-middle-y"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card border-0 rounded-3 bg-white mb-4">
+                    <div class="custom-padding-30 position-relative">
+                        <div class="d-flex align-items-center mb-4 pb-2">
+                            <div class="flex-shrink-0">
+                                <div class="text-center rounded-2 bg-danger-50"
+                                    style="width: 44px; height: 44px; line-height: 44px;">
+                                    <img src="{{ asset('backend/admin/assets') }}/images/icon-resigned.svg"
+                                        alt="icon-resigned">
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <span class="d-block mb-1">Resigned Employees</span>
+                                <h3 class="fw-medium fs-20 mb-0">3,18</h3>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <i class="ri-arrow-right-down-line d-inline-block text-center rounded-1 fs-18 text-danger-50"
+                                style="width: 26px; height: 26px; line-height: 26px; background-color: #FFE8D4;"></i>
+                            <p class="ms-2"><span class="text-secondary fw-medium">-5%</span> last year</p>
+                        </div>
+
+                        <div id="resigned_employees" class="chart-position top-50 translate-middle-y"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="card border-0 rounded-3 bg-white mb-4">
+                    <div class="custom-padding-30 position-relative">
+                        <div class="d-flex align-items-center mb-4 pb-2">
+                            <div class="flex-shrink-0">
+                                <div class="text-center rounded-2 bg-primary-div-50"
+                                    style="width: 44px; height: 44px; line-height: 44px;">
+                                    <img src="{{ asset('backend/admin/assets') }}/images/icon-employees.svg"
+                                        alt="icon-employees">
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <span class="d-block mb-1">New Employees</span>
+                                <h3 class="fw-medium fs-20 mb-0">8,24</h3>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <i class="ri-arrow-right-up-line d-inline-block text-center rounded-1 fs-18 text-success-50"
+                                style="width: 26px; height: 26px; line-height: 26px; background-color: #D8FFC8;"></i>
+                            <p class="ms-2"><span class="text-secondary fw-medium">+10%</span> last year</p>
+                        </div>
+
+                        <div id="new_employees" class="chart-position top-50 translate-middle-y me-1 mt-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-white border-0 rounded-3 mb-4">
+            <div class="card-body p-0">
+                <div
+                    class="d-flex justify-content-between align-items-center flex-wrap gap-3 custom-padding-30 border-bottom pb-4">
+                    <h3 class="mb-0">Employee List</h3>
+                    <div class="d-flex align-items-center">
+                        <form class="position-relative table-src-form">
+                            <input type="text" id="SearchControl" class="form-control border-0" style="width: 265px;"
+                                placeholder="Search for a name....">
+                            <i
+                                class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
+                        </form>
+                        <div class="dropdown action-opt">
+                            <button class="btn bg-transparent p-0" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i data-feather="more-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end bg-white border box-shadow">
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="clock"></i>
+                                        Today
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="pie-chart"></i>
+                                        Last 7 Days
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="rotate-cw"></i>
+                                        Last Month
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="calendar"></i>
+                                        Last 1 Year
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="bar-chart"></i>
+                                        All Time
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="eye"></i>
+                                        View
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <i data-feather="trash"></i>
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="default-table-area style-three employee-list for-data-table">
+                    <div class="table-responsive">
+                        <table class="table align-middle border-0" id="myTable">
+                            <thead class="border-bottom">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Employee</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Joining Date</th>
+                                    <th scope="col">Salary</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium">EMP001</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-6.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Olivia Turner</h4>
+                                                <span class="fs-12 text-body">olivia@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Marketing</td>
+                                    <td>Marketing Lead</td>
+                                    <td>Jan 15, 2020</td>
+                                    <td>$85,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP002</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-7.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Liam Bennett</h4>
+                                                <span class="fs-12 text-body">liam@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Human Resources</td>
+                                    <td>HR Manager</td>
+                                    <td>Mar 10, 2021</td>
+                                    <td>$75,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-primary-div bg-opacity-10 text-primary-div p-2 fs-12 fw-normal">On
+                                            Leave</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP003</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-8.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Sophia Myers</h4>
+                                                <span class="fs-12 text-body">sophia@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>IT</td>
+                                    <td>Software Engineer</td>
+                                    <td>Feb 22, 2019</td>
+                                    <td>$95,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP004</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-9.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Ethan Collins</h4>
+                                                <span class="fs-12 text-body">ethan@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Sales</td>
+                                    <td>Sales Manager</td>
+                                    <td>Apr 12, 2022</td>
+                                    <td>$90,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP005</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-10.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Isabella Reed</h4>
+                                                <span class="fs-12 text-body">isabella@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Finance</td>
+                                    <td>Financial Analyst</td>
+                                    <td>Aug 05, 2020</td>
+                                    <td>$80,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-danger bg-opacity-10 text-danger p-2 fs-12 fw-normal">Resigned</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP006</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-11.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Sophia Myers</h4>
+                                                <span class="fs-12 text-body">sophia@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>IT</td>
+                                    <td>Software Engineer</td>
+                                    <td>Feb 22, 2019</td>
+                                    <td>$95,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP007</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-12.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Isabella Reed</h4>
+                                                <span class="fs-12 text-body">isabella@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Finance</td>
+                                    <td>Financial Analyst</td>
+                                    <td>Aug 05, 2020</td>
+                                    <td>$80,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-danger bg-opacity-10 text-danger p-2 fs-12 fw-normal">Resigned</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP008</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-13.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Olivia Turner</h4>
+                                                <span class="fs-12 text-body">olivia@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Marketing</td>
+                                    <td>Marketing Lead</td>
+                                    <td>Jan 15, 2020</td>
+                                    <td>$85,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP009</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-14.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Liam Bennett</h4>
+                                                <span class="fs-12 text-body">liam@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Human Resources</td>
+                                    <td>HR Manager</td>
+                                    <td>Mar 10, 2021</td>
+                                    <td>$75,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-primary-div bg-opacity-10 text-primary-div p-2 fs-12 fw-normal">On
+                                            Leave</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">EMP0010</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <img src="{{ asset('backend/admin/assets') }}/images/user-15.jpg"
+                                                    class="rounded-circle" alt="user">
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <h4 class="fs-14 fw-medium mb-0">Ethan Collins</h4>
+                                                <span class="fs-12 text-body">ethan@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Sales</td>
+                                    <td>Sales Manager</td>
+                                    <td>Apr 12, 2022</td>
+                                    <td>$90,000</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-success bg-opacity-10 text-success p-2 fs-12 fw-normal">Active</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-primary">visibility</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-body">edit</i>
+                                            </button>
+                                            <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2">
+                                                <i class="material-symbols-outlined fs-18 text-danger">delete</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- dashboard content end -->
 @endsection
 
 
