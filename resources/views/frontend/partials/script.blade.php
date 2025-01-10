@@ -1,4 +1,3 @@
-
 <!-- All javascript files -->
 <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
@@ -10,22 +9,24 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const dropdownContainer = document.querySelector(".profile-dropdown-container1");
-      const dropdown = document.querySelector(".profile-dropdown1");
+        const dropdownContainer = document.querySelector(".profile-dropdown-container1");
+        const dropdown = document.querySelector(".profile-dropdown1");
+        if (dropdownContainer) {
+            dropdownContainer.addEventListener("click", (event) => {
+                event.stopPropagation(); // Prevent click event from propagating to the document
+                dropdown.classList.toggle("active");
 
-      dropdownContainer.addEventListener("click", (event) => {
-        event.stopPropagation(); // Prevent click event from propagating to the document
-        dropdown.classList.toggle("active");
-
-        console.log("hi")
-      });
-
-      // Close dropdown when clicking outside
-      document.addEventListener("click", () => {
-        dropdown.classList.remove("active");
-      });
+                console.log("hi")
+            });
+        }
+        if (dropdown) {
+         // Close dropdown when clicking outside
+        document.addEventListener("click", () => {
+            dropdown.classList.remove("active");
+        });   
+        }
+        
     });
-  </script>
+</script>
 
 @stack('scripts')
-

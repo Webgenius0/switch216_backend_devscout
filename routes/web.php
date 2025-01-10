@@ -86,9 +86,9 @@ Route::get('/house-list', function () {
 
 
 //provider
-Route::get('/provider/register', function () {
-    return view(view: 'frontend.layouts.provider.register');
-})->name('provider.register');
+// Route::get('/provider/register', function () {
+//     return view(view: 'frontend.layouts.provider.register');
+// })->name('provider.register');
 
 Route::get('/provider', function () {
     return view(view: 'frontend.layouts.provider.index');
@@ -109,7 +109,7 @@ Route::get('/contractor-dashboard', function () {
 })->middleware(['auth', 'verified'])->name('contractor.dashboard');
 
 
-Route::get('/contractor-dashboard', function () {
+Route::get('/customer-dashboard', function () {
     return view('frontend.dashboard.layouts.customer.index');
 })->middleware(['auth', 'verified'])->name('customer.dashboard');
 

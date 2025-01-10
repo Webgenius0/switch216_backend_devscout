@@ -32,17 +32,19 @@ class AuthenticatedSessionController extends Controller
 
         // Check the user's role
         if ($user->role === 'admin') {
+        flash()->success('Login successfully.');
             // Redirect to admin dashboard
             return redirect()->route('admin.dashboard');
         } elseif ($user->role === 'customer') {
+            flash()->success('Login successfully.');
             // Redirect to user dashboard
             return redirect()->route('customer.dashboard');
         } elseif ($user->role === 'contractor') {
+            flash()->success('Login successfully.');
             // Redirect to user dashboard
             return redirect()->route('contractor.dashboard');
         }
         $request->session()->regenerate();
-
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -56,7 +58,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
+        // flash()->success('Logout successfully.');
         return redirect('/');
     }
 }
