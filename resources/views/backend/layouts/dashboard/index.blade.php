@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="mb-4">
-                    <h3 class="fs-20 fw-semibold mb-1">Welcome Back, <span class="text-primary">Olivia!</span>
+                    <h3 class="fs-20 fw-semibold mb-1">Welcome Back, <span class="text-primary">{{ Auth::user()->name ?? 'Mr. John Doe' }}!</span>
                     </h3>
                     <p style="line-height: 1.4;">Monitor and manage employee performance, attendance and more
                         in one place.</p>

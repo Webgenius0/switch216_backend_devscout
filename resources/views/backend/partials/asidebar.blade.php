@@ -58,21 +58,21 @@
                     </li>
 
                     <!-- Settings Menu Item -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('profile_settings.*') ? 'open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle active">
                             <span class="material-symbols-outlined menu-icon">settings</span>
                             <span class="title">Settings</span>
                         </a>
                         <ul class="menu-sub">
                             <!-- Account Settings Submenu -->
-                            <li class="menu-item">
-                                <a href="account-settings.html" class="menu-link">
+                            <li class="menu-item ">
+                                <a href="{{route('profile_settings.index')}}" class="menu-link {{ request()->routeIs('profile_settings.index') ? 'active' : '' }} ">
                                     Profile Settings
                                 </a>
                             </li>
                             <!-- Change Password Submenu -->
                             <li class="menu-item">
-                                <a href="change-password.html" class="menu-link">
+                                <a href="{{route('profile_settings.password_change')}}" class="menu-link {{ request()->routeIs('profile_settings.password_change') ? 'active' : '' }}">
                                     Change Password
                                 </a>
                             </li>
@@ -108,13 +108,13 @@
                     <!-- Logout Menu Item -->
                     <li class="menu-item">
                         <a class="menu-link"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            onclick="event.preventDefault(); document.getElementById('logout-form-asidebar').submit();">
                             <span class="material-symbols-outlined menu-icon">logout</span>
                             <span class="title">Logout</span>
                         </a>
                     </li>
                 </ul>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form-asidebar" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
             </aside>

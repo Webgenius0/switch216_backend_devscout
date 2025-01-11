@@ -7,21 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Links Of CSS File -->
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/sidebar-menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/simplebar.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/apexcharts.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/prism.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/rangeslider.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/sweetalert.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/quill.snow.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/google-icon.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/remixicon.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/swiper-bundle.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/fullcalendar.main.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/jsvectormap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/lightpick.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/style.css') }}">
-
+    
+    @include('backend.partials.style')
     <!-- Favicon -->
     <link rel="icon" type="image/png"
         href="{{ asset($systemSetting->favicon ?? 'backend/admin/assets/images/favicon.png') }} ">

@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:web'])->prefix('admin')->group(function () {
@@ -21,6 +22,11 @@ Route::middleware(['auth:web'])->prefix('admin')->group(function () {
         return view('backend.layouts.dashboard.index');
         // return view('backend.layouts.dashboard.index');
     })->name('admin.dashboard');
+    
+    Route::get('settings-profile', [ProfileController::class, 'index'])->name('profile_settings.index');
+    Route::post('settings-profile', [ProfileController::class, 'update'])->name('profile_settings.update');
+    Route::get('settings-profile-password', [ProfileController::class, 'passwordChange'])->name('profile_settings.password_change');
+    Route::post('settings-profile-password', [ProfileController::class, 'UpdatePassword'])->name('profile_settings.password');
 
 });
 

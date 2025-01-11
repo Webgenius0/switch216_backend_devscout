@@ -156,14 +156,14 @@
                                 data-bs-toggle="dropdown">
                                 <div class="flex-shrink-0">
                                     <img class="rounded-circle wh-40 administrator"
-                                        src="{{ asset('backend/admin/assets') }}/images/administrator.jpg"
+                                        src="{{ asset('backend/admin/assets') }}/images/avatar_defult.png"
                                         alt="admin">
                                 </div>
                                 <div class="flex-grow-1 ms-2">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-none d-xxl-block">
                                             <div class="d-flex align-content-center">
-                                                <h3>Olivia</h3>
+                                                <h3>{{ Auth::user()->name ?? 'Mr. John Doe' }}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +174,7 @@
                                 <div class="d-flex align-items-center info">
                                     <div class="flex-shrink-0">
                                         <img class="rounded-circle wh-30 administrator"
-                                            src="{{ asset('backend/admin/assets') }}/images/administrator.jpg"
+                                            src="{{ asset('backend/admin/assets') }}/images/avatar_defult.png"
                                             alt="admin">
                                     </div>
                                     <div class="flex-grow-1 ms-2">
