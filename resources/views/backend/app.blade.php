@@ -1,3 +1,7 @@
+@php
+    $systemSetting = App\Models\SystemSetting::first();
+@endphp
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -11,7 +15,7 @@
     @include('backend.partials.style')
     <!-- Favicon -->
     <link rel="icon" type="image/png"
-        href="{{ asset($systemSetting->favicon ?? 'backend/admin/assets/images/favicon.png') }} ">
+        href="{{ asset($systemSetting->favicon ?? 'backend/admin/assets/favicon.ico') }} ">
     <!-- Title -->
     <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
 </head>

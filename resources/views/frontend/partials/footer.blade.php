@@ -1,12 +1,16 @@
+@php
+    $systemSetting = App\Models\SystemSetting::first();
+@endphp
 <!-- footer section start -->
 <footer class="footer">
     <div class="container">
         <div class="footer-section">
             <div class="logo-section">
-                <img class="footer-logo" src="{{ asset('frontend/assets/images/dark-logo.png') }}" alt="site logo" />
+                <img class="footer-logo" src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}" alt="site logo" />
                 <div class="footer-text">
-                    Effortlessly manage and organize chats, tasks, and files in one
-                    centeral location with Qoterra chat management solutions.
+                    {{ $systemSetting->description ?? 'Effortlessly manage and organize chats, tasks, and files in one
+                    centeral location with Qoterra chat management solutions.'}}
+                    
                 </div>
                 <div class="social-section">
                     <a href="https://x.com/?lang=en" target="_blank" class="social-item">
@@ -70,8 +74,9 @@
             </div>
             <div class="footer-nav-section">
                 <h6 class="footer-nav-section-title">Contact US</h6>
-                <a href="mailto:switch@business.com" class="mail-nav">switch@business.com</a>
-                <a href="tel:+91-80-65652545" class="phone-nav">+91-80-65652545</a>
+                <a href="mailto:{{$systemSetting->email?? 'switch@business.com'}}" class="mail-nav">{{$systemSetting->email?? 'switch@business.com'}} </a>
+                <a href="tel:{{$systemSetting->contact_number?? ''}}" class="phone-nav">{{$systemSetting->contact_number?? '+91-80-65652545'}} </a>
+                <a  class="mail-nav">{{$systemSetting->address?? 'Morocco'}} </a>
                 <a class="button" href="#">Contact Us</a>
             </div>
         </div>
@@ -80,7 +85,7 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-md-6 copy-right-text">
-                    © 2023 Holzbau, All right reserved
+                    {{$systemSetting->copyright_text?? '© 2023 Holzbau, All right reserved'}} 
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">

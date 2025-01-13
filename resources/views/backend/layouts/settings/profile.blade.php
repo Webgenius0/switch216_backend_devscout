@@ -7,7 +7,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Account Settings</h3>
+            <h3 class="mb-0">Profile Settings</h3>
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb align-items-center mb-0 lh-1">
@@ -21,7 +21,7 @@
                         <span class="fw-medium">Settings</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Account</span>
+                        <span class="fw-medium">Profile</span>
                     </li>
                 </ol>
             </nav>
@@ -40,20 +40,6 @@
                             class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Change
                             Password</a>
                     </li>
-                    {{-- <li>
-                        <a href="connections.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Connections</a>
-                    </li>
-                    <li>
-                        <a href="privacy-policy.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Privacy
-                            Policy</a>
-                    </li>
-                    <li>
-                        <a href="terms-conditions.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Terms
-                            &amp; Conditions</a>
-                    </li> --}}
                 </ul>
 
                 <div class="mb-4">

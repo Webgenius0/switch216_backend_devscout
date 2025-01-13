@@ -10,6 +10,7 @@
 
 
 use App\Http\Controllers\Web\Backend\ProfileController;
+use App\Http\Controllers\Web\Backend\SystemSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:web'])->prefix('admin')->group(function () {
@@ -27,6 +28,17 @@ Route::middleware(['auth:web'])->prefix('admin')->group(function () {
     Route::post('settings-profile', [ProfileController::class, 'update'])->name('profile_settings.update');
     Route::get('settings-profile-password', [ProfileController::class, 'passwordChange'])->name('profile_settings.password_change');
     Route::post('settings-profile-password', [ProfileController::class, 'UpdatePassword'])->name('profile_settings.password');
+
+    // Route for system settings index
+    Route::get('system-settings', [SystemSettingController::class, 'index'])->name('system_settings.index');
+
+    // Route for updating system settings
+    Route::post('system-settings-update', [SystemSettingController::class, 'update'])->name('system_settings.update');
+
+    // Mail Settings index
+    Route::get('system-settings-mail', [SystemSettingController::class, 'mailSettingGet'])->name('system_settings.mail_get');
+    // Mail Settings routes
+    Route::post('system-settings-mail', [SystemSettingController::class, 'mailSettingUpdate'])->name('system_settings.mail');
 
 });
 
