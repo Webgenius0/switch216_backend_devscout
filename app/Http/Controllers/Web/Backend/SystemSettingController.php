@@ -41,6 +41,7 @@ class SystemSettingController extends Controller
      */
     public function update(Request $request)
     {
+        // dd($request->all());
         $validateDta = $request->validate([
             'title' => 'required|string|max:100',
             'system_name' => 'required|string|max:50',
@@ -90,14 +91,13 @@ class SystemSettingController extends Controller
      */
     public function mailSettingUpdate(Request $request): RedirectResponse
     {
-        dd($request->all());
         $request->validate([
             'mail_mailer' => 'nullable|string',
             'mail_host' => 'nullable|string',
             'mail_port' => 'nullable|string',
             'mail_username' => 'nullable|string',
             'mail_password' => 'nullable|string',
-            'mail_encryption' => 'nullable|string',
+            // 'mail_encryption' => 'nullable|string',
             'mail_from_address' => 'nullable|string',
         ]);
 

@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ Route::middleware(['auth:web'])->prefix('admin')->group(function () {
         return view('backend.layouts.dashboard.index');
         // return view('backend.layouts.dashboard.index');
     })->name('admin.dashboard');
-    
+
     Route::get('settings-profile', [ProfileController::class, 'index'])->name('profile_settings.index');
     Route::post('settings-profile', [ProfileController::class, 'update'])->name('profile_settings.update');
     Route::get('settings-profile-password', [ProfileController::class, 'passwordChange'])->name('profile_settings.password_change');
@@ -40,9 +41,13 @@ Route::middleware(['auth:web'])->prefix('admin')->group(function () {
     // Mail Settings routes
     Route::post('system-settings-mail', [SystemSettingController::class, 'mailSettingUpdate'])->name('system_settings.mail');
 
+    // Routes for DynamicPageController
+    Route::resource('/dynamic-page', DynamicPageController::class)->names('dynamic_page');
+     Route::post('/dynamic-page/status/{id}', [DynamicPageController::class, 'status'])->name('dynamic_page.status');
+
 });
 
 // Public route for dynamic pages accessible to all users
-// Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
+Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
 
 
