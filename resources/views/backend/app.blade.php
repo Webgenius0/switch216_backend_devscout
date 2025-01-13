@@ -1,33 +1,43 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="zxx">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Service Banner</title>
-    {{-- <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
-    <link rel="shortcut icon" href="{{ asset($systemSetting->favicon ?? 'favicon.ico') }}" type="image/x-icon"> --}}
-
-
-    @include('frontend.dashboard.partials.style')
-
+    <!-- Links Of CSS File -->
+    
+    @include('backend.partials.style')
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+        href="{{ asset($systemSetting->favicon ?? 'backend/admin/assets/images/favicon.png') }} ">
+    <!-- Title -->
+    <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
 </head>
 
-<body>
-    <div class="layout-container">
-        @include('frontend.dashboard.partials.asidebar')
-        <!-- main content start -->
-        <div class="main-content">
-            <div class="main-content-container">
-                @include('frontend.dashboard.partials.header')
-                @yield('content')
-            </div>
+<body class="boxed-size">
+
+
+    @include('backend.partials.asidebar')
+
+    <!-- Start Main Content Area -->
+    <div class="container-fluid">
+        <div class="main-content d-flex flex-column">
+
+            @include('backend.partials.header')
+            @yield('content')
+
+            {{-- <div class="flex-grow-1"></div> --}}
+
+            @include('backend.partials.footer')
         </div>
     </div>
+    <!-- Start Main Content Area -->
+    @include('backend.partials.settings_area')
 
+    @include('backend.partials.script')
 
-    @include('frontend.dashboard.partials.script')
 </body>
 
 </html>

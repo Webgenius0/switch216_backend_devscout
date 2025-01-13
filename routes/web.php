@@ -113,6 +113,7 @@ Route::get('/customer-dashboard', function () {
     return view('frontend.dashboard.layouts.customer.index');
 })->middleware(['auth', 'verified'])->name('customer.dashboard');
 
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

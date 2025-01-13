@@ -1,123 +1,122 @@
-
- <!-- sidebar start -->
- <div class="sidebar">
-    <svg class="close-sidebar-icon" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 384 512">
-        <path
-            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-    </svg>
-    <a href="{{route('home')}}" class="logo">
-        <img src="{{ asset('backend/assets') }}/images/logo.png" alt="" />
-    </a>
-    <div class="sidebar-navs">
-        <a class="item active" href="{{route('home')}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                fill="none">
-                <path
-                    d="M8.125 3.125H4.375C4.04348 3.125 3.72554 3.2567 3.49112 3.49112C3.2567 3.72554 3.125 4.04348 3.125 4.375V8.125C3.125 8.45652 3.2567 8.77446 3.49112 9.00888C3.72554 9.2433 4.04348 9.375 4.375 9.375H8.125C8.45652 9.375 8.77446 9.2433 9.00888 9.00888C9.2433 8.77446 9.375 8.45652 9.375 8.125V4.375C9.375 4.04348 9.2433 3.72554 9.00888 3.49112C8.77446 3.2567 8.45652 3.125 8.125 3.125ZM8.125 8.125H4.375V4.375H8.125V8.125ZM15.625 3.125H11.875C11.5435 3.125 11.2255 3.2567 10.9911 3.49112C10.7567 3.72554 10.625 4.04348 10.625 4.375V8.125C10.625 8.45652 10.7567 8.77446 10.9911 9.00888C11.2255 9.2433 11.5435 9.375 11.875 9.375H15.625C15.9565 9.375 16.2745 9.2433 16.5089 9.00888C16.7433 8.77446 16.875 8.45652 16.875 8.125V4.375C16.875 4.04348 16.7433 3.72554 16.5089 3.49112C16.2745 3.2567 15.9565 3.125 15.625 3.125ZM15.625 8.125H11.875V4.375H15.625V8.125ZM8.125 10.625H4.375C4.04348 10.625 3.72554 10.7567 3.49112 10.9911C3.2567 11.2255 3.125 11.5435 3.125 11.875V15.625C3.125 15.9565 3.2567 16.2745 3.49112 16.5089C3.72554 16.7433 4.04348 16.875 4.375 16.875H8.125C8.45652 16.875 8.77446 16.7433 9.00888 16.5089C9.2433 16.2745 9.375 15.9565 9.375 15.625V11.875C9.375 11.5435 9.2433 11.2255 9.00888 10.9911C8.77446 10.7567 8.45652 10.625 8.125 10.625ZM8.125 15.625H4.375V11.875H8.125V15.625ZM15.625 10.625H11.875C11.5435 10.625 11.2255 10.7567 10.9911 10.9911C10.7567 11.2255 10.625 11.5435 10.625 11.875V15.625C10.625 15.9565 10.7567 16.2745 10.9911 16.5089C11.2255 16.7433 11.5435 16.875 11.875 16.875H15.625C15.9565 16.875 16.2745 16.7433 16.5089 16.5089C16.7433 16.2745 16.875 15.9565 16.875 15.625V11.875C16.875 11.5435 16.7433 11.2255 16.5089 10.9911C16.2745 10.7567 15.9565 10.625 15.625 10.625ZM15.625 15.625H11.875V11.875H15.625V15.625Z"
-                    fill="" />
-            </svg>
-            <span>Dashboard</span>
-        </a>
-        {{-- <a href="./appointments.html" class="item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                fill="none">
-                <path
-                    d="M13.5672 7.68281C13.6253 7.74086 13.6714 7.80979 13.7029 7.88566C13.7343 7.96154 13.7505 8.04287 13.7505 8.125C13.7505 8.20713 13.7343 8.28846 13.7029 8.36434C13.6714 8.44021 13.6253 8.50914 13.5672 8.56719L9.19219 12.9422C9.13414 13.0003 9.06521 13.0464 8.98934 13.0779C8.91346 13.1093 8.83213 13.1255 8.75 13.1255C8.66787 13.1255 8.58654 13.1093 8.51066 13.0779C8.43479 13.0464 8.36586 13.0003 8.30781 12.9422L6.43281 11.0672C6.31554 10.9499 6.24965 10.7909 6.24965 10.625C6.24965 10.4591 6.31554 10.3001 6.43281 10.1828C6.55009 10.0655 6.70915 9.99965 6.875 9.99965C7.04085 9.99965 7.19991 10.0655 7.31719 10.1828L8.75 11.6164L12.6828 7.68281C12.7409 7.6247 12.8098 7.5786 12.8857 7.54715C12.9615 7.5157 13.0429 7.49951 13.125 7.49951C13.2071 7.49951 13.2885 7.5157 13.3643 7.54715C13.4402 7.5786 13.5091 7.6247 13.5672 7.68281ZM17.5 3.75V16.25C17.5 16.5815 17.3683 16.8995 17.1339 17.1339C16.8995 17.3683 16.5815 17.5 16.25 17.5H3.75C3.41848 17.5 3.10054 17.3683 2.86612 17.1339C2.6317 16.8995 2.5 16.5815 2.5 16.25V3.75C2.5 3.41848 2.6317 3.10054 2.86612 2.86612C3.10054 2.6317 3.41848 2.5 3.75 2.5H16.25C16.5815 2.5 16.8995 2.6317 17.1339 2.86612C17.3683 3.10054 17.5 3.41848 17.5 3.75ZM16.25 16.25V3.75H3.75V16.25H16.25Z"
-                    fill="" />
-            </svg>
-            <span>Appointments</span>
-        </a>
-
-
-        <a href="./inbox.html" class="item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                fill="none">
-                <path
-                    d="M10.3125 1.875C8.24119 1.87727 6.25538 2.70111 4.79074 4.16574C3.32611 5.63038 2.50227 7.61619 2.5 9.6875V16.25C2.5 16.5815 2.6317 16.8995 2.86612 17.1339C3.10054 17.3683 3.41848 17.5 3.75 17.5H10.3125C12.3845 17.5 14.3716 16.6769 15.8368 15.2118C17.3019 13.7466 18.125 11.7595 18.125 9.6875C18.125 7.6155 17.3019 5.62836 15.8368 4.16323C14.3716 2.6981 12.3845 1.875 10.3125 1.875ZM10.3125 16.25H3.75V9.6875C3.75 8.38956 4.13488 7.12077 4.85598 6.04157C5.57708 4.96237 6.602 4.12124 7.80114 3.62454C9.00028 3.12784 10.3198 2.99788 11.5928 3.2511C12.8658 3.50431 14.0351 4.12933 14.9529 5.04711C15.8707 5.96489 16.4957 7.13422 16.7489 8.40722C17.0021 9.68022 16.8722 10.9997 16.3755 12.1989C15.8788 13.398 15.0376 14.4229 13.9584 15.144C12.8792 15.8651 11.6104 16.25 10.3125 16.25ZM11.25 10C11.25 10.1854 11.195 10.3667 11.092 10.5208C10.989 10.675 10.8426 10.7952 10.6713 10.8661C10.5 10.9371 10.3115 10.9557 10.1296 10.9195C9.94775 10.8833 9.7807 10.794 9.64959 10.6629C9.51848 10.5318 9.42919 10.3648 9.39301 10.1829C9.35684 10.001 9.37541 9.81254 9.44636 9.64123C9.51732 9.46993 9.63748 9.32351 9.79165 9.2205C9.94582 9.11748 10.1271 9.0625 10.3125 9.0625C10.5611 9.0625 10.7996 9.16127 10.9754 9.33709C11.1512 9.5129 11.25 9.75136 11.25 10ZM7.8125 10C7.8125 10.1854 7.75752 10.3667 7.6545 10.5208C7.55149 10.675 7.40507 10.7952 7.23377 10.8661C7.06246 10.9371 6.87396 10.9557 6.6921 10.9195C6.51025 10.8833 6.3432 10.794 6.21209 10.6629C6.08098 10.5318 5.99169 10.3648 5.95551 10.1829C5.91934 10.001 5.93791 9.81254 6.00886 9.64123C6.07982 9.46993 6.19998 9.32351 6.35415 9.2205C6.50832 9.11748 6.68958 9.0625 6.875 9.0625C7.12364 9.0625 7.3621 9.16127 7.53791 9.33709C7.71373 9.5129 7.8125 9.75136 7.8125 10ZM14.6875 10C14.6875 10.1854 14.6325 10.3667 14.5295 10.5208C14.4265 10.675 14.2801 10.7952 14.1088 10.8661C13.9375 10.9371 13.749 10.9557 13.5671 10.9195C13.3852 10.8833 13.2182 10.794 13.0871 10.6629C12.956 10.5318 12.8667 10.3648 12.8305 10.1829C12.7943 10.001 12.8129 9.81254 12.8839 9.64123C12.9548 9.46993 13.075 9.32351 13.2292 9.2205C13.3833 9.11748 13.5646 9.0625 13.75 9.0625C13.9986 9.0625 14.2371 9.16127 14.4129 9.33709C14.5887 9.5129 14.6875 9.75136 14.6875 10Z"
-                    fill="" />
-            </svg>
-            <span> Messages </span>
-        </a> --}}
-
-        {{-- <div class="accordion" id="sidebarAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Menu 1
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#sidebarAccordion">
-                    <div class="accordion-body">
-                        <a class="active" href="#">Submenu 1.1</a>
-                        <a href="#">Submenu 1.2</a>
-                        <a href="#">Submenu 1.3</a>
-                    </div>
-                </div>
+        <!-- Start Sidebar Area -->
+        <div class="sidebar-area" id="sidebar-area">
+            <div class="logo position-relative">
+                <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative">
+                    <img src="{{ asset('backend/admin/assets') }}/images/logo-icon.png" alt="logo-icon">
+                    <span class="logo-text fw-bold text-dark">Switch</span>
+                </a>
+                <button
+                    class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y"
+                    id="sidebar-burger-menu">
+                    <i data-feather="x"></i>
+                </button>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Menu 2
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#sidebarAccordion">
-                    <div class="accordion-body">
-                        <a href="#">Submenu 2.1</a>
-                        <a href="#">Submenu 2.2</a>
-                        <a href="#">Submenu 2.3</a>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Menu 3
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#sidebarAccordion">
-                    <div class="accordion-body">
-                        <a href="#">Submenu 3.1</a>
-                        <a href="#">Submenu 3.2</a>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 
-        <a href="./setting.html" class="item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M10.0001 6.875C8.27419 6.875 6.87508 8.27411 6.87508 10C6.87508 11.7259 8.27419 13.125 10.0001 13.125C11.726 13.125 13.1251 11.7259 13.1251 10C13.1251 8.27411 11.726 6.875 10.0001 6.875ZM5.62508 10C5.62508 7.58376 7.58384 5.625 10.0001 5.625C12.4163 5.625 14.3751 7.58376 14.3751 10C14.3751 12.4162 12.4163 14.375 10.0001 14.375C7.58384 14.375 5.62508 12.4162 5.62508 10Z"
-                    fill="#5E5E5E" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M7.32371 1.66304C7.49537 1.60762 7.68259 1.62908 7.83727 1.72188L9.66421 2.81805C9.88815 2.80804 10.1124 2.80805 10.3364 2.81807L12.1557 1.72932C12.3091 1.63752 12.4945 1.61581 12.6649 1.66966C13.8589 2.04687 14.9566 2.67904 15.882 3.52243C16.0147 3.64333 16.089 3.81543 16.0859 3.9949L16.0502 6.11852C16.1736 6.30797 16.2868 6.50385 16.3893 6.70533L18.2413 7.735C18.3972 7.8217 18.5087 7.97092 18.5476 8.14506C18.82 9.36543 18.8229 10.6306 18.556 11.8522C18.5176 12.0278 18.4055 12.1784 18.2482 12.2655L16.3891 13.2952C16.2866 13.4965 16.1734 13.6922 16.0502 13.8815L16.0859 16.0051C16.089 16.1846 16.0147 16.3567 15.882 16.4776C14.9585 17.3191 13.8655 17.9531 12.6765 18.337C12.5048 18.3924 12.3176 18.3709 12.1629 18.2781L10.336 17.182C10.112 17.192 9.88775 17.192 9.66381 17.1819L7.84446 18.2707C7.69106 18.3625 7.5057 18.3842 7.33524 18.3303C6.1413 17.9531 5.04361 17.321 4.11816 16.4776C3.98549 16.3567 3.9112 16.1845 3.91424 16.0051L3.95003 13.8863C3.82738 13.6948 3.7143 13.4975 3.61119 13.2949L1.75888 12.265C1.60293 12.1783 1.49148 12.0291 1.4526 11.8549C1.18013 10.6346 1.17725 9.36943 1.44418 8.14783C1.48255 7.97221 1.5947 7.82161 1.75196 7.73451L3.61111 6.70482C3.7136 6.50352 3.82672 6.30781 3.94999 6.11852L3.91423 3.9949C3.91121 3.81542 3.9855 3.64331 4.11818 3.52241C5.04168 2.68087 6.1347 2.04686 7.32371 1.66304ZM5.16893 4.26302L5.20312 6.29417C5.20534 6.42576 5.16596 6.55469 5.09059 6.66258C4.92296 6.90259 4.77619 7.15652 4.65191 7.42158C4.59603 7.54074 4.50397 7.63923 4.38883 7.703L2.61113 8.68757C2.45564 9.5557 2.45779 10.4448 2.61751 11.3122L4.38973 12.2975C4.50399 12.361 4.59545 12.4588 4.65125 12.577C4.77826 12.8462 4.9264 13.1048 5.09428 13.3506C5.16727 13.4574 5.20531 13.5843 5.20312 13.7137L5.16894 15.7369C5.84449 16.3076 6.61702 16.7524 7.44971 17.0502L9.18696 16.0106C9.29698 15.9447 9.42459 15.9143 9.55249 15.9235C9.8505 15.9448 10.1497 15.9448 10.4477 15.9235C10.5758 15.9143 10.7037 15.9448 10.8138 16.0109L12.5567 17.0567C13.3867 16.7542 14.1567 16.3074 14.8312 15.737L14.797 13.7058C14.7948 13.5742 14.8342 13.4453 14.9096 13.3374C15.0772 13.0974 15.224 12.8435 15.3483 12.5784C15.4041 12.4593 15.4962 12.3608 15.6113 12.297L17.389 11.3124C17.5445 10.4443 17.5424 9.55521 17.3827 8.68783L15.6104 7.7025C15.4957 7.63872 15.404 7.54043 15.3483 7.42158C15.224 7.15652 15.0772 6.90259 14.9096 6.66258C14.8342 6.55469 14.7948 6.42576 14.797 6.29417L14.8312 4.26311C14.1557 3.69242 13.3832 3.24759 12.5505 2.94982L10.8132 3.98943C10.7032 4.05527 10.5756 4.08568 10.4477 4.07653C10.1497 4.05522 9.8505 4.05522 9.55249 4.07653C9.42435 4.0857 9.2965 4.05516 9.18634 3.98906L7.44349 2.94335C6.61351 3.24585 5.84347 3.69261 5.16893 4.26302Z"
-                    fill="" />
-            </svg>
-            <span>Settings</span>
-        </a>
+            <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
+                <ul class="menu-inner">
+                    <li class="menu-title small text-uppercase">
+                        <span class="menu-title-text">MAIN</span>
+                    </li>
+                    <!-- Dashboard Menu Item -->
+                    <li class="menu-item open">
+                        <a href="{{ route('admin.dashboard') }}" class="menu-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined menu-icon">dashboard</span>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="menu-title small text-uppercase">
+                        <span class="menu-title-text">APPS</span>
+                    </li>
 
 
+                    <!-- Users Menu Item -->
 
-    </div>
-    <a class="logout-nav" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-            fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M4.45231 19.9931C2.09626 20.0207 0.136503 18.101 0.00474624 15.6366L0 15.4288V4.56555C0.0185007 2.09828 1.89007 0.0848404 4.2436 0.000405935H4.44674H9.08709C11.4429 -0.0288214 13.4034 1.88963 13.5362 4.35406L13.5402 5.47971C13.531 5.99769 13.1449 6.42189 12.6515 6.45639C12.1582 6.4909 11.7217 6.12393 11.6469 5.61205L11.6398 5.49554V4.56839C11.6266 3.16832 10.5731 2.02156 9.23783 1.95417L9.07915 1.95376H4.45149C3.11375 1.94118 1.99754 3.02137 1.90358 4.41941L1.89961 4.57976V15.4296C1.91317 16.8296 2.96642 17.976 4.30155 18.0438L4.46023 18.0483H9.0966C10.4292 18.0625 11.5419 16.9867 11.6358 15.594L11.6406 14.5199C11.6505 14.0019 12.0368 13.5785 12.53 13.5444C13.0231 13.5103 13.4592 13.8773 13.5338 14.3892L13.541 14.504V15.4401C13.5209 17.8989 11.6573 19.9058 9.31164 19.9947L9.10297 20L4.45231 19.9931ZM15.59 13.527C15.2599 13.1868 15.2215 12.6432 15.5003 12.2564L15.5797 12.1622L16.7445 10.97H7.60029C7.10315 10.9826 6.68437 10.5835 6.64974 10.0635C6.61513 9.54393 6.97694 9.08766 7.47096 9.02799L7.58443 9.02068H16.7461L15.5924 7.84347C15.261 7.50492 15.221 6.96138 15.4987 6.5733L15.5781 6.47872C15.9142 6.12921 16.4414 6.08253 16.8286 6.3683L16.9222 6.45152L19.7082 9.29469C19.8947 9.47614 20.0003 9.73066 19.9994 9.99736C19.9982 10.2673 19.8902 10.5243 19.701 10.7073L16.9357 13.5339C16.5612 13.9142 15.9661 13.9142 15.5916 13.5339L15.59 13.527Z"
-                fill="" />
-        </svg>
-        <span>Logout</span>
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
-                                  @csrf
-                              </form>
-</div>
-<!-- sidebar end -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                            <span class="material-symbols-outlined menu-icon">group_add</span>
+                            <span class="title">Users</span>
+                        </a>
+                        <ul class="menu-sub">
+                            <!-- Users List Submenu -->
+                            <li class="menu-item">
+                                <a href="users-list.html" class="menu-link">
+                                    Users List
+                                </a>
+                            </li>
+                            <!-- Add User Submenu -->
+                            <li class="menu-item">
+                                <a href="add-user.html" class="menu-link">
+                                    Add User
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu-title small text-uppercase">
+                        <span class="menu-title-text">OTHERS</span>
+                    </li>
+
+                    <!-- Settings Menu Item -->
+                    <li class="menu-item {{ request()->routeIs('profile_settings.*') ? 'open' : '' }}">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                            <span class="material-symbols-outlined menu-icon">settings</span>
+                            <span class="title">Settings</span>
+                        </a>
+                        <ul class="menu-sub">
+                            <!-- Account Settings Submenu -->
+                            <li class="menu-item ">
+                                <a href="{{route('profile_settings.index')}}" class="menu-link {{ request()->routeIs('profile_settings.index') ? 'active' : '' }} ">
+                                    Profile Settings
+                                </a>
+                            </li>
+                            <!-- Change Password Submenu -->
+                            <li class="menu-item">
+                                <a href="{{route('profile_settings.password_change')}}" class="menu-link {{ request()->routeIs('profile_settings.password_change') ? 'active' : '' }}">
+                                    Change Password
+                                </a>
+                            </li>
+                            <!-- Email Configaration Submenu -->
+                            <li class="menu-item">
+                                <a href="privacy-policy.html" class="menu-link">
+                                    Email Configaration
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Settings Menu Item -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                            <span class="material-symbols-outlined menu-icon">clarify</span>
+                            <span class="title">Daynamic page</span>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="account-settings.html" class="menu-link">
+                                    Pages
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="account-settings.html" class="menu-link">
+                                   Add New
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <!-- Logout Menu Item -->
+                    <li class="menu-item">
+                        <a class="menu-link"
+                            onclick="event.preventDefault(); document.getElementById('logout-form-asidebar').submit();">
+                            <span class="material-symbols-outlined menu-icon">logout</span>
+                            <span class="title">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+                <form id="logout-form-asidebar" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </aside>
+        </div>
+        <!-- End Sidebar Area -->
