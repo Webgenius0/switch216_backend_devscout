@@ -1,6 +1,4 @@
-@php
-    $systemSetting = App\Models\SystemSetting::first();
-@endphp
+
 <!-- footer section start -->
 <footer class="footer">
     <div class="container">

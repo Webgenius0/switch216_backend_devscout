@@ -185,7 +185,7 @@
                                 <ul class="admin-link ps-0 mb-0 list-unstyled">
                                     <li>
                                         <a class="dropdown-item admin-item-link d-flex align-items-center text-body"
-                                            href="my-profile.html">
+                                            href="{{route('profile_settings.index')}}">
                                             <i class="material-symbols-outlined">account_circle</i>
                                             <span class="ms-2">My Profile</span>
                                         </a>
@@ -194,7 +194,7 @@
                                 <ul class="admin-link ps-0 mb-0 list-unstyled">
                                     <li>
                                         <a class="dropdown-item admin-item-link d-flex align-items-center text-body"
-                                            href="settings.html">
+                                            href="{{route('system_settings.index')}}">
                                             <i class="material-symbols-outlined">settings </i>
                                             <span class="ms-2">Settings</span>
                                         </a>

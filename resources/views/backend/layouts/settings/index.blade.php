@@ -48,7 +48,7 @@
                 <p class="fs-15">Update your system and site details here.</p>
             </div>
 
-            <form action="{{ route('system_settings.mail') }}" method="POST" >
+            <form action="{{ route('system_settings.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -182,6 +182,7 @@
                             {{-- </div> --}}
                         </div>
                     </div>
+                    
 
                     <div class="col-lg-6">
                         <div class="form-group ">
