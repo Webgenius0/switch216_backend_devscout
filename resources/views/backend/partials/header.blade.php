@@ -156,7 +156,7 @@
                                 data-bs-toggle="dropdown">
                                 <div class="flex-shrink-0">
                                     <img class="rounded-circle wh-40 administrator"
-                                        src="{{ asset('backend/admin/assets') }}/images/avatar_defult.png"
+                                        src="{{ asset(Auth::user()->avatar ?? 'backend/admin/assets/images/avatar_defult.png') }}"
                                         alt="admin">
                                 </div>
                                 <div class="flex-grow-1 ms-2">
@@ -174,7 +174,7 @@
                                 <div class="d-flex align-items-center info">
                                     <div class="flex-shrink-0">
                                         <img class="rounded-circle wh-30 administrator"
-                                            src="{{ asset('backend/admin/assets') }}/images/avatar_defult.png"
+                                            src="{{ asset(Auth::user()->avatar ?? 'backend/admin/assets/images/avatar_defult.png') }}"
                                             alt="admin">
                                     </div>
                                     <div class="flex-grow-1 ms-2">

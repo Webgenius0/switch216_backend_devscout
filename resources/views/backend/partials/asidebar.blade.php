@@ -1,9 +1,12 @@
+@php
+$systemSetting = App\Models\SystemSetting::first();
+@endphp
         <!-- Start Sidebar Area -->
         <div class="sidebar-area" id="sidebar-area">
             <div class="logo position-relative">
                 <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative">
-                    <img src="{{ asset('backend/admin/assets') }}/images/logo-icon.png" alt="logo-icon">
-                    <span class="logo-text fw-bold text-dark">Switch</span>
+                    <img src="{{ asset($systemSetting->logo ?? 'backend/admin/assets/logo.png') }}" alt="logo-icon">
+                    {{-- <span class="logo-text fw-bold text-dark">Switch</span> --}}
                 </a>
                 <button
                     class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y"
@@ -58,7 +61,7 @@
                     </li>
 
                     <!-- Settings Menu Item -->
-                    <li class="menu-item {{ request()->routeIs('profile_settings.*') ? 'open' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('profile_settings.*', 'system_settings.*') ? 'open' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle active">
                             <span class="material-symbols-outlined menu-icon">settings</span>
                             <span class="title">Settings</span>
@@ -78,7 +81,13 @@
                             </li>
                             <!-- Email Configaration Submenu -->
                             <li class="menu-item">
-                                <a href="privacy-policy.html" class="menu-link">
+                                <a href="{{route('system_settings.index')}}" class="menu-link {{ request()->routeIs('system_settings.index') ? 'active' : '' }}">
+                                    System Configaration
+                                </a>
+                            </li>
+                            <!-- Email Configaration Submenu -->
+                            <li class="menu-item">
+                                <a href="{{route('system_settings.mail_get')}}" class="menu-link {{ request()->routeIs('system_settings.mail_get') ? 'active' : '' }}">
                                     Email Configaration
                                 </a>
                             </li>

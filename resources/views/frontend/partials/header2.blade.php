@@ -1,3 +1,6 @@
+@php
+$systemSetting = App\Models\SystemSetting::first();
+@endphp
  <!-- header section start -->
  <header>
      <!-- navbar section start -->
@@ -5,7 +8,7 @@
          <div class="nav-container">
              <div class="logo">
                  <a href="{{ route('home') }}" class="site-logo">
-                     <img src="{{ asset('frontend/assets/images/light-logo.png') }}" alt="Site logo" />
+                    <img class="footer-logo" src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}" alt="site logo" />
                  </a>
              </div>
              <div class="nav-items">
@@ -126,7 +129,7 @@
          </button>
          <div class="logo">
              <a href="{{ route('home') }}" class="site-logo">
-                 <img src="{{ asset('frontend/assets/images/dark-logo.png') }}" alt="Site logo" />
+                <img class="footer-logo" src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}" alt="site logo" />
              </a>
          </div>
          <div class="nav-items">

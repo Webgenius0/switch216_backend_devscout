@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('title', 'Profile')
+@section('title', 'Profile Password')
 
 @push('styles')
 @endpush
@@ -39,20 +39,6 @@
                             class="btn btn-primary border border-primary bg-primary text-white py-2 px-3 fw-semibold">Change
                             Password</a>
                     </li>
-                    {{-- <li>
-                        <a href="connections.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Connections</a>
-                    </li>
-                    <li>
-                        <a href="privacy-policy.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Privacy
-                            Policy</a>
-                    </li>
-                    <li>
-                        <a href="terms-conditions.html"
-                            class="btn btn-primary border border-primary bg-transparent text-primary py-2 px-3 fw-semibold">Terms
-                            &amp; Conditions</a>
-                    </li> --}}
                 </ul>
 
                 <form action="{{ route('profile_settings.password_change') }}" method="POST">

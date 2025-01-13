@@ -1,3 +1,7 @@
+@php
+    $systemSetting = App\Models\SystemSetting::first();
+@endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
