@@ -7,15 +7,13 @@ use Illuminate\Support\Str;
 
 
 
-function generateUniqueSlug($title, $hotel_id, $id = null)
+function generateUniqueSlug($title, $id = null)
 {
     // Create an initial slug using Laravel's Str::slug
     $slug = Str::slug($title);
     $original_slug = $slug;
 
-    // Check if the slug already exists for the given hotel_id
-    $count = DynamicPage::where('hotel_id', $hotel_id)
-        ->where('page_slug', $slug)
+    $count = DynamicPage::where('page_slug', $slug)
         ->when($id, function ($query) use ($id) {
             return $query->where('id', '!=', $id); // Exclude current record if updating
         })
@@ -25,8 +23,7 @@ function generateUniqueSlug($title, $hotel_id, $id = null)
     $index = 1;
     while ($count > 0) {
         $slug = $original_slug . '-' . $index;
-        $count = DynamicPage::where('hotel_id', $hotel_id)
-            ->where('page_slug', $slug)
+        $count = DynamicPage::where('page_slug', $slug)
             ->when($id, function ($query) use ($id) {
                 return $query->where('id', '!=', $id);
             })
@@ -39,7 +36,7 @@ function generateUniqueSlug($title, $hotel_id, $id = null)
 
 function getFileName($file): string
 {
-    return time().'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+    return time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 }
 function getEmailName($email): string
 {

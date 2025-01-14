@@ -18,7 +18,7 @@
                         in one place.</p>
                 </div>
             </div>
-            <div class="col-md-5">
+            {{-- <div class="col-md-5">
                 <div class="d-flex flex-wrap gap-2 justify-content-md-end mb-4">
                     <a href="pricing-plan.html" class="btn d-flex align-items-center gap-1"
                         style="background-color: #F3E8FF; color: #7C24CC; padding: 3.5px 11px;">
@@ -31,9 +31,9 @@
                         <span>Export Reports</span>
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="card border-0 rounded-3 bg-white mb-4">
                     <div class="custom-padding-30 position-relative">
@@ -566,7 +566,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

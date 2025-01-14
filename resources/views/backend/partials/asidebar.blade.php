@@ -99,19 +99,21 @@ $systemSetting = App\Models\SystemSetting::first();
                 </ul>
             </li>
             <!-- Settings Menu Item -->
-            <li class="menu-item">
+            <li class="menu-item {{ request()->routeIs('dynamic_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">clarify</span>
                     <span class="title">Daynamic page</span>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.index') }}" class="menu-link">
+                        <a href="{{ route('dynamic_page.index') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.index') ? 'active' : '' }}"">
                             Pages
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}" class="menu-link">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}"">
                             Add New
                         </a>
                     </li>

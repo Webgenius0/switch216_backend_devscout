@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\DynamicPage;
 use Illuminate\Http\Request;
@@ -25,9 +26,10 @@ class DynamicPageController extends Controller
                     $content = strip_tags($data->page_content);
                     return $content;
                 })
+
                 ->addColumn('status', function ($data) {
                     $status = '<div class="form-check form-switch">';
-                    $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;"' . $data->id . '" name="status"';
+                    $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;width:40px"' . $data->id . '" name="status"';
 
                     if ($data->status == "active") {
                         $status .= ' checked';
@@ -40,16 +42,7 @@ class DynamicPageController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="action-wrapper">
-
-
-                        <button class="action-btn outline-action-btn" type="button" onclick="window.location.href=\'' . route('pages', $data->page_slug) . '\'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                        <path d="M18.3911 8.211C19.3575 9.22772 19.3575 10.7724 18.3911 11.7892C16.7613 13.504 13.9621 15.8334 10.7826 15.8334C7.60296 15.8334 4.8038 13.504 3.17397 11.7892C2.20763 10.7724 2.20763 9.22772 3.17397 8.211C4.8038 6.49619 7.60296 4.16675 10.7826 4.16675C13.9621 4.16675 16.7613 6.49619 18.3911 8.211Z" stroke="#030C09" stroke-width="1.5"></path>
-                        <path d="M13.2826 10.0001C13.2826 11.3808 12.1633 12.5001 10.7826 12.5001C9.40184 12.5001 8.28255 11.3808 8.28255 10.0001C8.28255 8.61937 9.40184 7.50008 10.7826 7.50008C12.1633 7.50008 13.2826 8.61937 13.2826 10.0001Z" stroke="#030C09" stroke-width="1.5"></path></svg>
-                        </button>
-
-
-                        <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View">
+                        <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View" onclick="window.location.href=\'' . route('pages', $data->page_slug) . '\'">
                         <i class="material-symbols-outlined fs-16 text-primary">visibility</i>
                         </button>
                          <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit" onclick="window.location.href=\'' . route('dynamic_page.edit', $data->id) . '\'">
@@ -72,7 +65,7 @@ class DynamicPageController extends Controller
      */
     public function create()
     {
-        //
+        return view("backend.layouts.settings.dynamic_page.create");
     }
 
     /**
@@ -80,9 +73,27 @@ class DynamicPageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'page_title' => 'required|string|max:100',
+            'page_content' => 'required|string',
+        ]);
+        $validatedData['page_slug'] = generateUniqueSlug($request->page_title);
+        $validatedData['status'] = 'active';
+        DynamicPage::create($validatedData);
+        flash()->success('Dynamic Page Created Successfully');
+        return redirect()->route('dynamic_page.index');
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function showDaynamicPage($page_slug)
+    {
+        $page = DynamicPage::where('page_slug', $page_slug)->where('status', 'active')->firstOrFail();
+        $pages = DynamicPage::where('status', 'active')->get();
+
+        return view('frontend.layouts.dynamic_page.dynamic-page-show', compact(['page', 'pages']));
+    }
     /**
      * Display the specified resource.
      */
@@ -96,7 +107,8 @@ class DynamicPageController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = DynamicPage::findOrFail($id);
+        return view("backend.layouts.settings.dynamic_page.edit", compact("data"));
     }
 
     /**
@@ -104,7 +116,15 @@ class DynamicPageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'page_title' => 'required|string|max:100',
+            'page_content' => 'required|string',
+        ]);
+        $data = DynamicPage::findOrFail($id);
+        $validatedData['page_slug'] = generateUniqueSlug($request->page_title, $id);
+        $data->update($validatedData);
+        flash()->success('Dynamic Page Updated Successfully');
+        return redirect()->route('dynamic_page.index');
     }
 
     /**
@@ -112,7 +132,28 @@ class DynamicPageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = DynamicPage::findOrFail($id);
+        // check here BookingRequest hotel_id === identifyHotel
+        if (empty($data)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Item not found."
+            ], 404);
+        }
+
+        // if (!empty($data->image)) {
+        //     Helper::fileDelete(public_path($data->image));
+        // }
+        // if (!empty($data->background_image)) {
+        //     Helper::fileDelete(public_path($data->background_image));
+        // }
+
+        $data->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Item deleted successfully."
+        ]);
     }
 
     public function status(Request $request, $id)
