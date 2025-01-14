@@ -98,7 +98,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            <!-- Settings Menu Item -->
+            <!-- dynamic page Menu Item -->
             <li class="menu-item {{ request()->routeIs('dynamic_page.*') ? 'open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">clarify</span>
@@ -107,14 +107,76 @@ $systemSetting = App\Models\SystemSetting::first();
                 <ul class="menu-sub">
                     <li class="menu-item">
                         <a href="{{ route('dynamic_page.index') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.index') ? 'active' : '' }}"">
+                            class="menu-link {{ request()->routeIs('dynamic_page.index') ? 'active' : '' }}">
                             Pages
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}"">
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
                             Add New
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+           
+            <li class="menu-title small text-uppercase">
+                <span class="menu-title-text">CMS</span>
+            </li>
+            <!-- CMS Menu Item -->
+            <li class="menu-item {{ request()->routeIs('cms.home_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Home Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.banner.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.banner.*') ? 'active' : '' }}">
+                            Hero Banner
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.service_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.service_container.*') ? 'active' : '' }}">
+                            Service Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            Process Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            Platform Work
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            Provider Work Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            User Review Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            Provider Review Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('dynamic_page.create') }}"
+                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                            Faq Container
                         </a>
                     </li>
 
