@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('backend/admin/assets/css/style.css') }}">
 
     
-{{-- <link href="{{ asset('vendor/flasher/flasher.min.css') }}" rel="stylesheet"> --}}
+<link href="{{ asset('vendor/flasher/flasher.min.css') }}" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css" rel="stylesheet">
 <style>
     .fl-wrapper {

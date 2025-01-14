@@ -14,7 +14,7 @@ use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:web'])->prefix('admin')->group(function () {
+Route::middleware(['auth:web','role_check'])->prefix('admin')->group(function () {
     // Route for the admin dashboard
     // Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
