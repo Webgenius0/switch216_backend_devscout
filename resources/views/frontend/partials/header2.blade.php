@@ -1,4 +1,6 @@
-
+@php
+    $systemSetting = App\Models\SystemSetting::first();
+@endphp
  <!-- header section start -->
  <header>
      <!-- navbar section start -->

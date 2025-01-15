@@ -9,12 +9,14 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\CMS\HomePageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:web','role_check'])->prefix('admin')->group(function () {
+Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
     // Route for the admin dashboard
     // Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -43,11 +45,29 @@ Route::middleware(['auth:web','role_check'])->prefix('admin')->group(function ()
 
     // Routes for DynamicPageController
     Route::resource('/dynamic-page', DynamicPageController::class)->names('dynamic_page');
-     Route::post('/dynamic-page/status/{id}', [DynamicPageController::class, 'status'])->name('dynamic_page.status');
+    Route::post('/dynamic-page/status/{id}', [DynamicPageController::class, 'status'])->name('dynamic_page.status');
 
+
+    // cms all-------------------------------------------------
+    // cms all-------------------------------------------------
+
+
+    //! Route for Home Page C_M_S 
+    // Route::controller(HomePageController::class)->group(function () {
+    //     // Routes for displaying sections
+    //     Route::get('/cms/home-page/banner', 'index')->name('cms.home_page.banner');
+    //     Route::post('/cms/home-page/banner', 'store')->name('cms.home_page.banner.store');
+    //     Route::patch('/cms/home-page/banner-update', 'update')->name('cms.home_page.banner.update');
+    // });
+    Route::resource('/cms/home-page/banner', HomePageController::class)->names(names: 'cms.home_page.banner');
+    Route::post('/cms/home-page/banner/status/{id}', [HomePageController::class, 'status'])->name('cms.home_page.banner.status');
+    // home service container cms 
+    Route::resource('/cms/home-page/service-container', HomePageServiceContainerController::class)->names(names: 'cms.home_page.service_container');
+    Route::post('/cms/home-page/service-container/status/{id}', [HomePageServiceContainerController::class, 'status'])->name('cms.home_page.service_container.status');
 });
 
 // Public route for dynamic pages accessible to all users
 Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
+
 
 
