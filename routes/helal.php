@@ -10,6 +10,8 @@
 
 
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
@@ -61,10 +63,21 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // });
     Route::resource('/cms/home-page/banner', HomePageController::class)->names(names: 'cms.home_page.banner');
     Route::post('/cms/home-page/banner/status/{id}', [HomePageController::class, 'status'])->name('cms.home_page.banner.status');
+
     // home service container cms 
     Route::resource('/cms/home-page/service-container', HomePageServiceContainerController::class)->names(names: 'cms.home_page.service_container');
     Route::Post('/cms/home-page/service-container-update', [HomePageServiceContainerController::class, 'ServiceContainerUpdate'])->name('cms.home_page.service_container.service_container_update');
     Route::post('/cms/home-page/service-container/status/{id}', [HomePageServiceContainerController::class, 'status'])->name('cms.home_page.service_container.status');
+
+    // home process container cms 
+    Route::resource('/cms/home-page/process-container', HomePageProcessContainerController::class)->names(names: 'cms.home_page.process_container');
+    Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'processContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
+    Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
+
+    // home platform work container container cms 
+    Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
+    Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');
+    Route::post('/cms/home-page/platform-work-container/status/{id}', [HomePagePlatFormWorkContainerController::class, 'status'])->name('cms.home_page.platform_work_container.status');
 });
 
 // Public route for dynamic pages accessible to all users
