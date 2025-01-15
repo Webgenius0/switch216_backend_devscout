@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="{{ $id ?? 'defaultModal' }}" tabindex="-1" aria-labelledby="{{ $labelledby ?? 'modalLabel' }}"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered {{ $size ?? 'modal-xl' }}">

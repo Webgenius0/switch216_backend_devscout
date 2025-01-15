@@ -63,6 +63,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::post('/cms/home-page/banner/status/{id}', [HomePageController::class, 'status'])->name('cms.home_page.banner.status');
     // home service container cms 
     Route::resource('/cms/home-page/service-container', HomePageServiceContainerController::class)->names(names: 'cms.home_page.service_container');
+    Route::Post('/cms/home-page/service-container-update', [HomePageServiceContainerController::class, 'ServiceContainerUpdate'])->name('cms.home_page.service_container.service_container_update');
     Route::post('/cms/home-page/service-container/status/{id}', [HomePageServiceContainerController::class, 'status'])->name('cms.home_page.service_container.status');
 });
 

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Links Of CSS File -->
-    
+
     @include('backend.partials.style')
     <!-- Favicon -->
     <link rel="icon" type="image/png"
@@ -41,7 +41,30 @@
     @include('backend.partials.settings_area')
 
     @include('backend.partials.script')
-
+    <!-- Modal -->
+    {{-- <div class="modal fade" id="OpenModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Hello Modal Center
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary text-white">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
+    <x-modal id="openModal" title="My Modal Title" labelledby="customModalLabel" size="modal-lg" saveButton="Submit">
+        <p>This is the modal content.</p>
+    </x-modal>
+    <x-modal id="openModal2" title="My Modal Title" labelledby="customModalLabel" size="modal-lg" saveButton="Submit">
+        <p>This is the modal content.</p>
+    </x-modal>
 </body>
 
 </html>
