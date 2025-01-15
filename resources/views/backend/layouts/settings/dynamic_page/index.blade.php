@@ -2,98 +2,104 @@
 @section('title', 'Dynamic Page')
 
 @push('styles')
-<style>
-    .dataTables_length label {
-    font-weight: bold; /* Make label bold */
-    margin-right: 10px; /* Space between label and select */
-}
-
-.dataTables_length select {
-    border: 1px solid #ccc; /* Change border color */
-    border-radius: 5px; /* Round the corners */
-    padding: 5px; /* Add some padding */
-    font-size: 14px; /* Change font size */
-    background-color: #f9f9f9; /* Change background color */
-}
-</style>
 @endpush
 
 @section('content')
-    <main>
-        <h2 class="section-title">Dynamic Page</h2>
-        <div class="filter-wrapper">
-            <div class="search-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                    <path
-                        d="M22.7832 22L20.7832 20M2.7832 11.5C2.7832 6.25329 7.0365 2 12.2832 2C17.5299 2 21.7832 6.25329 21.7832 11.5C21.7832 16.7467 17.5299 21 12.2832 21C7.0365 21 2.7832 16.7467 2.7832 11.5Z"
-                        stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <input type="text" id="customSearchBox" placeholder="Search" class="form-control" />
-            </div>
-            <a href="{{ route('dynamic.page.create') }}" class="button button-pri" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M6 12H18" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M12 18V6" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <span>Add Dynamic Page</span>
-            </a>
+    <div class="main-content-container overflow-hidden">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+            <h3 class="mb-0">Pages List</h3>
+
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb align-items-center mb-0 lh-1">
+                    <li class="breadcrumb-item">
+                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                            <i class="ri-home-4-line fs-18 text-primary me-1"></i>
+                            <span class="text-secondary fw-medium hover">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span class="fw-medium">Pages</span>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span class="fw-medium">Pages List</span>
+                    </li>
+                </ol>
+            </nav>
         </div>
-        <div class="table-wrapper">
-            <div class="table-container" style="padding: 25px">
-                <table id="basic_tables" class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Page Title</th>
-                            <th scope="col">Page Content</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Custom Pagination -->
-            <div class="pagination-wrapper">
-                <a class="prev-page-btn" href="#" id="prevPage">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
-                        fill="none">
-                        <path d="M8.75755 4.94165L3.69922 9.99998L8.75755 15.0583" stroke="#575757" stroke-width="1.5"
-                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M17.8668 10H3.8418" stroke="#575757" stroke-width="1.5" stroke-miterlimit="10"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span>Previous</span>
-                </a>
-                <div class="pagination-container" id="customPagination">
+
+        <div class="card bg-white border-0 rounded-3 mb-4">
+            <div class="card-body p-0">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
+                    <span class="position-relative table-src-form me-0">
+                        <input type="text" class="form-control" placeholder="Search here" id="customSearchBox">
+                        <i class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
+                    </span>
+                    <a href="{{ route('dynamic_page.create') }}"
+                        class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
+                        <span class="py-sm-1 d-block">
+                            <i class="ri-add-line d-none d-sm-inline-block"></i>
+                            <span>Add New Page</span>
+                        </span>
+                    </a>
+                </div>
+
+                <div class="default-table-area style-two all-products">
+                    <div class="table-responsive">
+                        <table class="table align-middle" id="basic_tables">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Page Title</th>
+                                    <th scope="col">Page Content</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Custom Pagination -->
+                    <div
+                        class="d-flex justify-content-center justify-content-sm-between align-items-center text-center flex-wrap gap-2 showing-wrap">
+                        <span class="fs-12 fw-medium"></span>
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mb-0 justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link icon" aria-label="Previous" href="#" id="prevPage">
+                                        <i class="material-symbols-outlined">keyboard_arrow_left</i>
+                                    </a>
+                                </li>
+                                <!-- Pagination Container !-->
+                                <li class="row " id="customPagination">
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link icon" aria-label="Next" href="#" id="nextPage">
+                                        <i class="material-symbols-outlined">keyboard_arrow_right</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
 
                 </div>
-                <a class="next-page-btn" href="#" id="nextPage">
-                    <span>Next</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
-                        fill="none">
-                        <path d="M12.8086 4.94165L17.8669 9.99998L12.8086 15.0583" stroke="#575757" stroke-width="1.5"
-                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M3.69922 10H17.7242" stroke="#575757" stroke-width="1.5" stroke-miterlimit="10"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
             </div>
-
         </div>
-    </main>
+    </div>
 
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('backend') }}/js/datatables/data-tables.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/data-tables.min.js"></script>
     <!--buttons dataTables-->
-    <script src="{{ asset('backend') }}/js/datatables/datatables.buttons.min.js"></script>
-    <script src="{{ asset('backend') }}/js/datatables/jszip.min.js"></script>
-    <script src="{{ asset('backend') }}/js/datatables/pdfmake.min.js"></script>
-    <script src="{{ asset('backend') }}/js/datatables/buttons.html5.min.js"></script>
-    <script src="{{ asset('backend') }}/js/datatables/buttons.print.min.js"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/datatables.buttons.min.js"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/jszip.min.js"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/pdfmake.min.js"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.html5.min.js"></script>
+    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.print.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -109,7 +115,7 @@
                 serverSide: true,
                 paging: true, // Disable built-in pagination
                 language: {
-                    lengthMenu: "Show _MENU_ entries",
+                    lengthMenu: `<span style="margin-left: 20px;">Show _MENU_ entries</span>`,
                     processing: `<div class="text-center">
                 <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -123,8 +129,8 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-2 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('dynamic.page.index') }}",
-                    type: "get",
+                    url: "{{ route('dynamic_page.index') }}",
+                    type: "get"
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -145,7 +151,7 @@
                             }
                         }
                     },
-                        {
+                    {
                         data: 'page_content',
                         name: 'page_content',
                         orderable: true,
@@ -178,7 +184,6 @@
                 }
             });
 
-            // Custom search box functionality
             $('#customSearchBox').on('keyup', function() {
                 dTable.search(this.value).draw();
             });
@@ -215,7 +220,9 @@
 
                 // Add first page and ellipsis if needed
                 if (startPage > 1) {
-                    paginationContainer.append(`<a href="#" class="pagination-item" data-page="1">1</a>`);
+                    paginationContainer.append(
+                        ` <li class="page-item col-1"><a class="page-link active" href="#" data-page="1">1</a></li>`
+                        );
                     if (startPage > 2) {
                         paginationContainer.append(`<span class="ellipsis">...</span>`);
                     }
@@ -224,8 +231,8 @@
                 // Add the visible page range
                 for (let i = startPage; i <= endPage; i++) {
                     paginationContainer.append(
-                        `<a href="#" class="pagination-item ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`
-                        );
+                        ` <li class="page-item col-1"><a class="pagination-item page-link ${i === currentPage ? 'active' : ''}" href="#" data-page="${i}">${i}</a></li>`
+                    );
                 }
 
                 // Add ellipsis and last page if needed
@@ -234,7 +241,8 @@
                         paginationContainer.append(`<span class="ellipsis">...</span>`);
                     }
                     paginationContainer.append(
-                        `<a href="#" class="pagination-item" data-page="${totalPages}">${totalPages}</a>`);
+                        `<li class="page-item col-1"><a class="pagination-item page-link "  data-page="${totalPages}">${totalPages}</a></li>`
+                        );
                 }
 
                 // Click event for pagination items
@@ -265,21 +273,20 @@
 
         });
     </script>
-     <script src="{{ asset('backend/js/custom-actions.js') }}"></script>
-     <script>
-         // Use the status change alert
-         function changeStatus(event, id) {
-             event.preventDefault();
-             let statusUrl = '{{ route('dynamic.page.status', ':id') }}';
-             showStatusChangeAlert(id, statusUrl);
-         }
+    <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
+    <script>
+        // Use the status change alert
+        function changeStatus(event, id) {
+            event.preventDefault();
+            let statusUrl = '{{ route('dynamic_page.status', ':id') }}';
+            showStatusChangeAlert(id, statusUrl);
+        }
 
-         // Use the delete confirm alert
-         function deleteRecord(event, id) {
-             event.preventDefault();
-             let deleteUrl = '{{ route('dynamic.page.destroy', ':id') }}';
-             showDeleteConfirm(id, deleteUrl);
-         }
-     </script>
-
+        // Use the delete confirm alert
+        function deleteRecord(event, id) {
+            event.preventDefault();
+            let deleteUrl = '{{ route('dynamic_page.destroy', ':id') }}';
+            showDeleteConfirm(id, deleteUrl);
+        }
+    </script>
 @endpush

@@ -13,51 +13,82 @@
 
 @section('content')
 
-<main>
-    <h2 class="section-title">Update Dynamic page</h2>
-        <nav aria-label="breadcrumb tm-breadcumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item tm-breadcumb-item">
-                    <a href="{{route('dynamic.page.index')}}">Dynamic page</a>
+<div class="main-content-container overflow-hidden">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <h3 class="mb-0">Dynamic Page</h3>
+
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb align-items-center mb-0 lh-1">
+                <li class="breadcrumb-item">
+                    <a href="#" class="d-flex align-items-center text-decoration-none">
+                        <i class="ri-home-4-line fs-18 text-primary me-1"></i>
+                        <span class="text-secondary fw-medium hover">Dashboard</span>
+                    </a>
                 </li>
-                <li class="breadcrumb-item tm-breadcumb-item active" aria-current="page">
-                    Update Dynamic page
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span class="fw-medium">Dynamic Page</span>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span class="fw-medium">Edit</span>
                 </li>
             </ol>
         </nav>
-    <div class="addbooking-form-area">
-        <form action="{{ route('dynamic.page.update', $data->id) }}" method="POST" class="tm-form mt-5" enctype="multipart/form-data">
-            @csrf
-            @method('PUT') <!-- This is important for update actions -->
-            <div class="form-field-wrapper">
-                {{-- ------------------- Page Title Input Field ------------- --}}
-                <div class="form-group">
-                    <label for="page_title">Page Title</label>
-                    <input class="form-control @error('page_title') is-invalid @enderror" type="text"
-                        name="page_title" placeholder="Enter Page Title here"
-                        value="{{ old('page_title', $data->page_title) }}">
-                    @error('page_title')
-                        <div id="page_title-error" class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-field-wrapper">
-                {{-- ------------------- Page Content Input Field ------------- --}}
-                <div class="form-group">
-                    <label for="page_content">Page Content</label>
-                    <textarea name="page_content" class="form-control @error('page_content') is-invalid @enderror" id="page_content" placeholder="Page Content here">{{ old('page_content', $data->page_content) }}</textarea>
-                    @error('page_content')
-                        <div id="page_content-error" class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-            <div class="tm-booking-btn-wrapper" style="justify-content: start;">
-                <button type="reset" onclick="window.location.href='{{route('dynamic.page.index')}}'">Cancel</button>
-                <button type="submit">Update</button>
-            </div>
-        </form>
     </div>
-</main>
+
+    <div class="card bg-white border-0 rounded-3 mb-4">
+        <div class="card-body p-4">
+
+
+            <div class="mb-4">
+                <h4 class="fs-20 mb-1">Dynamic Page</h4>
+                <p class="fs-15">Edit Dynamic Page here.</p>
+            </div>
+
+            <form action="{{ route('dynamic_page.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT') <!-- This is important for update actions -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group mb-4">
+                            <label class="label text-secondary">Page Title</label>
+                            <div class="form-group position-relative">
+                                <input type="text"
+                                    class="form-control text-dark ps-5 h-55 @error('page_title') is-invalid @enderror"
+                                    name="page_title" value="{{ old('page_title', $data->page_title) }}" required
+                                    placeholder="Enter Page Title here">
+                            </div>
+                            @error('page_title')
+                                <div id="page_title-error" class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group mb-4">
+                            <label class="label text-secondary">Page Content</label>
+                            <div class="form-group position-relative">
+                                <textarea name="page_content" class="form-control @error('page_content') is-invalid @enderror" id="page_content" placeholder="Page Content here">{{ old('page_content', $data->page_content) }}</textarea>
+
+                            </div>
+                            @error('page_content')
+                                <div id="page_content-error" class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-flex flex-wrap gap-3">
+                            <button type="reset" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white" onclick="window.location.href='{{route('dynamic_page.index')}}'">Cancel</button>
+                            <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i class="ri-check-line text-white fw-medium"></i> Update Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection
 

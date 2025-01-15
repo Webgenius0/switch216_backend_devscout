@@ -4,14 +4,13 @@
 @section('code', '404')
 @section('message', __($exception->getMessage() ?: 'Not Found')) --}}
 
-@extends('frontend.app')
 
 @section('title')
     About Page
 @endsection
 @section('header')
     {{-- @include('frontend.partials.header') --}}
-    @include('frontend.partials.header2')
+    {{-- @include('frontend.partials.header2') --}}
 @endsection
 @push('styles')
 @endpush
