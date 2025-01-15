@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('title', 'Dynamic Page')
+@section('title', 'CMS Page')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Pages List</h3>
+            <h3 class="mb-0">Home Service List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,10 +20,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Pages</span>
+                        <span class="fw-medium">Home Service</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Pages List</span>
+                        <span class="fw-medium">Home Service List</span>
                     </li>
                 </ol>
             </nav>
@@ -102,7 +102,7 @@
                                     <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
                                     <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
                                         name="image"
-                                        data-default-file="{{ $ServiceContainer->image ? asset($ServiceContainer->image) : '' }}">
+                                        data-default-file="{{ isset($ServiceContainer) && $ServiceContainer->image ? asset($ServiceContainer->image) : '' }}">
                                     @error('image')
                                         <div id="image-error" class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -116,7 +116,7 @@
                             <div class="d-flex flex-wrap gap-3">
                                 {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
                                 <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
-                                        class="ri-check-line text-white fw-medium"></i> Submit Banner</button>
+                                        class="ri-check-line text-white fw-medium"></i> Submit</button>
                             </div>
                         </div>
                     </div>
@@ -470,8 +470,9 @@
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('cms.home_page.service_container.update', ':id') }}'.replace(
-                            ':id', id);
+                        let storeurl = '{{ route('cms.home_page.service_container.update', ':id') }}'
+                            .replace(
+                                ':id', id);
                         let formData = new FormData(this); // Collect form data
                         $.ajax({
                             url: storeurl, // Route to handle form submission
