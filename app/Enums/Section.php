@@ -7,6 +7,7 @@ enum Section: string
     // Home page section 
     case Banner = 'banner';
     case ServiceContainer = 'service_container';
+    case ServiceContainerContent = 'service_container_content';
     case AboutUs = 'about_us';
     case AboutUsContent = 'about_us_content';
     case NeedToApply = 'need_to_apply';

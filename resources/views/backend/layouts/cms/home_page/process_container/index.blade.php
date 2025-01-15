@@ -64,39 +64,27 @@
                         </table>
                     </div>
                     <!-- Custom Pagination -->
-                    <div class="pagination-wrapper row justify-content-between align-items-center mt-4">
-                        <!-- Previous Button -->
-                        <a class="prev-page-btn btn btn-light d-flex align-items-center col-auto" href="#"
-                            id="prevPage">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
-                                fill="none">
-                                <path d="M8.75755 4.94165L3.69922 9.99998L8.75755 15.0583" stroke="#575757"
-                                    stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M17.8668 10H3.8418" stroke="#575757" stroke-width="1.5" stroke-miterlimit="10"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <span class="ms-2">Previous</span>
-                        </a>
+                    <div
+                        class="d-flex justify-content-center justify-content-sm-between align-items-center text-center flex-wrap gap-2 showing-wrap">
+                        <span class="fs-12 fw-medium"></span>
 
-                        <!-- Pagination Container -->
-                        <div class="pagination-container col-auto text-center" id="customPagination">
-
-                        </div>
-
-                        <!-- Next Button -->
-                        <a class="next-page-btn btn btn-light d-flex align-items-center col-auto" href="#"
-                            id="nextPage">
-                            <span class="me-2">Next</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
-                                fill="none">
-                                <path d="M12.8086 4.94165L17.8669 9.99998L12.8086 15.0583" stroke="#575757"
-                                    stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M3.69922 10H17.7242" stroke="#575757" stroke-width="1.5" stroke-miterlimit="10"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </a>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mb-0 justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link icon" aria-label="Previous" href="#" id="prevPage">
+                                        <i class="material-symbols-outlined">keyboard_arrow_left</i>
+                                    </a>
+                                </li>
+                                <!-- Pagination Container !-->
+                                <li class="row " id="customPagination">
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link icon" aria-label="Next" href="#" id="nextPage">
+                                        <i class="material-symbols-outlined">keyboard_arrow_right</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
 
                 </div>
@@ -268,7 +256,8 @@
                 // Add first page and ellipsis if needed
                 if (startPage > 1) {
                     paginationContainer.append(
-                        `<a href="#" class="badge bg-secondary px-3 py-2" data-page="1">1</a>`);
+                        ` <li class="page-item col-1"><a class="page-link active" href="#" data-page="1">1</a></li>`
+                        );
                     if (startPage > 2) {
                         paginationContainer.append(`<span class="ellipsis">...</span>`);
                     }
@@ -277,7 +266,7 @@
                 // Add the visible page range
                 for (let i = startPage; i <= endPage; i++) {
                     paginationContainer.append(
-                        `<a href="#" class="btn bg-dark bg-opacity-10 fw-medium text-dark py-2 px-4 ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`
+                        ` <li class="page-item col-1"><a class="pagination-item page-link ${i === currentPage ? 'active' : ''}" href="#" data-page="${i}">${i}</a></li>`
                     );
                 }
 
@@ -287,7 +276,8 @@
                         paginationContainer.append(`<span class="ellipsis">...</span>`);
                     }
                     paginationContainer.append(
-                        `<a href="#" class="pagination-item" data-page="${totalPages}">${totalPages}</a>`);
+                        `<li class="page-item col-1"><a class="pagination-item page-link "  data-page="${totalPages}">${totalPages}</a></li>`
+                        );
                 }
 
                 // Click event for pagination items
