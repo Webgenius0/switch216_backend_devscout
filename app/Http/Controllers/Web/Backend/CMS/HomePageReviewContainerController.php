@@ -31,10 +31,6 @@ class HomePageReviewContainerController extends Controller
         );
 
         try {
-
-            $ReviewUserContainer = CMS::where('page', Page::HomePage)
-                ->where('section', Section::ReviewUserContainer)
-                ->first();
             CMS::updateOrCreate(
                 [
                     'page' => Page::HomePage->value,
@@ -61,10 +57,6 @@ class HomePageReviewContainerController extends Controller
         );
 
         try {
-            $ReviewProviderContainer = CMS::where('page', Page::HomePage)
-                ->where('section', Section::ReviewProviderContainer)
-                ->first();
-
             CMS::updateOrCreate(
                 [
                     'page' => Page::HomePage->value,

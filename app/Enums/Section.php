@@ -15,19 +15,9 @@ enum Section: string
     case PlatFormWorkContainerContent = 'plat_form_work_container_content';
     case ReviewUserContainer = 'review_user_container';
     case ReviewProviderContainer = 'review_provider_container';
-    case Faq = 'faq';
-    case FaqContent = 'faq_content';
+    case FaqContainer = 'faq_container';
+    case FaqContainerContent = 'faq_container_content';
     case HeroBanner = 'hero_banner';
-
-    //    OurProducts page section
-
-    //    Offers page section
-
-    //    AboutUs page section
-
-    //    ForBusiness page section
-
-    //    Contact page section
 }
 
 
