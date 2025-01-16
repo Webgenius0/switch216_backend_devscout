@@ -12,6 +12,7 @@
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
@@ -74,11 +75,18 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'processContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
     Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
 
-    // home platform work container container cms 
+    // home platform work container cms 
     Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
     Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');
     Route::post('/cms/home-page/platform-work-container/status/{id}', [HomePagePlatFormWorkContainerController::class, 'status'])->name('cms.home_page.platform_work_container.status');
+
+    // home provider work container  cms 
+    Route::get('/cms/home-page/provider-work-container', [HomePageProviderWorkContainerController::class, 'index'])->name('cms.home_page.provider_work_container.index');
+    Route::Post('/cms/home-page/provider-work-container-update', [HomePageProviderWorkContainerController::class, 'ProviderWorkContainerUpdate'])->name('cms.home_page.provider_work_container.provider_work_container_update');
+
+
 });
+
 
 // Public route for dynamic pages accessible to all users
 Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
