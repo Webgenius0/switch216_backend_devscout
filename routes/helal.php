@@ -10,6 +10,7 @@
 
 
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
@@ -89,6 +90,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::get('/cms/home-page/review-container', [HomePageReviewContainerController::class, 'index'])->name('cms.home_page.review_container.index');
     Route::Post('/cms/home-page/review-user-container-update', [HomePageReviewContainerController::class, 'ReviewUserContainerUpdate'])->name('cms.home_page.review_container.review_user_container_update');
     Route::Post('/cms/home-page/review-provider-container-update', [HomePageReviewContainerController::class, 'ReviewProviderContainerUpdate'])->name('cms.home_page.review_container.review_provide_container_update');
+
+    // faq container cms 
+    Route::resource('/cms/home-page/faq-container', HomePageFaqContainerController::class)->names(names: 'cms.home_page.faq_container');
+    Route::Post('/cms/home-page/faq-container-update', [HomePageFaqContainerController::class, 'FaqContainerUpdate'])->name('cms.home_page.faq_container.faq_container_update');
+    Route::post('/cms/home-page/faq-container/status/{id}', [HomePageFaqContainerController::class, 'status'])->name('cms.home_page.faq_container.status');
 
 
 });

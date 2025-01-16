@@ -120,7 +120,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
                 </ul>
             </li>
-           
+
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">CMS</span>
             </li>
@@ -169,8 +169,8 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.faq_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.faq_container.index') ? 'active' : '' }}">
                             Faq Container
                         </a>
                     </li>
