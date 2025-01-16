@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">CMS Home Provider Work List</h3>
+            <h3 class="mb-0">CMS Home Review List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,26 +20,26 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">CMS Home Provider Work</span>
+                        <span class="fw-medium">CMS Home Review</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">CMS Home Provider Work List</span>
+                        <span class="fw-medium">CMS Home Review List</span>
                     </li>
                 </ol>
             </nav>
         </div>
         {{-- ---------------------- --}}
         <div class="row justify-content-center">
-            <div class="col-xl-12 col-xxl-12 col-lg-12">
+            <div class="col-xl-6 col-xxl-6 col-lg-6">
                 <div class="card bg-white border-0 rounded-3 mb-4">
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Home Page Provider Work Container</h4>
-                            <p class="fs-15">Update Home Page Provider Work Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS Home Page User Review Container</h4>
+                            <p class="fs-15">Update Home Page User Review Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.provider_work_container.provider_work_container_update') }}"
+                        <form action="{{ route('cms.home_page.review_container.review_user_container_update') }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -51,7 +51,7 @@
                                             <input type="text"
                                                 class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
                                                 name="title"
-                                                value="{{ old('title', $ProviderWorkContainer->title ?? '') }}" required
+                                                value="{{ old('title', $ReviewUserContainer->title ?? '') }}" required
                                                 placeholder="Enter Title here">
                                         </div>
                                         @error('title')
@@ -67,40 +67,71 @@
                                                 class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
                                             <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
-                                                placeholder="Enter description here">{{ old('description', $ProviderWorkContainer->description ?? '') }}</textarea>
+                                                placeholder="Enter description here">{{ old('description', $ReviewUserContainer->description ?? '') }}</textarea>
                                         </div>
                                         @error('description')
                                             <div id="description-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <!-- Subtitle Field -->
+
+                            </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex flex-wrap gap-3">
+                                {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
+                                <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
+                                        class="ri-check-line text-white fw-medium"></i> Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-6 col-xxl-6 col-lg-6">
+                <div class="card bg-white border-0 rounded-3 mb-4">
+                    <div class="card-body p-4">
+
+                        <div class="mb-4">
+                            <h4 class="fs-20 mb-1">CMS Home Page Provider Review Container</h4>
+                            <p class="fs-15">Update Home Page Provider Review Container and site details here.</p>
+                        </div>
+
+                        <form action="{{ route('cms.home_page.review_container.review_provide_container_update') }}"
+                            method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <!-- Title Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Button Text<span
-                                                class="text-danger">*</span></label>
+                                        <label class="label text-secondary">Title<span class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
                                             <input type="text"
-                                                class="form-control text-dark ps-5 h-55 @error('button_text') is-invalid @enderror"
-                                                name="button_text"
-                                                value="{{ old('button_text', $ProviderWorkContainer->button_text ?? '') }}"
-                                                required placeholder="Enter Title here">
+                                                class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
+                                                name="title"
+                                                value="{{ old('title', $ReviewProviderContainer->title ?? '') }}" required
+                                                placeholder="Enter Title here">
                                         </div>
-                                        @error('button_text')
-                                            <div id="button_text-error" class="text-danger">{{ $message }}</div>
+                                        @error('title')
+                                            <div id="title-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
                                 <!-- Subtitle Field -->
                                 <div class="col-lg-12">
-                                    <div class="form-group ">
-                                        <label class="label text-secondary mb-1">Video<span
+                                    <div class="form-group mb-4">
+                                        <label class="label text-secondary">Description<span
                                                 class="text-danger">*</span></label>
-                                        <input class="dropify form-control @error('image') is-invalid @enderror"
-                                            type="file" name="image"
-                                            data-default-file="{{ isset($ProviderWorkContainer) && $ProviderWorkContainer->image ? asset($ProviderWorkContainer->image) : '' }}">
-                                        @error('image')
-                                            <div id="image-error" class="text-danger">{{ $message }}</div>
+                                        <div class="form-group position-relative">
+                                            <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
+                                                placeholder="Enter description here">{{ old('description', $ReviewProviderContainer->description ?? '') }}</textarea>
+                                        </div>
+                                        @error('description')
+                                            <div id="description-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
