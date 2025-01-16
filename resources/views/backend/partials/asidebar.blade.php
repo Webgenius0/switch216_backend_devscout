@@ -162,17 +162,12 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
-                            User Review Container
+                        <a href="{{ route('cms.home_page.review_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.review_container.index') ? 'active' : '' }}">
+                            Review Container
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
-                            Provider Review Container
-                        </a>
-                    </li>
+
                     <li class="menu-item">
                         <a href="{{ route('dynamic_page.create') }}"
                             class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">

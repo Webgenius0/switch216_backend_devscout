@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
@@ -83,6 +84,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // home provider work container  cms 
     Route::get('/cms/home-page/provider-work-container', [HomePageProviderWorkContainerController::class, 'index'])->name('cms.home_page.provider_work_container.index');
     Route::Post('/cms/home-page/provider-work-container-update', [HomePageProviderWorkContainerController::class, 'ProviderWorkContainerUpdate'])->name('cms.home_page.provider_work_container.provider_work_container_update');
+
+    // home Review container  cms 
+    Route::get('/cms/home-page/review-container', [HomePageReviewContainerController::class, 'index'])->name('cms.home_page.review_container.index');
+    Route::Post('/cms/home-page/review-user-container-update', [HomePageReviewContainerController::class, 'ReviewUserContainerUpdate'])->name('cms.home_page.review_container.review_user_container_update');
+    Route::Post('/cms/home-page/review-provider-container-update', [HomePageReviewContainerController::class, 'ReviewProviderContainerUpdate'])->name('cms.home_page.review_container.review_provide_container_update');
 
 
 });
