@@ -4,7 +4,7 @@
     Home Page
 @endsection
 @section('header')
-   @include('frontend.partials.header')
+    @include('frontend.partials.header')
     {{-- @include('frontend.partials.header2') --}}
 @endsection
 
@@ -14,97 +14,146 @@
 @section('content')
     <!-- banner section start -->
     <section class="banner">
-        <div class="line-tracker">
-            <span class="tracker-item active" data-value="1"></span>
-            <span class="tracker-item" data-value="2"></span>
-            <span class="tracker-item" data-value="3"></span>
-            <span class="tracker-item" data-value="4"></span>
-            <span class="tracker-item" data-value="5"></span>
-        </div>
-        <div class="slide-container">
-            <div class="slide-item active">
-                <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-01.jpg') }}" alt="Slide image" />
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
-                    <p class="slide-des">
-                        Explore trusted professionals across multiple categories, from
-                        party planners to contractors, all in one place.
-                    </p>
+        @if (!empty($cms['banner']) && count($cms['banner']) > 0)
+            <div class="line-tracker">
+                @foreach ($cms['banner'] as $key => $d)
+                    <span class="tracker-item @if ($loop->first) active @endif"
+                        data-value="{{ $key }}"></span>
+                @endforeach
+            </div>
+        @else
+            <div class="line-tracker">
+                <span class="tracker-item active" data-value="1"></span>
+                <span class="tracker-item" data-value="2"></span>
+                <span class="tracker-item" data-value="3"></span>
+                <span class="tracker-item" data-value="4"></span>
+                <span class="tracker-item" data-value="5"></span>
+            </div>
+        @endif
+
+        @if (!empty($cms['banner']) && count($cms['banner']) > 0)
+            <div class="slide-container">
+                @foreach ($cms['banner'] as $d)
+                    <div class="slide-item @if ($loop->first) active @endif">
+                        @if (!empty($d->image))
+                            <img class="slide-bg-img" src="{{ asset($d->image) }}" alt="Slide image" />
+                        @else
+                            <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-01.jpg') }}"
+                                alt="Slide image" />
+                        @endif
+                        <div class="overlay"></div>
+                        <div class="slide-content">
+                            <h4 class="slide-title">{{ $d->title ?? 'Find the Perfect Service for Your Needs' }}</h4>
+                            <p class="slide-des">
+                                {{ $d->description ??
+                                    "Explore trusted professionals across multiple categories, from
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
+                                </h4>
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="slide-container">
+                <div class="slide-item active">
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-01.jpg') }}" alt="Slide image" />
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
+                        <p class="slide-des">
+                            Explore trusted professionals across multiple categories, from
+                            party planners to contractors, all in one place.
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-item">
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-02.jpg') }}" alt="Slide image" />
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
+                        <p class="slide-des">
+                            Explore trusted professionals across multiple categories, from
+                            party planners to contractors, all in one place.
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-item">
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-03.jpg') }}" alt="Slide image" />
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
+                        <p class="slide-des">
+                            Explore trusted professionals across multiple categories, from
+                            party planners to contractors, all in one place.
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-item">
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-04.jpg') }}" alt="Slide image" />
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
+                        <p class="slide-des">
+                            Explore trusted professionals across multiple categories, from
+                            party planners to contractors, all in one place.
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-item">
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-05.jpg') }}" alt="Slide image" />
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
+                        <p class="slide-des">
+                            Explore trusted professionals across multiple categories, from
+                            party planners to contractors, all in one place.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="slide-item">
-                <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-02.jpg') }}" alt="Slide image" />
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
-                    <p class="slide-des">
-                        Explore trusted professionals across multiple categories, from
-                        party planners to contractors, all in one place.
-                    </p>
+        @endif
+        @if (!empty($cms['banner']) && count($cms['banner']) > 0)
+            <div class="thumbnail">
+                @foreach ($cms['banner'] as $d)
+                    <div class="thumbnail-item @if ($loop->first) active @endif"
+                        style="background-image: url('{{ isset($d->image) ? asset($d->image) : asset('frontend/assets/images/banner-01.jpg') }}')">
+                        <h6 class="thumbnail-title">{{ $d->sub_title ?? 'contractors' }}</h6>
+                        <p class="thumbnail-des">{{ $d->sub_description ?? 'electrician' }}</p>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="thumbnail">
+                <div class="thumbnail-item active"
+                    style="background-image: url('{{ asset('frontend/assets/images/banner-01.jpg') }}')">
+                    <h6 class="thumbnail-title">contractors</h6>
+                    <p class="thumbnail-des">electrician</p>
+                </div>
+                <div class="thumbnail-item"
+                    style="background-image: url('{{ asset('frontend/assets/images/banner-02.jpg') }}')">
+                    <h6 class="thumbnail-title">contractors</h6>
+                    <p class="thumbnail-des">electrician</p>
+                </div>
+                <div class="thumbnail-item"
+                    style="background-image: url('{{ asset('frontend/assets/images/banner-03.jpg') }}')">
+                    <h6 class="thumbnail-title">contractors</h6>
+                    <p class="thumbnail-des">electrician</p>
+                </div>
+                <div class="thumbnail-item"
+                    style="background-image: url('{{ asset('frontend/assets/images/banner-04.jpg') }}')">
+                    <h6 class="thumbnail-title">contractors</h6>
+                    <p class="thumbnail-des">electrician</p>
+                </div>
+                <div class="thumbnail-item"
+                    style="background-image: url('{{ asset('frontend/assets/images/banner-05.jpg') }}')">
+                    <h6 class="thumbnail-title">contractors</h6>
+                    <p class="thumbnail-des">electrician</p>
                 </div>
             </div>
-            <div class="slide-item">
-                <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-03.jpg') }}" alt="Slide image" />
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
-                    <p class="slide-des">
-                        Explore trusted professionals across multiple categories, from
-                        party planners to contractors, all in one place.
-                    </p>
-                </div>
-            </div>
-            <div class="slide-item">
-                <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-04.jpg') }}" alt="Slide image" />
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
-                    <p class="slide-des">
-                        Explore trusted professionals across multiple categories, from
-                        party planners to contractors, all in one place.
-                    </p>
-                </div>
-            </div>
-            <div class="slide-item">
-                <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-05.jpg') }}" alt="Slide image" />
-                <div class="overlay"></div>
-                <div class="slide-content">
-                    <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
-                    <p class="slide-des">
-                        Explore trusted professionals across multiple categories, from
-                        party planners to contractors, all in one place.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="thumbnail">
-            <div class="thumbnail-item active"
-                style="background-image: url('{{ asset('frontend/assets/images/banner-01.jpg') }}')">
-                <h6 class="thumbnail-title">contractors</h6>
-                <p class="thumbnail-des">electrician</p>
-            </div>
-            <div class="thumbnail-item"
-                style="background-image: url('{{ asset('frontend/assets/images/banner-02.jpg') }}')">
-                <h6 class="thumbnail-title">contractors</h6>
-                <p class="thumbnail-des">electrician</p>
-            </div>
-            <div class="thumbnail-item"
-                style="background-image: url('{{ asset('frontend/assets/images/banner-03.jpg') }}')">
-                <h6 class="thumbnail-title">contractors</h6>
-                <p class="thumbnail-des">electrician</p>
-            </div>
-            <div class="thumbnail-item"
-                style="background-image: url('{{ asset('frontend/assets/images/banner-04.jpg') }}')">
-                <h6 class="thumbnail-title">contractors</h6>
-                <p class="thumbnail-des">electrician</p>
-            </div>
-            <div class="thumbnail-item"
-                style="background-image: url('{{ asset('frontend/assets/images/banner-05.jpg') }}')">
-                <h6 class="thumbnail-title">contractors</h6>
-                <p class="thumbnail-des">electrician</p>
-            </div>
-        </div>
+        @endif
+
+
         <div class="slide-nav">
             <button id="slide-prev-btn" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
@@ -117,7 +166,8 @@
                 </svg>
             </button>
             <button id="slide-next-btn" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12"
+                    fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M18 6C18 6.55228 17.5523 7 17 7L0.999983 7C0.447699 7 -1.7234e-05 6.55229 -1.72098e-05 6C-1.71857e-05 5.44772 0.447699 5 0.999983 5L17 5C17.5523 5 18 5.44772 18 6Z"
                         fill="white" />
@@ -170,67 +220,100 @@
                 <div class="col-sm-6">
                     <div class="service-content">
                         <h2 class="title" data-aos="fade-right">
-                            24/7 Service at Your Door
+                            {{ $cms['service_container']->title ?? '24/7 Service at Your Door' }}
                         </h2>
-                        <div class="accordion" id="serviceAccordion" data-aos="fade-up">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#serviceOne" aria-expanded="true" aria-controls="serviceOne">
-                                        Installation and repair of locks
-                                    </button>
-                                </h2>
-                                <div id="serviceOne" class="accordion-collapse collapse show"
-                                    data-bs-parent="#serviceAccordion">
-                                    <div class="accordion-body">
-                                        Yet bed any for traveling assistance indulgence
-                                        unpleasing. Not thoughts all exercise blessing. Indulgence
-                                        way everything joy.
+                        @if (isset($cms['service_container_content']) && count($cms['service_container_content']) > 0)
+                            <div class="accordion" id="serviceAccordion" data-aos="fade-up">
+                                @foreach ($cms['service_container_content'] as $key => $service)
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading{{ $key }}">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}"
+                                                aria-expanded="false" aria-controls="collapse{{ $key }}">
+                                                {{ $service['title'] ?? 'Default Service Title' }}
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{ $key }}"
+                                            class="accordion-collapse collapse @if ($loop->first) show @endif"
+                                            aria-labelledby="heading{{ $key }}"
+                                            data-bs-parent="#serviceAccordion">
+                                            <div class="accordion-body">
+                                                {{ $service['description'] ?? 'Default service description.' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="accordion" id="serviceAccordion" data-aos="fade-up">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#serviceOne" aria-expanded="true" aria-controls="serviceOne">
+                                            Installation and repair of locks
+                                        </button>
+                                    </h2>
+                                    <div id="serviceOne" class="accordion-collapse collapse show"
+                                        data-bs-parent="#serviceAccordion">
+                                        <div class="accordion-body">
+                                            Yet bed any for traveling assistance indulgence
+                                            unpleasing. Not thoughts all exercise blessing. Indulgence
+                                            way everything joy.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#serviceTwo" aria-expanded="false"
+                                            aria-controls="serviceTwo">
+                                            Fast lockout service
+                                        </button>
+                                    </h2>
+                                    <div id="serviceTwo" class="accordion-collapse collapse"
+                                        data-bs-parent="#serviceAccordion">
+                                        <div class="accordion-body">
+                                            Yet bed any for traveling assistance indulgence
+                                            unpleasing. Not thoughts all exercise blessing. Indulgence
+                                            way everything joy.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#serviceThree"
+                                            aria-expanded="false" aria-controls="serviceThree">
+                                            Quick Tips and Advice
+                                        </button>
+                                    </h2>
+                                    <div id="serviceThree" class="accordion-collapse collapse"
+                                        data-bs-parent="#serviceAccordion">
+                                        <div class="accordion-body">
+                                            Yet bed any for traveling assistance indulgence
+                                            unpleasing. Not thoughts all exercise blessing. Indulgence
+                                            way everything joy.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#serviceTwo" aria-expanded="false" aria-controls="serviceTwo">
-                                        Fast lockout service
-                                    </button>
-                                </h2>
-                                <div id="serviceTwo" class="accordion-collapse collapse"
-                                    data-bs-parent="#serviceAccordion">
-                                    <div class="accordion-body">
-                                        Yet bed any for traveling assistance indulgence
-                                        unpleasing. Not thoughts all exercise blessing. Indulgence
-                                        way everything joy.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#serviceThree" aria-expanded="false"
-                                        aria-controls="serviceThree">
-                                        Quick Tips and Advice
-                                    </button>
-                                </h2>
-                                <div id="serviceThree" class="accordion-collapse collapse"
-                                    data-bs-parent="#serviceAccordion">
-                                    <div class="accordion-body">
-                                        Yet bed any for traveling assistance indulgence
-                                        unpleasing. Not thoughts all exercise blessing. Indulgence
-                                        way everything joy.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="./contact.html" class="button" data-aos="fade-left">Contact Now</a>
+                        @endif
+
+                        <a href="#" class="button"
+                            data-aos="fade-left">{{ $cms['service_container']->button_text ?? 'Contact Now' }}</a>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="service-card">
-                        <h4 class="card-title">Emergency with Services</h4>
+                        <h4 class="card-title">{{ $cms['service_container']->sub_title ?? 'Emergency with Services' }}
+                        </h4>
                         <figure class="card-img">
-                            <img src="{{ asset('frontend/assets/images/service.png') }}" alt="Service card image" />
+                            @if (!empty($cms['service_container']->image))
+                                <img src="{{ asset($cms['service_container']->image) }}" alt="Service card image" />
+                            @else
+                                <img src="{{ asset('frontend/assets/images/service.png') }}" alt="Service card image" />
+                            @endif
                         </figure>
                     </div>
                 </div>
@@ -265,66 +348,109 @@
             </svg>
 
             <div class="process-content" data-aos="fade-right">
-                <h2 class="title">We have best team and best process</h2>
+                <h2 class="title">{{ $cms['process_container']->title ?? 'We have best team and best process' }}</h2>
                 <p class="des">
-                    Yet bed any for traveling assistance indulgence unpleasing. Not
-                    thoughts all exercise blessing. Indulgence way everything joy.
+                    {{ $cms['process_container']->description ??
+                        'Yet bed any for traveling assistance indulgence unpleasing. Not
+                                                                                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
                 </p>
-                <a href="./service.html" class="button">See All Service</a>
+                <a href="#" class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
             </div>
-            <div class="process-timeline-container" data-aos="fade-up">
-                <div class="process-item" data-aos="fade-left">
-                    <div class="item-num">1</div>
-                    <div class="item-tracker"></div>
-                    <h5 class="item-title">Project Discovery Call</h5>
-                    <p class="item-des">
-                        Party we years to order allow asked of. We so opinion friends me
-                        message as delight.
-                    </p>
+
+            @if (isset($cms['process_container_content']) && count($cms['process_container_content']) > 0)
+                <div class="process-timeline-container" data-aos="fade-up">
+                    @foreach ($cms['process_container_content'] as $key => $d)
+                        <div class="process-item" data-aos="fade-left">
+                            <div class="item-num">{{ ++$key }}</div>
+                            <div class="item-tracker"></div>
+                            <h5 class="item-title">{{ $d->title ?? 'Project Discovery Call' }}</h5>
+                            <p class="item-des">
+                                {{ $d->description ??
+                                    "Party we years to order allow asked of. We so opinion friends me
+                                                                                                                                                                                                                                message as delight." }}
+                            </p>
+                        </div>
+                    @endforeach
+                    <svg class="process-timeline-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="464"
+                        viewBox="0 0 1150 464" fill="none" preserveAspectRatio="none">
+                        <g filter="url(#filter0_d_4391_773)">
+                            <path id="animatedPath"
+                                d="M27 326C75 361 186.8 427 250 411C329 391 351.911 301.371 470.5 264C589.5 226.5 723.5 346 776.5 203.001C829.719 59.41 1012 -39.0001 1123 20.0001"
+                                stroke="#003366" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_4391_773" x="0.5" y="0.0881348" width="1149" height="463.871"
+                                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                <feOffset dy="24" />
+                                <feGaussianBlur stdDeviation="12" />
+                                <feComposite in2="hardAlpha" operator="out" />
+                                <feColorMatrix type="matrix"
+                                    values="0 0 0 0 0.215686 0 0 0 0 0.203922 0 0 0 0 0.662745 0 0 0 0.3 0" />
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4391_773" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4391_773"
+                                    result="shape" />
+                            </filter>
+                        </defs>
+                    </svg>
                 </div>
-                <div class="process-item" data-aos="fade-right">
-                    <div class="item-num">2</div>
-                    <div class="item-tracker"></div>
-                    <h5 class="item-title">Project Discovery Call</h5>
-                    <p class="item-des">
-                        Party we years to order allow asked of. We so opinion friends me
-                        message as delight.
-                    </p>
+            @else
+                <div class="process-timeline-container" data-aos="fade-up">
+                    <div class="process-item" data-aos="fade-left">
+                        <div class="item-num">1</div>
+                        <div class="item-tracker"></div>
+                        <h5 class="item-title">Project Discovery Call</h5>
+                        <p class="item-des">
+                            Party we years to order allow asked of. We so opinion friends me
+                            message as delight.
+                        </p>
+                    </div>
+                    <div class="process-item" data-aos="fade-right">
+                        <div class="item-num">2</div>
+                        <div class="item-tracker"></div>
+                        <h5 class="item-title">Project Discovery Call</h5>
+                        <p class="item-des">
+                            Party we years to order allow asked of. We so opinion friends me
+                            message as delight.
+                        </p>
+                    </div>
+                    <div class="process-item" data-aos="fade-up">
+                        <div class="item-num">3</div>
+                        <div class="item-tracker"></div>
+                        <h5 class="item-title">Project Discovery Call</h5>
+                        <p class="item-des">
+                            Party we years to order allow asked of. We so opinion friends me
+                            message as delight.
+                        </p>
+                    </div>
+                    <svg class="process-timeline-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="464"
+                        viewBox="0 0 1150 464" fill="none" preserveAspectRatio="none">
+                        <g filter="url(#filter0_d_4391_773)">
+                            <path id="animatedPath"
+                                d="M27 326C75 361 186.8 427 250 411C329 391 351.911 301.371 470.5 264C589.5 226.5 723.5 346 776.5 203.001C829.719 59.41 1012 -39.0001 1123 20.0001"
+                                stroke="#003366" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_4391_773" x="0.5" y="0.0881348" width="1149" height="463.871"
+                                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                <feOffset dy="24" />
+                                <feGaussianBlur stdDeviation="12" />
+                                <feComposite in2="hardAlpha" operator="out" />
+                                <feColorMatrix type="matrix"
+                                    values="0 0 0 0 0.215686 0 0 0 0 0.203922 0 0 0 0 0.662745 0 0 0 0.3 0" />
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4391_773" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4391_773"
+                                    result="shape" />
+                            </filter>
+                        </defs>
+                    </svg>
                 </div>
-                <div class="process-item" data-aos="fade-up">
-                    <div class="item-num">3</div>
-                    <div class="item-tracker"></div>
-                    <h5 class="item-title">Project Discovery Call</h5>
-                    <p class="item-des">
-                        Party we years to order allow asked of. We so opinion friends me
-                        message as delight.
-                    </p>
-                </div>
-                <svg class="process-timeline-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="464"
-                    viewBox="0 0 1150 464" fill="none" preserveAspectRatio="none">
-                    <g filter="url(#filter0_d_4391_773)">
-                        <path id="animatedPath"
-                            d="M27 326C75 361 186.8 427 250 411C329 391 351.911 301.371 470.5 264C589.5 226.5 723.5 346 776.5 203.001C829.719 59.41 1012 -39.0001 1123 20.0001"
-                            stroke="#003366" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
-                    <defs>
-                        <filter id="filter0_d_4391_773" x="0.5" y="0.0881348" width="1149" height="463.871"
-                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                            <feColorMatrix in="SourceAlpha" type="matrix"
-                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                            <feOffset dy="24" />
-                            <feGaussianBlur stdDeviation="12" />
-                            <feComposite in2="hardAlpha" operator="out" />
-                            <feColorMatrix type="matrix"
-                                values="0 0 0 0 0.215686 0 0 0 0 0.203922 0 0 0 0 0.662745 0 0 0 0.3 0" />
-                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4391_773" />
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4391_773"
-                                result="shape" />
-                        </filter>
-                    </defs>
-                </svg>
-            </div>
+            @endif
         </section>
         <!-- process section end -->
 
@@ -332,99 +458,143 @@
         <section class="work container">
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
-                    <h2 class="title">How Our Platform Works</h2>
+                    <h2 class="title">
+                        {{ $cms['plat_form_work_container']->title ?? 'We have best team and best process' }}</h2>
+                    </h2>
                     <p class="des">
-                        From booking event planners to finding home contractors, our
-                        platform makes it easy to connect with professionals in your city.
+                        {{ $cms['plat_form_work_container']->description ??
+                            'From booking event planners to finding home contractors, our platform makes it easy to connect with professionals in your city.' }}
+
                     </p>
-                    <div class="icon-container">
-                        <div class="icon-item">
-                            <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                    viewBox="0 0 40 40" fill="none">
-                                    <g clip-path="url(#clip0_4391_679)">
-                                        <path
-                                            d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
-                                            fill="white" />
-                                        <path
-                                            d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
-                                            fill="white" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_4391_679">
-                                            <rect width="40" height="40" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
+                    @if (isset($cms['plat_form_work_container_content']) && count($cms['plat_form_work_container_content']) > 0)
+                        <div class="icon-container">
+                            @foreach ($cms['plat_form_work_container_content'] as $key => $d)
+                                <div class="icon-item">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                            viewBox="0 0 40 40" fill="none">
+                                            <g clip-path="url(#clip0_4391_679)">
+                                                <path
+                                                    d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
+                                                    fill="white" />
+                                                <path
+                                                    d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
+                                                    fill="white" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_4391_679">
+                                                    <rect width="40" height="40" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <div class="details">
+                                        <h6 class="icon-title">{{ $d->title ?? 'Best Service provider' }}</h6>
+                                        <p class="icon-des">
+                                            {{ $d->description ??
+                                                "Lorem Ipsum is simply dummy text of the printing and
+                                                                                                        typesetting industry. Lorem Ipsum has." }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                        viewBox="0 0 40 40" fill="none">
+                                        <g clip-path="url(#clip0_4391_679)">
+                                            <path
+                                                d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
+                                                fill="white" />
+                                            <path
+                                                d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4391_679">
+                                                <rect width="40" height="40" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="details">
+                                    <h6 class="icon-title">Best Service provider</h6>
+                                    <p class="icon-des">
+                                        Lorem Ipsum is simply dummy text of the printing and
+                                        typesetting industry. Lorem Ipsum has.
+                                    </p>
+                                </div>
                             </div>
-                            <div class="details">
-                                <h6 class="icon-title">Best Service provider</h6>
-                                <p class="icon-des">
-                                    Lorem Ipsum is simply dummy text of the printing and
-                                    typesetting industry. Lorem Ipsum has.
-                                </p>
+                            <div class="icon-item">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                        viewBox="0 0 40 40" fill="none">
+                                        <g clip-path="url(#clip0_4391_679)">
+                                            <path
+                                                d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
+                                                fill="white" />
+                                            <path
+                                                d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4391_679">
+                                                <rect width="40" height="40" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="details">
+                                    <h6 class="icon-title">Emergency Service</h6>
+                                    <p class="icon-des">
+                                        Lorem Ipsum is simply dummy text of the printing and
+                                        typesetting industry. Lorem Ipsum has.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="icon-item">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                        viewBox="0 0 40 40" fill="none">
+                                        <g clip-path="url(#clip0_4391_679)">
+                                            <path
+                                                d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
+                                                fill="white" />
+                                            <path
+                                                d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_4391_679">
+                                                <rect width="40" height="40" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="details">
+                                    <h6 class="icon-title">Party Services</h6>
+                                    <p class="icon-des">
+                                        Lorem Ipsum is simply dummy text of the printing and
+                                        typesetting industry. Lorem Ipsum has.
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div class="icon-item">
-                            <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                    viewBox="0 0 40 40" fill="none">
-                                    <g clip-path="url(#clip0_4391_679)">
-                                        <path
-                                            d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
-                                            fill="white" />
-                                        <path
-                                            d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
-                                            fill="white" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_4391_679">
-                                            <rect width="40" height="40" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <div class="details">
-                                <h6 class="icon-title">Emergency Service</h6>
-                                <p class="icon-des">
-                                    Lorem Ipsum is simply dummy text of the printing and
-                                    typesetting industry. Lorem Ipsum has.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="icon-item">
-                            <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                    viewBox="0 0 40 40" fill="none">
-                                    <g clip-path="url(#clip0_4391_679)">
-                                        <path
-                                            d="M37.8761 16.3953L34.9754 19.296V9.8372L38.801 6.01162C39.894 4.9186 39.894 3.15295 38.801 2.10197L37.9181 1.21914C37.6589 0.959327 37.3509 0.753201 37.0118 0.612562C36.6728 0.471922 36.3094 0.39953 35.9423 0.39953C35.5752 0.39953 35.2118 0.471922 34.8728 0.612562C34.5337 0.753201 34.2257 0.959327 33.9665 1.21914C25.1802 10.0054 28.2071 6.97852 27.5344 7.60911H8.95306V0.756708C8.95306 0.336315 8.61675 0.0420393 8.2384 0H4.83321C2.35289 0 0.292969 2.01789 0.292969 4.54025V29.5536C0.292969 32.0339 2.31085 34.0939 4.83321 34.0939H20.1776L16.352 37.9194C15.5953 38.6762 16.1418 39.9373 17.1928 39.9373H39.1373C39.5577 39.9373 39.852 39.601 39.894 39.2227V17.2361C39.894 16.1851 38.6328 15.6386 37.8761 16.3953ZM24.4656 18.203C23.9611 18.0349 23.6248 17.5724 23.5407 17.0259C23.4987 16.6896 23.2464 16.4374 22.9101 16.3953C22.4056 16.3533 21.9432 16.017 21.7751 15.4705L32.3269 4.9186L35.0595 7.65115C20.5559 22.1127 25.5586 17.152 24.4656 18.203ZM22.826 18.8336L20.3878 19.5903L21.1445 17.152C21.1865 17.1941 21.5649 17.5724 22.2375 17.7826C22.3216 18.161 22.5738 18.5393 22.826 18.8336ZM35.0595 2.22808C35.5639 1.72361 36.4047 1.72361 36.9092 2.22808L37.792 3.11091C38.2965 3.61538 38.2965 4.45617 37.792 4.96064L36.1105 6.64221L33.3779 3.90966L35.0595 2.22808ZM4.41282 1.51341H7.48169V25.0134H4.83321C3.69815 25.0134 2.60513 25.4338 1.76434 26.1905V4.54025C1.76434 2.98479 2.89941 1.72361 4.41282 1.51341ZM4.83321 32.5805C3.15164 32.5805 1.76434 31.1932 1.76434 29.5116C1.76434 27.83 3.15164 26.4427 4.83321 26.4427H8.2384C8.65879 26.4427 8.9951 26.1064 8.9951 25.686V9.08049H26.1051L20.4298 14.7138C20.3878 14.7558 20.2616 14.8819 20.2196 15.008C17.6132 23.3738 18.8743 19.296 18.538 20.4731C18.3699 21.0196 18.9164 21.5662 19.4629 21.398L24.886 19.7164C24.97 19.6744 25.0962 19.6324 25.1802 19.5483L33.4199 11.3086V20.8095L21.691 32.5805H4.83321ZM38.4226 38.466H37.6659V37.4991C37.6659 37.0787 37.3296 36.7424 36.9092 36.7424C36.4888 36.7424 36.1525 37.0787 36.1525 37.4991V38.466H34.8072V38.0035C34.8072 37.5831 34.4709 37.2468 34.0505 37.2468C33.6301 37.2468 33.2938 37.5831 33.2938 38.0035V38.466H31.9486V37.4991C31.9486 37.0787 31.6122 36.7424 31.1919 36.7424C30.7715 36.7424 30.4351 37.0787 30.4351 37.4991V38.466H29.216V38.0035C29.216 37.5831 28.8797 37.2468 28.4593 37.2468C28.0389 37.2468 27.7026 37.5831 27.7026 38.0035V38.466H26.3573V37.4991C26.3573 37.0787 26.021 36.7424 25.6006 36.7424C25.1802 36.7424 24.8439 37.0787 24.8439 37.4991V38.466H23.4987V38.0035C23.4987 37.5831 23.1623 37.2468 22.742 37.2468C22.3216 37.2468 21.9853 37.5831 21.9853 38.0035V38.466H20.64V37.4991C20.64 37.0787 20.3037 36.7424 19.8833 36.7424C19.4629 36.7424 19.1266 37.0787 19.1266 37.4991V38.466H17.7393L38.2545 17.9508L38.4226 38.466Z"
-                                            fill="white" />
-                                        <path
-                                            d="M25.262 34.6825C24.7995 35.145 25.1359 35.9437 25.7664 35.9437H35.1832C35.6036 35.9437 35.8979 35.6074 35.94 35.229V25.7702C35.94 25.0976 35.1412 24.8033 34.6788 25.2657L25.262 34.6825ZM34.4265 34.4723H27.5321L34.4265 27.5779V34.4723Z"
-                                            fill="white" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_4391_679">
-                                            <rect width="40" height="40" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <div class="details">
-                                <h6 class="icon-title">Party Services</h6>
-                                <p class="icon-des">
-                                    Lorem Ipsum is simply dummy text of the printing and
-                                    typesetting industry. Lorem Ipsum has.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="video-container">
-                        <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
-                            type="video/mp4"></video>
+                        @if (!empty($cms['plat_form_work_container']->image))
+                            <video id="work-video" src="{{ asset($cms['plat_form_work_container']->image) }}"
+                                type="video/mp4"></video>
+                        @else
+                            <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
+                                type="video/mp4"></video>
+                        @endif
+
                         <button id="work-video-play-button" class="play-button">
                             &#9658;
                         </button>
@@ -436,25 +606,30 @@
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
                     <div class="video-container">
-                        <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
-                            type="video/mp4"></video>
+                        @if (!empty($cms['provider_work_container']->image))
+                            <video id="work-video" src="{{ asset($cms['provider_work_container']->image) }}"
+                                type="video/mp4"></video>
+                        @else
+                            <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
+                                type="video/mp4"></video>
+                        @endif
                         <button id="work-video-play-button" class="play-button">
                             &#9658;
                         </button>
                     </div>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
-                    <h2 class="title">
-                        Service Provider <br />
-                        showing Work
+                    <h2 class="title"> {{ $cms['provider_work_container']->title ?? 'Service Provider showing Work' }}
                     </h2>
                     <p class="des">
-                        Yet bed any for travelling assistance indulgence unpleasing. Not
-                        thoughts all exercise blessing. Indulgence way everything joy. Yet
-                        bed any for travelling assistance indulgence unpleasing. Not
-                        thoughts all exercise blessing. Indulgence way everything joy.
+                        {{ $cms['provider_work_container']->description ??
+                            'Yet bed any for travelling assistance indulgence unpleasing. Not
+                                                                                                thoughts all exercise blessing. Indulgence way everything joy. Yet
+                                                                                                bed any for travelling assistance indulgence unpleasing. Not
+                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
                     </p>
-                    <a href="./service.html" class="button">See All</a>
+                    <a href="#"
+                        class="button">{{ $cms['provider_work_container']->button_text ?? 'Service Provider showing Work' }}</a>
                 </div>
             </div>
         </section>
@@ -463,17 +638,18 @@
         <!-- user review section start -->
         <section class="user-review">
             <div class="container">
-                <h2 class="title" data-aos="fade-up">What Our Users Are Saying</h2>
+                <h2 class="title" data-aos="fade-up">
+                    {{ $cms['review_user_container']->title ?? 'What Our Users Are Saying' }}</h2>
                 <p class="des" data-aos="fade-up">
-                    Lorem ipsum dolor sit amet consectetur. Sodales odio vulputate erat
-                    arcu eget ac pharetra enim cras. Etiam et laoreet iaculis bibendum
-                    ipsum mauris enim. Fermentum adipiscing id tincidunt vehicula. Ac ut
-                    tellus condimentum et urna orci eu morbi eleifend.
+                    {{ $cms['review_user_container']->description ??
+                        "Lorem ipsum dolor sit amet consectetur. Sodales odio vulputate erat arcu eget ac pharetra enim cras. Etiam et laoreet iaculis bibendum
+                                        ipsum mauris enim. Fermentum adipiscing id tincidunt vehicula. Ac ut
+                                        tellus condimentum et urna orci eu morbi eleifend." }}
                 </p>
             </div>
             <div data-aos="fade-down">
                 <div class="user-review-carousel owl-carousel owl-theme" aria-label="User review Carousel">
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -496,7 +672,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -519,7 +695,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -542,7 +718,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -565,7 +741,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -588,7 +764,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -611,7 +787,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -634,7 +810,7 @@
                             </p>
                         </div>
                     </a>
-                    <a href="./service-provider-profile.html" class="item" aria-roledescription="slide">
+                    <a href="#" class="item" aria-roledescription="slide">
                         <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
                         <div class="details-container">
                             <div class="user-details">
@@ -664,12 +840,15 @@
 
         <!-- testimonial section start -->
         <section class="testimonial container">
-            <h2 class="title" data-aos="fade-up">What Our Users Are Saying</h2>
+            <h2 class="title" data-aos="fade-up">
+                {{ $cms['review_provider_container']->title ?? 'What Our Users Are Saying' }}</h2>
             <p class="des" data-aos="fade-up">
-                Lorem ipsum dolor sit amet consectetur. Sodales odio vulputate erat
-                arcu eget ac pharetra enim cras. Etiam et laoreet iaculis bibendum
-                ipsum mauris enim. Fermentum adipiscing id tincidunt vehicula. Ac ut
-                tellus condimentum et urna orci eu morbi eleifend.
+                {{ $cms['review_provider_container']->description ??
+                    "Lorem ipsum dolor sit amet consectetur. Sodales odio vulputate erat
+                                arcu eget ac pharetra enim cras. Etiam et laoreet iaculis bibendum
+                                ipsum mauris enim. Fermentum adipiscing id tincidunt vehicula. Ac ut
+                                tellus condimentum et urna orci eu morbi eleifend." }}
+
             </p>
             <div data-aos="fade-down">
                 <div class="testimonial-carousel owl-carousel owl-theme" aria-label="Testimonials Carousel">
@@ -1168,8 +1347,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31" height="33"
                                     viewBox="0 0 31 33" fill="none">
                                     <g clip-path="url(#clip0_4391_514)">
-                                        <mask id="mask0_4391_514" style="mask-type: luminance" maskUnits="userSpaceOnUse"
-                                            x="0" y="0" width="31" height="33">
+                                        <mask id="mask0_4391_514" style="mask-type: luminance"
+                                            maskUnits="userSpaceOnUse" x="0" y="0" width="31" height="33">
                                             <path d="M31 0.665039H0V32.3341H31V0.665039Z" fill="white" />
                                         </mask>
                                         <g mask="url(#mask0_4391_514)">
@@ -1244,8 +1423,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31" height="33"
                                     viewBox="0 0 31 33" fill="none">
                                     <g clip-path="url(#clip0_4391_514)">
-                                        <mask id="mask0_4391_514" style="mask-type: luminance" maskUnits="userSpaceOnUse"
-                                            x="0" y="0" width="31" height="33">
+                                        <mask id="mask0_4391_514" style="mask-type: luminance"
+                                            maskUnits="userSpaceOnUse" x="0" y="0" width="31" height="33">
                                             <path d="M31 0.665039H0V32.3341H31V0.665039Z" fill="white" />
                                         </mask>
                                         <g mask="url(#mask0_4391_514)">
@@ -1442,13 +1621,16 @@
         <section class="faq container">
             <div class="row justify-content-between">
                 <div class="col-md-4" data-aos="fade-right">
-                    <h2 class="title">Any questions? We got you.</h2>
+                    <h2 class="title">{{ $cms['faq_container']->title ?? 'Any questions? We got you.' }}</h2>
                     <p class="des">
-                        Yet bed any for assistance indulgence unpleasing. Not thoughts all
-                        exercise blessing. Indulgence way everything joy alteration
-                        boisterous the attachment.
+                        {{ $cms['faq_container']->description ??
+                            "Yet bed any for assistance indulgence unpleasing. Not thoughts all
+                                                exercise blessing. Indulgence way everything joy alteration
+                                                boisterous the attachment." }}
+
                     </p>
-                    <a class="more-btn" href="#"><span>More FAQ</span>
+                    <a class="more-btn"
+                        href="#"><span>{{ $cms['faq_container']->button_text ?? 'More FAQ' }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 17 12"
                             fill="none">
                             <path
@@ -1457,69 +1639,102 @@
                         </svg></a>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
-                                    How this work?
-                                </button>
-                            </h2>
-                            <div id="faqOne" class="accordion-collapse collapse show"
-                                data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yet bed any for assistance indulgence unpleasing. Not
-                                    thoughts all exercise blessing. Indulgence way everything
-                                    joy alteration boisterous the attachment.
+                    @if (isset($cms['faq_container_content']) && count($cms['faq_container_content']) > 0)
+                        <div class="accordion" id="faqAccordion">
+                            @foreach ($cms['faq_container_content'] as $key => $d)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#faqOne{{ $key }}" aria-expanded="true"
+                                            aria-controls="faqOne{{ $key }}">
+                                            {{ $d->title ?? 'How this work?' }}
+                                        </button>
+                                    </h2>
+                                    <div id="faqOne{{ $key }}"
+                                        class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                                        data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            {{ $d->description ??
+                                                'Yet bed any for assistance indulgence unpleasing. Not
+                                                                                    thoughts all exercise blessing. Indulgence way everything
+                                                                                    joy alteration boisterous the attachment.' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                                        How this work?
+                                    </button>
+                                </h2>
+                                <div id="faqOne" class="accordion-collapse collapse show"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yet bed any for assistance indulgence unpleasing. Not
+                                        thoughts all exercise blessing. Indulgence way everything
+                                        joy alteration boisterous the attachment.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false"
+                                        aria-controls="faqTwo">
+                                        Are there any additional fee?
+                                    </button>
+                                </h2>
+                                <div id="faqTwo" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yet bed any for assistance indulgence unpleasing. Not
+                                        thoughts all exercise blessing. Indulgence way everything
+                                        joy alteration boisterous the attachment.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false"
+                                        aria-controls="faqThree">
+                                        How can I get the app?
+                                    </button>
+                                </h2>
+                                <div id="faqThree" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yet bed any for assistance indulgence unpleasing. Not
+                                        thoughts all exercise blessing. Indulgence way everything
+                                        joy alteration boisterous the attachment.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#faqfour" aria-expanded="false"
+                                        aria-controls="faqfour">
+                                        What features do you offer and other not?
+                                    </button>
+                                </h2>
+                                <div id="faqfour" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yet bed any for assistance indulgence unpleasing. Not
+                                        thoughts all exercise blessing. Indulgence way everything
+                                        joy alteration boisterous the attachment.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
-                                    Are there any additional fee?
-                                </button>
-                            </h2>
-                            <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yet bed any for assistance indulgence unpleasing. Not
-                                    thoughts all exercise blessing. Indulgence way everything
-                                    joy alteration boisterous the attachment.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
-                                    How can I get the app?
-                                </button>
-                            </h2>
-                            <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yet bed any for assistance indulgence unpleasing. Not
-                                    thoughts all exercise blessing. Indulgence way everything
-                                    joy alteration boisterous the attachment.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#faqfour" aria-expanded="false" aria-controls="faqfour">
-                                    What features do you offer and other not?
-                                </button>
-                            </h2>
-                            <div id="faqfour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yet bed any for assistance indulgence unpleasing. Not
-                                    thoughts all exercise blessing. Indulgence way everything
-                                    joy alteration boisterous the attachment.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
+
                 </div>
             </div>
         </section>
@@ -1531,12 +1746,12 @@
                 <h2 class="title">
                     Join with us to explore the next revolution of future
                 </h2>
-                <form class="subscribe-form">
+                {{-- <form class="subscribe-form" >
                     <fieldset>
                         <input type="email" placeholder="Your Email Address" />
                     </fieldset>
                     <button type="submit">Sign Up</button>
-                </form>
+                </form> --}}
             </div>
             <svg class="left-icon" width="310" height="369" viewBox="0 0 310 369" fill="none"
                 xmlns="http://www.w3.org/2000/svg">

@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\HomePageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    // return view('welcome');
-    return view('frontend.layouts.home.index');
-})->name('home');
+// Route::get('/', function () {
+//     // return view('welcome');
+//     return view('frontend.layouts.home.index');
+// })->name('home');
+
+Route::get('/', [HomePageController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');

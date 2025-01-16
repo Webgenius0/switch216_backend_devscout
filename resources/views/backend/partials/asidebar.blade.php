@@ -36,7 +36,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
             <!-- Users Menu Item -->
 
-            <li class="menu-item">
+            {{-- <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">group_add</span>
                     <span class="title">Users</span>
@@ -55,7 +55,7 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">OTHERS</span>
@@ -172,6 +172,13 @@ $systemSetting = App\Models\SystemSetting::first();
                         <a href="{{ route('cms.home_page.faq_container.index') }}"
                             class="menu-link {{ request()->routeIs('cms.home_page.faq_container.index') ? 'active' : '' }}">
                             Faq Container
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.social_link.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.social_link.index') ? 'active' : '' }}">
+                            Social Link Container
                         </a>
                     </li>
 
