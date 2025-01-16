@@ -156,8 +156,8 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.provider_work_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.provider_work_container.index') ? 'active' : '' }}">
                             Provider Work Container
                         </a>
                     </li>

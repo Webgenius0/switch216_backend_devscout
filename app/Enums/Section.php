@@ -9,6 +9,7 @@ enum Section: string
     case ServiceContainer = 'service_container';
     case ProcessContainer = 'process_container';
     case PlatFormWorkContainer = 'plat_form_work_container';
+    case ProviderWorkContainer = 'provider_work_container';
     case ServiceContainerContent = 'service_container_content';
     case ProcessContainerContent = 'process_container_content';
     case PlatFormWorkContainerContent = 'plat_form_work_container_content';

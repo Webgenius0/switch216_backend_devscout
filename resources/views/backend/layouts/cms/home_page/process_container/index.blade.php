@@ -68,8 +68,8 @@
                                             <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
                                                 placeholder="Enter description here">{{ old('description', $ProcessContainer->description ?? '') }}</textarea>
                                         </div>
-                                        @error('sub_title')
-                                            <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                        @error('description')
+                                            <div id="description-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
