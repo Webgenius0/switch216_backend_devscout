@@ -175,6 +175,13 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
 
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.social_link.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.social_link.index') ? 'active' : '' }}">
+                            Social Link Container
+                        </a>
+                    </li>
+
                 </ul>
             </li>
 

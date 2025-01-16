@@ -18,6 +18,9 @@ enum Section: string
     case FaqContainer = 'faq_container';
     case FaqContainerContent = 'faq_container_content';
     case HeroBanner = 'hero_banner';
+
+    // footer section
+    case SocialLinkContainer = 'social_link_container';
 }
 
 

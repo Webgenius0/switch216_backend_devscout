@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
@@ -57,13 +58,9 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // cms all-------------------------------------------------
 
 
-    //! Route for Home Page C_M_S 
-    // Route::controller(HomePageController::class)->group(function () {
-    //     // Routes for displaying sections
-    //     Route::get('/cms/home-page/banner', 'index')->name('cms.home_page.banner');
-    //     Route::post('/cms/home-page/banner', 'store')->name('cms.home_page.banner.store');
-    //     Route::patch('/cms/home-page/banner-update', 'update')->name('cms.home_page.banner.update');
-    // });
+    //! =============== Route for Home Page C_M_S ----------------------------- start
+
+    // home banner container cms
     Route::resource('/cms/home-page/banner', HomePageController::class)->names(names: 'cms.home_page.banner');
     Route::post('/cms/home-page/banner/status/{id}', [HomePageController::class, 'status'])->name('cms.home_page.banner.status');
 
@@ -74,7 +71,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
     // home process container cms 
     Route::resource('/cms/home-page/process-container', HomePageProcessContainerController::class)->names(names: 'cms.home_page.process_container');
-    Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'processContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
+    Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
     Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
 
     // home platform work container cms 
@@ -95,8 +92,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::resource('/cms/home-page/faq-container', HomePageFaqContainerController::class)->names(names: 'cms.home_page.faq_container');
     Route::Post('/cms/home-page/faq-container-update', [HomePageFaqContainerController::class, 'FaqContainerUpdate'])->name('cms.home_page.faq_container.faq_container_update');
     Route::post('/cms/home-page/faq-container/status/{id}', [HomePageFaqContainerController::class, 'status'])->name('cms.home_page.faq_container.status');
+    //! ============= Route for Home Page C_M_S ----------------------------- end
 
-
+    // footer social links and image cms
+    Route::resource('/cms/home-page/social-link', HomePageSocialLinkContainerController::class)->names(names: 'cms.home_page.social_link');
+    Route::post('/cms/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
 });
 
 
