@@ -40,27 +40,12 @@
                             </div>
                         </div>
 
-                        <!-- Subtitle Field -->
-                        <div class="col-lg-6">
-                            <div class="form-group mb-4">
-                                <label class="label text-secondary">Sub Title<span class="text-danger">*</span></label>
-                                <div class="form-group position-relative">
-                                    <input type="text"
-                                        class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
-                                        name="sub_title" value="{{ old('sub_title', $data->sub_title) }}"
-                                        placeholder="Enter Sub Title here">
-                                </div>
-                                @error('sub_title')
-                                    <div id="sub_title-error" class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+
 
                         <!-- 2nd Subtitle Field -->
                         <div class="col-lg-6">
                             <div class="form-group mb-4">
-                                <label class="label text-secondary">Image Upper Title<span
-                                        class="text-danger">*</span></label>
+                                <label class="label text-secondary">Sub Title<span class="text-danger">*</span></label>
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
@@ -72,7 +57,22 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <!-- Subtitle Field -->
+                        <div class="col-lg-6">
+                            <div class="form-group mb-4">
+                                <label class="label text-secondary">Image Upper Title<span
+                                        class="text-danger">*</span></label>
+                                <div class="form-group position-relative">
+                                    <input type="text"
+                                        class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
+                                        name="sub_title" value="{{ old('sub_title', $data->sub_title) }}"
+                                        placeholder="Enter Sub Title here">
+                                </div>
+                                @error('sub_title')
+                                    <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                         <!-- 3rd Subtitle Field -->
                         <div class="col-lg-6">
                             <div class="form-group mb-4">
@@ -81,8 +81,7 @@
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('sub_description') is-invalid @enderror"
-                                        name="sub_description"
-                                        value="{{ old('sub_description', $data->sub_description) }}"
+                                        name="sub_description" value="{{ old('sub_description', $data->sub_description) }}"
                                         placeholder="Enter Image Upper Sub Title here">
                                 </div>
                                 @error('sub_description')
@@ -97,8 +96,7 @@
                         <div class="form-group">
                             <label class="label text-secondary mb-1">Image</label>
                             <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
-                                name="image"
-                                data-default-file="{{ $data->image ? asset( $data->image) : '' }}">
+                                name="image" data-default-file="{{ $data->image ? asset($data->image) : '' }}">
                             @error('image')
                                 <div id="image-error" class="text-danger">{{ $message }}</div>
                             @enderror

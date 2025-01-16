@@ -1,5 +1,6 @@
 @php
     $systemSetting = App\Models\SystemSetting::first();
+    $SocialLink = App\Models\CMS::where('page', Page::HomePage)->where('status', 'active')->where()->;
 @endphp
 <!-- footer section start -->
 <footer class="footer">

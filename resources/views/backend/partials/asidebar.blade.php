@@ -36,7 +36,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
             <!-- Users Menu Item -->
 
-            <li class="menu-item">
+            {{-- <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">group_add</span>
                     <span class="title">Users</span>
@@ -55,7 +55,7 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">OTHERS</span>

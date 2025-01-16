@@ -36,27 +36,10 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Subtitle Field -->
-                        <div class="col-lg-6">
-                            <div class="form-group mb-4">
-                                <label class="label text-secondary">Sub Title<span class="text-danger">*</span></label>
-                                <div class="form-group position-relative">
-                                    <input type="text"
-                                        class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
-                                        name="sub_title" value="{{ old('sub_title') }}" placeholder="Enter Sub Title here">
-                                </div>
-                                @error('sub_title')
-                                    <div id="sub_title-error" class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
                         <!-- 2nd Subtitle Field -->
                         <div class="col-lg-6">
                             <div class="form-group mb-4">
-                                <label class="label text-secondary">Image Upper Title<span
-                                        class="text-danger">*</span></label>
+                                <label class="label text-secondary">Description<span class="text-danger">*</span></label>
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
@@ -68,6 +51,23 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <!-- Subtitle Field -->
+                        <div class="col-lg-6">
+                            <div class="form-group mb-4">
+                                <label class="label text-secondary">Image Upper Title<span
+                                        class="text-danger">*</span></label>
+                                <div class="form-group position-relative">
+                                    <input type="text"
+                                        class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
+                                        name="sub_title" value="{{ old('sub_title') }}" placeholder="Enter Sub Title here">
+                                </div>
+                                @error('sub_title')
+                                    <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
 
                         <!-- 3rd Subtitle Field -->
                         <div class="col-lg-6">
