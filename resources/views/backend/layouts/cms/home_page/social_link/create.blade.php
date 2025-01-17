@@ -29,7 +29,7 @@
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
-                                        name="title" value="{{ old('title') }}" required placeholder="Enter Title here">
+                                        name="title" value="{{ old('title') }}" required placeholder="facebook">
                                 </div>
                                 @error('title')
                                     <div id="title-error" class="text-danger">{{ $message }}</div>
@@ -47,7 +47,7 @@
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
                                         name="description" value="{{ old('description') }}"
-                                        placeholder="Enter Social Profile Link here">
+                                        placeholder="https://github.com/helalscript">
                                 </div>
                                 @error('description')
                                     <div id="description-error" class="text-danger">{{ $message }}</div>
@@ -75,7 +75,7 @@
                     <div class="d-flex flex-wrap gap-3">
                         {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
                         <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
-                                class="ri-check-line text-white fw-medium"></i> Submit Banner</button>
+                                class="ri-check-line text-white fw-medium"></i> Submit</button>
                     </div>
                 </div>
             </div>
