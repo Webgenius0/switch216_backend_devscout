@@ -10,6 +10,13 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- jQuery (required by Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
 @endpush
 
 @section('content')
@@ -24,7 +31,8 @@
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="auth-step-form-container">
-                        <form class="auth-step-form" method="POST" action="{{ route('provider.register.store') }}" enctype="multipart/form-data">
+                        <form class="auth-step-form" method="POST" action="{{ route('provider.register.store') }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <!-- Step 1 -->
@@ -77,8 +85,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="location">Location</label>
-                                    <input type="text" id="location" name="location"
-                                        placeholder="Enter your location" />
+                                    {{-- <select class="form-select" name="location" id="">
+                                        <option value="">Select Location</option>
+                                        @foreach ($morocco_city['results'] as $value)
+                                            <option value="{{ $value['geonameid'] }}">{{ $value['name'] }}</option>
+                                        @endforeach
+                                    </select> --}}
+                                    <select class="form-select" name="location" id="location-select">
+                                        <option value="">Select Location</option>
+                                        @foreach ($morocco_city['results'] as $value)
+                                            <option value="{{ $value['geonameid'] }}">{{ $value['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <label for="instagram">Add Instagram Link</label>
@@ -229,7 +248,8 @@
                                                 <span>Supported file types: .jpg, .jpeg, .png.</span>
                                             </div>
                                         </div>
-                                        <input type="file" name="gallary_image[]" accept="image/*" multiple id="fileInput" hidden />
+                                        <input type="file" name="gallary_image[]" accept="image/*" multiple
+                                            id="fileInput" hidden />
 
 
                                     </div>
@@ -251,4 +271,13 @@
 
 
 @push('scripts')
+{{-- <script>
+    $(document).ready(function() {
+        // Initialize Select2 on the dropdown
+        $('#location-select').select2({
+            placeholder: "Select Location", // Optional placeholder
+            allowClear: true                // Allows clearing the selection
+        });
+    });
+</script> --}}
 @endpush

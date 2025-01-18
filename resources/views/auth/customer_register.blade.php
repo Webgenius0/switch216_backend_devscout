@@ -63,7 +63,7 @@
                         <div class="auth-des auth-bottom text-center">
                             Already have an account? <a href="{{ route('login') }}">Sign In</a>
                         </div>
-                        <div class="text-separator">
+                        {{-- <div class="text-separator">
                             <div class="bar"></div>
                             <div class="text">or</div>
                             <div class="bar"></div>
@@ -75,7 +75,7 @@
                         <button type="button" class="social-auth-btn" id="facebook-auth-btn">
                             <img src="{{ asset('frontend/assets') }}/images/logos_facebook.png" alt="facebook logo" />
                             <span>Sign Up Facebook account</span>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>

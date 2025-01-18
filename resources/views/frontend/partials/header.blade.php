@@ -29,19 +29,19 @@
                   <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
               </div>
               <div class="nav-actions">
-                  <select class="select">
+                  {{-- <select class="select">
                       <option value="connected">English</option>
                       <option value="connected">Spanish</option>
                       <option value="connected">Chinese</option>
-                  </select>
+                  </select> --}}
                   @if (Auth::check())
                       <div class="profile-dropdown-container1">
                           <div class="profile-dropdown-btn">
-                              <img src="{{ asset('frontend/assets/images/profile.jpg') }}" alt="Profile" />
+                              <img src="{{ asset(Auth::user()->avatar ?? 'frontend/assets/images/profile.jpg') }}" alt="Profile" />
                           </div>
                           <div class="profile-dropdown1">
                               <a class="dropdown-item1 mb-2">{{ Auth::user()->name ?? 'Mr. John Doe' }}</a>
-                              <a href="#">
+                              {{-- <a href="#">
                                   <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
                                       viewBox="0 0 448 512">
                                       <path
@@ -49,7 +49,7 @@
                                   </svg>
 
                                   <span>My Profile</span>
-                              </a>
+                              </a> --}}
                               <a
                                   href="@if (Auth::user()->role === 'admin') {{ route('admin.dashboard') }}
                                   @elseif (Auth::user()->role === 'customer')
@@ -149,7 +149,7 @@
           </div>
           <div class="nav-items">
               <a class="nav-item active" href="{{ route('home') }}">Home</a>
-              <a class="nav-item" href="./service.html">Service</a>
+              <a class="nav-item" href="">Service</a>
               <div class="nav-item dropdown-items">
                   <span class="dropdown-item-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                       Category
@@ -160,18 +160,18 @@
                       <a class="dropdown-item" href="{{ route('car.index') }}">Car Rent</a>
                   </div>
               </div>
-              <a class="nav-item" href="./emergency.html"> Emergency Service</a>
+              
               <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
               <a href="{{ route('food.index') }}" class="nav-item">Foods</a>
               <a href="{{ route('car.index') }}" class="nav-item">Car Rent</a>
               <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
           </div>
           <div class="nav-actions">
-              <select class="select">
+              {{-- <select class="select">
                   <option value="connected">English</option>
                   <option value="connected">Spanish</option>
                   <option value="connected">Chinese</option>
-              </select>
+              </select> --}}
               @if (Auth::check())
               @else
                   <a href="{{ route('login') }}" class="auth-btn">Sign In</a>
