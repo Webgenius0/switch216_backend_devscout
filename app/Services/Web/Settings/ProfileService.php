@@ -115,7 +115,7 @@ class ProfileService
             if ($user->role == "admin") {
                 $user->update($validatedData);
             } else {
-                $validatedData = array_except($validatedData, ['email']);
+                unset($validatedData['email']);
                 $user->update($validatedData);
             }
 
