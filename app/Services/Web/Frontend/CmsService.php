@@ -33,7 +33,7 @@ class CmsService
             ];
 
             // Fetch all required sections in a single query
-            $cmsData = CMS::where('page', 'home_page')
+            $cmsData = CMS::where('page', 'home_page') 
                 ->where('status', 'active')
                 ->whereIn('section', array_keys($sections))
                 ->orderBy('created_at', 'desc')

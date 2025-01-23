@@ -125,6 +125,8 @@ Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
     Route::post('settings-profile', [ContractorSettingController::class, 'updateProfile'])->name('contractor.settings.update');
     Route::get('settings-password', [ContractorSettingController::class, 'password'])->name('contractor.settings.password');
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
+
+    
 });
 
 // Route::get('/dashboard', function () {

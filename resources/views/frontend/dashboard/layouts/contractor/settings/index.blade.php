@@ -42,7 +42,7 @@
                                 <input type="text"
                                     class="form-control text-dark ps-3 h-55 @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email', $contractor->email ?? '') }}" required
-                                    placeholder="Enter email here">
+                                     disabled>
                             </div>
                             @error('email')
                                 <div id="email-error" class="text-danger">{{ $message }}</div>
@@ -114,7 +114,7 @@
 
 
 @push('scripts')
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
+    {{-- <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script> --}}
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function() {
