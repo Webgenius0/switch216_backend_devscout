@@ -98,7 +98,7 @@
                 <a href="tel:{{ $systemSetting->contact_number ?? '' }}"
                     class="phone-nav">{{ $systemSetting->contact_number ?? '+91-80-65652545' }} </a>
                 <a class="mail-nav">{{ $systemSetting->address ?? 'Morocco' }} </a>
-                <a class="button" href="#">Contact Us</a>
+                {{-- <a class="button" href="#">Contact Us</a> --}}
             </div>
         </div>
     </div>

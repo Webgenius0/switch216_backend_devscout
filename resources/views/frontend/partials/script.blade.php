@@ -15,17 +15,15 @@
             dropdownContainer.addEventListener("click", (event) => {
                 event.stopPropagation(); // Prevent click event from propagating to the document
                 dropdown.classList.toggle("active");
-
-                console.log("hi")
             });
         }
         if (dropdown) {
-         // Close dropdown when clicking outside
-        document.addEventListener("click", () => {
-            dropdown.classList.remove("active");
-        });   
+            // Close dropdown when clicking outside
+            document.addEventListener("click", () => {
+                dropdown.classList.remove("active");
+            });
         }
-        
+
     });
 </script>
 

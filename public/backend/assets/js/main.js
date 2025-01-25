@@ -20,9 +20,9 @@ $(document).ready(function () {
     }
   });
 
-  // nice select start
-  $(".select").niceSelect();
-  // nice select end
+  // // nice select start
+  // $(".select").niceSelect();
+  // // nice select end
 
   // counter animation start
   const counterItems = document.querySelectorAll(".count");
@@ -125,8 +125,8 @@ $(document).ready(function () {
     });
   });
 
-  document.querySelector(".back-to-inbox-btn").addEventListener("click", () => {
-    document.querySelector(".user-messages").style.display = "none";
-    document.querySelector(".inbox").style.display = "block";
-  });
+  // document.querySelector(".back-to-inbox-btn").addEventListener("click", () => {
+  //   document.querySelector(".user-messages").style.display = "none";
+  //   document.querySelector(".inbox").style.display = "block";
+  // });
 });

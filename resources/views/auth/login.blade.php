@@ -85,7 +85,7 @@
                             <div class="se--checkField">
                                 <!-- checkBox -->
                                 <div class="se--remember">
-                                  <input type="checkbox" id="check-me" />
+                                  <input type="checkbox" id="check-me" checked required />
                                   <label for="check-me">I Accept Terms</label>
                                 </div>
                                 <!-- forgotPassword -->
@@ -96,7 +96,7 @@
                         <div class="auth-des auth-bottom text-center">
                             Don't have any account? <a href="{{ route('register') }}">Sign Up</a>
                         </div>
-                        <div class="text-separator">
+                        {{-- <div class="text-separator">
                             <div class="bar"></div>
                             <div class="text">or</div>
                             <div class="bar"></div>
@@ -108,7 +108,7 @@
                         <button type="button" class="social-auth-btn" id="facebook-auth-btn">
                             <img src="{{ asset('frontend/assets/images/logos_facebook.png') }}" alt="facebook logo" />
                             <span>Sign In Facebook account</span>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
