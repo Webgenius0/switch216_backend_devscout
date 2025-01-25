@@ -46,7 +46,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -54,19 +53,23 @@ class ProfileController extends Controller
             'gender' => 'required|in:male,female,other',
             'avatar' => 'nullable|image|max:2048',
         ]);
-
-        $updatedProfile = $this->profileService->update($this->user, $validatedData);
-        if ($updatedProfile) {
-            flash()->success('Profile Update Succesfull');
-            return redirect()->route('profile_settings.index');
-        } else {
+        try {
+            $updatedProfile = $this->profileService->update($this->user, $validatedData);
+            if ($updatedProfile) {
+                flash()->success('Profile Update Succesfull');
+                return redirect()->route('profile_settings.index');
+            } else {
+                // Flash error message
+                flash()->error('Something went wrong');
+                return redirect()->back();
+            }
+        } catch (Exception $e) {
+            Log::error('Profile update failed: ' . $e->getMessage());
             // Flash error message
             flash()->error('Something went wrong');
             return redirect()->back();
         }
-
     }
-
 
     public function UpdatePassword(Request $request)
     {
@@ -86,6 +89,6 @@ class ProfileController extends Controller
         if ($updatedProfile) {
             flash()->success('Password updated successfully');
             return redirect()->route('profile_settings.password_change');
-        } 
+        }
     }
 }

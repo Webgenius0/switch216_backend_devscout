@@ -66,106 +66,106 @@ function profileUpload(profileUploadBox) {
   });
 }
 
-function fileUpload(fileUploadContainer) {
-  const fileInput = fileUploadContainer.querySelector("input[type='file']");
-  const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+// function fileUpload(fileUploadContainer) {
+//   const fileInput = fileUploadContainer.querySelector("input[type='file']");
+//   const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
-  const galleryInput = document.createElement("input");
-  galleryInput.setAttribute("type", "hidden");
-  galleryInput.setAttribute("name", "gallery_images[]");
-  galleryInput.setAttribute("multiple", true);
-  fileUploadContainer.appendChild(galleryInput);
+//   // Global array to store selected files
+//   let galleryFiles = [];
 
-  fileUploadContainer.addEventListener("click", function (e) {
-    e.stopPropagation();
-    fileInput.click();
-  });
+//   // Hidden input for submitting file names/identifiers
+//   const galleryInput = document.createElement("input");
+//   galleryInput.setAttribute("type", "hidden");
+//   galleryInput.setAttribute("name", "gallery_images");
+//   fileUploadContainer.appendChild(galleryInput);
 
-  fileInput.addEventListener("change", function (e) {
-    const files = e.target.files;
-    handleFiles(files);
+//   // Open file dialog on click
+//   fileUploadContainer.addEventListener("click", function (e) {
+//     e.stopPropagation();
+//     fileInput.click();
+//   });
 
-    // Reset the file input after handling files to allow the same files to be selected again
-    fileInput.value = '';
-  });
+//   // Handle file input change
+//   fileInput.addEventListener("change", function (e) {
+//     const files = Array.from(e.target.files);
+//     handleFiles(files);
 
-  fileUploadContainer.addEventListener("dragover", function (e) {
-    e.preventDefault();
-    if (!fileUploadContainer.classList.contains("dragover")) {
-      fileUploadContainer.classList.add("dragover");
-    }
-  });
+//     // Reset file input to allow re-selecting the same files
+//     fileInput.value = '';
+//   });
 
-  fileUploadContainer.addEventListener("dragleave", function (e) {
-    e.preventDefault();
-    fileUploadContainer.classList.remove("dragover");
-  });
+//   // Drag and drop functionality
+//   fileUploadContainer.addEventListener("dragover", function (e) {
+//     e.preventDefault();
+//     fileUploadContainer.classList.add("dragover");
+//   });
 
-  fileUploadContainer.addEventListener("drop", function (e) {
-    e.preventDefault();
-    fileUploadContainer.classList.remove("dragover");
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-  });
+//   fileUploadContainer.addEventListener("dragleave", function () {
+//     fileUploadContainer.classList.remove("dragover");
+//   });
 
-  function handleFiles(files) {
-    // Clear the image preview container before adding new previews
-    // imagePreviewContainer.innerHTML = ''; // Remove all previous previews
+//   fileUploadContainer.addEventListener("drop", function (e) {
+//     e.preventDefault();
+//     fileUploadContainer.classList.remove("dragover");
 
-    // Prepare the `galleryInput` to hold the new list of files
-    // galleryInput.value = '';
+//     const files = Array.from(e.dataTransfer.files);
+//     handleFiles(files);
+//   });
 
-    // Loop through all the files and create an image preview for each
-    Array.from(files).forEach((file) => {
-      const imgContainer = document.createElement("div");
-      imgContainer.setAttribute("class", "image-container");
+//   // Handle files and preview them
+//   function handleFiles(files) {
+//     files.forEach((file) => {
+//       if (!galleryFiles.includes(file)) {
+//         galleryFiles.push(file);
 
-      const img = document.createElement("img");
-      const reader = new FileReader();
+//         // Update gallery input with file names
+//         updateGalleryInput();
 
-      reader.onload = function (e) {
-        img.setAttribute("src", e.target.result);
-        img.setAttribute("class", "preview-img");
+//         // Create preview
+//         const imgContainer = document.createElement("div");
+//         imgContainer.setAttribute("class", "image-container");
 
-        // Apply CSS directly in JavaScript to control width, height, and aspect ratio
-        img.style.width = "300px";
-        img.style.height = "200px";
-        img.style.objectFit = "cover";
-        img.style.margin = "5px";
+//         const img = document.createElement("img");
+//         const reader = new FileReader();
 
-        // Create the close button
-        const closeButton = document.createElement("button");
-        closeButton.textContent = "×";
-        closeButton.setAttribute("class", "close-btn");
-        closeButton.setAttribute("type", "button");
+//         reader.onload = function (e) {
+//           img.setAttribute("src", e.target.result);
+//           img.setAttribute("class", "preview-img");
+//           img.style.width = "300px";
+//           img.style.height = "200px";
+//           img.style.objectFit = "cover";
+//           img.style.margin = "5px";
 
-        // Add close button functionality
-        closeButton.addEventListener("click", function () {
-          imgContainer.remove();
-          // Update the `galleryInput` value after removing a file
-          const updatedFiles = Array.from(files).filter((f) => f !== file);
-          updateGalleryInput(updatedFiles);
-        });
+//           // Close button
+//           const closeButton = document.createElement("button");
+//           closeButton.textContent = "×";
+//           closeButton.setAttribute("class", "close-btn");
+//           closeButton.addEventListener("click", function () {
+//             // Remove preview and update files
+//             imgContainer.remove();
+//             galleryFiles = galleryFiles.filter((f) => f !== file);
+//             updateGalleryInput();
+//           });
 
-        // Append the image and the close button to the container
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(closeButton);
+//           // Append image and close button
+//           imgContainer.appendChild(img);
+//           imgContainer.appendChild(closeButton);
+//           imagePreviewContainer.appendChild(imgContainer);
+//         };
 
-        // Append the container to the image preview container
-        imagePreviewContainer.appendChild(imgContainer);
-      };
+//         reader.readAsDataURL(file);
+//       }
+//     });
+//   }
 
-      reader.readAsDataURL(file);
-      console.log(file);
-      // Add the file to the `galleryInput` value
-      galleryInput.value += `${file},`; 
-    });
-  }
+//   // Update the hidden input with file names (or other serialized data)
+//   function updateGalleryInput() {
+//     galleryInput.value = JSON.stringify(galleryFiles.map((file) => file.name)); // Example: send file names
+//     console.log("Current gallery files:", galleryFiles);
+//     console.log("Hidden input value:", galleryInput.value);
+//   }
+// }
 
-  function updateGalleryInput(files) {
-    galleryInput.value = files.map((f) => f).join(',');
-  }
-}
 
 
 

@@ -36,7 +36,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
             <!-- Users Menu Item -->
 
-            <li class="menu-item">
+            {{-- <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle active">
                     <span class="material-symbols-outlined menu-icon">group_add</span>
                     <span class="title">Users</span>
@@ -55,7 +55,7 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">OTHERS</span>
@@ -120,7 +120,7 @@ $systemSetting = App\Models\SystemSetting::first();
 
                 </ul>
             </li>
-           
+
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">CMS</span>
             </li>
@@ -144,39 +144,41 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.process_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.process_container.index') ? 'active' : '' }}">
                             Process Container
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.platform_work_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.platform_work_container.index') ? 'active' : '' }}">
                             Platform Work
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.provider_work_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.provider_work_container.index') ? 'active' : '' }}">
                             Provider Work Container
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
-                            User Review Container
+                        <a href="{{ route('cms.home_page.review_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.review_container.index') ? 'active' : '' }}">
+                            Review Container
                         </a>
                     </li>
+
                     <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
-                            Provider Review Container
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('dynamic_page.create') }}"
-                            class="menu-link {{ request()->routeIs('dynamic_page.create') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.faq_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.faq_container.index') ? 'active' : '' }}">
                             Faq Container
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.social_link.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.social_link.index') ? 'active' : '' }}">
+                            Social Link Container
                         </a>
                     </li>
 

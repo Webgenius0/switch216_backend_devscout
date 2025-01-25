@@ -59,12 +59,10 @@
         </div>
     </div>
 </div> --}}
-    <x-modal id="openModal" title="My Modal Title" labelledby="customModalLabel" size="modal-lg" saveButton="Submit">
+    {{-- <x-modal id="openModal" title="My Modal Title" labelledby="customModalLabel" size="modal-lg" saveButton="Submit">
         <p>This is the modal content.</p>
-    </x-modal>
-    <x-modal id="openModal2" title="My Modal Title" labelledby="customModalLabel" size="modal-lg" saveButton="Submit">
-        <p>This is the modal content.</p>
-    </x-modal>
+    </x-modal> --}}
+
 </body>
 
 </html>

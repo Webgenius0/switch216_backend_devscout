@@ -10,7 +10,13 @@
 
 
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
@@ -52,20 +58,47 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // cms all-------------------------------------------------
 
 
-    //! Route for Home Page C_M_S 
-    // Route::controller(HomePageController::class)->group(function () {
-    //     // Routes for displaying sections
-    //     Route::get('/cms/home-page/banner', 'index')->name('cms.home_page.banner');
-    //     Route::post('/cms/home-page/banner', 'store')->name('cms.home_page.banner.store');
-    //     Route::patch('/cms/home-page/banner-update', 'update')->name('cms.home_page.banner.update');
-    // });
+    //! =============== Route for Home Page C_M_S ----------------------------- start
+
+    // home banner container cms
     Route::resource('/cms/home-page/banner', HomePageController::class)->names(names: 'cms.home_page.banner');
     Route::post('/cms/home-page/banner/status/{id}', [HomePageController::class, 'status'])->name('cms.home_page.banner.status');
+
     // home service container cms 
     Route::resource('/cms/home-page/service-container', HomePageServiceContainerController::class)->names(names: 'cms.home_page.service_container');
     Route::Post('/cms/home-page/service-container-update', [HomePageServiceContainerController::class, 'ServiceContainerUpdate'])->name('cms.home_page.service_container.service_container_update');
     Route::post('/cms/home-page/service-container/status/{id}', [HomePageServiceContainerController::class, 'status'])->name('cms.home_page.service_container.status');
+
+    // home process container cms 
+    Route::resource('/cms/home-page/process-container', HomePageProcessContainerController::class)->names(names: 'cms.home_page.process_container');
+    Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
+    Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
+
+    // home platform work container cms 
+    Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
+    Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');
+    Route::post('/cms/home-page/platform-work-container/status/{id}', [HomePagePlatFormWorkContainerController::class, 'status'])->name('cms.home_page.platform_work_container.status');
+
+    // home provider work container  cms 
+    Route::get('/cms/home-page/provider-work-container', [HomePageProviderWorkContainerController::class, 'index'])->name('cms.home_page.provider_work_container.index');
+    Route::Post('/cms/home-page/provider-work-container-update', [HomePageProviderWorkContainerController::class, 'ProviderWorkContainerUpdate'])->name('cms.home_page.provider_work_container.provider_work_container_update');
+
+    // home Review container  cms 
+    Route::get('/cms/home-page/review-container', [HomePageReviewContainerController::class, 'index'])->name('cms.home_page.review_container.index');
+    Route::Post('/cms/home-page/review-user-container-update', [HomePageReviewContainerController::class, 'ReviewUserContainerUpdate'])->name('cms.home_page.review_container.review_user_container_update');
+    Route::Post('/cms/home-page/review-provider-container-update', [HomePageReviewContainerController::class, 'ReviewProviderContainerUpdate'])->name('cms.home_page.review_container.review_provide_container_update');
+
+    // faq container cms 
+    Route::resource('/cms/home-page/faq-container', HomePageFaqContainerController::class)->names(names: 'cms.home_page.faq_container');
+    Route::Post('/cms/home-page/faq-container-update', [HomePageFaqContainerController::class, 'FaqContainerUpdate'])->name('cms.home_page.faq_container.faq_container_update');
+    Route::post('/cms/home-page/faq-container/status/{id}', [HomePageFaqContainerController::class, 'status'])->name('cms.home_page.faq_container.status');
+    //! ============= Route for Home Page C_M_S ----------------------------- end
+
+    // footer social links and image cms
+    Route::resource('/cms/home-page/social-link', HomePageSocialLinkContainerController::class)->names(names: 'cms.home_page.social_link');
+    Route::post('/cms/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
 });
+
 
 // Public route for dynamic pages accessible to all users
 Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');

@@ -39,9 +39,10 @@ class HomePageServiceContainerController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="action-wrapper">
-                         <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit" onclick="window.location.href=\'' . route('cms.home_page.service_container.edit', $data->id) . '\'">
-                         <i class="material-symbols-outlined fs-16 text-body">edit</i>
-                        </button>
+                        <a type="button" href="javascript:void(0)"
+                                class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
+                                data-bs-toggle="modal" data-bs-target="#EditServiceContainer" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
+                            </a>
                         <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
                         <i class="material-symbols-outlined fs-16 text-danger">delete</i>
                         </button>
@@ -51,12 +52,14 @@ class HomePageServiceContainerController extends Controller
                 ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.cms.home_page.service_container.index",compact("ServiceContainer"));
+        return view("backend.layouts.cms.home_page.service_container.index", compact("ServiceContainer"));
     }
 
     public function create()
     {
-        return view("backend.layouts.cms.home_page.service_container.create");
+        // return view("backend.layouts.cms.home_page.service_container.create");
+        flash()->warning('not found this page');
+        return back();
     }
 
     public function store(Request $request)
@@ -72,12 +75,20 @@ class HomePageServiceContainerController extends Controller
             $validatedData['page'] = Page::HomePage->value;
             $validatedData['section'] = Section::ServiceContainerContent->value;
             CMS::Create($validatedData);
-            flash()->success('Service Container Content created successfully');
-            return redirect()->route('cms.home_page.banner.index');
+            // flash()->success('Service Container Content created successfully');
+            // return redirect()->route('cms.home_page.banner.index');
+            return response()->json([
+                "success" => true,
+                "message" => "Service Container Content created successfully"
+            ]);
         } catch (Exception $e) {
             Log::error("HomePageController::store" . $e->getMessage());
-            flash()->error('Service Container Content not created successfully');
-            return redirect()->route('cms.home_page.banner.index');
+            // flash()->error('Service Container Content not created successfully');
+            // return redirect()->route('cms.home_page.banner.index');
+            return response()->json([
+                "success" => false,
+                "message" => "Service Container Content not create"
+            ]);
         }
     }
     // update main service container
@@ -126,11 +137,17 @@ class HomePageServiceContainerController extends Controller
         return view("backend.layouts.cms.home_page.service_container.edit", compact("data"));
     }
 
+    public function show(string $id)
+    {
+        flash()->warning('not found this page');
+        return back();
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -138,12 +155,20 @@ class HomePageServiceContainerController extends Controller
         try {
             $data = CMS::findOrFail($id);
             $data->update($validatedData);
-            flash()->success('Service Container Content Updated Successfully');
-            return redirect()->route('cms.home_page.service_container.index');
+            // flash()->success('Service Container Content Updated Successfully');
+            // return redirect()->route('cms.home_page.service_container.index');
+            return response()->json([
+                "success" => true,
+                "message" => "Service Container Content Updated Successfully"
+            ]);
         } catch (Exception $e) {
             Log::error("HomePageController::update" . $e->getMessage());
-            flash()->error('Service Container Content not Updated Successfully');
-            return redirect()->route('cms.home_page.service_container.index');
+            // flash()->error('Service Container Content not Updated Successfully');
+            // return redirect()->route('cms.home_page.service_container.index');
+            return response()->json([
+                "success" => false,
+                "message" => "Service Container Content not Update"
+            ]);
         }
     }
 

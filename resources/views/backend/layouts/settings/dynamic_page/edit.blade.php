@@ -81,7 +81,7 @@
                     <div class="col-lg-12">
                         <div class="d-flex flex-wrap gap-3">
                             <button type="reset" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white" onclick="window.location.href='{{route('dynamic_page.index')}}'">Cancel</button>
-                            <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i class="ri-check-line text-white fw-medium"></i> Update Profile</button>
+                            <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i class="ri-check-line text-white fw-medium"></i> Update</button>
                         </div>
                     </div>
                 </div>

@@ -63,6 +63,9 @@
                 <label for="userEmail" class="input-label">Email</label>
                 <input type="email" id="userEmail" class="input-field" placeholder="kolchie@mail.com" required name="email" :value="old('email')"  autofocus autocomplete="username" />
               </fieldset>
+              @if ($errors->has('email'))
+                <div class="text-danger mb-2">{{ $errors->first('email') }}</div>
+              @endif
               <button type="submit" class="button w-100">Continue</button>
             </form>
           </div>
