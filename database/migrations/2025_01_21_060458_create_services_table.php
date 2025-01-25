@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->foreignId('subcategory_id')->nullable()->constrained('sub_categories')->onDelete('restrict');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('status')->default('pending'); // 'pending', 'approved', 'rejected'
             $table->string('cover_image')->nullable();
             $table->json('gallery_images')->nullable(); // Array of images
             $table->string('video_url')->nullable(); // Service video
