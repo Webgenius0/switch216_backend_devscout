@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -41,23 +42,25 @@ class RegisterContractorController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
-        dd($request->all());
+        // dd($request->all());
         $validateData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'location' => 'required|string|max:255',
-            'instagram' => 'nullable|string|max:255',
-            'serviceDetails' => 'nullable|string',
-            'serviceTitle' => 'nullable|string|max:255',
-            'gallery_images.*' => 'file|mimes:jpg,jpeg,png,gif|max:2048',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
             'avatar' => 'file|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+        // dd($validateData);
         try {
             $this->contractorRegisterService->store($validateData);
-            return redirect(route('contarctor.dashboard', absolute: false));
+            Log::info('RegisterContractorController ::store- complete');
+            return redirect(route('contractor.dashboard'));
         } catch (Exception $e) {
-            return back()->withErrors($e->errors())->withInput();
+            Log::error('RegisterContractorController ::store-' . $e->getMessage());
+            flash()->error($e->getMessage());
+            return redirect()->route('contractor.dashboard');
         }
 
     }

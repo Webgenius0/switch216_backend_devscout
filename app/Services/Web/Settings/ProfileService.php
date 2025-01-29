@@ -23,7 +23,7 @@ class ProfileService
             $user = Auth::user();
             return $user;
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -37,7 +37,7 @@ class ProfileService
         try {
             // Logic for create form
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -52,7 +52,7 @@ class ProfileService
         try {
             // Logic to store a new resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -67,7 +67,7 @@ class ProfileService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -82,7 +82,7 @@ class ProfileService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -125,7 +125,7 @@ class ProfileService
         } catch (Exception $e) {
             Log::error("Profile Update Error: " . $e->getMessage());
             DB::rollBack();
-            return $this->handleException($e);
+             throw $e;
         }
 
     }
@@ -147,7 +147,7 @@ class ProfileService
         } catch (Exception $e) {
             Log::error("Profile Password Update Error: " . $e->getMessage());
             DB::rollBack();
-            return $this->handleException($e);
+             throw $e;
         }
 
     }
@@ -163,7 +163,7 @@ class ProfileService
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 

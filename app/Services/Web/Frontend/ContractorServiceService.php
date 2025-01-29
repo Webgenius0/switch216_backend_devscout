@@ -16,7 +16,7 @@ class ContractorServiceService
         try {
             // Logic to fetch all resources
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -30,7 +30,7 @@ class ContractorServiceService
         try {
             // Logic for create form
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -45,7 +45,7 @@ class ContractorServiceService
         try {
             // Logic to store a new resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -60,7 +60,7 @@ class ContractorServiceService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -75,7 +75,7 @@ class ContractorServiceService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -91,7 +91,7 @@ class ContractorServiceService
         try {
             // Logic to update a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 
@@ -106,7 +106,7 @@ class ContractorServiceService
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+             throw $e;
         }
     }
 

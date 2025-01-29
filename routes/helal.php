@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
@@ -97,6 +98,17 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // footer social links and image cms
     Route::resource('/cms/home-page/social-link', HomePageSocialLinkContainerController::class)->names(names: 'cms.home_page.social_link');
     Route::post('/cms/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
+
+
+
+
+    // App route 
+
+    //category
+    Route::resource('categories', CategoryController::class)->names(names: 'category');
+    Route::post('categories/status/{id}', [CategoryController::class, 'status'])->name('category.status');
+
+
 });
 
 

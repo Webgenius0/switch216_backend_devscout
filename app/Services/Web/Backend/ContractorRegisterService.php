@@ -2,6 +2,7 @@
 
 namespace App\Services\Web\Backend;
 
+use App\Helpers\Helper;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +21,7 @@ class ContractorRegisterService
         try {
             // Logic to fetch all resources
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -34,7 +35,7 @@ class ContractorRegisterService
         try {
             // Logic for create form
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -47,18 +48,31 @@ class ContractorRegisterService
     public function store(array $data)
     {
         try {
-            $user = User::create([
-                'name' => $data->name,
-                'email' => $data->email,
-                'password' => Hash::make($data->password),
-                'role' => 'contarctor',
-            ]);
+            // Check if 'avatar' is in the array and if the file exists
+            if (isset($data['avatar']) && is_file($data['avatar'])) {
+                // Use the Helper method to handle the file upload
+                $data['avatar'] = Helper::fileUpload($data['avatar'], 'avatar', time() . '_' . getFileName($data['avatar']));
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'role' => 'contractor',
+                    'avatar' => $data['avatar'],
+                ]);
+            } else {
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'role' => 'contractor',
+                ]);
+            }
 
             event(new Registered($user));
             Auth::login($user);
             return true;
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -73,7 +87,7 @@ class ContractorRegisterService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -88,7 +102,7 @@ class ContractorRegisterService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -104,7 +118,7 @@ class ContractorRegisterService
         try {
             // Logic to update a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -119,7 +133,7 @@ class ContractorRegisterService
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 

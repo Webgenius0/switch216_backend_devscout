@@ -108,4 +108,21 @@ class User extends Authenticatable
         // Return only the path for web requests
         return $value;
     }
+
+
+    /**
+     * Get the services created by the user (contractor).
+     */
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'user_id');
+    }
+
+    /**
+     * Get the bookings made by the user (customer).
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'user_id');
+    }
 }

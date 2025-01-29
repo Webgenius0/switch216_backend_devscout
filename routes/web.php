@@ -5,11 +5,19 @@ use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 // Route::get('/', function () {
 //     // return view('welcome');
 //     return view('frontend.layouts.home.index');
 // })->name('home');
+
+
+Route::get('/map-api-key', function () {
+    return response()->json(['key' => env('MAPTILER_API_KEY')]);
+})->name('map.api.key');
+
+
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 
@@ -126,7 +134,7 @@ Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
     Route::get('settings-password', [ContractorSettingController::class, 'password'])->name('contractor.settings.password');
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
 
-    
+
 });
 
 // Route::get('/dashboard', function () {

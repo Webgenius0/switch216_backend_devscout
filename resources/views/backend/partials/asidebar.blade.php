@@ -32,7 +32,14 @@ $systemSetting = App\Models\SystemSetting::first();
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">APPS</span>
             </li>
-
+            <!-- Category Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('category.index') }}"
+                    class="menu-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Category</span>
+                </a>
+            </li>
 
             <!-- Users Menu Item -->
 
