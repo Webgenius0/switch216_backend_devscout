@@ -42,10 +42,10 @@
                             </span>
                             <a href="javascript:void(0)"
                                 class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
-                                data-bs-toggle="modal" data-bs-target="#CreateCategory">
+                                data-bs-toggle="modal" data-bs-target="#CreateSubCategory">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                    <span>Add New Category</span>
+                                    <span>Add New SubCategory</span>
                                 </span>
                             </a>
                         </div>
@@ -57,6 +57,7 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Image</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Status</th>
@@ -101,13 +102,13 @@
         {{-- ---------------  --}}
 
 
-        <x-modal id="EditCategory" title="Update" labelledby="customModalLabel" size="modal-lg"
+        <x-modal id="EditSubCategory" title="Update" labelledby="customModalLabel" size="modal-lg"
             saveButton="Update">
-            <div id="EditCategoryContent"></div>
+            <div id="EditSubCategoryContent"></div>
         </x-modal>
 
         {{-- here this return a model  start --}}
-        @include('backend.layouts.category.create')
+        @include('backend.layouts.sub_category.create', ['Categories' => $Categories])
 
 
     </div>
@@ -152,7 +153,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('category.index') }}",
+                    url: "{{ route('sub_category.index') }}",
                     type: "get"
                 },
                 columns: [{
@@ -166,6 +167,19 @@
                         name: 'thumbnail',
                         orderable: false,
                         searchable: false,
+                    },
+                    {
+                        data: 'category',
+                        name: 'category',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data.length > 50) {
+                                return data.substring(0, 50) + '...';
+                            } else {
+                                return data;
+                            }
+                        }
                     },
                     {
                         data: 'name',
@@ -309,14 +323,14 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('category.status', ':id') }}';
+            let statusUrl = '{{ route('sub_category.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('category.destroy', ':id') }}';
+            let deleteUrl = '{{ route('sub_category.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>
@@ -334,7 +348,7 @@
             let submitButton = $('#submitButton');
             submitButton.prop('disabled', true).text('Submitting...');
 
-            let storeurl = '{{ route('category.store') }}';
+            let storeurl = '{{ route('sub_category.store') }}';
             let formData = new FormData(this); // Collect form data
             $.ajax({
                 url: storeurl, // Route to handle form submission
@@ -372,19 +386,19 @@
     {{-- for update data --}}
     <script>
         function viewModel(id) {
-            let url = '{{ route('category.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('sub_category.edit', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(resp) {
-                    $('#EditCategoryContent').html(resp);
+                    $('#EditSubCategoryContent').html(resp);
                     $('#request-form-update').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
                         // Disable the submit button to prevent multiple submissions
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('category.update', ':id') }}'
+                        let storeurl = '{{ route('sub_category.update', ':id') }}'
                             .replace(
                                 ':id', id);
                         let formData = new FormData(this); // Collect form data

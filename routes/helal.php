@@ -20,7 +20,9 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
+use App\Http\Controllers\Web\Backend\SubCategoryController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
+use App\Http\Controllers\Web\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
@@ -102,13 +104,22 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
 
-    // App route 
-
+    // ==================================== App route  start===========================================================
+    
+    // Route for UserController
+    Route::resource('/user-list', UserController::class)->names('user-list');
+    Route::post('/user-list/status/{id}', [UserController::class, 'status'])->name('user-list.status');
+    
     //category
     Route::resource('categories', CategoryController::class)->names(names: 'category');
     Route::post('categories/status/{id}', [CategoryController::class, 'status'])->name('category.status');
 
+    //category
+    Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
+    Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
 
+
+    // ==================================== App route  end===========================================================
 });
 
 

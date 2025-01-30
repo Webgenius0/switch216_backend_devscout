@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('title', 'Category')
+@section('title', 'User')
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Category List</h3>
+            <h3 class="mb-0">User List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,10 +20,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Category</span>
+                        <span class="fw-medium">User</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Category List</span>
+                        <span class="fw-medium">User List</span>
                     </li>
                 </ol>
             </nav>
@@ -56,9 +56,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Avatar</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -101,14 +101,10 @@
         {{-- ---------------  --}}
 
 
-        <x-modal id="EditCategory" title="Update" labelledby="customModalLabel" size="modal-lg"
+        <x-modal id="ShowUser" title="User Profile" labelledby="customModalLabel" size="modal-lg"
             saveButton="Update">
-            <div id="EditCategoryContent"></div>
+            <div id="ShowUserContent"></div>
         </x-modal>
-
-        {{-- here this return a model  start --}}
-        @include('backend.layouts.category.create')
-
 
     </div>
 
@@ -126,6 +122,9 @@
 
     <script>
         $(document).ready(function() {
+            let userType = "{{ $userType }}";
+            userType = userType ? userType : "customer";
+            let url = "{{ route('user-list.index') }}";
             let dTable = $('#basic_tables').DataTable({
                 order: [],
                 destroy: true,
@@ -152,8 +151,11 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('category.index') }}",
+                    url: url + '?userType=' + userType,
                     type: "get"
+                    // success: function(res) {
+                    //     console.log(res)
+                    // }
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -162,8 +164,8 @@
                         searchable: false
                     },
                     {
-                        data: 'thumbnail',
-                        name: 'thumbnail',
+                        data: 'avatar',
+                        name: 'avatar',
                         orderable: false,
                         searchable: false,
                     },
@@ -181,8 +183,8 @@
                         }
                     },
                     {
-                        data: 'description',
-                        name: 'description',
+                        data: 'email',
+                        name: 'email',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {
@@ -309,116 +311,31 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('category.status', ':id') }}';
+            let statusUrl = '{{ route('user-list.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('category.destroy', ':id') }}';
+            let deleteUrl = '{{ route('user-list.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
-    </script>
-    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.dropify').dropify();
-        })
-    </script>
-
-    <script>
-        $('#request-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            // Disable the submit button to prevent multiple submissions
-            let submitButton = $('#submitButton');
-            submitButton.prop('disabled', true).text('Submitting...');
-
-            let storeurl = '{{ route('category.store') }}';
-            let formData = new FormData(this); // Collect form data
-            $.ajax({
-                url: storeurl, // Route to handle form submission
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        flasher.success(response?.message);
-                        $('#basic_tables').DataTable().ajax.reload();
-                        $('#request-form').trigger("reset");
-                        $('.btn-close').trigger('click');
-                    } else {
-                        flasher.error('Something went wrong.');
-                    }
-                },
-                error: function(response) {
-                    // Check if there are validation errors
-                    if (response.responseJSON.errors) {
-                        $('#show-error').html(
-                            `<div class="text-danger">${response.responseJSON.message}</div>`
-                        );
-                    }
-                },
-                complete: function() {
-                    // Re-enable the submit button after the request completes
-                    submitButton.prop('disabled', false).text('Submit Request');
-                }
-            });
-
-        });
     </script>
 
     {{-- for update data --}}
     <script>
         function viewModel(id) {
-            let url = '{{ route('category.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('user-list.show', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(resp) {
-                    $('#EditCategoryContent').html(resp);
+                    $('#ShowUserContent').html(resp);
                     $('#request-form-update').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
                         // Disable the submit button to prevent multiple submissions
-                        let submitButton = $('#submitButtonUpdate');
-                        submitButton.prop('disabled', true).text('Submitting...');
-
-                        let storeurl = '{{ route('category.update', ':id') }}'
-                            .replace(
-                                ':id', id);
-                        let formData = new FormData(this); // Collect form data
-                        $.ajax({
-                            url: storeurl, // Route to handle form submission
-                            type: "POST",
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                if (response.success) {
-                                    flasher.success(response?.message);
-                                    $('#basic_tables').DataTable().ajax.reload();
-                                    $('#request-form-update').trigger("reset");
-                                    $('.btn-close').trigger('click');
-                                } else {
-                                    flasher.error('Something went wrong.');
-                                }
-                            },
-                            error: function(response) {
-                                // Check if there are validation errors
-                                if (response.responseJSON.errors) {
-                                    $('#show-error').html(
-                                        `<div class="text-danger">${response.responseJSON.message}</div>`
-                                    );
-                                }
-                            },
-                            complete: function() {
-                                // Re-enable the submit button after the request completes
-                                submitButton.prop('disabled', false).text('Submit Request');
-                            }
                         });
-
-                    });
                 }
             });
         }

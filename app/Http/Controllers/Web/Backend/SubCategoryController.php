@@ -2,27 +2,31 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
-
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Exception;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the units with DataTables support.
      */
     public function index(Request $request)
     {
+        $Categories = Category::get();
         if ($request->ajax()) {
-            $data = Category::latest();
+            $data = SubCategory::with('category')->latest();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('category', function ($data) {
+                    return $data->category->name;
+                })
                 ->addColumn('thumbnail', function ($data) {
                     return '<img src="' . asset($data->thumbnail) . '" class="wh-40 rounded-3" alt="no image found">';
                 })
@@ -43,7 +47,7 @@ class CategoryController extends Controller
                     return '<div class="action-wrapper">
                         <a type="button" href="javascript:void(0)"
                                 class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
-                                data-bs-toggle="modal" data-bs-target="#EditCategory" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
+                                data-bs-toggle="modal" data-bs-target="#EditSubCategory" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
                             </a>
                         <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
                         <i class="material-symbols-outlined fs-16 text-danger">delete</i>
@@ -51,10 +55,10 @@ class CategoryController extends Controller
              
                 </div>';
                 })
-                ->rawColumns(['thumbnail', 'status', 'action'])
+                ->rawColumns(['category','thumbnail', 'status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.category.index");
+        return view("backend.layouts.sub_category.index", compact("Categories"));
     }
     /**
      * Show the form for creating a new data.
@@ -70,8 +74,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -81,7 +85,7 @@ class CategoryController extends Controller
             if ($request->hasFile('thumbnail')) {
                 $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'category', time() . '_' . getFileName($request->file('thumbnail')));
             }
-            Category::Create($validatedData);
+            SubCategory::Create($validatedData);
             return response()->json([
                 "success" => true,
                 "message" => "Category created successfully"
@@ -100,8 +104,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Category::findOrFail($id);
-        return view("backend.layouts.category.edit", compact("data"));
+        $Categories = Category::get();
+        $data = SubCategory::findOrFail($id);
+        return view("backend.layouts.sub_category.edit", compact("data", "Categories"));
     }
     /**
      * Display the specified resource.
@@ -118,19 +123,20 @@ class CategoryController extends Controller
     {
         // dd($request->all());
         $validatedData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $data = Category::findOrFail($id);
+            $data = SubCategory::findOrFail($id);
             if ($request->hasFile('thumbnail')) {
                 if ($data && $data->thumbnail && file_exists(public_path($data->thumbnail))) {
                     Helper::fileDelete(public_path($data->thumbnail));
                 }
-                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'category', time() . '_' . getFileName($request->file('thumbnail')));
+                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'SubCategory', time() . '_' . getFileName($request->file('thumbnail')));
             }
-            $data = Category::findOrFail($id);
+            $data = SubCategory::findOrFail($id);
             $data->update($validatedData);
 
             return response()->json([
@@ -151,7 +157,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Category::findOrFail($id);
+        $data = SubCategory::findOrFail($id);
         // check if the category exists
         if (empty($data)) {
             return response()->json([
@@ -176,7 +182,7 @@ class CategoryController extends Controller
      */
     public function status(Request $request, $id)
     {
-        $data = Category::find($id);
+        $data = SubCategory::find($id);
 
         // check if the category exists
         if (empty($data)) {

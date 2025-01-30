@@ -7,12 +7,35 @@
             <div class="row">
                 <span id="show-error"></span>
                 <input type="hidden" name="request_id" value="{{ $data->id }}">
+
+                <!-- category Field -->
+                <div class="col-lg-12">
+                    <div class="form-group mb-4">
+                        <label class="label text-secondary"> Category<span class="text-danger">*</span></label>
+                        <div class="form-group position-relative">
+                            <select class="form-control text-dark  @error('category_id') is-invalid @enderror"
+                                name="category_id" required>
+                                <option value="">Select Category</option>
+                                @foreach ($Categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $data->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('category_id')
+                            <div id="category-error" class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <!-- Name Field -->
                 <div class="col-lg-12">
                     <div class="form-group mb-4">
                         <label class="label text-secondary"> Name<span class="text-danger">*</span></label>
                         <div class="form-group position-relative">
-                            <input type="text" class="form-control text-dark @error('name') is-invalid @enderror"
+                            <input type="text"
+                                class="form-control text-dark  @error('name') is-invalid @enderror"
                                 name="name" value="{{ old('name', $data->name ?? '') }}" required
                                 placeholder="Enter Name here">
                         </div>
@@ -24,7 +47,8 @@
                     <div class="form-group mb-4">
                         <label class="label text-secondary">Description<span class="text-danger">*</span></label>
                         <div class="form-group position-relative">
-                            <textarea class="form-control text-dark " name="description" required="" placeholder="Enter description here">{{ old('description', $data->description ?? '') }}</textarea>
+                            <textarea class="form-control text-dark  " name="description" required=""
+                                placeholder="Enter description here">{{ old('description', $data->description ?? '') }}</textarea>
                         </div>
                     </div>
                 </div>
