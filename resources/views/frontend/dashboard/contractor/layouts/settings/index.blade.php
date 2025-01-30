@@ -1,10 +1,10 @@
-@extends('frontend.dashboard.app')
+@extends('frontend.dashboard.contractor.app')
 
 @section('title')
     Dashboard Contrator
 @endsection
 @section('header')
-    @include('frontend.dashboard.partials.header')
+    @include('frontend.dashboard.contractor.partials.header')
 @endsection
 @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
@@ -42,7 +42,7 @@
                                 <input type="text"
                                     class="form-control text-dark ps-3 h-55 @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email', $contractor->email ?? '') }}" required
-                                    placeholder="Enter email here">
+                                     disabled>
                             </div>
                             @error('email')
                                 <div id="email-error" class="text-danger">{{ $message }}</div>

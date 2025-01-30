@@ -105,11 +105,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
     // ==================================== App route  start===========================================================
-    
+
     // Route for UserController
     Route::resource('/user-list', UserController::class)->names('user-list');
     Route::post('/user-list/status/{id}', [UserController::class, 'status'])->name('user-list.status');
-    
+
     //category
     Route::resource('categories', CategoryController::class)->names(names: 'category');
     Route::post('categories/status/{id}', [CategoryController::class, 'status'])->name('category.status');
@@ -120,6 +120,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
     // ==================================== App route  end===========================================================
+
 });
 
 

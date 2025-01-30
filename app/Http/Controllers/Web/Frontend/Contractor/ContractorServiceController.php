@@ -22,8 +22,8 @@ class ContractorServiceController extends Controller
      */
     public function index()
     {
-        $services = $this->ContractorServiceService->get();
-        return view('frontend.dashboard.layouts.contractor.services.index', compact('services'));
+        $services = $this->ContractorServiceService->index();
+        return view('frontend.dashboard.contractor.layouts.services.index', compact('services'));
     }
 
     /**

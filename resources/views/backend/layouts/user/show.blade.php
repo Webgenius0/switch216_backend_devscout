@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-md-3 text-center">
-                    <img src="{{ asset($data->avatar) }}" class="img-fluid rounded-circle border p-2" alt="User Avatar"
+                    <img src="{{ asset($data->avatar??'backend/admin/assets/images/avatar_defult.png') }}" class="img-fluid rounded-circle border p-2" alt="User Avatar"
                         width="100" height="100" style="border-radius: 50%;">
                 </div>
                 <div class="col-md-9">

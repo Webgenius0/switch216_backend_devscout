@@ -1,10 +1,10 @@
-@extends('frontend.dashboard.app')
+@extends('frontend.dashboard.contractor.app')
 
 @section('title')
     Dashboard Contrator
 @endsection
 @section('header')
-    @include('frontend.dashboard.partials.header')
+    @include('frontend.dashboard.contractor.partials.header')
 @endsection
 @push('styles')
 @endpush
@@ -15,7 +15,7 @@
         <!-- dashboard-banner-content start -->
         <div class="dashboard-banner-content">
             <div class="title">
-                Hello, <span>John Doe</span> ! Let's get started on your multi services
+                Hello, <span>{{ Auth::user()->name ?? 'Mr. John Doe' }}</span> ! Let's get started on your multi services
             </div>
             <div class="text mt-3">
                 Start now to connect with multi-service professionals, book appointments, and manage your
@@ -66,7 +66,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -103,7 +103,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -140,7 +140,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -177,7 +177,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -214,7 +214,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -251,7 +251,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -288,7 +288,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">
@@ -325,7 +325,7 @@
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                     <div class="profile d-flex gap-2 flex-wrap">
                         <div class="profile-img">
-                            <img src="./assets/images/user.png" alt="">
+                            <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
                         </div>
                         <div class="profile-info">
                             <div class="profile-title">

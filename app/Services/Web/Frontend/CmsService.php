@@ -135,7 +135,7 @@ class CmsService
      * @param int $id
      * @return bool
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         try {
             // Logic to delete a specific resource
@@ -144,19 +144,5 @@ class CmsService
         }
     }
 
-    /**
-     * Handle exceptions.
-     *
-     * @param Exception $e
-     * @return mixed
-     */
-    private function handleException(Exception $e)
-    {
-        // Log the exception or handle it as needed
-        // You can use logger or return an error response
-        return [
-            'success' => false,
-            'message' => $e->getMessage(),
-        ];
-    }
+
 }

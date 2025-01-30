@@ -2,7 +2,9 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Models\Service;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class ContractorServiceService
 {
@@ -11,12 +13,13 @@ class ContractorServiceService
      *
      * @return mixed
      */
-    public function get()
+    public function index()
     {
         try {
-            // Logic to fetch all resources
+            $services = Service::where("user_id", Auth::user()->id)->get();
+            return $services;
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -30,7 +33,7 @@ class ContractorServiceService
         try {
             // Logic for create form
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -45,7 +48,7 @@ class ContractorServiceService
         try {
             // Logic to store a new resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -60,7 +63,7 @@ class ContractorServiceService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -75,7 +78,7 @@ class ContractorServiceService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -91,7 +94,7 @@ class ContractorServiceService
         try {
             // Logic to update a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -101,12 +104,12 @@ class ContractorServiceService
      * @param int $id
      * @return bool
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 

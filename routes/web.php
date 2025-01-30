@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use Illuminate\Support\Facades\Route;
@@ -123,10 +124,10 @@ Route::get('/provider-details', function () {
 
 
 Route::get('/customer-dashboard', function () {
-    return view('frontend.dashboard.layouts.customer.index');
+    return view('frontend.dashboard.customer.layouts.home.index');
 })->middleware(['auth', 'verified'])->name('customer.dashboard');
 
-Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
+Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(function () {
     Route::get('dashboard', [ContractorDashboardController::class, 'index'])->name('contractor.dashboard');
     //profile settings
     Route::get('settings-profile', [ContractorSettingController::class, 'index'])->name('contractor.settings.index');
@@ -134,7 +135,9 @@ Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
     Route::get('settings-password', [ContractorSettingController::class, 'password'])->name('contractor.settings.password');
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
 
-
+    // manage services from contactor 
+    Route::resource('services', ContractorServiceController::class)->names('contractor.services');
+    Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
 });
 
 // Route::get('/dashboard', function () {

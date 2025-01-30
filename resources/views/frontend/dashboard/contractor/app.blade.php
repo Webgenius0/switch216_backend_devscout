@@ -10,24 +10,24 @@
     <link rel="shortcut icon" href="{{ asset($systemSetting->favicon ?? 'favicon.ico') }}" type="image/x-icon"> --}}
 
 
-    @include('frontend.dashboard.partials.style')
+    @include('frontend.dashboard.contractor.partials.style')
 
 </head>
 
 <body>
     <div class="layout-container">
-        @include('frontend.dashboard.partials.asidebar')
+        @include('frontend.dashboard.contractor.partials.asidebar')
         <!-- main content start -->
         <div class="main-content">
             <div class="main-content-container">
-                @include('frontend.dashboard.partials.header')
+                @include('frontend.dashboard.contractor.partials.header')
                 @yield('content')
             </div>
         </div>
     </div>
 
 
-    @include('frontend.dashboard.partials.script')
+    @include('frontend.dashboard.contractor.partials.script')
 </body>
 
 </html>
