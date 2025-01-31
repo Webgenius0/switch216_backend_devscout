@@ -1,3 +1,6 @@
+@php
+    $systemSetting = App\Models\SystemSetting::first();
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -5,9 +8,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Service Banner</title>
-    {{-- <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
-    <link rel="shortcut icon" href="{{ asset($systemSetting->favicon ?? 'favicon.ico') }}" type="image/x-icon"> --}}
+    <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
+    <link rel="shortcut icon" href="{{ asset($systemSetting->favicon ?? 'favicon.ico') }}" type="image/x-icon">
 
 
     @include('frontend.dashboard.customer.partials.style')

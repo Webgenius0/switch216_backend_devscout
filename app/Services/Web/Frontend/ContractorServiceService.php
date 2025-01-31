@@ -2,9 +2,11 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Helpers\Helper;
 use App\Models\Service;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ContractorServiceService
 {
@@ -40,13 +42,34 @@ class ContractorServiceService
     /**
      * Store a new resource.
      *
-     * @param array $data
+     * @param array $validatedData
      * @return mixed
      */
-    public function store(array $data)
+    public function store(array $validatedData)
     {
         try {
-            // Logic to store a new resource
+            // Handle Cover Image Upload
+            if (isset($validatedData['cover_image'])) {
+
+                $coverImagePath = Helper::fileUpload($validatedData['cover_image'], 'services_cover_image', getFileName($validatedData['cover_image']));
+                $validatedData['cover_image'] = $coverImagePath;
+            }
+
+            // Handle Gallery Images Upload
+            $galleryImages = [];
+            if (isset($validatedData['gallery_images'])) {
+                if ($validatedData['gallery_images']) {
+                    foreach ($validatedData['gallery_images'] as $key => $image) {
+                        // $imagePath = $image->store('uploads/gallery', 'public'); // Save in storage/app/public/uploads/gallery
+                        $imagePath = Helper::fileUpload($image, 'services_gallery_images', $key . '_' . getFileName($image));
+                        $galleryImages[] = $imagePath;
+                    }
+                }
+            }
+            $validatedData['user_id'] = Auth::user()->id;
+            $validatedData['gallery_images'] = json_encode($galleryImages);
+            $service = Service::create($validatedData);
+            return $service;
         } catch (Exception $e) {
             throw $e;
         }
@@ -107,25 +130,47 @@ class ContractorServiceService
     public function destroy(int $id)
     {
         try {
-            // Logic to delete a specific resource
+            $service = Service::where("user_id", Auth::user()->id)->findOrFail($id);
+            if (!$service) {
+                return false;
+            }
+            $service->delete();
+            return true;
         } catch (Exception $e) {
+            Log::error('ContractorServiceService::destroy-' . $e->getMessage());
             throw $e;
         }
     }
 
     /**
-     * Handle exceptions.
+     * Delete a specific resource.
      *
-     * @param Exception $e
-     * @return mixed
+     * @param int $id
+     * @return bool
      */
-    private function handleException(Exception $e)
+    public function status(int $id)
     {
-        // Log the exception or handle it as needed
-        // You can use logger or return an error response
-        return [
-            'success' => false,
-            'message' => $e->getMessage(),
-        ];
+        try {
+            $data = Service::where('user_id', Auth::user()->id)->findOrFail($id);
+
+            // check if the category exists
+            if (empty($data)) {
+                return false;
+            }
+            // toggle status of the category
+            if ($data->status == 'active') {
+                $data->status = 'inactive';
+            } else {
+                $data->status = 'active';
+            }
+            // save the changes
+            $data->save();
+            return true;
+        } catch (Exception $e) {
+            Log::error('ContractorServiceService::status-' . $e->getMessage());
+            throw $e;
+        }
     }
+
+
 }

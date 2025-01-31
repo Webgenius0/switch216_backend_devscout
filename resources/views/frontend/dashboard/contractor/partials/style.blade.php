@@ -8,4 +8,12 @@
 <link rel="stylesheet" href="{{ asset('backend/assets') }}/css/responsive.css" />
 <link rel="stylesheet" href="{{ asset('backend/assets') }}/css/notification.css" />
 
+<link href="{{ asset('vendor/flasher/flasher.min.css') }}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+    .fl-wrapper {
+        z-index: 999999 !important;
+    }
+</style>
+
 @stack('styles')
