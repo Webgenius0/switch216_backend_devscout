@@ -118,7 +118,7 @@
                     </div>
 
                     <!-- Cover Image -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Cover Image<span style="color: red">*</span></label>
                             <input type="file" class="form-control dropify @error('cover_image') is-invalid @enderror"
@@ -130,7 +130,7 @@
                     </div>
 
                     <!-- Gallery Image Upload -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Gallery Images<span style="color: red">*</span></label>
                             <div id="gallery-dropzone"

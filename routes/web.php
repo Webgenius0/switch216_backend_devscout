@@ -138,6 +138,7 @@ Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(fun
     // manage services from contactor 
     Route::resource('services', ContractorServiceController::class)->names('contractor.services');
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
+    Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 });
 
 // Route::get('/dashboard', function () {

@@ -18,7 +18,7 @@ class ContractorServiceService
     public function index()
     {
         try {
-            $services = Service::where("user_id", Auth::user()->id)->get();
+            $services = Service::where("user_id", Auth::user()->id)->latest()->get();
             return $services;
         } catch (Exception $e) {
             throw $e;
@@ -68,6 +68,7 @@ class ContractorServiceService
             }
             $validatedData['user_id'] = Auth::user()->id;
             $validatedData['gallery_images'] = json_encode($galleryImages);
+            $validatedData['verify'] = 'approved'; // Set the verify field to 'approved' but after complete the verification process change it to 'pending'
             $service = Service::create($validatedData);
             return $service;
         } catch (Exception $e) {
@@ -143,10 +144,10 @@ class ContractorServiceService
     }
 
     /**
-     * Delete a specific resource.
+     * Toggle the status of a specific resource.
      *
-     * @param int $id
-     * @return bool
+     * @param int $id The ID of the resource to toggle the status for.
+     * @return bool True on success, false on failure.
      */
     public function status(int $id)
     {
@@ -162,6 +163,35 @@ class ContractorServiceService
                 $data->status = 'inactive';
             } else {
                 $data->status = 'active';
+            }
+            // save the changes
+            $data->save();
+            return true;
+        } catch (Exception $e) {
+            Log::error('ContractorServiceService::status-' . $e->getMessage());
+            throw $e;
+        }
+    }
+    /**
+     * Toggle the emargence of a specific resource.
+     *
+     * @param int $id The ID of the resource to toggle the emargence for.
+     * @return bool True on success, false on failure.
+     */
+    public function emargence(int $id)
+    {
+        try {
+            $data = Service::where('user_id', Auth::user()->id)->findOrFail($id);
+
+            // check if the category exists
+            if (empty($data)) {
+                return false;
+            }
+            // toggle status of the category
+            if ($data->is_emergency == true) {
+                $data->is_emergency = false;
+            } else {
+                $data->is_emergency = true;
             }
             // save the changes
             $data->save();

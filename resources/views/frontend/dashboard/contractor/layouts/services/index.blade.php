@@ -65,6 +65,7 @@
                                             <th scope="col">Description</th>
                                             <th scope="col">Verify</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Emergency</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -210,6 +211,12 @@
                         searchable: false
                     },
                     {
+                        data: 'is_emergency',
+                        name: 'is_emergency',
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -320,6 +327,12 @@
         function changeStatus(event, id) {
             event.preventDefault();
             let statusUrl = '{{ route('contractor.services.status', ':id') }}';
+            showStatusChangeAlert(id, statusUrl);
+        }
+        // Use the status change alert
+        function changeEmergencyStatus(event, id) {
+            event.preventDefault();
+            let statusUrl = '{{ route('contractor.services.emargence', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 

@@ -53,16 +53,28 @@ class ContractorServiceController extends Controller
 
                         return $status;
                     })
+                    ->addColumn('is_emergency', function ($data) {
+                        $emergency = '<div class="form-check form-switch">';
+                        $emergency .= '<input onclick="changeEmergencyStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input bg-warning" style="border-radius: 25rem;width:40px"' . $data->id . '" name="is_emergency"';
+
+                        if ($data->is_emergency == true) {
+                            $emergency .= ' checked';
+                        }
+                        $emergency .= '>';
+                        $emergency .= '</div>';
+
+                        return $emergency;
+                    })
                     ->addColumn('action', function ($data) {
                         return '<div class="action-wrapper">
                         
-                        <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
-                        <svg data-v-14c8c335="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 lucide-icon customizable"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
+                        <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
+                        <svg data-v-14c8c335="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 lucide-icon customizable"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
                         </button>
              
                 </div>';
                     })
-                    ->rawColumns(['cover_image', 'status', 'action'])
+                    ->rawColumns(['cover_image', 'status', 'is_emergency', 'action'])
                     ->make(true);
             }
             // <a type="button" href="javascript:void(0)"
@@ -181,6 +193,25 @@ class ContractorServiceController extends Controller
             ]);
         } catch (Exception $e) {
             Log::error('ContractorServiceController::status-' . $e->getMessage());
+            return response()->json([
+                "success" => false,
+                "message" => "Something went wrong."
+            ], 404);
+        }
+    }
+    /**
+     * Change the emargence of the specified resource from storage.
+     */
+    public function emargence(Request $request, $id)
+    {
+        try {
+            $this->ContractorServiceService->emargence($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'Item emargence changed successfully.'
+            ]);
+        } catch (Exception $e) {
+            Log::error('ContractorServiceController::emargence-' . $e->getMessage());
             return response()->json([
                 "success" => false,
                 "message" => "Something went wrong."
