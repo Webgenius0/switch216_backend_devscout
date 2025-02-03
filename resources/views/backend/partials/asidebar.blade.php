@@ -49,7 +49,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     <li class="menu-item">
                         <a href="{{ route('user-list.index', ['userType' => 'contractor']) }}"
                             class="menu-link {{ request()->routeIs('user-list.index') && request('userType') == 'contractor' ? 'active' : '' }}">
-                            Contractor
+                            Provider
                         </a>
                     </li>
 

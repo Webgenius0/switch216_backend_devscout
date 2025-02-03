@@ -104,9 +104,11 @@
                 <h2 class="profile-section-title">Best Services in gallery</h2>
                 <div class="gallery-section">
                     @php
-                        $galleryImages = is_array($service->gallery_images) ? $service->gallery_images : json_decode($service->gallery_images, true);
+                        $galleryImages = is_array($service->gallery_images)
+                            ? $service->gallery_images
+                            : json_decode($service->gallery_images, true);
                     @endphp
-                
+
                     @foreach ($galleryImages as $key => $gallery_image)
                         <div class="gallery-image">
                             <figure>
@@ -316,37 +318,113 @@
                     </div>
                 </div>
                 <input type="text" hidden id="appointment-date-picker" />
-                <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
-                    data-bs-target="#authModal">
-                    Book Appointment
-                </button>
-                <button class="button w-100 mt-2 mt-lg-3 d-none" type="button" data-bs-toggle="modal"
-                    data-bs-target="#successModal">
-                    Open Success Modal
-                </button>
-                <a href="./contact.html" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                @guest
+                    <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
+                        data-bs-target="#authModal">
+                        Book Appointment
+                    </button>
+                    <a href="#" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                @endguest
+
+                @auth
+                    @if (auth()->user()->role === 'customer')
+                        <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
+                            data-bs-target="#successModal">
+                            Book Appointment
+                        </button>
+                        <a href="#" class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
+                    @endif
+                @endauth
+
+
+
             </div>
         </div>
     </main>
     <!-- main content section end -->
-    {{-- <!-- chat section start -->
-  <button id="chat-icon" type="button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <path
-        d="M29.3346 13.3332V17.3332C29.3346 22.6665 26.668 25.3332 21.3346 25.3332H20.668C20.2546 25.3332 19.8546 25.5332 19.6013 25.8665L17.6013 28.5332C16.7213 29.7065 15.2813 29.7065 14.4013 28.5332L12.4013 25.8665C12.188 25.5732 11.6946 25.3332 11.3346 25.3332H10.668C5.33464 25.3332 2.66797 23.9998 2.66797 17.3332V10.6665C2.66797 5.33317 5.33464 2.6665 10.668 2.6665H18.668"
-        stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-      <path
-        d="M26.0013 9.33317C27.8423 9.33317 29.3346 7.84079 29.3346 5.99984C29.3346 4.15889 27.8423 2.6665 26.0013 2.6665C24.1604 2.6665 22.668 4.15889 22.668 5.99984C22.668 7.84079 24.1604 9.33317 26.0013 9.33317Z"
-        stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M21.3273 14.6667H21.3393" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M15.9953 14.6667H16.0073" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M10.6593 14.6667H10.6713" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
-  </button>
-  <!-- chat section end --> --}}
+    <!-- chat section start -->
+    {{-- <button id="chat-icon" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path
+                d="M29.3346 13.3332V17.3332C29.3346 22.6665 26.668 25.3332 21.3346 25.3332H20.668C20.2546 25.3332 19.8546 25.5332 19.6013 25.8665L17.6013 28.5332C16.7213 29.7065 15.2813 29.7065 14.4013 28.5332L12.4013 25.8665C12.188 25.5732 11.6946 25.3332 11.3346 25.3332H10.668C5.33464 25.3332 2.66797 23.9998 2.66797 17.3332V10.6665C2.66797 5.33317 5.33464 2.6665 10.668 2.6665H18.668"
+                stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path
+                d="M26.0013 9.33317C27.8423 9.33317 29.3346 7.84079 29.3346 5.99984C29.3346 4.15889 27.8423 2.6665 26.0013 2.6665C24.1604 2.6665 22.668 4.15889 22.668 5.99984C22.668 7.84079 24.1604 9.33317 26.0013 9.33317Z"
+                stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21.3273 14.6667H21.3393" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M15.9953 14.6667H16.0073" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M10.6593 14.6667H10.6713" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </button> --}}
+    <!-- chat section end -->
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="authModalLabel">
+                        You have to <span>Sign In</span> to Connect with user
+                    </h1>
+                    <button class="close-btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none">
+                            <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                stroke="#6B6B6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.17188 14.8299L14.8319 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.8319 14.8299L9.17188 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Join our community of professionals and clients today! By signing
+                    up, you gain direct access to experienced multi-services,
+                    personalized services, and a seamless platform to manage your
+                    service needs.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Sign In later</button>
+                    <button type="button" class="button">Sign In Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button class="close-btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                            stroke="#6B6B6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.17188 14.8299L14.8319 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14.8319 14.8299L9.17188 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <figure class="success-icon-img">
+                    <img src="./assets/images/success-icon.png" alt="success icon" />
+                </figure>
+                <div class="title">
+                    You have earn the top <br />
+                    <span>Emergency service</span> badge
+                </div>
+                <div class="des">
+                    Join our community of professionals and clients today! By signing
+                    up, you gain direct access to experienced multi-services,
+                    personalized services, and a seamless platform to manage your
+                    service needs.
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
