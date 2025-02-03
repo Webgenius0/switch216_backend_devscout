@@ -23,6 +23,7 @@ Route::get('/map-api-key', function () {
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/service-emergency', [EmergencyPageController::class, 'index'])->name('service.emergency');
+Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 
 Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');

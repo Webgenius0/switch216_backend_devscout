@@ -125,4 +125,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class, 'user_id');
     }
+
+    
+    /**
+     * Get the addresses associated with the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userAddresses()
+    {
+        return $this->hasMany(UserAddress::class, 'user_id');
+    }
+
+    
+    /**
+     * Get the contractor ranking associated with the user.
+     */
+    public function contractorRanking()
+    {
+        return $this->hasOne(ContractorRanking::class, 'user_id');
+    }
 }

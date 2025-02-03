@@ -122,7 +122,7 @@
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Cover Image<span style="color: red">*</span></label>
                             <input type="file" class="form-control dropify @error('cover_image') is-invalid @enderror"
-                                name="cover_image" accept="image/jpeg,png,jpg" required id="cover_image">
+                                name="cover_image" accept="image/jpeg,image/png,image/jpg" required id="cover_image">
                             @error('cover_image')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -142,7 +142,7 @@
                             </div>
                             {{-- <input type="hidden" id="gallery-images"> --}}
                             <input type="file" hidden class="form-control @error('cover_image') is-invalid @enderror"
-                                name="gallery_images[]" accept="image/jpeg,png,jpg" multiple id="gallery-images">
+                                name="gallery_images[]" accept="image/jpeg,image/png,image/jpg" multiple id="gallery-images">
                             @error('gallery_images')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -244,7 +244,7 @@
             dropzone.on('click', function() {
                 let fileInput = $('<input>', {
                     type: 'file',
-                    accept: 'image/jpeg,png,jpg',
+                    accept: 'image/jpeg,image/png,image/jpg',
                     multiple: true
                 }).on('change', function(event) {
                     handleFiles(event.target.files);

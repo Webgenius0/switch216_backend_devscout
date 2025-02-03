@@ -12,6 +12,6 @@ Artisan::command('inspire', function () {
 
 // Schedule::call(UpdateContractorRanking::class)->everyFifteenSeconds();
 
-Schedule::call( function () {
-    logger()->info('test it');
-})->everySecond();
+// Schedule::call( function () {
+//     logger()->info('test it');
+// })->everySecond();

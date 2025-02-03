@@ -2,9 +2,11 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Models\Service;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
-class EmergencyPageController
+class EmergencyPageService
 {
     /**
      * Fetch all resources.
@@ -14,10 +16,11 @@ class EmergencyPageController
     public function index()
     {
         try {
-            // Logic to fetch all resources
+            $services = Service::with(['user'])->where("status", 'active')->where('is_emergency', true)->latest()->get();
+            return $services;
         } catch (Exception $e) {
+            Log::error('EmergencyPageService::index' . $e->getMessage());
             throw $e;
-             
         }
     }
 
@@ -59,7 +62,8 @@ class EmergencyPageController
     public function show(int $id)
     {
         try {
-            // Logic to show a specific resource
+            $service = Service::with(['user'])->where("status", 'active')->findOrFail($id);
+            return $service;
         } catch (Exception $e) {
             throw $e;
         }
