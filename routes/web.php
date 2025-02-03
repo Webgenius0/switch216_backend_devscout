@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
+use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
@@ -21,6 +22,7 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/service-emergency', [EmergencyPageController::class, 'index'])->name('service.emergency');
 
 Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');
@@ -43,9 +45,9 @@ Route::get('/service-sub-category', function () {
     return view(view: 'frontend.layouts.service.sub_category');
 })->name('service.sub_category');
 
-Route::get('/service-emergency', function () {
-    return view(view: 'frontend.layouts.service.emergency');
-})->name('service.emergency');
+// Route::get('/service-emergency', function () {
+//     return view(view: 'frontend.layouts.service.emergency');
+// })->name('service.emergency');
 
 
 //food service all
@@ -151,5 +153,7 @@ Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(fun
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
+
+
 
 require __DIR__ . '/auth.php';
