@@ -19,11 +19,6 @@ class UserAddress extends Model
      */
     protected $fillable = [
         'user_id',
-        'address_line1',
-        'address_line2',
-        'building',
-        'apartment',
-        'floor',
         'location',
         'description',
         'latitude',
@@ -39,11 +34,6 @@ class UserAddress extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
-        'address_line1' => 'string',
-        'address_line2' => 'string',
-        'building' => 'string',
-        'apartment' => 'string',
-        'floor' => 'string',
         'location' => 'string',
         'description' => 'string',
         'latitude' => 'float',

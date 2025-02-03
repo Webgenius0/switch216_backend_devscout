@@ -2,16 +2,28 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
+use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 // Route::get('/', function () {
 //     // return view('welcome');
 //     return view('frontend.layouts.home.index');
 // })->name('home');
 
+
+Route::get('/map-api-key', function () {
+    return response()->json(['key' => env('MAPTILER_API_KEY')]);
+})->name('map.api.key');
+
+
+
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/service-emergency', [EmergencyPageController::class, 'index'])->name('service.emergency');
+Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 
 Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');
@@ -34,9 +46,9 @@ Route::get('/service-sub-category', function () {
     return view(view: 'frontend.layouts.service.sub_category');
 })->name('service.sub_category');
 
-Route::get('/service-emergency', function () {
-    return view(view: 'frontend.layouts.service.emergency');
-})->name('service.emergency');
+// Route::get('/service-emergency', function () {
+//     return view(view: 'frontend.layouts.service.emergency');
+// })->name('service.emergency');
 
 
 //food service all
@@ -115,10 +127,10 @@ Route::get('/provider-details', function () {
 
 
 Route::get('/customer-dashboard', function () {
-    return view('frontend.dashboard.layouts.customer.index');
+    return view('frontend.dashboard.customer.layouts.home.index');
 })->middleware(['auth', 'verified'])->name('customer.dashboard');
 
-Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
+Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(function () {
     Route::get('dashboard', [ContractorDashboardController::class, 'index'])->name('contractor.dashboard');
     //profile settings
     Route::get('settings-profile', [ContractorSettingController::class, 'index'])->name('contractor.settings.index');
@@ -126,7 +138,10 @@ Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
     Route::get('settings-password', [ContractorSettingController::class, 'password'])->name('contractor.settings.password');
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
 
-    
+    // manage services from contactor 
+    Route::resource('services', ContractorServiceController::class)->names('contractor.services');
+    Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
+    Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 });
 
 // Route::get('/dashboard', function () {
@@ -139,5 +154,7 @@ Route::middleware(['auth:web'])->prefix('contractor')->group(function () {
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
+
+
 
 require __DIR__ . '/auth.php';

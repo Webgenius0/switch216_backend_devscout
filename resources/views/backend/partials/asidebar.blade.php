@@ -33,6 +33,45 @@ $systemSetting = App\Models\SystemSetting::first();
                 <span class="menu-title-text">APPS</span>
             </li>
 
+            <!-- User-list Menu Item -->
+            <li class="menu-item {{ request()->routeIs('user-list.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">group_add</span>
+                    <span class="title">Users</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('user-list.index', ['userType' => 'customer']) }}"
+                            class="menu-link {{ request()->routeIs('user-list.index') && request('userType') == 'customer' ? 'active' : '' }}">
+                            Customer
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('user-list.index', ['userType' => 'contractor']) }}"
+                            class="menu-link {{ request()->routeIs('user-list.index') && request('userType') == 'contractor' ? 'active' : '' }}">
+                            Contractor
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- Category Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('category.index') }}"
+                    class="menu-link {{ request()->routeIs('category.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Category</span>
+                </a>
+            </li>
+            <!-- Sub Category Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('sub_category.index') }}"
+                    class="menu-link {{ request()->routeIs('sub_category.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">content_paste</span>
+                    <span class="title">Sub Category</span>
+                </a>
+            </li>
 
             <!-- Users Menu Item -->
 

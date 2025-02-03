@@ -2,7 +2,10 @@
 
 namespace App\Services\Web\Backend;
 
+use App\Helpers\Helper;
 use App\Models\User;
+use App\Models\UserAddress;
+use DB;
 use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +18,12 @@ class ContractorRegisterService
      *
      * @return mixed
      */
-    public function get()
+    public function index()
     {
         try {
             // Logic to fetch all resources
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -34,7 +37,7 @@ class ContractorRegisterService
         try {
             // Logic for create form
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -47,18 +50,51 @@ class ContractorRegisterService
     public function store(array $data)
     {
         try {
-            $user = User::create([
-                'name' => $data->name,
-                'email' => $data->email,
-                'password' => Hash::make($data->password),
-                'role' => 'contarctor',
-            ]);
-
+            DB::beginTransaction();
+            // Check if 'avatar' is in the array and if the file exists
+            if (isset($data['avatar']) && is_file($data['avatar'])) {
+                // Use the Helper method to handle the file upload
+                $data['avatar'] = Helper::fileUpload($data['avatar'], 'avatar', time() . '_' . getFileName($data['avatar']));
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'role' => 'contractor',
+                    'avatar' => $data['avatar'],
+                ]);
+                // Create user address
+                $user_address = UserAddress::create([
+                    'user_id' => $user->id,
+                    'location' => $data['address'],
+                    'latitude' => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                    'address_type' => 'work',
+                    'is_current' => true,
+                ]);
+            } else {
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'role' => 'contractor',
+                ]);
+                // Create user address
+                $user_address = UserAddress::create([
+                    'user_id' => $user->id,
+                    'location' => $data['address'],
+                    'latitude' => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                    'address_type' => 'work',
+                    'is_current' => true,
+                ]);
+            }
             event(new Registered($user));
             Auth::login($user);
+            DB::commit();
             return true;
         } catch (Exception $e) {
-            return $this->handleException($e);
+            DB::rollBack();
+            throw $e;
         }
     }
 
@@ -73,7 +109,7 @@ class ContractorRegisterService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -88,7 +124,7 @@ class ContractorRegisterService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -104,7 +140,7 @@ class ContractorRegisterService
         try {
             // Logic to update a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
@@ -114,28 +150,13 @@ class ContractorRegisterService
      * @param int $id
      * @return bool
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-            return $this->handleException($e);
+            throw $e;
         }
     }
 
-    /**
-     * Handle exceptions.
-     *
-     * @param Exception $e
-     * @return mixed
-     */
-    private function handleException(Exception $e)
-    {
-        // Log the exception or handle it as needed
-        // You can use logger or return an error response
-        return [
-            'success' => false,
-            'message' => $e->getMessage(),
-        ];
-    }
 }

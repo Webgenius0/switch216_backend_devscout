@@ -28,13 +28,13 @@ class ContractorSettingController extends Controller
     {
         $contractor = $this->profileService->get();
         // dd($contractor);
-        return view('frontend.dashboard.layouts.contractor.settings.index', compact('contractor'));
+        return view('frontend.dashboard.contractor.layouts.settings.index', compact('contractor'));
     }
 
 
     public function password()
     {
-        return view('frontend.dashboard.layouts.contractor.settings.password');
+        return view('frontend.dashboard.contractor.layouts.settings.password');
     }
     public function passwordUpdate(Request $request)
     {
@@ -64,7 +64,6 @@ class ContractorSettingController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'gender' => 'required|in:male,female,other',
             'avatar' => 'nullable|image|max:2048',

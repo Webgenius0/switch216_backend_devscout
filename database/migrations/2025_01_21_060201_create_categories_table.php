@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name'); // Category name (e.g., "Food", "Car", "Home")
             $table->string('description')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
