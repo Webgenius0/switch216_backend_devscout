@@ -12,7 +12,7 @@ class ContractorDashboardController extends Controller
      */
     public function index()
     {
-        return view('frontend.dashboard.layouts.contractor.index');
+        return view('frontend.dashboard.contractor.layouts.home.index');
     }
 
     /**

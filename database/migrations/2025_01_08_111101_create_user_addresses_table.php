@@ -14,11 +14,6 @@ return new class extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
-            $table->string('address_line1')->nullable(); // Primary address line
-            $table->string('address_line2')->nullable(); 
-            $table->string('building')->nullable(); 
-            $table->string('apartment')->nullable(); 
-            $table->string('floor')->nullable(); 
             $table->string('location')->nullable(); // here map like google
             $table->text('description')->nullable();
             $table->decimal('latitude', 10, 7)->nullable(); // Latitude with precision

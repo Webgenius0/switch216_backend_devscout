@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
@@ -19,7 +20,9 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\ProfileController;
+use App\Http\Controllers\Web\Backend\SubCategoryController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
+use App\Http\Controllers\Web\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
@@ -97,6 +100,27 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     // footer social links and image cms
     Route::resource('/cms/home-page/social-link', HomePageSocialLinkContainerController::class)->names(names: 'cms.home_page.social_link');
     Route::post('/cms/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
+
+
+
+
+    // ==================================== App route  start===========================================================
+
+    // Route for UserController
+    Route::resource('/user-list', UserController::class)->names('user-list');
+    Route::post('/user-list/status/{id}', [UserController::class, 'status'])->name('user-list.status');
+
+    //category
+    Route::resource('categories', CategoryController::class)->names(names: 'category');
+    Route::post('categories/status/{id}', [CategoryController::class, 'status'])->name('category.status');
+
+    //category
+    Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
+    Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
+
+
+    // ==================================== App route  end===========================================================
+
 });
 
 

@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->json('gallery_images')->nullable(); // Array of images
             $table->string('video_url')->nullable(); // Service video
             $table->decimal('price', 10, 2)->nullable(); // Base price
+            $table->boolean('is_emergency')->default(false);
             $table->enum('type', ['event', 'single', 'sell', 'rent'])->nullable();
             $table->enum('verify', ['pending', 'approved','rejected'])->default('pending');
             $table->enum('status', ['active', 'inactive'])->default('active');
