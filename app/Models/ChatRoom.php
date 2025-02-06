@@ -28,6 +28,14 @@ class ChatRoom extends Model
     ];
 
     /**
+     * Get all messages for the chat room.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
      * Get the customer who owns this chat room.
      */
     public function customer()

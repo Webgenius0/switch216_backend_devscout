@@ -114,7 +114,7 @@
 
 
 @push('scripts')
-    {{-- <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script> --}}
+
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function() {

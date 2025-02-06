@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\Contractor\BookingController;
+use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
@@ -24,6 +26,8 @@ Route::get('/map-api-key', function () {
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/service-emergency', [EmergencyPageController::class, 'index'])->name('service.emergency');
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
+
+
 
 Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');
@@ -130,7 +134,7 @@ Route::get('/customer-dashboard', function () {
     return view('frontend.dashboard.customer.layouts.home.index');
 })->middleware(['auth', 'verified'])->name('customer.dashboard');
 
-Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(function () {
+Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(function () {
     Route::get('dashboard', [ContractorDashboardController::class, 'index'])->name('contractor.dashboard');
     //profile settings
     Route::get('settings-profile', [ContractorSettingController::class, 'index'])->name('contractor.settings.index');
@@ -142,6 +146,14 @@ Route::middleware(['auth:web','is_contractor'])->prefix('contractor')->group(fun
     Route::resource('services', ContractorServiceController::class)->names('contractor.services');
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
+
+    Route::get('/contractor-messages', [ChatController::class, 'index'])->name('contractor.message.index');
+    Route::get('/contractor-messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
+    Route::get('/contractor-messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
+    Route::post('/contractor-messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
+
+    Route::get('/contractor-booking', [BookingController::class, 'index'])->name('contractor.booking.index');
+
 });
 
 // Route::get('/dashboard', function () {

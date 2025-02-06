@@ -8,6 +8,36 @@
     @include('frontend.partials.header2')
 @endsection
 @push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+    #map {
+        width: 100%;
+        height: 40vh;
+        border-radius: 10px;
+    }
+
+    .leaflet-top.leaflet-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+    }
+
+    .map-button {
+        background: white;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+    }
+
+    .map-button:hover {
+        background: #f0f0f0;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -323,7 +353,8 @@
                         data-bs-target="#authModal">
                         Book Appointment
                     </button>
-                    <a href="#" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                    <a data-bs-toggle="modal"
+                    data-bs-target="#authModal" href="#" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
                 @endguest
 
                 @auth
@@ -335,7 +366,10 @@
                         <a href="#" class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
                     @endif
                 @endauth
-
+                <div id="map"></div>
+                                    <input type="hidden" name="latitude" id="latitude">
+                                    <input type="hidden" name="longitude" id="longitude">
+                                    <input type="hidden" name="address" id="address">
 
 
             </div>
@@ -389,7 +423,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal">Sign In later</button>
-                    <button type="button" class="button">Sign In Now</button>
+                    <button type="button" class="button" onclick="window.location.href='{{ route('login') }}'">Sign In Now</button>
                 </div>
             </div>
         </div>
@@ -475,4 +509,82 @@
             console.log('clicked');
         }
     </script> --}}
+
+    <script>
+        let currentMarker;
+        const serviceLat = {{  $service->user->userAddresses()->first()->latitude ?? '34.0522' }}; // Default: Los Angeles
+        const serviceLng = {{  $service->user->userAddresses()->first()->longitude ?? '-118.2437' }};
+        let mapTilerKey = '';
+    
+        const map = L.map('map', {
+            center: [serviceLat, serviceLng],
+            zoom: 13,
+            zoomControl: true,
+            scrollWheelZoom: false
+        });
+    
+        $.ajax({
+            url: "{{route('map.api.key')}}",
+            method: "GET",
+            success: function(response) {
+                mapTilerKey = response.key;
+                initializeMap();
+            },
+            error: function() {
+                alert("Failed to load Map API key!");
+            }
+        });
+    
+        function initializeMap() {
+            L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
+                maxZoom: 18,
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+    
+            // Show service provider's marker
+            L.marker([serviceLat, serviceLng], { draggable: false })
+                .addTo(map)
+                .bindPopup("Service Provider's Location")
+                .openPopup();
+        }
+    
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+    
+                        // Show user's marker
+                        const userMarker = L.marker([userLat, userLng], { draggable: false })
+                            .addTo(map)
+                            .bindPopup("Your Location")
+                            .openPopup();
+    
+                        // Draw red line between user and service provider
+                        const latLngs = [
+                            [serviceLat, serviceLng], 
+                            [userLat, userLng]
+                        ];
+                        L.polyline(latLngs, { color: 'red', weight: 3 }).addTo(map);
+    
+                        // Fit map bounds
+                        const bounds = L.latLngBounds(latLngs);
+                        map.fitBounds(bounds);
+                    },
+                    () => {
+                        alert("Location access denied! Using only service provider location.");
+                    },
+                    { enableHighAccuracy: true, timeout: 5000 }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+    
+        locateUser(); // Auto-locate on load
+    
+    </script>
+    
 @endpush
