@@ -152,20 +152,35 @@ class ChatService
     public function startChat($serviceId)
     {
         try {
+            DB::beginTransaction();
             if ($this->user->role !== 'customer') {
                 throw new Exception('Only customers can create a chat.');
             }
             $service = Service::findOrFail($serviceId);
-            return ChatRoom::firstOrCreate([
-                'customer_id' => $this->user->id,
-                'contractor_id' => $service->user_id,
-                'service_id' => $serviceId,
-                'focus_at' => now(),
-            ]);
+
+            // Check if a chatroom already exists
+            $chatroom = ChatRoom::where('customer_id', $this->user->id)
+                ->where('contractor_id', $service->user_id)
+                ->first();
+
+            // If no chatroom exists, create a new one
+            if (!$chatroom) {
+                $chatroom = ChatRoom::create([
+                    'customer_id' => $this->user->id,
+                    'contractor_id' => $service->user_id,
+                    'service_id' => $serviceId,
+                    'focus_at' => now(),
+                ]);
+            }
+            $chatroom->update(['focus_at' => now()]);
+            DB::commit();
+            return $chatroom;
         } catch (Exception $e) {
+            DB::rollBack();
             throw $e;
         }
     }
+
 
     private function isUserOnline($user)
     {

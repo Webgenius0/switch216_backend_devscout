@@ -71,13 +71,13 @@
                             <div class="user-title">
                                 <div class=" d-flex align-item-center gap-4 ">
                                     <div style=" width: 50px; height: 50px; " class="">
-                                        <img src="{{ asset($lastChatRommMessage->customer->avatar ?? 'backend/assets/images/avatar_defult.png') }}"
-                                            alt="user"
-                                            style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;" />
+                                        <img src="{{ asset(auth()->id() === $lastChatRommMessage->customer_id ? $lastChatRommMessage->contractor->avatar ?? 'backend/assets/images/avatar_defult.png' : $lastChatRommMessage->customer->avatar ?? 'backend/assets/images/avatar_defult.png') }}"
+                                            alt="Avatar"
+                                            style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;">
                                     </div>
                                     <div class=" pt-2 ">
                                         <span>
-                                            {{ $lastChatRommMessage->customer->name ?? ($lastChatRommMessage->contactor->name ?? '') }}
+                                            {{ auth()->id() === $lastChatRommMessage->customer_id ? $lastChatRommMessage->contractor->name ?? '' : $lastChatRommMessage->customer->name ?? '' }}
                                             {{-- <h6 style="color:green">online</h6> --}}
                                         </span>
                                     </div>
@@ -245,7 +245,7 @@
                                     </div>
                                 </div>
                                 ${chatRoom.unread_count ? `<div class="chat-count"><span class="chat-count-number">${ chatRoom.unread_count }</span></div>
-    ` : ""}
+        ` : ""}
                             </div>
                             <div class="chat-separator"></div>
                         `);

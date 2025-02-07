@@ -22,7 +22,6 @@ class ChatController extends Controller
     public function index(Request $request)
     {
         $lastChatRommMessage = $this->chatService->getLastChatRoomMessage();
-        
         if ($this->user->role === 'contractor') {
             return view('frontend.dashboard.contractor.layouts.chat.index', compact('lastChatRommMessage'));
         } else {
