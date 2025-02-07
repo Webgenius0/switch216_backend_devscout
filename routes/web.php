@@ -147,15 +147,20 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-messages', [ChatController::class, 'index'])->name('contractor.message.index');
-    Route::get('/contractor-messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
-    Route::get('/contractor-messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
-    Route::post('/contractor-messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
+
 
     Route::get('/contractor-booking', [BookingController::class, 'index'])->name('contractor.booking.index');
 
 });
 
+//for customer and contractor only
+Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
+    Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index');
+    Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
+    Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
+    Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
+    Route::post('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
+});
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

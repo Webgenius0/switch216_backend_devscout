@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_check' => \App\Http\Middleware\RoleCheckMiddleWare::class,
             'is_contractor' => \App\Http\Middleware\CheckIsContractorMiddleWare::class,
             'is_costomer' => \App\Http\Middleware\CheckIsCostomerMiddleWare::class,
+            'is_customer_or_contractor' => \App\Http\Middleware\CheckIsCustomerOrContractorMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

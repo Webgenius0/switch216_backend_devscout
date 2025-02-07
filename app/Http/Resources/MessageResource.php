@@ -16,7 +16,7 @@ class MessageResource extends JsonResource
     {
         return [
             'content' => $this->content,
-            'created_at' => $this->created_at->setTimezone(config('app.timezone'))->format('g:i A'),
+            'created_at' => $this->created_at,
         ];
     }
 }

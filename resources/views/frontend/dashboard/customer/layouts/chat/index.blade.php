@@ -1,10 +1,10 @@
-@extends('frontend.dashboard.contractor.app')
+@extends('frontend.dashboard.customer.app')
 
 @section('title')
     Dashboard Contrator
 @endsection
 @section('header')
-    @include('frontend.dashboard.contractor.partials.header')
+    @include('frontend.dashboard.customer.partials.header')
 @endsection
 @push('styles')
     <!-- custom css -->

@@ -13,7 +13,7 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 // let channelName = import.meta.env.VITE_REVERB_CHANNEL_NAME;
-// let channelName = 'chat.1';
+// let channelName = 'chat.2';
 
 // window.Echo.private(channelName)
 //     .listen('MessageEvent', (e) => {

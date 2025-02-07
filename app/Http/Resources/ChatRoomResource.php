@@ -15,16 +15,23 @@ class ChatRoomResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $authUser = Auth::user();
+        $isContractor = $authUser->role === 'contractor';
+
         return [
             'chatRoom_id' => $this->id,
-            'customer' => [
-                'id' => $this->customer->id,
-                'name' => $this->customer->name,
-                'avatar' => $this->customer->avatar,
-                'is_online' => $this->customer->is_online,
+            'other_user' => [
+                'id' => $isContractor ? $this->customer->id : $this->contractor->id,
+                'name' => $isContractor ? $this->customer->name : $this->contractor->name,
+                'avatar' => $isContractor ? $this->customer->avatar : $this->contractor->avatar,
+                'is_online' => $this->other_user_is_online,
             ],
+            'user_role' => $authUser->role,
             'last_message' => new MessageResource($this->messages->first()),
-            'unread_count' => $this->messages->where('is_read', 0)->where('sender_id', '!=', Auth::user()->id)->count(),
+            'unread_count' => $this->messages
+                ->where('is_read', 0)
+                ->where('sender_id', '!=', $authUser->id)
+                ->count(),
         ];
     }
 }

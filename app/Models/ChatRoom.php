@@ -15,6 +15,7 @@ class ChatRoom extends Model
         'contractor_id',
         'service_id',
         'service_item_id',
+        'focus_at',
     ];
 
     protected $casts = [
