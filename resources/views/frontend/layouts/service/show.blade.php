@@ -8,36 +8,37 @@
     @include('frontend.partials.header2')
 @endsection
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>
-    #map {
-        width: 100%;
-        height: 40vh;
-        border-radius: 10px;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 40vh;
+            border-radius: 10px;
+        }
 
-    .leaflet-top.leaflet-right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 8px;
-    }
+        .leaflet-top.leaflet-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
 
-    .map-button {
-        background: white;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        padding: 8px;
-        cursor: pointer;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        font-size: 14px;
-    }
+        .map-button {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
 
-    .map-button:hover {
-        background: #f0f0f0;
-    }
-</style>
+        .map-button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -69,7 +70,11 @@
                             <span>{{ $service->user->userAddresses()->first()->location ?? ' ' }}</span>
                         </div>
                         <div class="profile-tags">
-                            Wedding DJ, Corporate Events, Private Parties
+                            @forelse ($categoryNames as $item)
+                                <span>{{ $item }},</span>
+                            @empty
+                                <span>No Category</span>
+                            @endforelse
                         </div>
                     </div>
                     <div class="profile-end">
@@ -152,30 +157,22 @@
                 <hr class="separator" />
 
                 <!-- service section start -->
-                {{-- <h2 class="profile-section-title">Services Offered by</h2>
+                <h2 class="profile-section-title">Services Offered by</h2>
                 <div class="service-wrapper">
+                    @forelse ($ServiceTitleWithDescription as $item )
                     <div class="service-item">
-                        <h5 class="service-title">Wedding DJ</h5>
+                        <h5 class="service-title">{{$item->title}}</h5>
                         <p class="service-des">
-                            Create the perfect atmosphere for your special day with a
-                            customized playlist and seamless music transitions.
+                            {{$item->description}}
                         </p>
                     </div>
-                    <div class="service-item">
-                        <h5 class="service-title">Corporate Events DJ</h5>
-                        <p class="service-des">
-                            Professional sound and music tailored for corporate gatherings,
-                            product launches, or company parties.
-                        </p>
-                    </div>
-                    <div class="service-item">
-                        <h5 class="service-title">Private Party DJ</h5>
-                        <p class="service-des">
-                            Bring energy to your private event with a mix of top hits and
-                            crowd favorites.
-                        </p>
-                    </div>
-                </div> --}}
+                        
+                    @empty
+                        
+                    @endforelse
+                    
+                    
+                </div>
                 <!-- service section end -->
 
                 <hr class="separator" />
@@ -353,8 +350,8 @@
                         data-bs-target="#authModal">
                         Book Appointment
                     </button>
-                    <a data-bs-toggle="modal"
-                    data-bs-target="#authModal" href="#" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                    <a data-bs-toggle="modal" data-bs-target="#authModal" href="#"
+                        class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
                 @endguest
 
                 @auth
@@ -363,15 +360,14 @@
                             data-bs-target="#successModal">
                             Book Appointment
                         </button>
-                        <a href="{{route('contractor.message.start_chat',$service->id)}}" class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
+                        <a href="{{ route('contractor.message.start_chat', $service->id) }}"
+                            class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
                     @endif
                 @endauth
                 <div id="map"></div>
-                                    <input type="hidden" name="latitude" id="latitude">
-                                    <input type="hidden" name="longitude" id="longitude">
-                                    <input type="hidden" name="address" id="address">
-
-
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
+                <input type="hidden" name="address" id="address">
             </div>
         </div>
     </main>
@@ -423,7 +419,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal">Sign In later</button>
-                    <button type="button" class="button" onclick="window.location.href='{{ route('login') }}'">Sign In Now</button>
+                    <button type="button" class="button" onclick="window.location.href='{{ route('login') }}'">Sign In
+                        Now</button>
                 </div>
             </div>
         </div>
@@ -464,24 +461,8 @@
 
 
 @push('scripts')
-    {{-- <script type="text/javascript">
-        let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
-        let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 
-        const searchDate = document.getElementById('appointment-date-picker');
-
-        if (searchDate) {
-            const picker = new easepick.create({
-                element: searchDate,
-                css: [
-                    assetEasepick,
-                    assetEasepickProvider,
-                ],
-                zIndex: 100,
-                format: 'DD-MM-YYYY',
-            });
-        }
-    </script> --}}
     <script type="text/javascript">
         const appointmentDatePicker = document.getElementById(
             'appointment-date-picker'
@@ -512,19 +493,19 @@
 
     <script>
         let currentMarker;
-        const serviceLat = {{  $service->user->userAddresses()->first()->latitude ?? '34.0522' }}; // Default: Los Angeles
-        const serviceLng = {{  $service->user->userAddresses()->first()->longitude ?? '-118.2437' }};
+        const serviceLat = {{ $service->user->userAddresses()->first()->latitude ?? '34.0522' }}; // Default: Los Angeles
+        const serviceLng = {{ $service->user->userAddresses()->first()->longitude ?? '-118.2437' }};
         let mapTilerKey = '';
-    
+
         const map = L.map('map', {
             center: [serviceLat, serviceLng],
             zoom: 13,
             zoomControl: true,
             scrollWheelZoom: false
         });
-    
+
         $.ajax({
-            url: "{{route('map.api.key')}}",
+            url: "{{ route('map.api.key') }}",
             method: "GET",
             success: function(response) {
                 mapTilerKey = response.key;
@@ -534,57 +515,80 @@
                 alert("Failed to load Map API key!");
             }
         });
-    
+
         function initializeMap() {
             L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
                 maxZoom: 18,
                 tileSize: 512,
                 zoomOffset: -1
             }).addTo(map);
-    
+
             // Show service provider's marker
-            L.marker([serviceLat, serviceLng], { draggable: false })
+            L.marker([serviceLat, serviceLng], {
+                    draggable: false
+                })
                 .addTo(map)
                 .bindPopup("Service Provider's Location")
                 .openPopup();
         }
-    
+
         function locateUser() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const userLat = position.coords.latitude;
                         const userLng = position.coords.longitude;
-    
+
                         // Show user's marker
-                        const userMarker = L.marker([userLat, userLng], { draggable: false })
+                        const userMarker = L.marker([userLat, userLng], {
+                                draggable: false
+                            })
                             .addTo(map)
                             .bindPopup("Your Location")
                             .openPopup();
-    
+
                         // Draw red line between user and service provider
                         const latLngs = [
-                            [serviceLat, serviceLng], 
+                            [serviceLat, serviceLng],
                             [userLat, userLng]
                         ];
-                        L.polyline(latLngs, { color: 'red', weight: 3 }).addTo(map);
-    
+                        L.polyline(latLngs, {
+                            color: 'red',
+                            weight: 3
+                        }).addTo(map);
+
                         // Fit map bounds
                         const bounds = L.latLngBounds(latLngs);
                         map.fitBounds(bounds);
                     },
                     () => {
                         alert("Location access denied! Using only service provider location.");
-                    },
-                    { enableHighAccuracy: true, timeout: 5000 }
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 5000
+                    }
                 );
             } else {
                 alert("Geolocation is not supported by this browser.");
             }
         }
-    
+
         locateUser(); // Auto-locate on load
-    
+
+
+        function Booking(event) {
+            event.prevent;
+            // $.ajax({
+            //     url: "{{ route('map.api.key') }}",
+            //     method: "POST",
+            //     success: function(response) {
+            //         mapTilerKey = response.key;
+            //         initializeMap();
+            //     },
+            //     error: function() {
+            //         alert("Failed to load Map API key!");
+            //     }
+            // });
+        }
     </script>
-    
 @endpush

@@ -4,25 +4,26 @@
     Contact Page
 @endsection
 @section('header')
-   @include('frontend.partials.header')
+    @include('frontend.partials.header')
     {{-- @include('frontend.partials.header2') --}}
 @endsection
 @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
     <!-- banner section start -->
-  <section class="provider-banner">
-    <div class="provider-banner-content" data-aos="fade-up">
-      <h2 class="banner-title">
-        Find the Best <span>Party Services</span> in City
-      </h2>
-      <p class="banner-text">
-        Explore top-rated DJs, photographers, caterers, and more for your next
-        event.
-      </p>
-      <!-- search section start -->
-      <div class="container banner-search-container search-container" data-aos="fade-up">
+    <section class="provider-banner">
+        <div class="provider-banner-content" data-aos="fade-up">
+            <h2 class="banner-title">
+                Find the Best <span>Party Services</span> in City
+            </h2>
+            <p class="banner-text">
+                Explore top-rated DJs, photographers, caterers, and more for your next
+                event.
+            </p>
+            <!-- search section start -->
+            {{-- <div class="container banner-search-container search-container" data-aos="fade-up">
         <div class="search-section">
           <form action="./service.html">
             <div class="search-item">
@@ -50,157 +51,54 @@
             </button>
           </form>
         </div>
-      </div>
-      <!-- search section end -->
-    </div>
-  </section>
-  <!-- banner section end -->
-
-  <!-- main section start -->
-  <main class="container m-top m-bottom">
-    <section>
-      <h2 class="section-title" data-aos="fade-up">
-        Contractors Service Providers in city
-      </h2>
-      <p class="section-text" data-aos="fade-left">
-        Looking for service? <a class="active" href="">Click now</a>
-      </p>
-      <div class="service-container sub-service-container" data-aos="fade-down">
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Contractors</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Get the party started with experienced DJs
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Electrician</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Plumber</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Flooring</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Handyman</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Glasses</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Painters</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-        <a class="item" href="./service-provider-list.html">
-          <h4 class="section-card-title">Hvac System</h4>
-          <p class="section-card-text mt-2 mb-2">
-            Capture every special moment with top photographers
-          </p>
-          <div class="mt-2 mt-xl-5">
-            <div class="action">
-              <span>Explore Now</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                <path
-                  d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                  fill="" />
-              </svg>
-            </div>
-          </div>
-        </a>
-      </div>
+      </div> --}}
+            <!-- search section end -->
+        </div>
     </section>
-  </main>
-  <!-- main section end -->
+    <!-- banner section end -->
+
+    <!-- main section start -->
+    <main class="container m-top m-bottom">
+        <section>
+            <h2 class="section-title" data-aos="fade-up">
+                Contractors Service Providers in city
+            </h2>
+            <p class="section-text" data-aos="fade-left">
+                Looking for service? <a class="active" href="">Click now</a>
+            </p>
+            <div class="service-container sub-service-container" data-aos="fade-down">
+                @forelse ($category->subCategories as $key=>$sub_category)
+                <a href="{{ route('service.emergency', ['category' => $category->name,'subcategory'=> $sub_category->name]) }}" class="item">
+                  <img src="{{asset($sub_category->thumbnail)}}" alt="not photo find">
+                   <h4 class="section-card-title mt-2 mt-xl-4">{{$sub_category->name??""}}</h4>
+                   <p class="section-card-text mt-2 mb-2">
+                       {{$sub_category->description ??""}}
+                   </p>
+                   <div class="mt-2 mt-xl-5">
+                     <div class="action">
+                       <span>Explore Now</span>
+         
+                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
+                         <path
+                           d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
+                           fill="" />
+                       </svg>
+                     </div>
+                   </div>
+                 </a>
+                @empty
+                <h1>No Sub Category Found</h1>
+                @endforelse
+                
+
+            </div>
+        </section>
+    </main>
+    <!-- main section end -->
 @endsection
 
 
 
 @push('scripts')
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 @endpush

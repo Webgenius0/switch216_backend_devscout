@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
+use App\Http\Controllers\Web\Frontend\ServiceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -24,8 +25,11 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
-Route::get('/service-emergency', [EmergencyPageController::class, 'index'])->name('service.emergency');
+Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
+
+Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
+Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
 
 
 
@@ -38,17 +42,17 @@ Route::get('/contract', function () {
 })->name('contract');
 
 //service all
-Route::get('/service', function () {
-    return view(view: 'frontend.layouts.service.index');
-})->name('service.index');
+// Route::get('/service', function () {
+//     return view(view: 'frontend.layouts.service.index');
+// })->name('service.index');
 
-Route::get('/service-category', function () {
-    return view(view: 'frontend.layouts.service.category');
-})->name('service.category');
+// Route::get('/service-category', function () {
+//     return view(view: 'frontend.layouts.service.category');
+// })->name('service.category');
 
-Route::get('/service-sub-category', function () {
-    return view(view: 'frontend.layouts.service.sub_category');
-})->name('service.sub_category');
+// Route::get('/service-sub-category', function () {
+//     return view(view: 'frontend.layouts.service.sub_category');
+// })->name('service.sub_category');
 
 // Route::get('/service-emergency', function () {
 //     return view(view: 'frontend.layouts.service.emergency');
@@ -60,13 +64,13 @@ Route::get('/food', function () {
     return view(view: 'frontend.layouts.food_service.index');
 })->name('food.index');
 
-Route::get('/food-details', function () {
-    return view(view: 'frontend.layouts.food_service.list');
-})->name('food.details');
+// Route::get('/food-details', function () {
+//     return view(view: 'frontend.layouts.food_service.list');
+// })->name('food.details');
 
-Route::get('/food-order', function () {
-    return view(view: 'frontend.layouts.food_service.details');
-})->name('food.order');
+// Route::get('/food-order', function () {
+//     return view(view: 'frontend.layouts.food_service.details');
+// })->name('food.order');
 
 
 //car service all
@@ -74,13 +78,13 @@ Route::get('/car', function () {
     return view(view: 'frontend.layouts.car_service.index');
 })->name('car.index');
 
-Route::get('/car-details', function () {
-    return view(view: 'frontend.layouts.car_service.index');
-})->name('car.details');
+// Route::get('/car-details', function () {
+//     return view(view: 'frontend.layouts.car_service.index');
+// })->name('car.details');
 
-Route::get('/car-rental', function () {
-    return view(view: 'frontend.layouts.car_service.index');
-})->name('car.rental');
+// Route::get('/car-rental', function () {
+//     return view(view: 'frontend.layouts.car_service.index');
+// })->name('car.rental');
 
 //error page
 Route::get('/error-comming-soon', function () {
@@ -97,13 +101,13 @@ Route::get('/house', function () {
     return view(view: 'frontend.layouts.house_service.index');
 })->name('house.index');
 
-Route::get('/house-details', function () {
-    return view(view: 'frontend.layouts.house_service.details');
-})->name('house.details');
+// Route::get('/house-details', function () {
+//     return view(view: 'frontend.layouts.house_service.details');
+// })->name('house.details');
 
-Route::get('/house-list', function () {
-    return view(view: 'frontend.layouts.house_service.list');
-})->name('house.list');
+// Route::get('/house-list', function () {
+//     return view(view: 'frontend.layouts.house_service.list');
+// })->name('house.list');
 
 
 //provider

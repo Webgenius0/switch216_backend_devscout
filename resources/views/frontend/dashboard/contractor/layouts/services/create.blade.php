@@ -85,7 +85,7 @@
                                 <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
                                 <option value="event" {{ old('type') == 'event' ? 'selected' : '' }}>Event
                                 </option>
-                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Single
+                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Others
                                 </option>
                             </select>
                             @error('type')

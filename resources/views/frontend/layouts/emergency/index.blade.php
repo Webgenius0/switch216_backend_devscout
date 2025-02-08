@@ -8,7 +8,9 @@
     @include('frontend.partials.header2')
 @endsection
 @push('styles')
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" /> --}}
 @livewireStyles
+
 @endpush
 
 @section('content')
@@ -22,6 +24,7 @@
 
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";

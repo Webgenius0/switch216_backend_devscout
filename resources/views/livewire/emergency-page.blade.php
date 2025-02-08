@@ -2,39 +2,64 @@
     <h2 class="section-title">Describe your Emergency?</h2>
     <div class="filters-container mt-2">
         <fieldset class="filter-input-wrapper">
-            <input class="filter-input-field" wire:model.live.debounce.250ms="location" placeholder="Location"
-                type="text" />
+            <input class="form-control" wire:model.live.debounce.250ms="location" placeholder="Location" type="text" />
         </fieldset>
-        <select wire:model.change="category" class="select">
-            <option value="">Services</option>
-            @forelse ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @empty
-            @endforelse
+           <!-- Category Dropdown -->
+    <fieldset class="filter-input-wrapper">
+        <select wire:model="category" wire:change="resetSubcategory" class="form-control">
+            <option value="">Select Category</option>
+            @foreach ($categories as $categoryItem)
+                <option value="{{ $categoryItem->name }}">{{ $categoryItem->name }}</option>
+            @endforeach
         </select>
-        <select  wire:model.change="contractor_ranking">
-            <option value="">Rating</option>
-            <option value="5.">5</option>
-            <option value="4.">4</option>
-            <option value="3.">3</option>
-            <option value="2.">2</option>
-            <option value="1.">1</option>
+    </fieldset>
+
+    <!-- Subcategory Dropdown -->
+    <fieldset class="filter-input-wrapper">
+        <select wire:change="subcategory" class="form-control" hidden>
+            <option value="">Subcategory</option>
+            {{-- @foreach ($subcategories as $subCategoryItem)
+                <option value="{{ $subCategoryItem->id }}">{{ $subCategoryItem->name }}</option>
+            @endforeach --}}
         </select>
-        
-        
+    </fieldset>
+        <fieldset class="filter-input-wrapper">
+            <select wire:model.change="contractor_ranking" class="form-control">
+                <option value="" selected>Rating </option>
+                <option value="5."> 5 </option>
+                <option value="4."> 4 </option>
+                <option value="3."> 3 </option>
+                <option value="2."> 2 </option>
+                <option value="1."> 1 </option>
+                <option value="0" hidden> .......................... </option>
+            </select>
+        </fieldset>
+        <fieldset class="filter-input-wrapper">
+            <select wire:model.change="serching_type" class="form-control">
+                <option value="" selected>Type </option>
+                <option value="sell">Buy</option>
+                <option value="rent">Rent</option>
+                <option value="event">Event</option>
+                <option value="single">Others</option>
+                <option value="0" hidden> .......................... </option>
+            </select>
+        </fieldset>
+    
+
+        <fieldset class="filter-input-wrapper">
         <div class="toggle-container">
-            <input type="checkbox" id="emergency-toggle" class="toggle-checkbox"
-                wire:model="serching_is_emergency" wire:click="$toggle('serching_is_emergency')" />
+            <input type="checkbox" id="emergency-toggle" class="toggle-checkbox" wire:model="serching_is_emergency"
+                wire:click="$toggle('serching_is_emergency')" />
             <label for="emergency-toggle" class="toggle"></label>
             <label for="emergency-toggle" class="toggle-label">Available Emergency Service</label>
         </div>
-        
+    </fieldset>
     </div>
 
     <div class="service-providers mt-4 mt-md-5" data-aos="fade-down">
         <!-- here will sow all services  -->
         @forelse($services as $key => $service)
-            <div data-href="{{ route('service.single_show', $service->id) }}" class="item item-link">
+        <div data-href="{{ route('service.single_show', $service->id) }}" class="item item-link" >
                 <div class="img-container">
                     <img src="{{ asset($service->cover_image ?? '') }}" alt="" />
                     {{-- <div class="react active">
@@ -93,7 +118,9 @@
             </div>
         @empty
 
-            <div>Not Found.</div>
+            <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                <h1 style="text-align: center;">Service Not Found.</h1>
+            </div>
         @endforelse
 
     </div>

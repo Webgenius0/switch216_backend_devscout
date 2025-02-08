@@ -21,13 +21,14 @@
                     </span>
                     <div class="dropdown-item-menu">
                         <a class="dropdown-item active" href="{{ route('house.index') }}">Real Estate</a>
-                        <a class="dropdown-item" href="{{ route('food.index') }}">Foods</a>
-                        <a class="dropdown-item" href="{{ route('car.index') }}">Car Rent</a>
+                        <a class="dropdown-item" href="{{route('service.emergency',['category' => 'food'])}}">Foods</a>
+                        <a class="dropdown-item" href="{{ route('car.index') }}">Car</a>
+                        <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                     </div>
                 </div>
                 <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-                <a href="{{ route('food.index') }}" class="nav-item">Foods</a>
-                <a href="{{ route('car.index') }}" class="nav-item">Car Rent</a>
+                <a href="{{route('service.emergency',['category' => 'food'])}}" class="nav-item">Foods</a>
+                <a href="{{ route('car.index') }}" class="nav-item">Car</a>
                 <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
             </div>
             <div class="nav-actions">
@@ -153,20 +154,20 @@
         </div>
         <div class="nav-items">
             <a class="nav-item" href="{{ route('home') }}">Home</a>
-            <a class="nav-item" href="{{ route('service.index') }}">Service</a>
             <div class="nav-item dropdown-items">
                 <span class="dropdown-item-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Category
                 </span>
                 <div class="dropdown-item-menu">
                     <a class="dropdown-item" href="{{ route('house.index') }}">Real Estate</a>
-                    <a class="dropdown-item" href="{{ route('food.index') }}">Foods</a>
-                    <a class="dropdown-item" href="{{ route('car.index') }}">Car Rent</a>
+                    <a class="dropdown-item" href="{{route('service.emergency',['category' => 'food'])}}">Foods</a>
+                    <a class="dropdown-item" href="{{ route('car.index') }}">Car</a>
+                    <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                 </div>
             </div>
             <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-            <a href="{{ route('food.index') }}" class="nav-item">Foods</a>
-            <a href="{{ route('car.index') }}" class="nav-item">Car Rent</a>
+            <a href="{{route('service.emergency',['category' => 'food'])}}" class="nav-item">Foods</a>
+            <a href="{{ route('car.index') }}" class="nav-item">Car</a>
             <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
         </div>
         <div class="nav-actions">
