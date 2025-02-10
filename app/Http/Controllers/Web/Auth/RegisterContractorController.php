@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Services\Web\Backend\ContractorRegisterService;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,10 +29,11 @@ class RegisterContractorController extends Controller
      */
     public function create(): View
     {
+        $categories = Category::where('status', 'active')->get();
         $morocco_city = json_decode(file_get_contents(public_path('backend/admin/assets/morocco_city_list.json')), true);
 
         // dd($morocco_city);
-        return view('auth.contractor_register', compact('morocco_city'));
+        return view('auth.contractor_register', compact('morocco_city', 'categories'));
     }
 
     /**
@@ -47,6 +49,8 @@ class RegisterContractorController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'instagram_social_link' => ['required', 'url'],
+            'category_id' => 'required|exists:categories,id',
             'address' => 'required|string',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',

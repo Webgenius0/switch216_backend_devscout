@@ -72,7 +72,7 @@ class CategoryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -118,12 +118,15 @@ class CategoryController extends Controller
     {
         // dd($request->all());
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name,' . $id,
             'description' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
             $data = Category::findOrFail($id);
+            if (in_array($data->name, ['Car', 'Restaurant', 'Real Estate'])) {
+                unset($validatedData['name']); // Prevent updating `name`
+            }
             if ($request->hasFile('thumbnail')) {
                 if ($data && $data->thumbnail && file_exists(public_path($data->thumbnail))) {
                     Helper::fileDelete(public_path($data->thumbnail));
@@ -152,13 +155,14 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $data = Category::findOrFail($id);
-        // check if the category exists
-        if (empty($data)) {
+        // Prevent deletion of specific categories
+        if (in_array($data->name, ['Car', 'Restaurant', 'Real Estate'])) {
             return response()->json([
                 "success" => false,
-                "message" => "Item not found."
-            ], 404);
+                "message" => "This category cannot be deleted."
+            ], 403);
         }
+
         // delete the category
         if (!empty($data->image)) {
             Helper::fileDelete(public_path($data->image));

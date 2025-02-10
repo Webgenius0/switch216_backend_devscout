@@ -17,14 +17,24 @@ class CategorySubCategorySeeder extends Seeder
         // Category data with subcategories
         $categories = [
             [
-                'name' => 'Party Event',
-                'thumbnail' => 'category_images/party_event.jpg', // Image filename
-                'description' => 'All kinds of party event services.',
+                'name' => 'Real Estate',
+                'thumbnail' => 'category_images/home.jpg',
+                'description' => 'Home maintenance and repair services.',
                 'sub_categories' => [
-                    ['name' => 'Event Organizer', 'thumbnail' => 'category_images/party_event/event_organizer.png', 'description' => 'Event organizing services.'],
-                    ['name' => 'Birthday Party Organizer', 'thumbnail' => 'category_images/party_event/birthday_party_organizer.png', 'description' => 'Birthday party organizing services.'],
-                    ['name' => 'Wedding Organizer', 'thumbnail' => 'category_images/party_event/wedding_organizer.png', 'description' => 'Wedding organizing services.'],
-                    ['name' => 'Others', 'thumbnail' => 'category_images/party_event/others.png', 'description' => 'Other party event services.'],
+                    ['name' => 'Buy a Home', 'thumbnail' => 'category_images/real_estate/Buy.png', 'description' => 'Buy services.'],
+                    ['name' => 'Rent a Home', 'thumbnail' => 'category_images/real_estate/Rent.png', 'description' => 'Rent services.'],
+                    ['name' => 'Others', 'thumbnail' => 'category_images/real_estate/others.png', 'description' => 'Real estate others services.'],
+                ]
+            ],
+            [
+                'name' => 'Restaurant',
+                'thumbnail' => 'category_images/food.jpg',
+                'description' => 'Food services.',
+                'sub_categories' => [
+                    ['name' => 'Local Cuisine', 'thumbnail' => 'category_images/food/local_cuisine.png', 'description' => 'Food local cuisine services.'],
+                    ['name' => 'Snaks', 'thumbnail' => 'category_images/food/snaks.png', 'description' => 'Food snaks services.'],
+                    ['name' => 'Pizza', 'thumbnail' => 'category_images/food/pizza.png', 'description' => 'Food pizza services.'],
+                    ['name' => 'Others', 'thumbnail' => 'category_images/food/others.png', 'description' => 'Food others services.'],
                 ]
             ],
             [
@@ -34,30 +44,7 @@ class CategorySubCategorySeeder extends Seeder
                 'sub_categories' => [
                     ['name' => 'Rent a Car', 'thumbnail' => 'category_images/vehicle/rent_a_car.png', 'description' => 'Rent a car services.'],
                     ['name' => 'Buy a Car', 'thumbnail' => 'category_images/vehicle/buy_a_car.png', 'description' => 'Buy a car services.'],
-                    ['name' => 'Car Washing', 'thumbnail' => 'category_images/vehicle/car_washing.png', 'description' => 'Car washing services.'],
-                    ['name' => 'Car Cleaning', 'thumbnail' => 'category_images/vehicle/car_cleaning.png', 'description' => 'Car cleaning services.'],
-                    ['name' => 'Car Detailing', 'thumbnail' => 'category_images/vehicle/car_detailing.png', 'description' => 'Car detailing services.'],
                     ['name' => 'Others', 'thumbnail' => 'category_images/vehicle/others.png', 'description' => 'Other vehicle services.'],
-                ]
-            ],
-            [
-                'name' => 'Food',
-                'thumbnail' => 'category_images/food.jpg',
-                'description' => 'Food services.',
-                'sub_categories' => [
-                    ['name' => 'Food Delivery', 'thumbnail' => 'category_images/food/food_delivery.png', 'description' => 'Food delivery services.'],
-                    ['name' => 'Food Catering', 'thumbnail' => 'category_images/food/food_catering.png', 'description' => 'Food catering services.'],
-                    ['name' => 'Food Takeaway', 'thumbnail' => 'category_images/food/food_takeaway.png', 'description' => 'Food takeaway services.'],
-                    ['name' => 'Others', 'thumbnail' => 'category_images/food/others.png', 'description' => 'Other food services.'],
-                ]
-            ],
-            [
-                'name' => 'Real Estate',
-                'thumbnail' => 'category_images/home.jpg',
-                'description' => 'Home maintenance and repair services.',
-                'sub_categories' => [
-                    ['name' => 'Buy Home', 'thumbnail' => 'category_images/home/Buy.png', 'description' => 'Buy services.'],
-                    ['name' => 'Rent Home', 'thumbnail' => 'category_images/home/Rent.png', 'description' => 'Rent services.'],
                 ]
             ],
             [
@@ -122,7 +109,18 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Outdoor Furniture', 'thumbnail' => 'category_images/furniture/outdoor_furniture.png', 'description' => 'Outdoor furniture services.'],
                     ['name' => 'Others', 'thumbnail' => 'category_images/furniture/others.png', 'description' => 'Other furniture services.'],
                 ]
-            ]
+            ],
+            [
+                'name' => 'Party Event',
+                'thumbnail' => 'category_images/party_event.jpg', // Image filename
+                'description' => 'All kinds of party event services.',
+                'sub_categories' => [
+                    ['name' => 'Event Organizer', 'thumbnail' => 'category_images/party_event/event_organizer.png', 'description' => 'Event organizing services.'],
+                    ['name' => 'Birthday Party Organizer', 'thumbnail' => 'category_images/party_event/birthday_party_organizer.png', 'description' => 'Birthday party organizing services.'],
+                    ['name' => 'Wedding Organizer', 'thumbnail' => 'category_images/party_event/wedding_organizer.png', 'description' => 'Wedding organizing services.'],
+                    ['name' => 'Others', 'thumbnail' => 'category_images/party_event/others.png', 'description' => 'Other party event services.'],
+                ]
+            ],
 
         ];
 

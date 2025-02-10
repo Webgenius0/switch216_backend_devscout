@@ -3,6 +3,7 @@
 namespace App\Services\Web\Backend;
 
 use App\Helpers\Helper;
+use App\Models\ContactorCategory;
 use App\Models\User;
 use App\Models\UserAddress;
 use DB;
@@ -58,6 +59,7 @@ class ContractorRegisterService
                 $user = User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
+                    'instagram_social_link' => $data['instagram_social_link'],
                     'password' => Hash::make($data['password']),
                     'role' => 'contractor',
                     'avatar' => $data['avatar'],
@@ -71,10 +73,16 @@ class ContractorRegisterService
                     'address_type' => 'work',
                     'is_current' => true,
                 ]);
+                // create contactor category
+                $contactorCategory = ContactorCategory::create([
+                    'user_id' => $user->id,
+                    'category_id' => $data['category_id'],
+                ]);
             } else {
                 $user = User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
+                    'instagram_social_link' => $data['instagram_social_link'],
                     'password' => Hash::make($data['password']),
                     'role' => 'contractor',
                 ]);
@@ -86,6 +94,11 @@ class ContractorRegisterService
                     'longitude' => $data['longitude'],
                     'address_type' => 'work',
                     'is_current' => true,
+                ]);
+                // create contactor category
+                $contactorCategory = ContactorCategory::create([
+                    'user_id' => $user->id,
+                    'category_id' => $data['category_id'],
                 ]);
             }
             event(new Registered($user));

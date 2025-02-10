@@ -18,7 +18,14 @@ class CheckIsCustomerOrContractorMiddleWare
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
+        if ($user->status == 'inactive') {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
 
+            $request->session()->regenerateToken();
+            flash()->error('your account is not active.');
+            return redirect('/login');
+        }
         // Check if user is authenticated and has the correct role
         if ($user && ($user->role === 'customer' || $user->role === 'contractor')) {
             // Update 'last_seen' timestamp if user is authenticated

@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('phone')->nullable()->unique();
             $table->string('avatar')->nullable();
+            $table->text('instagram_social_link')->nullable();
             $table->enum('gender', ['male', 'female', 'others'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['contractor', 'customer', 'admin'])->nullable();

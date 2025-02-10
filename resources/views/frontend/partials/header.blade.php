@@ -22,15 +22,15 @@
                     <div class="dropdown-item-menu">
                         <a class="dropdown-item" href="{{ route('house.index') }}">Real Estate</a>
                         <a class="dropdown-item"
-                            href="{{ route('service.emergency', ['category' => 'food']) }}">Foods</a>
+                            href="{{ route('service.emergency', ['category' => 'Restaurant']) }}">Restaurant</a>
                         <a class="dropdown-item" href="{{ route('car.index') }}">Car</a>
                         <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                     </div>
                 </div>
                 <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-                <a href="{{ route('service.emergency', ['category' => 'food']) }}" class="nav-item">Foods</a>
+                <a href="{{ route('service.emergency', ['category' => 'Restaurant']) }}" class="nav-item">Restaurant</a>
                 <a href="{{ route('car.index') }}" class="nav-item">Car</a>
-                <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
+                <a href="{{ route('service.emergency', ['serching_is_emergency' => 'true']) }}" class="nav-item">Emergency</a>
             </div>
             <div class="nav-actions">
                 <select class="select" onchange="langChange(this)">
@@ -144,16 +144,16 @@
                 <div class="dropdown-item-menu">
                     <a class="dropdown-item" href="{{ route('house.index') }}">Real Estate</a>
                     <a class="dropdown-item"
-                        href="{{ route('service.emergency', ['category' => 'food']) }}">Foods</a>
+                        href="{{ route('service.emergency', ['category' => 'Restaurant']) }}">Restaurant</a>
                     <a class="dropdown-item" href="{{ route('car.index') }}">Car </a>
                     <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                 </div>
             </div>
 
             <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-            <a href="{{ route('service.emergency', ['category' => 'food']) }}" class="nav-item">Foods</a>
+            <a href="{{ route('service.emergency', ['category' => 'Restaurant']) }}" class="nav-item">Restaurant</a>
             <a href="{{ route('car.index') }}" class="nav-item">Car</a>
-            <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
+            <a href="{{ route('service.emergency',['serching_is_emergency'=> 'true']) }}" class="nav-item">Emergency</a>
         </div>
         <div class="nav-actions">
             <select class="select" onchange="langChange(this)">

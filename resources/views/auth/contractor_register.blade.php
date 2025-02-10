@@ -59,7 +59,8 @@
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="auth-step-form-container">
-                        <form class="auth-step-form" method="POST" action="{{ route('provider.register.store') }}" enctype="multipart/form-data">
+                        <form class="auth-step-form" method="POST" action="{{ route('provider.register.store') }}"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="step-content">
                                 <div class="step-title">Tell us about yourself</div>
@@ -69,7 +70,8 @@
                                     <div class="profile-upload-container">
                                         <div class="profile-upload-box">
                                             <div class="content">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                    viewBox="0 0 32 32" fill="none">
                                                     <path d="M16 11V21M21 16H11M31 16C31 17.9698 ..." stroke="#222222"
                                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>
@@ -82,35 +84,69 @@
 
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" id="name" name="name" placeholder="Enter your name" value="{{ old('name') }}" required/>
-                                    <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('name') }}</span> 
+                                    <input type="text" id="name" name="name" placeholder="Enter your name"
+                                        value="{{ old('name') }}" required />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('name') }}</span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required/>
-                                    <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('email') }}</span> 
+                                    <input type="email" id="email" name="email" placeholder="Enter your email"
+                                        value="{{ old('email') }}" required />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('email') }}</span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" id="phone" name="phone" inputmode="numeric" placeholder="Enter your phone number" value="{{ old('phone') }}" required/>
-                                    <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('phone') }}</span> 
+                                    <input type="text" id="phone" name="phone" inputmode="numeric"
+                                        placeholder="Enter your phone number" value="{{ old('phone') }}" required />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('phone') }}</span>
                                 </div>
-                                
-                                    <div class="form-group">
+                                <div class="form-group">
+                                    <label for="instagram_social_link">Instagram Social Link</label>
+                                    <input type="text" id="instagram_social_link" name="instagram_social_link"
+                                        placeholder="https://www.instagram.com/kolchie...."
+                                        value="{{ old('instagram_social_link') }}" required />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('instagram_social_link') }}</span>
+                                </div>
+                                <!-- Category -->
+                                <div class="form-group">
+                                    <label class="label text-secondary">Category<span style="color: red">*</span></label>
+                                    <select id="category" class="form-select @error('category_id') is-invalid @enderror"
+                                        name="category_id" required>
+                                        <option value="" selected disabled>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                                data-subcategories="{{ json_encode($category->subCategories) }}">
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
                                     <label for="userPassword" class="input-label">Password</label>
                                     <input type="password" id="userPassword" class="input-field" placeholder="******"
-                                        required name="password" /> 
-                                        <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('password') }}</span> 
-                                    </div>
-                                
-                                    <div class="form-group">
+                                        required name="password" />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('password') }}</span>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="userPassword" class="input-label">Confirm Password</label>
                                     <input type="password" id="userPassword" class="input-field" placeholder="******"
-                                        required name="password_confirmation" /> 
-                                        <span class="text-red-600 text-sm" style="color: red">{{ $errors->first('password_confirmation') }}</span> 
-                                    </div>
+                                        required name="password_confirmation" />
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('password_confirmation') }}</span>
+                                </div>
                                 <fieldset class="checkbox-wrapper">
                                     <input type="checkbox" id="terms" class="checkbox-field" required />
                                     <label class="checkbox-label" for="terms">
@@ -139,7 +175,7 @@
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script>
         let currentMarker;
         const defaultLat = 34.0522; // Default: Los Angeles
@@ -149,11 +185,11 @@
         const map = L.map('map', {
             center: [defaultLat, defaultLng],
             zoom: 13,
-            zoomControl: true,  
+            zoomControl: true,
             scrollWheelZoom: false
         });
         $.ajax({
-            url: "{{route('map.api.key')}}",
+            url: "{{ route('map.api.key') }}",
             method: "GET",
             success: function(response) {
                 mapTilerKey = response.key;
@@ -166,13 +202,13 @@
 
         function initializeMap() {
             L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
-            // attribution: '© MapTiler contributors',
-            maxZoom: 18,
-            tileSize: 512,
-            zoomOffset: -1
-        }).addTo(map);
+                // attribution: '© MapTiler contributors',
+                maxZoom: 18,
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
         }
-        
+
 
         // Ensure full map rendering
         setTimeout(() => {
@@ -186,12 +222,17 @@
             if (currentMarker) {
                 currentMarker.setLatLng([lat, lng]);
             } else {
-                currentMarker = L.marker([lat, lng], { draggable: true }).addTo(map)
+                currentMarker = L.marker([lat, lng], {
+                        draggable: true
+                    }).addTo(map)
                     .bindPopup('You are here!')
                     .openPopup();
-                
-                currentMarker.on('dragend', function (e) {
-                    let { lat, lng } = e.target.getLatLng();
+
+                currentMarker.on('dragend', function(e) {
+                    let {
+                        lat,
+                        lng
+                    } = e.target.getLatLng();
                     updateMarker(lat, lng);
                 });
             }
@@ -218,8 +259,10 @@
                     () => {
                         alert("Location access denied! Using default location.");
                         updateMarker(defaultLat, defaultLng);
-                    },
-                    { enableHighAccuracy: true, timeout: 5000 }
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 5000
+                    }
                 );
             } else {
                 alert("Geolocation is not supported by this browser.");
@@ -227,8 +270,10 @@
         }
 
         // Add a "Find Me" button
-        const locateButton = L.control({ position: 'topright' });
-        locateButton.onAdd = function () {
+        const locateButton = L.control({
+            position: 'topright'
+        });
+        locateButton.onAdd = function() {
             const div = L.DomUtil.create('div', 'map-button');
             div.innerHTML = '📍 Find Me';
             div.onclick = locateUser;

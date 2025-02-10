@@ -133,16 +133,15 @@ Route::get('/provider-details', function () {
 })->name('provider.details');
 
 
+//for customer only
+Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(function () {
+    Route::get('dashboard', function () {
+        return view('frontend.dashboard.customer.layouts.home.index');
+    })->name('customer.dashboard');
+});
 
-// Route::get('/contractor-dashboard', function () {
-//     return view('frontend.dashboard.layouts.contractor.index');
-// })->middleware(['auth', 'verified'])->name('contractor.dashboard');
 
-
-Route::get('/customer-dashboard', function () {
-    return view('frontend.dashboard.customer.layouts.home.index');
-})->middleware(['auth', 'verified'])->name('customer.dashboard');
-
+//for contractor only
 Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(function () {
     Route::get('dashboard', [ContractorDashboardController::class, 'index'])->name('contractor.dashboard');
     //profile settings
@@ -156,11 +155,10 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-
-
     Route::get('/contractor-booking', [BookingController::class, 'index'])->name('contractor.booking.index');
 
 });
+
 
 //for customer and contractor only
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
@@ -170,30 +168,22 @@ Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->gr
     Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
     Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
 });
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 //Language translate
 Route::post('/set-locale/{locale}', function ($locale) {
 
     //check valid lang code
-    if (! in_array($locale,['en','es','ar','fr'])) {
+    if (!in_array($locale, ['en', 'es', 'ar', 'fr'])) {
         //set default language
         App::setLocale(Config::get('app.locale'));
     } else {
         //set language
         App::setLocale($locale);
         session(['locale' => $locale]);
-        
-        Log::info('Session Local set ::'.  $locale);
+
+        // Log::info('Session Local set ::' . $locale);
     }
     return response()->noContent();
 

@@ -45,6 +45,7 @@ class User extends Authenticatable
         'phone',
         'avatar',
         'gender',
+        'instagram_social_link',
         'password',
         'otp',
         'reset_password_token',
