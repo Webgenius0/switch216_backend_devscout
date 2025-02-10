@@ -9,8 +9,13 @@ use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\App;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 // Route::get('/', function () {
 //     // return view('welcome');
@@ -176,6 +181,22 @@ Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->gr
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
+//Language translate
+Route::post('/set-locale/{locale}', function ($locale) {
 
+    //check valid lang code
+    if (! in_array($locale,['en','es','ar','fr'])) {
+        //set default language
+        App::setLocale(Config::get('app.locale'));
+    } else {
+        //set language
+        App::setLocale($locale);
+        session(['locale' => $locale]);
+        
+        Log::info('Session Local set ::'.  $locale);
+    }
+    return response()->noContent();
+
+})->name('setLocale');
 
 require __DIR__ . '/auth.php';

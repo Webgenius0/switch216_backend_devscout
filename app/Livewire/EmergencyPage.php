@@ -15,7 +15,7 @@ class EmergencyPage extends Component
     public $subcategory = '';
     public $subcategories = [];
     public $serching_is_emergency = false;
-    public $contractor_ranking = "";
+    // public $contractor_ranking = "";
     // public $contractor = "5";
     public $serching_type;
 
@@ -62,13 +62,13 @@ class EmergencyPage extends Component
             ->when($this->serching_is_emergency, function ($query) {
                 $query->where('is_emergency', true);
             })
-            ->when($this->contractor_ranking, function ($query, $value) {
-                $query->whereHas('user', function ($query) use ($value) {
-                    $query->whereHas('contractorRanking', function ($query) use ($value) {
-                        $query->where('average_rating', '>=', $value); // Fixed this condition
-                    });
-                });
-            })
+            // ->when($this->contractor_ranking, function ($query, $value) {
+            //     $query->whereHas('user', function ($query) use ($value) {
+            //         $query->whereHas('contractorRanking', function ($query) use ($value) {
+            //             $query->where('average_rating', '>=', $value); // Fixed this condition
+            //         });
+            //     });
+            // })
             ->paginate(20);
 
 

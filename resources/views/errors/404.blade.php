@@ -1,20 +1,5 @@
 @extends('errors::minimal')
 
-{{-- @section('title', __('Not Found'))
-@section('code', '404')
-@section('message', __($exception->getMessage() ?: 'Not Found')) --}}
-
-
-@section('title')
-    About Page
-@endsection
-@section('header')
-    {{-- @include('frontend.partials.header') --}}
-    {{-- @include('frontend.partials.header2') --}}
-@endsection
-@push('styles')
-@endpush
-
 @section('content')
     <!-- main section start -->
     <main>
@@ -39,7 +24,3 @@
     <!-- main section end -->
 @endsection
 
-
-
-@push('scripts')
-@endpush

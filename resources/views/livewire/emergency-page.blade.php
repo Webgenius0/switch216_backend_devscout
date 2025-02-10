@@ -23,7 +23,7 @@
             @endforeach --}}
         </select>
     </fieldset>
-        <fieldset class="filter-input-wrapper">
+        {{-- <fieldset class="filter-input-wrapper">
             <select wire:model.change="contractor_ranking" class="form-control">
                 <option value="" selected>Rating </option>
                 <option value="5."> 5 </option>
@@ -33,7 +33,7 @@
                 <option value="1."> 1 </option>
                 <option value="0" hidden> .......................... </option>
             </select>
-        </fieldset>
+        </fieldset> --}}
         <fieldset class="filter-input-wrapper">
             <select wire:model.change="serching_type" class="form-control">
                 <option value="" selected>Type </option>
@@ -118,9 +118,9 @@
             </div>
         @empty
 
-            <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-                <h1 style="text-align: center;">Service Not Found.</h1>
-            </div>
+            <span class="d-flex justify-content-center align-items-center vh-100">
+                <h1 class="text-center">Service Not Found.</h1>
+            </span>
         @endforelse
 
     </div>

@@ -9,7 +9,7 @@
             <div class="logo">
                 <a href="{{ route('home') }}" class="site-logo">
                     <img class="footer-logo"
-                        src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}"
+                        src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/light-logo.png') }}"
                         alt="site logo" />
                 </a>
             </div>
@@ -32,11 +32,12 @@
                 <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
             </div>
             <div class="nav-actions">
-                {{-- <select class="select">
-                     <option value="connected">English</option>
-                     <option value="connected">Spanish</option>
-                     <option value="connected">Chinese</option>
-                 </select> --}}
+                <select class="select" onchange="langChange(this)">
+                    <option @if (app()->getLocale() !== 'es') selected @endif value="en">English</option>
+                    <option @if (app()->getLocale() === 'es') selected @endif value="es">Spanish</option>
+                    <option @if (app()->getLocale() === 'ar') selected @endif value="ar">Arabic</option>
+                    <option @if (app()->getLocale() === 'fr') selected @endif value="fr">French</option>
+                </select>
                 @if (Auth::check())
                     <div class="profile-dropdown-container1">
                         <div class="profile-dropdown-btn">
@@ -148,7 +149,7 @@
         <div class="logo">
             <a href="{{ route('home') }}" class="site-logo">
                 <img class="footer-logo"
-                    src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}"
+                    src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/light-logo.png') }}"
                     alt="site logo" />
             </a>
         </div>
@@ -171,11 +172,12 @@
             <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
         </div>
         <div class="nav-actions">
-            {{-- <select class="select">
-                 <option value="connected">English</option>
-                 <option value="connected">Spanish</option>
-                 <option value="connected">Chinese</option>
-             </select> --}}
+            <select class="select" onchange="langChange(this)">
+                <option @if (app()->getLocale() !== 'es') selected @endif value="en">English</option>
+                <option @if (app()->getLocale() === 'es') selected @endif value="es">Spanish</option>
+                <option @if (app()->getLocale() === 'ar') selected @endif value="ar">Arabic</option>
+                <option @if (app()->getLocale() === 'fr') selected @endif value="fr">French</option>
+            </select>
             @if (Auth::check())
             @else
                 <a href="{{ route('login') }}" class="auth-btn">Sign In</a>
@@ -187,3 +189,37 @@
     <!-- mobile navbar section end -->
 </header>
 <!-- header section end -->
+
+<script>
+    function langChange(e) {
+        var url = '{{ route('setLocale', ':code') }}';
+        $.ajax({
+            type: "POST",
+            url: url.replace(':code', e.value),
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(resp) {
+                //handle success
+            },
+            error: function(error) {
+                //handle error
+            }
+        })
+
+        if (e.value === 'es') {
+            doGTranslate('en|es');
+            doGTranslate('en|es');
+        } else if (e.value === 'ar') {
+            doGTranslate('en|ar');
+            doGTranslate('en|ar');
+        } else if (e.value === 'fr') {
+            doGTranslate('en|fr');
+            doGTranslate('en|fr');
+        } else {
+            doGTranslate('es|en');
+            doGTranslate('es|en');
+        }
+        return false;
+    }
+</script>

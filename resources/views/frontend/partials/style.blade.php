@@ -72,3 +72,8 @@
     }
 </style>
 @stack('styles')
+<style>
+    .skiptranslate {
+        display: none !important;
+    }
+</style>

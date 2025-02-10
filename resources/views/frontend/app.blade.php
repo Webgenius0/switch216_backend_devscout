@@ -32,7 +32,7 @@
     @yield('header')
 
     @yield('content')
-
+    <div id="google_translate_element2"></div>
 
     @include('frontend.partials.footer')
     @include('frontend.partials.script')
