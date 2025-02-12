@@ -13,12 +13,12 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 // let channelName = import.meta.env.VITE_REVERB_CHANNEL_NAME;
-let channelName = 'chat.1';
+// let channelName = 'chat.2';
 
-window.Echo.private(channelName)
-    .listen('MessageEvent', (e) => {
-        console.log(e);
-    });
+// window.Echo.private(channelName)
+//     .listen('MessageEvent', (e) => {
+//         console.log(e);
+//     });
 // let userId = 8;
 // window.Echo.private('App.Models.User.' + userId)
 //     .notification((notification) => {
