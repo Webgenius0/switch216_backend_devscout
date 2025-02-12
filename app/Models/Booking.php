@@ -15,6 +15,7 @@ class Booking extends Model
         'user_id',
         'service_id',
         'booking_date',
+        'reschedule_booking_date',
         'status',
     ];
 
@@ -22,6 +23,7 @@ class Booking extends Model
         'user_id' => 'integer',
         'service_id' => 'integer',
         'booking_date' => 'datetime',
+        'reschedule_booking_date' => 'datetime',
         'status' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -41,5 +43,10 @@ class Booking extends Model
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'booking_id'); // Adjust 'booking_id' if necessary
     }
 }

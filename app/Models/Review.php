@@ -11,12 +11,18 @@ class Review extends Model
 
     protected $fillable = [
         'service_id',
+        'contactor_id',
+        'booking_id',
         'user_id',
         'rating',
         'review',
     ];
 
     protected $casts = [
+        'service_id' => 'integer',
+        'contactor_id' => 'integer',
+        'booking_id' => 'integer',
+        'user_id' => 'integer',
         'rating' => 'integer',
         'review' => 'string',
         'created_at' => 'datetime',
@@ -38,4 +44,13 @@ class Review extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the booking that this review is associated with.
+     */
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
+    }
+
 }

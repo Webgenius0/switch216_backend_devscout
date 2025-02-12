@@ -9,7 +9,7 @@
             <div class="logo">
                 <a href="{{ route('home') }}" class="site-logo">
                     <img class="footer-logo"
-                        src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}"
+                        src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/light-logo.png') }}"
                         alt="site logo" />
                 </a>
             </div>
@@ -21,21 +21,23 @@
                     </span>
                     <div class="dropdown-item-menu">
                         <a class="dropdown-item active" href="{{ route('house.index') }}">Real Estate</a>
-                        <a class="dropdown-item" href="{{ route('food.index') }}">Foods</a>
-                        <a class="dropdown-item" href="{{ route('car.index') }}">Car Rent</a>
+                        <a class="dropdown-item" href="{{ route('service.emergency', ['category' => 'Restaurant']) }}">Restaurant</a>
+                        <a class="dropdown-item" href="{{ route('car.index') }}">Car</a>
+                        <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                     </div>
                 </div>
                 <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-                <a href="{{ route('food.index') }}" class="nav-item">Foods</a>
-                <a href="{{ route('car.index') }}" class="nav-item">Car Rent</a>
-                <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
+                <a href="{{route('service.emergency',['category' => 'Restaurant'])}}" class="nav-item">Restaurant</a>
+                <a href="{{ route('car.index') }}" class="nav-item">Car</a>
+                <a href="{{ route('service.emergency',['serching_is_emergency'=> 'true']) }}" class="nav-item">Emergency</a>
             </div>
             <div class="nav-actions">
-                {{-- <select class="select">
-                     <option value="connected">English</option>
-                     <option value="connected">Spanish</option>
-                     <option value="connected">Chinese</option>
-                 </select> --}}
+                <select class="select" onchange="langChange(this)">
+                    <option @if (app()->getLocale() !== 'es') selected @endif value="en">English</option>
+                    <option @if (app()->getLocale() === 'es') selected @endif value="es">Spanish</option>
+                    <option @if (app()->getLocale() === 'ar') selected @endif value="ar">Arabic</option>
+                    <option @if (app()->getLocale() === 'fr') selected @endif value="fr">French</option>
+                </select>
                 @if (Auth::check())
                     <div class="profile-dropdown-container1">
                         <div class="profile-dropdown-btn">
@@ -147,34 +149,35 @@
         <div class="logo">
             <a href="{{ route('home') }}" class="site-logo">
                 <img class="footer-logo"
-                    src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/dark-logo.png') }}"
+                    src="{{ asset($systemSetting->logo ?? 'frontend/assets/images/light-logo.png') }}"
                     alt="site logo" />
             </a>
         </div>
         <div class="nav-items">
             <a class="nav-item" href="{{ route('home') }}">Home</a>
-            <a class="nav-item" href="{{ route('service.index') }}">Service</a>
             <div class="nav-item dropdown-items">
                 <span class="dropdown-item-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Category
                 </span>
                 <div class="dropdown-item-menu">
                     <a class="dropdown-item" href="{{ route('house.index') }}">Real Estate</a>
-                    <a class="dropdown-item" href="{{ route('food.index') }}">Foods</a>
-                    <a class="dropdown-item" href="{{ route('car.index') }}">Car Rent</a>
+                    <a class="dropdown-item" href="{{route('service.emergency',['category' => 'Restaurant'])}}">Restaurant</a>
+                    <a class="dropdown-item" href="{{ route('car.index') }}">Car</a>
+                    <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                 </div>
             </div>
             <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-            <a href="{{ route('food.index') }}" class="nav-item">Foods</a>
-            <a href="{{ route('car.index') }}" class="nav-item">Car Rent</a>
-            <a href="{{ route('service.emergency') }}" class="nav-item">Emergency</a>
+            <a href="{{route('service.emergency',['category' => 'Restaurant'])}}" class="nav-item">Restaurant</a>
+            <a href="{{ route('car.index') }}" class="nav-item">Car</a>
+            <a href="{{ route('service.emergency',['serching_is_emergency'=> 'true']) }}" class="nav-item">Emergency</a>
         </div>
         <div class="nav-actions">
-            {{-- <select class="select">
-                 <option value="connected">English</option>
-                 <option value="connected">Spanish</option>
-                 <option value="connected">Chinese</option>
-             </select> --}}
+            <select class="select" onchange="langChange(this)">
+                <option @if (app()->getLocale() !== 'es') selected @endif value="en">English</option>
+                <option @if (app()->getLocale() === 'es') selected @endif value="es">Spanish</option>
+                <option @if (app()->getLocale() === 'ar') selected @endif value="ar">Arabic</option>
+                <option @if (app()->getLocale() === 'fr') selected @endif value="fr">French</option>
+            </select>
             @if (Auth::check())
             @else
                 <a href="{{ route('login') }}" class="auth-btn">Sign In</a>
@@ -186,3 +189,37 @@
     <!-- mobile navbar section end -->
 </header>
 <!-- header section end -->
+
+<script>
+    function langChange(e) {
+        var url = '{{ route('setLocale', ':code') }}';
+        $.ajax({
+            type: "POST",
+            url: url.replace(':code', e.value),
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(resp) {
+                //handle success
+            },
+            error: function(error) {
+                //handle error
+            }
+        })
+
+        if (e.value === 'es') {
+            doGTranslate('en|es');
+            doGTranslate('en|es');
+        } else if (e.value === 'ar') {
+            doGTranslate('en|ar');
+            doGTranslate('en|ar');
+        } else if (e.value === 'fr') {
+            doGTranslate('en|fr');
+            doGTranslate('en|fr');
+        } else {
+            doGTranslate('es|en');
+            doGTranslate('es|en');
+        }
+        return false;
+    }
+</script>

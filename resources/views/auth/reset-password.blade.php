@@ -11,6 +11,7 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -148,4 +149,5 @@
 @endsection
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 @endpush

@@ -24,15 +24,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+
         // Authenticate the user
         $request->authenticate();
 
         // Retrieve the authenticated user
         $user = auth()->user();
+      
+        // if ($user->status == 'inactive') {
+        //     Auth::guard('web')->logout();
+        //     $request->session()->invalidate();
 
+        //     $request->session()->regenerateToken();
+        //     flash()->error('your account is not active.');
+        //     return redirect('/login');
+        // }
         // Check the user's role
         if ($user->role === 'admin') {
-        flash()->success('Login successfully.');
+            flash()->success('Login successfully.');
             // Redirect to admin dashboard
             return redirect()->route('admin.dashboard');
         } elseif ($user->role === 'customer') {
@@ -44,6 +53,7 @@ class AuthenticatedSessionController extends Controller
             // Redirect to user dashboard
             return redirect()->route('contractor.dashboard');
         }
+
         $request->session()->regenerate();
         return redirect()->intended(route('dashboard', absolute: false));
     }

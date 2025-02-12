@@ -10,6 +10,7 @@
 @push('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -62,7 +63,7 @@
           </div>
 
           <div class="se--choose--plane-container">
-            <a href="./HousesList.html" class="se-choose--plan-box" data-aos="fade-right">
+            <a href="{{route('service.emergency',['category' => 'Real Estate','serching_type'=> 'sell'])}}" class="se-choose--plan-box" data-aos="fade-right">
               <svg class="home_svg" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"
                 fill="none">
                 <path
@@ -74,7 +75,7 @@
                 including things you won’t find anywhere else.</p>
 
             </a>
-            <a href="./HousesList.html" class="se-choose--plan-box se-white" data-aos="fade-left">
+            <a href="{{route('service.emergency',['category' => 'Real Estate','serching_type'=> 'rent'])}}" class="se-choose--plan-box se-white" data-aos="fade-left">
               <svg class="home_svg" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"
                 fill="none">
                 <path
@@ -234,6 +235,7 @@
 
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";

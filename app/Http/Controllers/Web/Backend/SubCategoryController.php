@@ -55,7 +55,7 @@ class SubCategoryController extends Controller
              
                 </div>';
                 })
-                ->rawColumns(['category','thumbnail', 'status', 'action'])
+                ->rawColumns(['category', 'thumbnail', 'status', 'action'])
                 ->make(true);
         }
         return view("backend.layouts.sub_category.index", compact("Categories"));
@@ -76,7 +76,7 @@ class SubCategoryController extends Controller
     {
         $validatedData = $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:sub_categories,name',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -88,13 +88,13 @@ class SubCategoryController extends Controller
             SubCategory::Create($validatedData);
             return response()->json([
                 "success" => true,
-                "message" => "Category created successfully"
+                "message" => "Sub Category created successfully"
             ]);
         } catch (Exception $e) {
-            Log::error("CategoryController::store" . $e->getMessage());
+            Log::error("SubCategoryController::store" . $e->getMessage());
             return response()->json([
                 "success" => false,
-                "message" => "Category not create"
+                "message" => "sub Category not create"
             ]);
         }
     }
@@ -124,12 +124,16 @@ class SubCategoryController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:sub_categories,name,' . $id,
             'description' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
             $data = SubCategory::findOrFail($id);
+            if (in_array($data->name, ['Buy a Car', 'Rent a Car', 'Rent a Home', 'Buy a Home', 'Local Cuisine', 'Snaks', 'Pizza'])) {
+                unset($validatedData['name']); // Prevent updating `name`
+                unset($validatedData['category_id']); // Prevent updating `category_id`
+            }
             if ($request->hasFile('thumbnail')) {
                 if ($data && $data->thumbnail && file_exists(public_path($data->thumbnail))) {
                     Helper::fileDelete(public_path($data->thumbnail));
@@ -141,13 +145,13 @@ class SubCategoryController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => "Category Updated Successfully"
+                "message" => " Sub Category Updated Successfully"
             ]);
         } catch (Exception $e) {
-            Log::error("CategoryController::update" . $e->getMessage());
+            Log::error("SubCategoryController::update" . $e->getMessage());
             return response()->json([
                 "success" => false,
-                "message" => "Category not Update"
+                "message" => "Sub Category not Update"
             ]);
         }
     }
@@ -159,11 +163,12 @@ class SubCategoryController extends Controller
     {
         $data = SubCategory::findOrFail($id);
         // check if the category exists
-        if (empty($data)) {
+        // Prevent deletion of specific categories
+        if (in_array($data->name, ['Buy a Car', 'Rent a Car', 'Rent a Home', 'Buy a Home', 'Local Cuisine', 'Snaks', 'Pizza'])) {
             return response()->json([
                 "success" => false,
-                "message" => "Item not found."
-            ], 404);
+                "message" => "This Sub category cannot be deleted."
+            ], 403);
         }
         // delete the category
         if (!empty($data->image)) {

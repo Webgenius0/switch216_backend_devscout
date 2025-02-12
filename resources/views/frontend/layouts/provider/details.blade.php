@@ -10,6 +10,7 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -211,124 +212,5 @@
 
 
 @push('scripts')
-
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 @endpush
-
-{{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Laravel Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <style>
-        #map {
-            height: 200px; /* Height similar to a text area */
-            width: 100%;  /* Full-width */
-            max-width: 400px; /* Optional: Limit max width */
-            border: 1px solid #ccc; /* Text area-like border */
-            border-radius: 4px; /* Rounded corners */
-            padding: 5px; /* Optional: Add padding for a textarea feel */
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Optional: Add inner shadow */
-        }
-        /* Custom CSS for Red Dot */
-        .custom-marker {
-            background-color: red;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-    </style>
-</head>
-<body>
-    <div id="map"></div>
-    <script>
-        // Your latitude and longitude values
-        var latitude = 51.505;
-        var longitude = -0.09;
-
-        // Initialize the map
-        var map = L.map('map').setView([latitude, longitude], 18); // Zoom level
-
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Create a custom icon for the marker
-        var redIcon = L.divIcon({
-            className: 'custom-marker', // Use the CSS class for styling
-            iconSize: [20, 20], // Size of the marker
-            popupAnchor: [0, -10], // Position the popup relative to the icon
-        });
-
-        // Add a red marker (dot) to the map
-        L.marker([latitude, longitude], { icon: redIcon })
-            .addTo(map)
-            .bindPopup('This is the location you selected.') // Optional: Add popup text
-            .openPopup();
-    </script>
-</body>
-</html> --}}
-
-{{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Multiple Providers Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <style>
-        #map {
-            height: 400px; /* Set the map height */
-            width: 100%;  /* Set the map width */
-            border: 1px solid #ccc; /* Optional: Border for visibility */
-            border-radius: 4px;
-        }
-
-        /* Custom CSS for Red Dot Marker */
-        .custom-marker {
-            background-color: red;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-    </style>
-</head>
-<body>
-    <div id="map"></div>
-    <script>
-        // Example list of latitude, longitude, and provider names
-        var locations = [
-            { lat: 51.505, lng: -0.09, name: "Provider A" },
-            { lat: 51.515, lng: -0.1, name: "Provider B" },
-            { lat: 51.525, lng: -0.08, name: "Provider C" },
-            { lat: 51.535, lng: -0.07, name: "Provider D" },
-        ];
-
-        // Initialize the map and set the view to the first location
-        var map = L.map('map').setView([locations[0].lat, locations[0].lng], 13);
-
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Create a custom red icon for the markers
-        var redIcon = L.divIcon({
-            className: 'custom-marker', // Use the CSS class for styling
-            iconSize: [15, 15], // Size of the marker
-            popupAnchor: [0, -10], // Position the popup relative to the icon
-        });
-
-        // Add markers to the map for each location
-        locations.forEach(function(location) {
-            L.marker([location.lat, location.lng], { icon: redIcon })
-                .addTo(map)
-                .bindPopup(`<strong>${location.name}</strong>`); // Display provider name in the popup
-        });
-    </script>
-</body>
-</html> --}}

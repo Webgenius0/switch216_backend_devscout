@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Frontend\Contractor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ContactorCategory;
 use App\Models\Service;
 use App\Models\SubCategory;
 use App\Services\Web\Frontend\ContractorServiceService;
@@ -95,7 +96,8 @@ class ContractorServiceController extends Controller
     public function create()
     {
         try {
-            $categories = Category::where('status', 'active')->with('subCategories')->get();
+            $contactor_category = $this->ContractorServiceService->contactorCategory();
+            $categories = Category::where('status', 'active')->where('id', $contactor_category->category->id)->with('subCategories')->get();
             return view('frontend.dashboard.contractor.layouts.services.create', compact('categories'));
         } catch (Exception $e) {
             Log::error('ContractorServiceController::create-' . $e->getMessage());

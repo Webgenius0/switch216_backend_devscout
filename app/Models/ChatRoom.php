@@ -15,6 +15,7 @@ class ChatRoom extends Model
         'contractor_id',
         'service_id',
         'service_item_id',
+        'focus_at',
     ];
 
     protected $casts = [
@@ -26,6 +27,14 @@ class ChatRoom extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime', // For soft deletes
     ];
+
+    /**
+     * Get all messages for the chat room.
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 
     /**
      * Get the customer who owns this chat room.

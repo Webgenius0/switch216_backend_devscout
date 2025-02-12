@@ -25,35 +25,6 @@ class EmergencyPageService
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
-    {
-        try {
-            // Logic for create form
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Store a new resource.
-     *
-     * @param array $data
-     * @return mixed
-     */
-    public function store(array $data)
-    {
-        try {
-            // Logic to store a new resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
      * Display a specific resource.
      *
      * @param int $id
@@ -62,57 +33,42 @@ class EmergencyPageService
     public function show(int $id)
     {
         try {
-            $service = Service::with(['user'])->where("status", 'active')->findOrFail($id);
+            $service = Service::with(['user',])->where("status", 'active')->findOrFail($id);
             return $service;
         } catch (Exception $e) {
             throw $e;
         }
     }
 
-    /**
-     * Show the form for editing a resource.
-     *
-     * @param int $id
-     * @return void
-     */
-    public function edit(int $id)
+    public function getContactorCategoryList($contactor_id)
     {
         try {
-            // Logic for edit form
+            $contactor_serviceCategory = Service::where('user_id', $contactor_id)->with(['category', 'subcategory', 'bookings', 'reviews'])->get();
+            $categoryNames = $contactor_serviceCategory->pluck('category.name');
+            // $ServiceTitleWithDescription = $contactor_serviceCategory->pluck('category.name');
+            return $categoryNames;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+    public function ServiceTitleWithDescription($contactor_id)
+    {
+        try {
+            $ServiceTitleWithDescription = Service::where('user_id', $contactor_id)->select('id', 'title', 'description')->get();
+            return $ServiceTitleWithDescription;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+    public function ContactorReview($contactor_id)
+    {
+        try {
+            $ServiceTitleWithDescription = Service::where('user_id', $contactor_id)->select('id', 'title', 'description')->get();
+            return $ServiceTitleWithDescription;
         } catch (Exception $e) {
             throw $e;
         }
     }
 
-    /**
-     * Update a specific resource.
-     *
-     * @param int $id
-     * @param array $data
-     * @return mixed
-     */
-    public function update(int $id, array $data)
-    {
-        try {
-            // Logic to update a specific resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Delete a specific resource.
-     *
-     * @param int $id
-     * @return bool
-     */
-    public function destroy(int $id)
-    {
-        try {
-            // Logic to delete a specific resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
 
 }

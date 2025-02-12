@@ -45,6 +45,7 @@ class User extends Authenticatable
         'phone',
         'avatar',
         'gender',
+        'instagram_social_link',
         'password',
         'otp',
         'reset_password_token',
@@ -52,6 +53,7 @@ class User extends Authenticatable
         'otp_expires_at',
         'remember_token',
         'email_verified_at',
+        'last_seen',
         'created_at',
         'updated_at',
         'role',
@@ -90,6 +92,7 @@ class User extends Authenticatable
             'otp_expires_at' => 'datetime',
             'is_otp_verified' => 'boolean',
             'reset_password_token_expires_at' => 'datetime',
+            'last_seen' => 'datetime',
             'password' => 'hashed'
         ];
     }

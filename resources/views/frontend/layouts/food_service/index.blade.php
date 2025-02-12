@@ -9,6 +9,7 @@
 @endsection
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/service.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -22,7 +23,7 @@
                 Explore top-rated DJs, photographers, caterers, and more for your next event.
             </p>
             <!-- search section start -->
-            <div class="se--serach--container" data-aos="fade-up">
+            {{-- <div class="se--serach--container" data-aos="fade-up">
                 <div class="se--home--rental--search-section ">
                     <form action="">
                         <input type="text" class="se--search--input" placeholder="Search all Services" />
@@ -41,7 +42,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- search section end -->
         </div>
     </section>
@@ -461,6 +462,7 @@
 
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";

@@ -85,7 +85,7 @@
                                 <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
                                 <option value="event" {{ old('type') == 'event' ? 'selected' : '' }}>Event
                                 </option>
-                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Single
+                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Others
                                 </option>
                             </select>
                             @error('type')
@@ -183,7 +183,6 @@
 
 
 @push('scripts')
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
     <script>
         $(document).ready(function() {
