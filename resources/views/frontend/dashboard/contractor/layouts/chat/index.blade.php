@@ -505,7 +505,6 @@
             ':chatRoomId', {{ $lastChatRommMessage ? $lastChatRommMessage->id : 'null' }});
         $('#sendFormOpen').on('submit', function(event) {
             event.preventDefault();
-            console.log(Opnestoreurl)
             let formData = new FormData(this);
             $.ajax({
                 url: Opnestoreurl,

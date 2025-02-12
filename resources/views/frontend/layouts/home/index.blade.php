@@ -1619,46 +1619,23 @@
         <!-- testimonial section end -->
 
 
-  <!-- user review section start -->
-        {{-- <section class="user-review">
+  <!-- ads section start -->
+        <section class="user-review">
             <div class="container">
                 <h2 class="title" data-aos="fade-up">
-                    {{ $cms['review_user_container']->title ?? 'What Our Users Are Saying' }}</h2>
+                    {{ $cms['review_user_container']->title ?? 'View Some ' }}</h2>
                 <p class="des" data-aos="fade-up">
                     {{ $cms['review_user_container']->description ??
                         "Lorem ipsum " }}
                 </p>
             </div>
-            <div data-aos="fade-down">
-                <div class="user-review-carousel owl-carousel owl-theme" aria-label="User review Carousel">
-                    <a href="#" class="item" aria-roledescription="slide">
-                        <img src="{{ asset('frontend/assets/images/user-review-01.png') }}" alt="user review image" />
-                        <div class="details-container">
-                            <div class="user-details">
-                                <div>
-                                    <div class="user-name">Sarah Deo</div>
-                                    <div class="tagline">(Car painter)</div>
-                                </div>
-                                <div class="review">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        viewBox="0 0 16 16" fill="none">
-                                        <path
-                                            d="M7.2795 1.91199C7.35287 1.78609 7.45796 1.68164 7.58429 1.60904C7.71063 1.53644 7.85379 1.49823 7.9995 1.49823C8.14521 1.49823 8.28838 1.53644 8.41471 1.60904C8.54105 1.68164 8.64614 1.78609 8.7195 1.91199L10.5828 5.11065L14.2015 5.89465C14.3438 5.92558 14.4756 5.99329 14.5836 6.09101C14.6916 6.18873 14.7721 6.31306 14.8171 6.4516C14.8621 6.59014 14.87 6.73806 14.84 6.8806C14.81 7.02314 14.7432 7.15533 14.6462 7.26399L12.1795 10.0247L12.5528 13.708C12.5676 13.853 12.544 13.9994 12.4845 14.1325C12.4249 14.2655 12.3315 14.3807 12.2136 14.4664C12.0956 14.552 11.9573 14.6053 11.8123 14.6208C11.6674 14.6363 11.5209 14.6135 11.3875 14.5547L7.9995 13.0613L4.6115 14.5547C4.47811 14.6135 4.33163 14.6363 4.18667 14.6208C4.04171 14.6053 3.90336 14.552 3.78542 14.4664C3.66748 14.3807 3.57408 14.2655 3.51455 14.1325C3.45502 13.9994 3.43144 13.853 3.44617 13.708L3.8195 10.0247L1.35284 7.26465C1.25565 7.156 1.18867 7.02376 1.15858 6.88113C1.12848 6.7385 1.13633 6.59047 1.18133 6.45182C1.22633 6.31317 1.30692 6.18875 1.41504 6.09099C1.52316 5.99322 1.65504 5.92552 1.7975 5.89465L5.41617 5.11065L7.2795 1.91199Z"
-                                            fill="#FFC700" />
-                                    </svg>
-                                    <span>(4.5)</span>
-                                </div>
-                            </div>
-                            <p class="details">
-                                Professional the with 10 years of experience.
-                            </p>
-                        </div>
-                    </a>
-
-                </div>
+            <div class="" style="height:700px;  padding:60px 400px;" >
+                <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
+                <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
+                </a> 
             </div>
-        </section> --}}
-        <!-- user review section end -->
+        </section>
+        <!-- ads section end -->
 
         <!-- faq section star -->
         <section class="faq container">

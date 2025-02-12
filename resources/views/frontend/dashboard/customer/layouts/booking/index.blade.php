@@ -54,8 +54,14 @@
                         Description: {{ $booking->service->description ?? ' ' }}
                     </div>
                     @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
-                        <a class="action mt-5 reschedule-booking-btn" type="button">
+                        <a class="action mt-5 reschedule-booking-btn" type="button" data-booking-id="{{ $booking->id }}">
                             Reschedule
+                        </a>
+                    @endif
+                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                        <a href="{{ route('customer.booking.cancle', $booking->id) }}"
+                            class="action mt-5 cancelled-booking-btn" type="button">
+                            Cancle Booking
                         </a>
                     @endif
                     @if ($booking->status !== 'completed' && !$booking->booking_date->isFuture())
@@ -124,7 +130,7 @@
     <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <button class="close-btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
                         <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
@@ -137,12 +143,13 @@
                 </button>
                 <form id="rescheduleForm" class="p-3 border rounded">
                     @csrf
-                    <input type="hidden" name="booking_id" id="bookingIdInput">
+
+                    <input type="hidden" name="booking_id" id="reschedule_bookingIdInput">
 
                     <div class="mb-3">
                         <label for="booking_date" class="form-label fw-bold">New Booking Date:</label>
-                        <input type="date" name="booking_date" id="booking_date" class="form-control"
-                            value="{{ now()->toDateString() }}" required>
+                        <input type="date" name="booking_date" id="booking_date" class="form-control" required>
+                        <span id="rescheduleFormError"> </span>
                     </div>
 
                     <button type="submit" id="submitReschedule" class="btn btn-primary w-100">Submit Reschedule
@@ -199,6 +206,7 @@
 
 
         $(document).ready(function() {
+
             // When the review button is clicked
             $('.review-booking-btn').on('click', function(event) {
                 event.preventDefault();
@@ -231,41 +239,49 @@
             });
         });
 
-
-        // Open the reschedule modal and set the booking_id
-        $(document).on('click', '.reschedule-booking-btn', function() {
-            var bookingId = $(this).data('booking-id');
-            $('#bookingIdInput').val(bookingId); // Set the booking ID in the form
-            $('#rescheduleModal').modal('show');
-        });
-
-        // Handle form submission for rescheduling
-        $('#rescheduleForm').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
-            var bookingId = $('#bookingIdInput').val();
-            var bookingDate = $('#booking_date').val();
-
-            // Send AJAX request to reschedule the booking
-            $.ajax({
-                url: "{{ route('customer.booking.reschedule', ':id') }}".replace(':id', bookingId),
-                type: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    booking_date: bookingDate
-                },
-                success: function(response) {
-                    if (response.success) {
-                        Swal.fire('Success', response.message, 'success');
-                        $('#rescheduleModal').modal('hide'); // Close the modal
-                        location.reload(); // Reload the page to see the updated status
-                    } else {
-                        Swal.fire('Error', response.message, 'error');
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire('Error', 'Something went wrong!',xhr.responseJSON.message);
+        $(document).ready(function() {
+            let rescheduleRoute = "{{ route('customer.booking.reschedule') }}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
+            });
+
+            $('.reschedule-booking-btn').on('click', function(event) {
+                event.preventDefault();
+                let bookingId = $(this).data('booking-id');
+                $("#reschedule_bookingIdInput").val(bookingId);
+                $('#rescheduleFormError').html('');
+                $('#rescheduleModal').modal('show');
+            });
+
+            $('#rescheduleForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: rescheduleRoute,
+                    type: "POST",
+                    data: $(this).serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            flasher.success(response.message);
+                            $('#rescheduleModal').modal('hide'); // Hide modal
+                            $('#rescheduleForm')[0].reset(); // Reset form
+                            $('.reschedule-booking-btn[data-booking-id="' + response.data.id +
+                                '"]').hide(); // Hide only the clicked button
+
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#rescheduleFormError').append(`
+                        <div style="color:red">${xhr.responseJSON.message}</div>
+                        `);
+                        flasher.error(xhr.responseJSON.message);
+                    }
+                });
             });
         });
     </script>

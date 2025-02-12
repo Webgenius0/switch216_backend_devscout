@@ -29,7 +29,7 @@ class BookingCustomerController extends Controller
     public function index()
     {
         // $booking= $this->bookingService->getAll();
-        $bookings = Booking::where("user_id", $this->user->id)->get();
+        $bookings = Booking::where("user_id", $this->user->id)->latest()->get();
         return view("frontend.dashboard.customer.layouts.booking.index", compact("bookings"));
     }
     public function getAllBooking()
@@ -109,15 +109,16 @@ class BookingCustomerController extends Controller
     }
 
 
-    public function reschedule(Request $request, $bookingId)
+    public function reSchedule(Request $request)
     {
         // Validate request
         $validatedData = $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
             'booking_date' => 'required|date|after:now', // Ensure future date
         ]);
 
         // Find the booking
-        $booking = Booking::where('id', $bookingId)
+        $booking = Booking::where('id', $validatedData['booking_id'])
             ->where('user_id', auth()->id()) // Ensure user owns the booking
             ->first();
 
@@ -141,12 +142,12 @@ class BookingCustomerController extends Controller
             ->whereDate('booking_date', $validatedData['booking_date'])
             ->exists();
 
-        if ($existingBooking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You already have a booking on this date.'
-            ], 400);
-        }
+        // if ($existingBooking) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'You already have a booking on this date.'
+        //     ], 400);
+        // }
 
         try {
             // Store the reschedule request (instead of updating directly)
@@ -171,46 +172,36 @@ class BookingCustomerController extends Controller
     }
 
 
-    public function cancelBooking($bookingId)
+    public function cancelBooking(string $bookingId)
     {
-        // Find the booking
-        $booking = Booking::where('id', $bookingId)
-            ->where('user_id', auth()->id()) // Ensure user owns the booking
-            ->first();
-
-        if (!$booking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking not found.'
-            ], 404);
-        }
-
-        // Prevent cancellation on the same day as the booking
-        if ($booking->booking_date->isToday()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You cannot cancel a booking on the same day.'
-            ], 400);
-        }
-
         try {
+            // dd($bookingId);
+            // Find the booking
+            $booking = Booking::where('id', $bookingId)
+                ->where('user_id', auth()->id()) // Ensure user owns the booking
+                ->first();
+
+            if (!$booking) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Booking not found.'
+                ], 404);
+            }
+
+            // Prevent cancellation on the same day as the booking
+            if ($booking->booking_date->isToday()) {
+                flash()->error('You cannot cancel a booking on the same day.');
+            }
             // Cancel the booking
             $booking->update([
                 'status' => 'cancelled',
             ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your booking has been cancelled successfully.',
-                'data' => $booking
-            ], 200);
-
+            // dd($booking);
+            flash()->success('Your booking has been cancelled successfully.');
+            return redirect()->back();
         } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong!',
-                'error' => $e->getMessage()
-            ], 500);
+            flash()->error('Something went wrong!');
+            return redirect()->back();
         }
     }
 

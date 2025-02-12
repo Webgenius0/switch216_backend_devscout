@@ -136,12 +136,14 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
         return view('frontend.dashboard.customer.layouts.home.index');
     })->name('customer.dashboard');
     // customer bookings 
+
     Route::get('/customer-booking', [BookingCustomerController::class, 'index'])->name('customer.booking.index');
     Route::get('/customer-bookings/all', [BookingCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
     Route::post('/customer-booking', [BookingCustomerController::class, 'store'])->name('customer.booking.store');
-    Route::post('/customer-booking/complete/${bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
-    Route::post('/customer-booking/cancle/${bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
-    Route::post('/customer-booking/reschedule/${bookingId}', [BookingCustomerController::class, 'reschedule'])->name('customer.booking.reschedule');
+    Route::post('/customer-booking/complete/{bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
+    Route::get('/customer-booking/cancle/{bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
+    Route::post('/customer-booking/reschedule', [BookingCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
+   
     Route::post('/customer-booking/given-review', [BookingCustomerController::class, 'givenReview'])->name('customer.booking.review');
 });
 
