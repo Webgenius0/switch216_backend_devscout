@@ -3,6 +3,7 @@
 namespace App\Services\Web\Frontend;
 
 use App\Helpers\Helper;
+use App\Models\ContactorCategory;
 use App\Models\Service;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -25,15 +26,12 @@ class ContractorServiceService
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
+
+    public function contactorCategory()
     {
         try {
-            // Logic for create form
+            $contactor_category = ContactorCategory::where('user_id', Auth::user()->id)->with('category.subCategories')->first();
+            return $contactor_category;
         } catch (Exception $e) {
             throw $e;
         }

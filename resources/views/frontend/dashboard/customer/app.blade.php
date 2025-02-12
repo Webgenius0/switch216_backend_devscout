@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
     <link rel="shortcut icon" href="{{ asset($systemSetting->favicon ?? 'favicon.ico') }}" type="image/x-icon">
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @include('frontend.dashboard.customer.partials.style')
 

@@ -73,7 +73,7 @@
                 <ul>
                     <li><a href="{{ route('home') }}">Home</a></li>
                     <li><a href="{{ route('about') }}">About Us</a></li>
-                    <li><a href="#">Services</a></li>
+                    <li><a href="{{route('service.emergency')}}">Services</a></li>
                 </ul>
             </div>
             <div class="footer-nav-section">

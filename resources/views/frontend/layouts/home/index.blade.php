@@ -9,6 +9,7 @@
 @endsection
 
 @push('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -1617,6 +1618,25 @@
         </section>
         <!-- testimonial section end -->
 
+
+  <!-- ads section start -->
+        <section class="user-review">
+            <div class="container">
+                <h2 class="title" data-aos="fade-up">
+                    {{ $cms['review_user_container']->title ?? 'View Some ' }}</h2>
+                <p class="des" data-aos="fade-up">
+                    {{ $cms['review_user_container']->description ??
+                        "Lorem ipsum " }}
+                </p>
+            </div>
+            <div class="" style="height:700px;  padding:60px 400px;" >
+                <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
+                <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
+                </a> 
+            </div>
+        </section>
+        <!-- ads section end -->
+
         <!-- faq section star -->
         <section class="faq container">
             <div class="row justify-content-between">
@@ -1782,6 +1802,7 @@
 @endsection
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";

@@ -8,6 +8,7 @@
     {{-- @include('frontend.partials.header2') --}}
 @endsection
 @push('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -433,6 +434,7 @@
 
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         const searchDate = document.getElementById('searchDate');
 

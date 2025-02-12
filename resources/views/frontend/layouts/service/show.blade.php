@@ -8,6 +8,37 @@
     @include('frontend.partials.header2')
 @endsection
 @push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 40vh;
+            border-radius: 10px;
+        }
+
+        .leaflet-top.leaflet-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .map-button {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+
+        .map-button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 
 @section('content')
@@ -39,7 +70,11 @@
                             <span>{{ $service->user->userAddresses()->first()->location ?? ' ' }}</span>
                         </div>
                         <div class="profile-tags">
-                            Wedding DJ, Corporate Events, Private Parties
+                            @forelse ($categoryNames as $item)
+                                <span>{{ $item }},</span>
+                            @empty
+                                <span>No Category</span>
+                            @endforelse
                         </div>
                     </div>
                     <div class="profile-end">
@@ -50,7 +85,7 @@
                                     d="M7.2795 2.41205C7.35287 2.28615 7.45796 2.1817 7.58429 2.1091C7.71063 2.0365 7.85379 1.99829 7.9995 1.99829C8.14521 1.99829 8.28838 2.0365 8.41471 2.1091C8.54105 2.1817 8.64614 2.28615 8.7195 2.41205L10.5828 5.61071L14.2015 6.39471C14.3438 6.42565 14.4756 6.49335 14.5836 6.59107C14.6916 6.68879 14.7721 6.81312 14.8171 6.95166C14.8621 7.09021 14.87 7.23812 14.84 7.38066C14.81 7.5232 14.7432 7.65539 14.6462 7.76405L12.1795 10.5247L12.5528 14.208C12.5676 14.3531 12.544 14.4994 12.4845 14.6325C12.4249 14.7656 12.3315 14.8807 12.2136 14.9664C12.0956 15.0521 11.9573 15.1054 11.8123 15.1209C11.6674 15.1363 11.5209 15.1135 11.3875 15.0547L7.9995 13.5614L4.6115 15.0547C4.47811 15.1135 4.33163 15.1363 4.18667 15.1209C4.04171 15.1054 3.90336 15.0521 3.78542 14.9664C3.66748 14.8807 3.57408 14.7656 3.51455 14.6325C3.45502 14.4994 3.43144 14.3531 3.44617 14.208L3.8195 10.5247L1.35284 7.76471C1.25565 7.65606 1.18867 7.52382 1.15858 7.38119C1.12848 7.23856 1.13633 7.09053 1.18133 6.95188C1.22633 6.81323 1.30692 6.68882 1.41504 6.59105C1.52316 6.49328 1.65504 6.42558 1.7975 6.39471L5.41617 5.61071L7.2795 2.41205Z"
                                     fill="#FFC700" />
                             </svg>
-                            <span>({{ $service->user->contractorRanking->average_rating ?? 0 }})</span>
+                            <span>({{ $service->user->contractorRanking->average_rating ?? 0 }} Reviews) </span>
                         </div>
                         <a href="https://www.instagram.com" target="_blank" class="action-button">
                             <span class="media-icon">
@@ -104,9 +139,11 @@
                 <h2 class="profile-section-title">Best Services in gallery</h2>
                 <div class="gallery-section">
                     @php
-                        $galleryImages = is_array($service->gallery_images) ? $service->gallery_images : json_decode($service->gallery_images, true);
+                        $galleryImages = is_array($service->gallery_images)
+                            ? $service->gallery_images
+                            : json_decode($service->gallery_images, true);
                     @endphp
-                
+
                     @foreach ($galleryImages as $key => $gallery_image)
                         <div class="gallery-image">
                             <figure>
@@ -120,30 +157,21 @@
                 <hr class="separator" />
 
                 <!-- service section start -->
-                {{-- <h2 class="profile-section-title">Services Offered by</h2>
+                <h2 class="profile-section-title">Services Offered by</h2>
                 <div class="service-wrapper">
-                    <div class="service-item">
-                        <h5 class="service-title">Wedding DJ</h5>
-                        <p class="service-des">
-                            Create the perfect atmosphere for your special day with a
-                            customized playlist and seamless music transitions.
-                        </p>
-                    </div>
-                    <div class="service-item">
-                        <h5 class="service-title">Corporate Events DJ</h5>
-                        <p class="service-des">
-                            Professional sound and music tailored for corporate gatherings,
-                            product launches, or company parties.
-                        </p>
-                    </div>
-                    <div class="service-item">
-                        <h5 class="service-title">Private Party DJ</h5>
-                        <p class="service-des">
-                            Bring energy to your private event with a mix of top hits and
-                            crowd favorites.
-                        </p>
-                    </div>
-                </div> --}}
+                    @forelse ($ServiceTitleWithDescription as $item)
+                        <div class="service-item">
+                            <h5 class="service-title">{{ $item->title }}</h5>
+                            <p class="service-des">
+                                {{ $item->description }}
+                            </p>
+                        </div>
+
+                    @empty
+                    @endforelse
+
+
+                </div>
                 <!-- service section end -->
 
                 <hr class="separator" />
@@ -316,60 +344,124 @@
                     </div>
                 </div>
                 <input type="text" hidden id="appointment-date-picker" />
-                <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
-                    data-bs-target="#authModal">
-                    Book Appointment
-                </button>
-                <button class="button w-100 mt-2 mt-lg-3 d-none" type="button" data-bs-toggle="modal"
-                    data-bs-target="#successModal">
-                    Open Success Modal
-                </button>
-                <a href="./contact.html" class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                @guest
+                    <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
+                        data-bs-target="#authModal">
+                        Book Appointment
+                    </button>
+                    <a data-bs-toggle="modal" data-bs-target="#authModal" href="#"
+                        class="button w-100 mt-2 mt-lg-3 sec">Contact us</a>
+                @endguest
+
+                @auth
+                    @if (auth()->user()->role === 'customer')
+                    <button id="bookAppointmentBtn" class="button w-100 mt-2 mt-lg-3 d-block" type="button">
+                        Book Appointment
+                    </button>
+            
+                    <a href="{{ route('contractor.message.start_chat', $service->id) }}"
+                        class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
+                        
+                    @endif
+                @endauth
+                <div id="map"></div>
+                <input type="hidden" name="latitude" id="latitude">
+                <input type="hidden" name="longitude" id="longitude">
+                <input type="hidden" name="address" id="address">
             </div>
         </div>
     </main>
     <!-- main content section end -->
-    {{-- <!-- chat section start -->
-  <button id="chat-icon" type="button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <path
-        d="M29.3346 13.3332V17.3332C29.3346 22.6665 26.668 25.3332 21.3346 25.3332H20.668C20.2546 25.3332 19.8546 25.5332 19.6013 25.8665L17.6013 28.5332C16.7213 29.7065 15.2813 29.7065 14.4013 28.5332L12.4013 25.8665C12.188 25.5732 11.6946 25.3332 11.3346 25.3332H10.668C5.33464 25.3332 2.66797 23.9998 2.66797 17.3332V10.6665C2.66797 5.33317 5.33464 2.6665 10.668 2.6665H18.668"
-        stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-      <path
-        d="M26.0013 9.33317C27.8423 9.33317 29.3346 7.84079 29.3346 5.99984C29.3346 4.15889 27.8423 2.6665 26.0013 2.6665C24.1604 2.6665 22.668 4.15889 22.668 5.99984C22.668 7.84079 24.1604 9.33317 26.0013 9.33317Z"
-        stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M21.3273 14.6667H21.3393" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M15.9953 14.6667H16.0073" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M10.6593 14.6667H10.6713" stroke="white" stroke-width="3" stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
-  </button>
-  <!-- chat section end --> --}}
+    <!-- chat section start -->
+    {{-- <button id="chat-icon" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path
+                d="M29.3346 13.3332V17.3332C29.3346 22.6665 26.668 25.3332 21.3346 25.3332H20.668C20.2546 25.3332 19.8546 25.5332 19.6013 25.8665L17.6013 28.5332C16.7213 29.7065 15.2813 29.7065 14.4013 28.5332L12.4013 25.8665C12.188 25.5732 11.6946 25.3332 11.3346 25.3332H10.668C5.33464 25.3332 2.66797 23.9998 2.66797 17.3332V10.6665C2.66797 5.33317 5.33464 2.6665 10.668 2.6665H18.668"
+                stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path
+                d="M26.0013 9.33317C27.8423 9.33317 29.3346 7.84079 29.3346 5.99984C29.3346 4.15889 27.8423 2.6665 26.0013 2.6665C24.1604 2.6665 22.668 4.15889 22.668 5.99984C22.668 7.84079 24.1604 9.33317 26.0013 9.33317Z"
+                stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21.3273 14.6667H21.3393" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M15.9953 14.6667H16.0073" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M10.6593 14.6667H10.6713" stroke="white" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </button> --}}
+    <!-- chat section end -->
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="authModalLabel">
+                        You have to <span>Sign In</span> to Connect with user
+                    </h1>
+                    <button class="close-btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none">
+                            <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                stroke="#6B6B6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.17188 14.8299L14.8319 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.8319 14.8299L9.17188 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Join our community of professionals and clients today! By signing
+                    up, you gain direct access to experienced multi-services,
+                    personalized services, and a seamless platform to manage your
+                    service needs.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal">Sign In later</button>
+                    <button type="button" class="button" onclick="window.location.href='{{ route('login') }}'">Sign In
+                        Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button class="close-btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                            stroke="#6B6B6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.17188 14.8299L14.8319 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14.8319 14.8299L9.17188 9.16992" stroke="#6B6B6B" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <figure class="success-icon-img">
+                    <img src="{{ asset('frontend/assets/images/success-icon.png') }}" alt="success icon" />
+                </figure>
+                <div class="title">
+                   Your Booking Request Sent Successfully
+                </div>
+                {{-- <div class="des">
+                    Join our community of professionals and clients today! By signing
+                    up, you gain direct access to experienced multi-services,
+                    personalized services, and a seamless platform to manage your
+                    service needs.
+                </div> --}}
+            </div>
+        </div>
+    </div>
 @endsection
 
 
 
 @push('scripts')
-    {{-- <script type="text/javascript">
-        let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
-        let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 
-        const searchDate = document.getElementById('appointment-date-picker');
-
-        if (searchDate) {
-            const picker = new easepick.create({
-                element: searchDate,
-                css: [
-                    assetEasepick,
-                    assetEasepickProvider,
-                ],
-                zIndex: 100,
-                format: 'DD-MM-YYYY',
-            });
-        }
-    </script> --}}
     <script type="text/javascript">
         const appointmentDatePicker = document.getElementById(
             'appointment-date-picker'
@@ -397,4 +489,145 @@
             console.log('clicked');
         }
     </script> --}}
+
+    <script>
+        let currentMarker;
+        const serviceLat = {{ $service->user->userAddresses()->first()->latitude ?? '34.0522' }}; // Default: Los Angeles
+        const serviceLng = {{ $service->user->userAddresses()->first()->longitude ?? '-118.2437' }};
+        let mapTilerKey = '';
+
+        const map = L.map('map', {
+            center: [serviceLat, serviceLng],
+            zoom: 13,
+            zoomControl: true,
+            scrollWheelZoom: false
+        });
+
+        $.ajax({
+            url: "{{ route('map.api.key') }}",
+            method: "GET",
+            success: function(response) {
+                mapTilerKey = response.key;
+                initializeMap();
+            },
+            error: function() {
+                alert("Failed to load Map API key!");
+            }
+        });
+
+        function initializeMap() {
+            L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
+                maxZoom: 18,
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+
+            // Show service provider's marker
+            L.marker([serviceLat, serviceLng], {
+                    draggable: false
+                })
+                .addTo(map)
+                .bindPopup("Service Provider's Location")
+                .openPopup();
+        }
+
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+
+                        // Show user's marker
+                        const userMarker = L.marker([userLat, userLng], {
+                                draggable: false
+                            })
+                            .addTo(map)
+                            .bindPopup("Your Location")
+                            .openPopup();
+
+                        // Draw red line between user and service provider
+                        const latLngs = [
+                            [serviceLat, serviceLng],
+                            [userLat, userLng]
+                        ];
+                        L.polyline(latLngs, {
+                            color: 'red',
+                            weight: 3
+                        }).addTo(map);
+
+                        // Fit map bounds
+                        const bounds = L.latLngBounds(latLngs);
+                        map.fitBounds(bounds);
+                    },
+                    () => {
+                        alert("Location access denied! Using only service provider location.");
+                    }, {
+                        enableHighAccuracy: true,
+                        timeout: 5000
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        locateUser(); // Auto-locate on load
+
+
+        function Booking(event) {
+            event.prevent;
+            // $.ajax({
+            //     url: "{{ route('map.api.key') }}",
+            //     method: "POST",
+            //     success: function(response) {
+            //         mapTilerKey = response.key;
+            //         initializeMap();
+            //     },
+            //     error: function() {
+            //         alert("Failed to load Map API key!");
+            //     }
+            // });
+        }
+
+        $(document).ready(function() {
+            $('#bookAppointmentBtn').on('click', function(e) {
+                e.preventDefault();
+
+                let bookingDate = $('#appointment-date-picker').val(); // Get the date from date picker
+                console.log(bookingDate);
+                if (!bookingDate) {
+                    alert("Please select a booking date.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('customer.booking.store') }}", // Laravel route
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        service_id: "{{ $service->id }}", // Assuming `$service->id` is available
+                        booking_date: bookingDate
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            $('#successModal').modal('show'); // Show success modal
+                        } else {
+                            alert(response.message); // Show error message
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMessage = "Something went wrong!";
+
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+
+                        alert(errorMessage); // Show error alert
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

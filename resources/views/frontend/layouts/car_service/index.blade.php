@@ -9,8 +9,11 @@
 @endsection
 
 @push('styles')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
   <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
+
 @endpush
 
 @section('content')
@@ -24,7 +27,7 @@
                 Explore top-rated DJs, photographers, caterers, and more for your next event.
             </p>
             <!-- search section start -->
-            <div class="se--serach--container" data-aos="fade-up">
+            {{-- <div class="se--serach--container" data-aos="fade-up">
                 <div class="se--home--rental--search-section ">
                     <form action="">
                         <input type="text" class="se--search--input" placeholder="Search all Services" />
@@ -43,7 +46,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- search section end -->
         </div>
     </section>
@@ -64,7 +67,7 @@
                     </div>
 
                     <div class="se--choose--plane-container">
-                        <a href="./carList.html" class="se-choose--plan-box" data-aos="fade-right">
+                        <a href="{{route('service.emergency',['category' => 'Car','serching_type'=> 'sell'])}}" class="se-choose--plan-box" data-aos="fade-right">
                             <svg class="home_svg" xmlns="http://www.w3.org/2000/svg" width="60" height="47"
                                 viewBox="0 0 60 47" fill="none">
                                 <path
@@ -77,7 +80,7 @@
                                 including things you won’t find anywhere else.</p>
 
                         </a>
-                        <a href="./carList.html" class="se-choose--plan-box " data-aos="fade-left">
+                        <a href="{{route('service.emergency',['category' => 'Car','serching_type'=> 'rent'])}}" class="se-choose--plan-box " data-aos="fade-left">
                             <svg class="home_svg" xmlns="http://www.w3.org/2000/svg" width="60" height="47"
                                 viewBox="0 0 60 47" fill="none">
                                 <path
@@ -354,6 +357,7 @@
 
 
 @push('scripts')
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         const searchDate = document.getElementById('searchDate');
 

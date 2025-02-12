@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignId('contractor_id')->constrained('users')->onDelete('cascade'); // Contractor or receiver
             $table->foreignId('service_id')->nullable()->constrained('services')->onDelete('cascade');
             $table->foreignId('service_item_id')->nullable()->constrained('service_items')->onDelete('cascade');
+            $table->timestamp('focus_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 class EmergencyPageController extends Controller
 {
     protected $emergencyService;
+
     public function __construct(EmergencyPageService $emergencyService)
     {
         $this->emergencyService = $emergencyService;
@@ -41,11 +42,15 @@ class EmergencyPageController extends Controller
     {
         try {
             $service = $this->emergencyService->show($id);
-            return view("frontend.layouts.service.show", compact("service"));
+            $categoryNames = $this->emergencyService->getContactorCategoryList($service->user_id);
+            $ServiceTitleWithDescription = $this->emergencyService->ServiceTitleWithDescription($service->user_id);
+            
+            return view("frontend.layouts.service.show", compact("service", "categoryNames", "ServiceTitleWithDescription"));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();
         }
     }
+
 
 }
