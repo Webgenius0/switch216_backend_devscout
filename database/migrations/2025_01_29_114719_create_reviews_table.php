@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade'); // Link to Service
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Link to User
             $table->foreignId('contactor_id')->constrained('users')->onDelete('cascade'); // Link to User
+            $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade'); // Link to Booking
             $table->tinyInteger('rating')->unsigned()->default(0); // Rating (1-5 scale)
             $table->text('review')->nullable(); // Review content
             $table->timestamps();

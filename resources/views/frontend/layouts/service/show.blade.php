@@ -159,19 +159,18 @@
                 <!-- service section start -->
                 <h2 class="profile-section-title">Services Offered by</h2>
                 <div class="service-wrapper">
-                    @forelse ($ServiceTitleWithDescription as $item )
-                    <div class="service-item">
-                        <h5 class="service-title">{{$item->title}}</h5>
-                        <p class="service-des">
-                            {{$item->description}}
-                        </p>
-                    </div>
-                        
+                    @forelse ($ServiceTitleWithDescription as $item)
+                        <div class="service-item">
+                            <h5 class="service-title">{{ $item->title }}</h5>
+                            <p class="service-des">
+                                {{ $item->description }}
+                            </p>
+                        </div>
+
                     @empty
-                        
                     @endforelse
-                    
-                    
+
+
                 </div>
                 <!-- service section end -->
 
@@ -356,12 +355,13 @@
 
                 @auth
                     @if (auth()->user()->role === 'customer')
-                        <button class="button w-100 mt-2 mt-lg-3 d-block" type="button" data-bs-toggle="modal"
-                            data-bs-target="#successModal">
-                            Book Appointment
-                        </button>
-                        <a href="{{ route('contractor.message.start_chat', $service->id) }}"
-                            class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
+                    <button id="bookAppointmentBtn" class="button w-100 mt-2 mt-lg-3 d-block" type="button">
+                        Book Appointment
+                    </button>
+            
+                    <a href="{{ route('contractor.message.start_chat', $service->id) }}"
+                        class="button w-100 mt-2 mt-lg-3 sec">Send Message</a>
+                        
                     @endif
                 @endauth
                 <div id="map"></div>
@@ -441,18 +441,17 @@
                     </svg>
                 </button>
                 <figure class="success-icon-img">
-                    <img src="./assets/images/success-icon.png" alt="success icon" />
+                    <img src="{{ asset('frontend/assets/images/success-icon.png') }}" alt="success icon" />
                 </figure>
                 <div class="title">
-                    You have earn the top <br />
-                    <span>Emergency service</span> badge
+                   Your Booking Request Sent Successfully
                 </div>
-                <div class="des">
+                {{-- <div class="des">
                     Join our community of professionals and clients today! By signing
                     up, you gain direct access to experienced multi-services,
                     personalized services, and a seamless platform to manage your
                     service needs.
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -461,7 +460,7 @@
 
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 
     <script type="text/javascript">
         const appointmentDatePicker = document.getElementById(
@@ -590,5 +589,45 @@
             //     }
             // });
         }
+
+        $(document).ready(function() {
+            $('#bookAppointmentBtn').on('click', function(e) {
+                e.preventDefault();
+
+                let bookingDate = $('#appointment-date-picker').val(); // Get the date from date picker
+                console.log(bookingDate);
+                if (!bookingDate) {
+                    alert("Please select a booking date.");
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('customer.booking.store') }}", // Laravel route
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        service_id: "{{ $service->id }}", // Assuming `$service->id` is available
+                        booking_date: bookingDate
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            $('#successModal').modal('show'); // Show success modal
+                        } else {
+                            alert(response.message); // Show error message
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMessage = "Something went wrong!";
+
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+
+                        alert(errorMessage); // Show error alert
+                    }
+                });
+            });
+        });
     </script>
 @endpush

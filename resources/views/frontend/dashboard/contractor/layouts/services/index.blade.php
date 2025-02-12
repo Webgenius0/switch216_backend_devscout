@@ -294,7 +294,7 @@
                 // Click event for pagination items
                 $('.pagination-item').on('click', function(e) {
                     e.preventDefault();
-                    console.log('pagination-item')
+                    // console.log('pagination-item')
                     const page = $(this).data('page');
                     if (!$(this).hasClass('disabled')) {
                         dTable.page(page - 1).draw('page'); // DataTables is 0-based index, so subtract 1

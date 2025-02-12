@@ -1,21 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Web\Frontend\Contractor\BookingController;
+use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
+use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\App;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 // Route::get('/', function () {
 //     // return view('welcome');
@@ -138,6 +135,14 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::get('dashboard', function () {
         return view('frontend.dashboard.customer.layouts.home.index');
     })->name('customer.dashboard');
+    // customer bookings 
+    Route::get('/customer-booking', [BookingCustomerController::class, 'index'])->name('customer.booking.index');
+    Route::get('/customer-bookings/all', [BookingCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
+    Route::post('/customer-booking', [BookingCustomerController::class, 'store'])->name('customer.booking.store');
+    Route::post('/customer-booking/complete/${bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
+    Route::post('/customer-booking/cancle/${bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
+    Route::post('/customer-booking/reschedule/${bookingId}', [BookingCustomerController::class, 'reschedule'])->name('customer.booking.reschedule');
+    Route::post('/customer-booking/given-review', [BookingCustomerController::class, 'givenReview'])->name('customer.booking.review');
 });
 
 
@@ -155,7 +160,7 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-booking', [BookingController::class, 'index'])->name('contractor.booking.index');
+    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
 
 });
 
