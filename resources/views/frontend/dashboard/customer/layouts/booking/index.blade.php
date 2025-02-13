@@ -53,18 +53,18 @@
                     <div class="text mt-3">
                         Description: {{ $booking->service->description ?? ' ' }}
                     </div>
-                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled' && $booking->status !== 'request_completed')
                         <a class="action mt-5 reschedule-booking-btn" type="button" data-booking-id="{{ $booking->id }}">
                             Reschedule
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled' && $booking->status !== 'request_completed')
                         <a href="{{ route('customer.booking.cancle', $booking->id) }}"
                             class="action mt-5 cancelled-booking-btn" type="button">
                             Cancle Booking
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && !$booking->booking_date->isFuture())
+                    @if ($booking->status !== 'completed'&& $booking->status !== 'cancelled' && !$booking->booking_date->isFuture())
                         <a class="action mt-5 complete-booking-btn" type="button"
                             onclick="mark_as_complete({{ $booking->id }}, this)" data-booking-id="{{ $booking->id }}">
                             Mark As Complete
