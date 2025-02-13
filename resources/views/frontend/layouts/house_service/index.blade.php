@@ -25,7 +25,7 @@
         Explore top-rated DJs, photographers, caterers, and more for your next event.
       </p>
       <!-- search section start -->
-      <div class="se--serach--container" data-aos="fade-up">
+      {{-- <div class="se--serach--container" data-aos="fade-up">
         <div class="se--home--rental--search-section ">
           <form action="">
             <input type="text" class="se--search--input" placeholder="Search all Services" />
@@ -43,7 +43,7 @@
 
           </div>
         </div>
-      </div>
+      </div> --}}
       <!-- search section end -->
     </div>
   </section>

@@ -2,6 +2,8 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Models\Booking;
+use App\Models\Review;
 use App\Models\Service;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -45,7 +47,6 @@ class EmergencyPageService
         try {
             $contactor_serviceCategory = Service::where('user_id', $contactor_id)->with(['category', 'subcategory', 'bookings', 'reviews'])->get();
             $categoryNames = $contactor_serviceCategory->pluck('category.name');
-            // $ServiceTitleWithDescription = $contactor_serviceCategory->pluck('category.name');
             return $categoryNames;
         } catch (Exception $e) {
             throw $e;
@@ -63,8 +64,26 @@ class EmergencyPageService
     public function ContactorReview($contactor_id)
     {
         try {
-            $ServiceTitleWithDescription = Service::where('user_id', $contactor_id)->select('id', 'title', 'description')->get();
-            return $ServiceTitleWithDescription;
+            $ContactorReviews = Review::where('contactor_id', $contactor_id)->with([
+                'user' => function ($q) {
+                    $q->select('id', 'name', 'avatar');
+                }
+            ])->select('id', 'service_id', 'contactor_id', 'booking_id', 'user_id', 'rating', 'review', 'created_at')->get();
+            return $ContactorReviews;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+    public function ContactorProfileCounter($contactor_id)
+    {
+        try {
+            $ContactorReviewCount = Review::where('contactor_id', $contactor_id)->count();
+            $services = Service::where('user_id', $contactor_id)->get();
+            // dd($services);
+            $ContactorCompleteBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->where('status', 'completed')->count();
+            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->whereIn('status', ['pending', 'pending_reschedule'])->count();
+
+            return ['client_review_count' => $ContactorReviewCount, 'complete_booking_count' => $ContactorCompleteBookingCount, 'pending_booking_count' => $ContactorPendingBookingCount];
         } catch (Exception $e) {
             throw $e;
         }

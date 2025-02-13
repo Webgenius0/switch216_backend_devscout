@@ -19,7 +19,7 @@ class EmergencyPage extends Component
     // public $contractor = "5";
     public $serching_type;
 
-    protected $queryString = ['serching_is_emergency', 'category', 'subcategory', 'serching_type'];
+    protected $queryString = ['location','serching_is_emergency', 'category', 'subcategory', 'serching_type'];
 
 
     public function resetSubcategory()

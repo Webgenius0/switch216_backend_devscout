@@ -184,18 +184,19 @@
     <!-- search section start -->
     <div class="container search-container" data-aos="fade-up">
         <div class="search-section">
-            <form action="./service.html">
+            <form action="{{route('home.serchingStatic')}}" method="POST">
+                @csrf
                 <div class="search-item">
                     <div class="item-title">Location</div>
-                    <input class="search-input" placeholder="Select location" type="text" />
+                    <input name="location" class="search-input" placeholder="Select location" type="text" />
                 </div>
                 <div class="search-item">
                     <div class="item-title">Service Type</div>
-                    <select class="select">
-                        <option value="">Select service</option>
-                        <option value="contractor">Contractor</option>
-                        <option value="plumber">plumber</option>
-                        <option value="real_state">Real state</option>
+                    <select name="category" class="select" required>
+                        <option value="">Select Category</option>
+                        @foreach ($categories as $categoryItem)
+                            <option value="{{ $categoryItem->name }}">{{ $categoryItem->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <button type="submit" class="button">

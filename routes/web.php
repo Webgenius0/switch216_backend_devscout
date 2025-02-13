@@ -27,6 +27,7 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
 Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 
