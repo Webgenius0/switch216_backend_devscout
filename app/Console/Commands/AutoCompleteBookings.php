@@ -13,7 +13,7 @@ class AutoCompleteBookings extends Command
 
     public function handle()
     {
-        $bookings = Booking::where('status', 'confirmed')
+        $bookings = Booking::where('status', 'request_completed')
             ->where('booking_date', '<', Carbon::now()->subDay()) // Check bookings older than 24 hours
             ->update(['status' => 'completed']);
 
