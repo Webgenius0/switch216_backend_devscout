@@ -68,28 +68,30 @@
             </p>
             <div class="service-container sub-service-container" data-aos="fade-down">
                 @forelse ($category->subCategories as $key=>$sub_category)
-                <a href="{{ route('service.emergency', ['category' => $category->name,'subcategory'=> $sub_category->name]) }}" class="item">
-                  <img src="{{asset($sub_category->thumbnail)}}" alt="not photo find">
-                   <h4 class="section-card-title mt-2 mt-xl-4">{{$sub_category->name??""}}</h4>
-                   <p class="section-card-text mt-2 mb-2">
-                       {{$sub_category->description ??""}}
-                   </p>
-                   <div class="mt-2 mt-xl-5">
-                     <div class="action">
-                       <span>Explore Now</span>
-         
-                       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-                         <path
-                           d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
-                           fill="" />
-                       </svg>
-                     </div>
-                   </div>
-                 </a>
+                    <a href="{{ route('service.emergency', ['category' => $category->name, 'subcategory' => $sub_category->name]) }}"
+                        class="item">
+                        <img src="{{ asset($sub_category->thumbnail) }}" alt="not photo find">
+                        <h4 class="section-card-title mt-2 mt-xl-4">{{ $sub_category->name ?? '' }}</h4>
+                        <p class="section-card-text mt-2 mb-2">
+                            {{ Str::limit($sub_category->description ?? '', 100) }}
+                        </p>
+                        <div class="mt-2 mt-xl-5">
+                            <div class="action">
+                                <span>Explore Now</span>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13"
+                                    fill="none">
+                                    <path
+                                        d="M16.5303 7.03033C16.8232 6.73744 16.8232 6.26256 16.5303 5.96967L11.7574 1.1967C11.4645 0.903806 10.9896 0.903806 10.6967 1.1967C10.4038 1.48959 10.4038 1.96447 10.6967 2.25736L14.9393 6.5L10.6967 10.7426C10.4038 11.0355 10.4038 11.5104 10.6967 11.8033C10.9896 12.0962 11.4645 12.0962 11.7574 11.8033L16.5303 7.03033ZM0 7.25H16V5.75H0L0 7.25Z"
+                                        fill="" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
                 @empty
-                <h1>No Sub Category Found</h1>
+                    <h1>No Sub Category Found</h1>
                 @endforelse
-                
+
 
             </div>
         </section>

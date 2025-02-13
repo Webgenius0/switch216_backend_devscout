@@ -21,7 +21,7 @@
                     <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                         <div class="profile d-flex gap-2 flex-wrap">
                             <div class="profile-img">
-                                <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
+                                <img src="{{ asset($booking->service->user->avatar ??'backend/assets/images/user.png') }}" alt="">
                             </div>
                             <div class="profile-info">
                                 <div class="profile-title">

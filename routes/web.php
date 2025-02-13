@@ -143,7 +143,7 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('/customer-booking/complete/{bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
     Route::get('/customer-booking/cancle/{bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
     Route::post('/customer-booking/reschedule', [BookingCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
-   
+
     Route::post('/customer-booking/given-review', [BookingCustomerController::class, 'givenReview'])->name('customer.booking.review');
 });
 
@@ -163,7 +163,9 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
     Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
-
+    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
+    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.cancle');
+    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
 });
 
 

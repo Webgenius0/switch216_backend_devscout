@@ -70,7 +70,7 @@
            <img src="{{asset($category->thumbnail)}}" alt="not photo find">
             <h4 class="section-card-title mt-2 mt-xl-4">{{$category->name??""}}</h4>
             <p class="section-card-text mt-2 mb-2">
-                {{$category->description ??""}}
+                {{Str::limit($category->description ?? "", 100)}}
             </p>
             <div class="mt-2 mt-xl-5">
               <div class="action">
