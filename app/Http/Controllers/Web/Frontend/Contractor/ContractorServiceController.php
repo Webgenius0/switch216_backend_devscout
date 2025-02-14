@@ -111,18 +111,38 @@ class ContractorServiceController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        if ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id === 1) {
 
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'subcategory_id' => 'required|exists:sub_categories,id',
-            'is_emergency' => 'required|boolean',
-            'type' => 'required|in:sell,rent,event,single',
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'gallery_images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'gallery_images' => 'required',
-        ]);
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'subcategory_id' => 'required|exists:sub_categories,id',
+                'is_emergency' => 'required|boolean',
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'property_type' => 'required|string',
+                'price' => 'required|numeric',
+                'bedrooms' => 'required|integer',
+                'bathrooms' => 'required|integer',
+                'furnished' => 'required|in:Yes,No',
+                'cover_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images' => 'required',
+            ]);
+        } else {
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'subcategory_id' => 'required|exists:sub_categories,id',
+                'is_emergency' => 'required|boolean',
+                'type' => 'required|in:sell,rent,event,single',
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'cover_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images' => 'required',
+            ]);
+        }
+
         try {
             $this->ContractorServiceService->store($validatedData);
             flash()->success('Service added successfully!');
