@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         //category sub_category seeder call
+        $this->call(SystemSettingSeeder::class);
         $this->call(CategorySubCategorySeeder::class);
     }
 }

@@ -26,4 +26,71 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.all.min.js"
         integrity="sha256-BpyIV7Y3e2pnqy8TQGXxsmOiQ4jXNDTOTBGL2TEJeDY=" crossorigin="anonymous"></script>
 
+
+    <!-- for live notification -->
+    <script>
+        function deleteNotification(id) {
+            $.ajax({
+                type: "DELETE",
+                url: "{{ route('notification.delete', ':id') }}".replace(':id', id),
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                success: function(resp) {
+                    flasher.success(resp.message);
+                    $("#notification_" + id).remove()
+                    let notificationCount = parseInt($("#notification-count").text());
+                    if (notificationCount > 0) {
+                        $("#notification-count").text(notificationCount - 1);
+                    }
+                },
+                error: function(error) {
+                    flasher.error(error.responseJSON.message);
+                }
+            });
+        }
+
+        function markAllRead() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notification.read') }}",
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+                success: function(resp) {
+                    flasher.success(resp.message);
+                    $('.notification-title').addClass('text-gray-400');
+                    $("#notification-indicator").remove()
+                    let notificationCount = parseInt($("#notification-count").text());
+                    if (notificationCount >= 0) {
+                        $("#notification-count").text(0);
+                    }
+                },
+                error: function(error) {
+                    flasher.error(error.responseJSON.message);
+                }
+            });
+        }
+
+        //realtime notification fetch
+        document.addEventListener('DOMContentLoaded', function() {
+
+
+            Echo.private('App.Models.User.' + {{ auth()->id() }})
+                .notification((notification) => {
+                    console.log(notification);
+                    let notificationCount = parseInt($("#notification-count").text());
+                    if (notificationCount >= 0) {
+                        $("#notification-count").text(notificationCount + 1);
+                    }
+
+                    $('#notificationDropdown').append(`
+                `)
+
+                    flasher.info(notification.message, 'Notification');
+                });
+        })
+    </script>
+
+
     @stack('scripts')

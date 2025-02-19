@@ -10,6 +10,35 @@
 
 @push('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
+<style>
+    .dropdown-menu {
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+        width: 40%;
+        display: none;
+        margin-top: 80px;
+    }
+
+    .dropdown-menu div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .dropdown-menu div:hover {
+        background: #f0f0f0;
+    }
+    .new-banner-photo {
+        padding:30px 20px
+    }
+    @media screen and (min-width: 1300px){
+        .new-banner-photo {
+            padding:60px 400px
+        }
+    }
+</style>
 @endpush
 
 @section('content')
@@ -188,7 +217,8 @@
                 @csrf
                 <div class="search-item">
                     <div class="item-title">Location</div>
-                    <input name="location" class="search-input" placeholder="Select location" type="text" />
+                    <input id="locationInput" name="location" class="search-input" placeholder="Select location" type="text" autocomplete="off" />
+                    <div id="locationDropdown" class="dropdown-menu"></div>
                 </div>
                 <div class="search-item">
                     <div class="item-title">Service Type</div>
@@ -302,7 +332,7 @@
                             </div>
                         @endif
 
-                        <a href="#" class="button"
+                        <a href="{{route('contact_us.index')}}" class="button"
                             data-aos="fade-left">{{ $cms['service_container']->button_text ?? 'Contact Now' }}</a>
                     </div>
                 </div>
@@ -356,7 +386,7 @@
                         'Yet bed any for traveling assistance indulgence unpleasing. Not
                                                                                                                                                                 thoughts all exercise blessing. Indulgence way everything joy.' }}
                 </p>
-                <a href="#" class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
+                <a href="{{ route('service.category') }}" class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
             </div>
 
             @if (isset($cms['process_container_content']) && count($cms['process_container_content']) > 0)
@@ -638,7 +668,7 @@
         <!-- work section end -->
 
         <!-- user review section start -->
-        <section class="user-review">
+        {{-- <section class="user-review">
             <div class="container">
                 <h2 class="title" data-aos="fade-up">
                     {{ $cms['review_user_container']->title ?? 'What Our Users Are Saying' }}</h2>
@@ -837,11 +867,11 @@
                     </a>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- user review section end -->
 
         <!-- testimonial section start -->
-        <section class="testimonial container">
+        {{-- <section class="testimonial container">
             <h2 class="title" data-aos="fade-up">
                 {{ $cms['review_provider_container']->title ?? 'What Our Users Are Saying' }}</h2>
             <p class="des" data-aos="fade-up">
@@ -1616,7 +1646,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- testimonial section end -->
 
 
@@ -1630,7 +1660,7 @@
                         "Lorem ipsum " }}
                 </p>
             </div>
-            <div class="" style="height:700px;  padding:60px 400px;" >
+            <div class="new-banner-photo"  >
                 <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
                 <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
                 </a> 
@@ -1822,4 +1852,57 @@
             });
         }
     </script>
+
+<script>
+    $(document).ready(function () {
+    let cities = [];
+
+    // Load Morocco city list from JSON
+    $.getJSON("/backend/admin/assets/morocco_city_list.json", function (data) {
+        cities = data.results.map(city => city.name); // Extract only city names
+    });
+
+    $("#locationInput").on("input", function () {
+        let query = $(this).val().toLowerCase();
+        let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
+
+        let dropdown = $("#locationDropdown");
+        dropdown.empty().hide();
+
+        if (filteredCities.length > 0) {
+            dropdown.show();
+            filteredCities.forEach(city => {
+                dropdown.append(`<div class="dropdown-item">${city}</div>`);
+            });
+        }
+    });
+    $("#locationInput").on("click", function () {
+        let query = $(this).val().toLowerCase();
+        let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
+
+        let dropdown = $("#locationDropdown");
+        dropdown.empty().hide();
+
+        if (filteredCities.length > 0) {
+            dropdown.show();
+            filteredCities.forEach(city => {
+                dropdown.append(`<div class="dropdown-item">${city}</div>`);
+            });
+        }
+    });
+    // Click event for selecting a city
+    $(document).on("click", ".dropdown-item", function () {
+        $("#locationInput").val($(this).text());
+        $("#locationDropdown").hide();
+    });
+
+    // Hide dropdown if clicked outside
+    $(document).click(function (e) {
+        if (!$(e.target).closest(".search-item").length) {
+            $("#locationDropdown").hide();
+        }
+    });
+});
+
+</script>
 @endpush

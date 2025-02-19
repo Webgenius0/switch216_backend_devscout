@@ -450,26 +450,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // counter animation start
   const counterItems = document.querySelectorAll(".count");
-  if (counterItems.length > 0) {
-    let speed = 2000;
-    counterItems.forEach((counterItem) => {
-      // const current = counterItem.querySelector("span");
-      const endValue = +counterItem.dataset.target;
+if (counterItems.length > 0) {
+  let speed = 2000;
+  counterItems.forEach((counterItem) => {
+    const endValue = +counterItem.dataset.target;
 
-      let startValue = endValue > 100 ? endValue - 500 : 0;
+    // If target is 0, set the text directly and skip counting
+    if (endValue === 0) {
+      counterItem.textContent = "0";
+      return;
+    }
 
-      const duration = Math.floor(speed / endValue);
+    let startValue = endValue > 100 ? endValue - 500 : 0;
+    const duration = Math.floor(speed / endValue);
 
-      const counter = setInterval(() => {
-        startValue++;
-        // current.textContent = startValue.toLocaleString("en-US");
-        counterItem.textContent = startValue.toLocaleString("en-US");
-        if (startValue === endValue) {
-          clearInterval(counter);
-        }
-      }, duration);
-    });
-  }
+    const counter = setInterval(() => {
+      startValue++;
+      counterItem.textContent = startValue.toLocaleString("en-US");
+      if (startValue === endValue) {
+        clearInterval(counter);
+      }
+    }, duration);
+  });
+}
   // counter animation end
 
   // choose item select start

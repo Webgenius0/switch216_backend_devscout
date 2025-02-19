@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\ContactPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
@@ -28,6 +30,8 @@ Route::get('/map-api-key', function () {
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
+Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
+Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
 Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 
@@ -40,9 +44,9 @@ Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');
 })->name('about');
 
-Route::get('/contract', function () {
-    return view(view: 'frontend.layouts.contract.index');
-})->name('contract');
+// Route::get('/contact', function () {
+//     return view(view: 'frontend.layouts.contact.index');
+// })->name('contact_us');
 
 //service all
 // Route::get('/service', function () {
@@ -198,5 +202,6 @@ Route::post('/set-locale/{locale}', function ($locale) {
     return response()->noContent();
 
 })->name('setLocale');
+
 
 require __DIR__ . '/auth.php';
