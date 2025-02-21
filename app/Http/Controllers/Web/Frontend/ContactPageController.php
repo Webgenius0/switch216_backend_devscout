@@ -26,14 +26,6 @@ class ContactPageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -46,7 +38,6 @@ class ContactPageController extends Controller
         ]);
 
         try {
-            // dd($validatedData);
             $this->contact->handleContactForm($validatedData);
             flash()->success('Message sent successfully');
             return redirect()->route('contact_us.index');
@@ -55,37 +46,5 @@ class ContactPageController extends Controller
             flash()->error($e->getMessage());
             return redirect()->route('contact_us.index');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

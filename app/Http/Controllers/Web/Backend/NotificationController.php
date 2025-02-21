@@ -22,6 +22,18 @@ class NotificationController extends Controller
             return Helper::jsonErrorResponse($e->getMessage(), 500);
         }
     }
+    public function markAsSingleRead($id)
+    {
+        try {
+            $notification = auth()->user()->notifications()->findOrFail($id)->update(['read_at' => now()]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Notifications marked as read.',
+            ], 200);
+        } catch (Exception $e) {
+            return Helper::jsonErrorResponse($e->getMessage(), 500);
+        }
+    }
 
     public function delete($id)
     {

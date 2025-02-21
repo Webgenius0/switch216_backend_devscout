@@ -54,7 +54,7 @@
                 @enderror
             </div>
         </div>
-        <!-- Is Emergency -->
+        <!-- Service Type -->
         <div class="col-md-6">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Service Type<span style="color: red">*</span></label>

@@ -37,6 +37,9 @@
         .map-button:hover {
             background: #f0f0f0;
         }
+        .navbar {
+            z-index: 9999 !important;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Frontend\Contractor;
 
 use App\Http\Controllers\Controller;
+use App\Models\CarBrand;
 use App\Models\Category;
 use App\Models\ContactorCategory;
 use App\Models\Service;
@@ -98,7 +99,8 @@ class ContractorServiceController extends Controller
         try {
             $contactor_category = $this->ContractorServiceService->contactorCategory();
             $categories = Category::where('status', 'active')->where('id', $contactor_category->category->id)->with('subCategories')->get();
-            return view('frontend.dashboard.contractor.layouts.services.create', compact('categories'));
+            $carBrands=CarBrand::get();
+            return view('frontend.dashboard.contractor.layouts.services.create', compact('categories','carBrands'));
         } catch (Exception $e) {
             Log::error('ContractorServiceController::create-' . $e->getMessage());
             flash()->error('Something went wrong. Please try again later');
@@ -112,22 +114,48 @@ class ContractorServiceController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        if ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id === 1) {
+        if ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 1) {
 
             $validatedData = $request->validate([
                 'category_id' => 'required|exists:categories,id',
                 'subcategory_id' => 'required|exists:sub_categories,id',
                 'is_emergency' => 'required|boolean',
+                'type' => 'required|in:sell,rent,event,single',
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'property_type' => 'required|string',
-                'price' => 'required|numeric',
-                'bedrooms' => 'required|integer',
-                'bathrooms' => 'required|integer',
-                'furnished' => 'required|in:Yes,No',
                 'cover_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'gallery_images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'gallery_images' => 'required',
+                //extra for real state service
+                'property_type' => 'required|string',
+                'price' => 'required|numeric|min:0',
+                'bedrooms' => 'required|integer',
+                'bathrooms' => 'required|integer',
+                'is_furnished' => 'required|boolean',
+            ]);
+        } elseif ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 3) {
+
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'subcategory_id' => 'required|exists:sub_categories,id',
+                'is_emergency' => 'required|boolean',
+                'type' => 'required|in:sell,rent,event,single',
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'cover_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gallery_images' => 'required',
+                //extra for car service
+                'car_type' => 'nullable|in:Sedan,SUV,Coupe,Convertible,Pickup Truck,Van,Motorcycle,Electric,Other',
+                'brand' => 'nullable|string|max:255',
+                'model' => 'nullable|string|max:255',
+                'year' => 'nullable|integer|min:1900|max:' . date('Y'),
+                'fuel_type' => 'nullable|in:Gasoline,Diesel,Hybrid,Electric,Other',
+                'transmission' => 'nullable|in:Manual,Automatic',
+                'kilometers_driven' => 'nullable',
+                'location' => 'nullable|string|max:255',
+                'price' => 'nullable|numeric|min:0',
+                'transaction_type' => 'nullable|in:sell,rent',
             ]);
         } else {
             $validatedData = $request->validate([
@@ -142,7 +170,7 @@ class ContractorServiceController extends Controller
                 'gallery_images' => 'required',
             ]);
         }
-
+        // dd($validatedData);
         try {
             $this->ContractorServiceService->store($validatedData);
             flash()->success('Service added successfully!');
@@ -150,7 +178,7 @@ class ContractorServiceController extends Controller
 
         } catch (Exception $e) {
             Log::error('ContractorServiceController::store-' . $e->getMessage());
-            flash()->error('Something went wrong');
+            flash()->error('Something went wrong' . $e->getMessage());
             return redirect()->back();
         }
     }

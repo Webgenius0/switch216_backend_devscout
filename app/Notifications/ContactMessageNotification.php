@@ -35,6 +35,7 @@ class ContactMessageNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'title' => $this->requestData['title'],
             'message' => $this->requestData['message'],
             'url' => $this->requestData['url'],
             'type' => $this->requestData['type'],

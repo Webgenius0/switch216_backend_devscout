@@ -2,7 +2,7 @@
                 @csrf
                 <div class="row">
                     <!-- Category -->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Category<span style="color: red">*</span></label>
                             <select id="category" class="form-select @error('category_id') is-invalid @enderror"
@@ -23,7 +23,7 @@
                     </div>
 
                     <!-- Subcategory -->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Subcategory<span style="color: red">*</span></label>
                             <select id="subcategory" class="form-select @error('subcategory_id') is-invalid @enderror"
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <!-- Is Emergency -->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group mb-4">
                             <label class="label text-secondary">Is Emergency?<span style="color: red">*</span></label>
                             <select class="form-select @error('is_emergency') is-invalid @enderror" name="is_emergency"
@@ -54,23 +54,7 @@
                             @enderror
                         </div>
                     </div>
-                    <!-- Is Emergency -->
-                    {{-- <div class="col-md-6">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Service Type<span style="color: red">*</span></label>
-                            <select class="form-select @error('type') is-invalid @enderror" name="type" required>
-                                <option value="sell" {{ old('type') == 'sell' ? 'selected' : '' }}>Sell</option>
-                                <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
-                                <option value="event" {{ old('type') == 'event' ? 'selected' : '' }}>Event
-                                </option>
-                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Others
-                                </option>
-                            </select>
-                            @error('type')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div> --}}
+                    
                     <!-- Title -->
                     <div class="col-md-12">
                         <div class="form-group mb-4">
@@ -96,14 +80,14 @@
                     </div>
 <!-- Home Details Fields -->
         <!-- Property Type -->
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Property Type<span style="color: red">*</span></label>
                 <select class="form-select @error('property_type') is-invalid @enderror" name="property_type" required>
-                    <option value="House">House</option>
-                    <option value="Apartment">Apartment</option>
-                    <option value="Land">Land</option>
-                    <option value="Commercial">Commercial</option>
+                    <option value="House" {{ old('property_type') == 'House' ? 'selected' : '' }}>House</option>
+                    <option value="Apartment" {{ old('property_type') == 'Apartment' ? 'selected' : '' }}>Apartment</option>
+                    <option value="Land" {{ old('property_type') == 'Land' ? 'selected' : '' }}>Land</option>
+                    <option value="Commercial" {{ old('property_type') == 'Commercial' ? 'selected' : '' }}>Commercial</option>
                 </select>
                 @error('property_type')
                     <div class="text-danger">{{ $message }}</div>
@@ -126,10 +110,10 @@
         </div> --}}
 
         <!-- Price Range -->
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Price<span style="color: red">*</span></label>
-                <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" required>
+                <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required>
                 @error('price')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -148,14 +132,13 @@
         </div> --}}
 
         <!-- Number of Bedrooms -->
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Number of Bedrooms<span style="color: red">*</span></label>
                 <select class="form-select @error('bedrooms') is-invalid @enderror" name="bedrooms" required>
-                    <option value="Studio">Studio</option>
-                    <option value="1">1 Bedroom</option>
-                    <option value="2">2 Bedrooms</option>
-                    <option value="3+">3+ Bedrooms</option>
+                    <option value="1" {{ old('bedrooms') == '1' ? 'selected' : '' }}>1 Bedroom</option>
+                    <option value="2" {{ old('bedrooms') == '2' ? 'selected' : '' }}>2 Bedrooms</option>
+                    <option value="3" {{ old('bedrooms') == '3' ? 'selected' : '' }}>3+ Bedrooms</option>
                 </select>
                 @error('bedrooms')
                     <div class="text-danger">{{ $message }}</div>
@@ -164,13 +147,13 @@
         </div>
 
         <!-- Number of Bathrooms -->
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Number of Bathrooms<span style="color: red">*</span></label>
                 <select class="form-select @error('bathrooms') is-invalid @enderror" name="bathrooms" required>
-                    <option value="1+">1+</option>
-                    <option value="2+">2+</option>
-                    <option value="3+">3+</option>
+                    <option value="1" {{ old('bathrooms') == '1' ? 'selected' : '' }}>1+</option>
+                    <option value="2" {{ old('bathrooms') == '2' ? 'selected' : '' }}>2+</option>
+                    <option value="3" {{ old('bathrooms') == '3' ? 'selected' : '' }}>3+</option>
                 </select>
                 @error('bathrooms')
                     <div class="text-danger">{{ $message }}</div>
@@ -179,14 +162,29 @@
         </div>
 
         <!-- Furnished? -->
-        <div class="col-md-6">
+        <div class="col-md-2">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Furnished?<span style="color: red">*</span></label>
-                <select class="form-select @error('furnished') is-invalid @enderror" name="furnished" required>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                <select class="form-select @error('is_furnished') is-invalid @enderror" name="is_furnished" required>
+                    <option value="1" {{ old('is_furnished') == '1' ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('is_furnished') == '0' ? 'selected' : '' }}>No</option>
                 </select>
-                @error('furnished')
+                @error('is_furnished')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <!-- Service Type -->
+        <div class="col-md-2">
+            <div class="form-group mb-4">
+                <label class="label text-secondary">Service Type<span style="color: red">*</span></label>
+                <select class="form-select @error('type') is-invalid @enderror" name="type" required>
+                    <option value="sell" {{ old('type') == 'sell' ? 'selected' : '' }}>Sell</option>
+                    <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
+                    {{-- <option value="event" {{ old('type') == 'event' ? 'selected' : '' }}>Event</option>
+                    <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Others</option> --}}
+                </select>
+                @error('type')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

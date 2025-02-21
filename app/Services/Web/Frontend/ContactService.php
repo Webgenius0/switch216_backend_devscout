@@ -74,9 +74,9 @@ class ContactService
         $notificationData = [
             'title' => 'A new Contact Message has been submitted.',
             'message' => $contactMessage->message,
-            'url' => route('contact_us.index'),
+            'url' => route('admin_contact_us.index'),
             'type' => 'Contact Message',
-            'thumbnail' => asset('backend/images/messages_user.png'??''),
+            'thumbnail' => asset('backend/admin/assets/images/messages_user.png'??''),
         ];
 
         foreach ($adminUsers as $admin) {
