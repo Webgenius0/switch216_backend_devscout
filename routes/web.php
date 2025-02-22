@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\CarPageController;
+use App\Http\Controllers\Web\Frontend\ContactPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
@@ -27,8 +30,16 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
-Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
+Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
+Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
+Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
+//show single service with contractor profile
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
+//emergency page
+Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
+//car page
+Route::get('/car-services', [CarPageController::class, 'index'])->name('service.car');
+Route::get('/car-services/list', [CarPageController::class, 'carList'])->name('service.car_list');
 
 Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
@@ -39,9 +50,9 @@ Route::get('/about', function () {
     return view(view: 'frontend.layouts.about.index');
 })->name('about');
 
-Route::get('/contract', function () {
-    return view(view: 'frontend.layouts.contract.index');
-})->name('contract');
+// Route::get('/contact', function () {
+//     return view(view: 'frontend.layouts.contact.index');
+// })->name('contact_us');
 
 //service all
 // Route::get('/service', function () {
@@ -76,9 +87,9 @@ Route::get('/food', function () {
 
 
 //car service all
-Route::get('/car', function () {
-    return view(view: 'frontend.layouts.car_service.index');
-})->name('car.index');
+// Route::get('/car', function () {
+//     return view(view: 'frontend.layouts.car_service.index');
+// })->name('car.index');
 
 // Route::get('/car-details', function () {
 //     return view(view: 'frontend.layouts.car_service.index');
@@ -164,7 +175,7 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
 
     Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
     Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
-    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.cancle');
+    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
     Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
 });
 
@@ -197,5 +208,6 @@ Route::post('/set-locale/{locale}', function ($locale) {
     return response()->noContent();
 
 })->name('setLocale');
+
 
 require __DIR__ . '/auth.php';

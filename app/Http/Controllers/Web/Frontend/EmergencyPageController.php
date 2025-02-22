@@ -44,8 +44,11 @@ class EmergencyPageController extends Controller
             $service = $this->emergencyService->show($id);
             $categoryNames = $this->emergencyService->getContactorCategoryList($service->user_id);
             $ServiceTitleWithDescription = $this->emergencyService->ServiceTitleWithDescription($service->user_id);
-            
-            return view("frontend.layouts.service.show", compact("service", "categoryNames", "ServiceTitleWithDescription"));
+            $ContactorReviews = $this->emergencyService->ContactorReview($service->user_id);
+
+            $ContactorProfileCounter = $this->emergencyService->ContactorProfileCounter($service->user_id);
+            // dd($ContactorProfileCounter);
+            return view("frontend.layouts.service.show", compact("service", "categoryNames", "ServiceTitleWithDescription", "ContactorReviews", "ContactorProfileCounter"));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();

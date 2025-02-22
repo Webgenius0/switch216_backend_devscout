@@ -23,7 +23,7 @@ class CategorySubCategorySeeder extends Seeder
                 'sub_categories' => [
                     ['name' => 'Buy a Home', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Buy services.'],
                     ['name' => 'Rent a Home', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Rent services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Real estate others services.'],
+                    ['name' => 'Others Real Estate', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Real estate others services.'],
                 ]
             ],
             [
@@ -34,7 +34,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Local Cuisine', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Food local cuisine services.'],
                     ['name' => 'Snaks', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Food snaks services.'],
                     ['name' => 'Pizza', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Food pizza services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Food others services.'],
+                    ['name' => 'Others Restaurant', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Food others services.'],
                 ]
             ],
             [
@@ -44,7 +44,7 @@ class CategorySubCategorySeeder extends Seeder
                 'sub_categories' => [
                     ['name' => 'Rent a Car', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Rent a car services.'],
                     ['name' => 'Buy a Car', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Buy a car services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other vehicle services.'],
+                    ['name' => 'Others Car', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other vehicle services.'],
                 ]
             ],
             [
@@ -55,7 +55,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Light Bulb Replacement', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Light bulb replacement services.'],
                     ['name' => 'Carpentry Works', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Carpentry works services.'],
                     ['name' => 'Small Door Installation', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Small door installation services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other repair services.'],
+                    ['name' => 'Others Repair', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other repair services.'],
                 ]
             ],
             [
@@ -68,7 +68,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Hair Services', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Hair services.'],
                     ['name' => 'Nail Services', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Nail services.'],
                     ['name' => 'Skin Care', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Skin care services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other beauty and wellness services.'],
+                    ['name' => 'Others Beauty and Wellness', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other beauty and wellness services.'],
                 ]
             ],
             [
@@ -81,7 +81,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Language Lessons', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Language lessons services.'],
                     ['name' => 'Sports and Fitness Lessons', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Sports and fitness lessons services.'],
                     ['name' => 'Music Lessons', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Music lessons services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other education and childcare services.'],
+                    ['name' => 'Others Education and Childcare', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other education and childcare services.'],
                 ]
             ],
             [
@@ -94,7 +94,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Software Installation', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Software installation services.'],
                     ['name' => 'Data Recovery', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Data recovery services.'],
                     ['name' => 'System Testing and Maintenance', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'System testing and maintenance services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other IT service services.'],
+                    ['name' => 'Others IT Service', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other IT service services.'],
                 ]
             ],
             [
@@ -107,7 +107,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Dining Room Furniture', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Dining room furniture services.'],
                     ['name' => 'Office Furniture', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Office furniture services.'],
                     ['name' => 'Outdoor Furniture', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Outdoor furniture services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other furniture services.'],
+                    ['name' => 'Others Furniture', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other furniture services.'],
                 ]
             ],
             [
@@ -118,7 +118,7 @@ class CategorySubCategorySeeder extends Seeder
                     ['name' => 'Event Organizer', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Event organizing services.'],
                     ['name' => 'Birthday Party Organizer', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Birthday party organizing services.'],
                     ['name' => 'Wedding Organizer', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Wedding organizing services.'],
-                    ['name' => 'Others', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other party event services.'],
+                    ['name' => 'Others Party Event', 'thumbnail' => 'uploads/category/demo_pic.jpg', 'description' => 'Other party event services.'],
                 ]
             ],
 

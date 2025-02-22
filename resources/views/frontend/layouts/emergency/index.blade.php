@@ -1,7 +1,7 @@
 @extends('frontend.app')
 
 @section('title')
-    Contact Page
+    Emergency Page
 @endsection
 @section('header')
     {{-- @include('frontend.partials.header') --}}

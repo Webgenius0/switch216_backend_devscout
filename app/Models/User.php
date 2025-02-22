@@ -129,7 +129,7 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'user_id');
     }
 
-    
+
     /**
      * Get the addresses associated with the user
      *
@@ -140,7 +140,7 @@ class User extends Authenticatable
         return $this->hasMany(UserAddress::class, 'user_id');
     }
 
-    
+
     /**
      * Get the contractor ranking associated with the user.
      */
@@ -148,4 +148,30 @@ class User extends Authenticatable
     {
         return $this->hasOne(ContractorRanking::class, 'user_id');
     }
+
+
+
+    /**
+     * Count the completed bookings for the user.
+     */
+    public function completedBookingsCount()
+    {
+        return $this->bookings()->where('status', 'completed')->count();
+    }
+
+    /**
+     * Count the pending bookings for the user.
+     */
+    public function pendingBookingsCount()
+    {
+        return $this->bookings()->where('status', 'pending')->count();
+    }
+
+    /**
+     * Count the reviews made by the user.
+     */
+    // public function reviewsCount()
+    // {
+    //     return $this->hasMany(Review::class, 'contactor_id')->count();
+    // }
 }

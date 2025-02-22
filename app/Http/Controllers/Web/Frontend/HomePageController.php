@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Frontend;
 use App\Enums\Page;
 use App\Enums\SecondSection;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\CMS;
 use App\Services\Web\Frontend\CmsService;
 use Illuminate\Http\Request;
@@ -53,8 +54,27 @@ class HomePageController extends Controller
     {
         // Fetch CMS data for the homepage
         $cms = $this->cmsService->get();
-        // dd($cms);
+        $categories = Category::with('subCategories')->where("status", 'active')->get();
+
         // Return the view with optimized data
-        return view("frontend.layouts.home.index", compact('cms'));
+        return view("frontend.layouts.home.index", compact('cms', 'categories'));
+    }
+
+    public function serchingStatic(Request $request)
+    {
+        $validateData = $request->validate([
+            'location' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255',
+            // 'sub_category_id' => 'nullable|integer|exists:sub_categories,id',
+            // 'date' => 'nullable|date',
+            // 'is_emergency' => 'nullable|boolean',
+            'rating' => 'nullable|integer',
+        ]);
+        return redirect()->route('service.emergency', [
+            'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
+            'location' => $validateData['location'] ?? null,
+            'rating' => $validateData['rating'] ?? null,
+        ]);
+
     }
 }

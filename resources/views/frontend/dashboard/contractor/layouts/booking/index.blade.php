@@ -54,20 +54,21 @@
                     <div class="text mt-3">
                         Description: {{ $booking->service->description ?? ' ' }}
                     </div>
-                    @if (!in_array($booking->status, ['completed', 'cancelled', 'confirmed']))
+                    @if (!in_array($booking->status, ['completed', 'cancelled', 'confirmed','request_completed']))
                         <a href="{{ route('contractor.booking.confirm', $booking->id) }}"
                             class="action mt-5 cancelled-booking-btn" type="button">
                             Confirm Booking
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                    @if ( in_array($booking->status, ['pending', 'confirmed', 'pending_reschedule']))
                         <a href="{{ route('contractor.booking.cancle', $booking->id) }}"
                             class="action mt-5 cancelled-booking-btn" type="button">
                             Cancle Booking
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && !$booking->booking_date->isFuture())
-                        <a href="{{ route('contractor.booking.mark_as_complete', $booking->id) }}" class="action mt-5 complete-booking-btn" type="button" >
+                    @if (in_array($booking->status, ['confirmed']) && !$booking->booking_date->isFuture())
+                        <a href="{{ route('contractor.booking.mark_as_complete', $booking->id) }}"
+                            class="action mt-5 complete-booking-btn" type="button">
                             Mark As Complete
                         </a>
                     @endif

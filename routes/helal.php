@@ -18,7 +18,9 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController
 use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\ContactMessageController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
+use App\Http\Controllers\Web\Backend\NotificationController;
 use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\SubCategoryController;
 use App\Http\Controllers\Web\Backend\SystemSettingController;
@@ -118,8 +120,16 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
     Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
 
+    // Routes for NotificationController
+    Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notification.read');
+    Route::post('/notifications/mark-as-read/single/{id}', [NotificationController::class, 'markAsSingleRead'])->name('notification.read_single');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+    Route::delete('/notifications', [NotificationController::class, 'deleteAll'])->name('notification.deleteall');
 
+    Route::get('/contact-us-message', [ContactMessageController::class, 'index'])->name('admin_contact_us.index');
+    Route::delete('/contact-us-message/{id}', [ContactMessageController::class, 'destroy'])->name('admin_contact_us.destroy');
     // ==================================== App route  end===========================================================
+
 
 });
 

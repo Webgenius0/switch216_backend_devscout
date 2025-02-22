@@ -3,10 +3,13 @@
 namespace App\Services\Web\Frontend;
 
 use App\Helpers\Helper;
+use App\Models\CarService;
 use App\Models\ContactorCategory;
+use App\Models\RealStateService;
 use App\Models\Service;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ContractorServiceService
@@ -46,6 +49,7 @@ class ContractorServiceService
     public function store(array $validatedData)
     {
         try {
+            DB::beginTransaction();
             // Handle Cover Image Upload
             if (isset($validatedData['cover_image'])) {
 
@@ -58,7 +62,6 @@ class ContractorServiceService
             if (isset($validatedData['gallery_images'])) {
                 if ($validatedData['gallery_images']) {
                     foreach ($validatedData['gallery_images'] as $key => $image) {
-                        // $imagePath = $image->store('uploads/gallery', 'public'); // Save in storage/app/public/uploads/gallery
                         $imagePath = Helper::fileUpload($image, 'services_gallery_images', $key . '_' . getFileName($image));
                         $galleryImages[] = $imagePath;
                     }
@@ -67,9 +70,54 @@ class ContractorServiceService
             $validatedData['user_id'] = Auth::user()->id;
             $validatedData['gallery_images'] = json_encode($galleryImages);
             $validatedData['verify'] = 'approved'; // Set the verify field to 'approved' but after complete the verification process change it to 'pending'
-            $service = Service::create($validatedData);
+
+            $service = Service::create([
+                'category_id' => $validatedData['category_id'],
+                'subcategory_id' => $validatedData['subcategory_id'],
+                'user_id' => $validatedData['user_id'],
+                'verify' => $validatedData['verify'],
+                'is_emergency' => $validatedData['is_emergency'],
+                'type' => $validatedData['type'],
+                'title' => $validatedData['title'],
+                'description' => $validatedData['description'],
+                'cover_image' => $validatedData['cover_image'],
+                'gallery_images.*' => $validatedData['gallery_images'],
+                'gallery_images' => json_encode($galleryImages),
+            ]);
+
+            if ($validatedData['category_id'] == 1) {
+                $realStateService = RealStateService::create([
+                    'service_id' => $service->id,
+                    // 'location' => $validatedData['location'],
+                    'property_type' => $validatedData['property_type'],
+                    'transaction_type' => $validatedData['type'],
+                    'price' => $validatedData['price'],
+                    'bedrooms' => $validatedData['bedrooms'],
+                    'bathrooms' => $validatedData['bathrooms'],
+                    'is_furnished' => $validatedData['is_furnished'],
+                ]);
+                Log::info('Real State service created success fully, id: ' . $realStateService->id);
+            }
+            if ($validatedData['category_id'] == 3) {
+                $carService = CarService::create([
+                    'service_id' => $service->id,
+                    // 'location' => $validatedData['location'],
+                    'price' => $validatedData['price'],
+                    "car_type" => $validatedData['car_type'],
+                    "brand" => $validatedData['brand'],
+                    "model" => $validatedData['model'],
+                    "year" => $validatedData['year'],
+                    "fuel_type" => $validatedData['fuel_type'],
+                    "transmission" => $validatedData['transmission'],
+                    "kilometers_driven" => $validatedData['kilometers_driven'],
+                    "transaction_type" => $validatedData['type'],
+                ]);
+                Log::info('Car service created success fully, id: ' . $carService->id);
+            }
+            DB::commit();
             return $service;
         } catch (Exception $e) {
+            DB::rollBack();
             throw $e;
         }
     }

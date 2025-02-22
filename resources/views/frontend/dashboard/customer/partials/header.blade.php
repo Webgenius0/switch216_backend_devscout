@@ -17,6 +17,9 @@
                      fill="#A9A9A9" />
              </svg>
          </div> --}}
+         <div >
+            <a type="button" class="btn bg-warning" href="{{route('home')}}">Visit Site</a>
+        </div>
          <div class="notification-container">
              <div class="notification-btn">
                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41"

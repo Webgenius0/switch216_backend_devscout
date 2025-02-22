@@ -37,119 +37,53 @@
                             <i class="material-symbols-outlined text-body">fullscreen</i>
                         </button>
                     </li>
-                    {{-- <li class="header-right-item">
+                    <li class="header-right-item">
                         <div class="dropdown notifications noti">
-                            <button class="btn btn-secondary border-0 p-0 position-relative badge"
-                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary border-0 p-0 position-relative"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markAllRead()">
+                                
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notification-count">
+                                    {{ Auth::user()->notifications()->whereNull('read_at')->count() }}
+                                </span>
+                                
                                 <span class="material-symbols-outlined">notifications</span>
                             </button>
                             <div class="dropdown-menu dropdown-lg p-0 border-0 p-0 dropdown-menu-end">
                                 <div class="d-flex justify-content-between align-items-center title">
                                     <span class="fw-semibold fs-15 text-secondary">Notifications <span
-                                            class="fw-normal text-body fs-14">(03)</span></span>
-                                    <button
-                                        class="p-0 m-0 bg-transparent border-0 fs-14 text-primary">Clear
-                                        All</button>
+                                            class="fw-normal text-body fs-14">({{ Auth::user()->notifications()->whereNull('read_at')->count() }})</span></span>
+                                    <button class="p-0 m-0 bg-transparent border-0 fs-14 text-primary"  onclick="deleteAllNotification()">Delete All</button>
                                 </div>
 
-                                <div class="max-h-217" data-simplebar>
-                                    <div class="notification-menu">
-                                        <a href="notification.html" class="dropdown-item">
+                                <div class="max-h-217" data-simplebar id="notification-list">
+                                    @foreach (Auth::user()->notifications as $notification)
+                                    <div class="notification-menu {{ $notification->read_at ? '' : 'unseen' }}"  id="notification_{{ $notification->id }}">
+                                        <a href="{{ $notification->data['url'] ?? '' }}" class="dropdown-item" >
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-primary">sms</i>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="rounded bg-light" style="width: 40px; height: 40px; overflow: hidden;">
+                                                            <img src="{{ $notification->data['thumbnail'] ?? 'default-thumbnail.jpg' }}" 
+                                                                 alt="Notification Thumbnail" 
+                                                                 class="img-fluid rounded">
+                                                        </div>
+                                                    </div>
+                                                    {{-- <i
+                                                        class="material-symbols-outlined text-primary">sms</i> --}}
                                                 </div>
                                                 <div class="flex-grow-1 ms-3">
-                                                    <p>You have requested to <span
-                                                            class="fw-semibold">withdrawal</span></p>
-                                                    <span class="fs-13">2 hrs ago</span>
+                                                    <p>{{ $notification->data['type'] ?? 'Untitled Notification' }}</p>
+                                                    <span class="fs-13">{{ $notification->created_at->diffForHumans() }}</span>
                                                 </div>
                                             </div>
                                         </a>
                                     </div>
-                                    <div class="notification-menu unseen">
-                                        <a href="notification.html" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-info">person</i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p>A new user added in Trezo</p>
-                                                    <span class="fs-13">3 hrs ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="notification-menu">
-                                        <a href="notification.html" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-success">mark_email_unread</i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p>You have requested to <span
-                                                            class="fw-semibold">withdrawal</span></p>
-                                                    <span class="fs-13">1 day ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="notification-menu">
-                                        <a href="notification.html" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-primary">sms</i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p>You have requested to <span
-                                                            class="fw-semibold">withdrawal</span></p>
-                                                    <span class="fs-13">2 hrs ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="notification-menu unseen">
-                                        <a href="notification.html" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-info">person</i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p>A new user added in Trezo</p>
-                                                    <span class="fs-13">3 hrs ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="notification-menu">
-                                        <a href="notification.html" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <i
-                                                        class="material-symbols-outlined text-success">mark_email_unread</i>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p>You have requested to <span
-                                                            class="fw-semibold">withdrawal</span></p>
-                                                    <span class="fs-13">1 day ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    @endforeach
+                                    
                                 </div>
-
-                                <a href="notification.html"
-                                    class="dropdown-item text-center text-primary d-block view-all fw-medium rounded-bottom-3">
-                                    <span>See All Notifications </span>
-                                </a>
                             </div>
                         </div>
-                    </li> --}}
+                    </li>
                     <li class="header-right-item">
                         <div class="dropdown admin-profile">
                             <div class="d-xxl-flex align-items-center bg-transparent border-0 text-start p-0 cursor dropdown-toggle"

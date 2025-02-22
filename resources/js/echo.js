@@ -19,8 +19,9 @@ window.Echo = new Echo({
 //     .listen('MessageEvent', (e) => {
 //         console.log(e);
 //     });
-// let userId = 8;
+// let userId = 1;
 // window.Echo.private('App.Models.User.' + userId)
 //     .notification((notification) => {
 //         console.log("New Notification:", notification);
 //     });
+
