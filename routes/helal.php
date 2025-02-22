@@ -10,6 +10,7 @@
 
 
 use App\Http\Controllers\Web\Backend\CategoryController;
+use App\Http\Controllers\Web\Backend\CMS\CarController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
@@ -104,6 +105,9 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::post('/cms/home-page/social-link/status/{id}', [HomePageSocialLinkContainerController::class, 'status'])->name('cms.home_page.social_link.status');
 
 
+    //! =============== Route for Care Page C_M_S ----------------------------- start
+
+    Route::get('/cms/car-page/banner',[CarController::class,'index'])->name('cms.car_page.index');
 
 
     // ==================================== App route  start===========================================================
