@@ -43,7 +43,7 @@ class CarPageService
             $services = Service::with(['user', 'CarService'])->where("status", 'active')->where('is_emergency', true)->latest()->get();
             return $services;
         } catch (Exception $e) {
-            Log::error('EmergencyPageService::index' . $e->getMessage());
+            Log::error('CarPageService::index' . $e->getMessage());
             throw $e;
         }
     }
