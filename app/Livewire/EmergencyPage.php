@@ -36,7 +36,8 @@ class EmergencyPage extends Component
 
         $categories = Category::with('subCategories')->where("status", 'active')->get();
 
-        $services = Service::when($this->location, function ($query, $value) {
+        $services = Service::where('status', 'active')
+        ->when($this->location, function ($query, $value) {
             $query->whereHas('user', function ($query) use ($value) {
                 $query->whereHas('userAddresses', function ($query) use ($value) {
                     $query->where('location', 'LIKE', '%' . $value . '%');

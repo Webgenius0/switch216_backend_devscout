@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
@@ -32,8 +33,13 @@ Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
 Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
 Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
-Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
+//show single service with contractor profile
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
+//emergency page
+Route::get('/services', [EmergencyPageController::class, 'index'])->name('service.emergency');
+//car page
+Route::get('/car-services', [CarPageController::class, 'index'])->name('service.car');
+Route::get('/car-services/list', [CarPageController::class, 'carList'])->name('service.car_list');
 
 Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
@@ -81,9 +87,9 @@ Route::get('/food', function () {
 
 
 //car service all
-Route::get('/car', function () {
-    return view(view: 'frontend.layouts.car_service.index');
-})->name('car.index');
+// Route::get('/car', function () {
+//     return view(view: 'frontend.layouts.car_service.index');
+// })->name('car.index');
 
 // Route::get('/car-details', function () {
 //     return view(view: 'frontend.layouts.car_service.index');
