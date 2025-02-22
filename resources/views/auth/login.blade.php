@@ -9,8 +9,8 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/service.css" />
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets') }}/css/serviceResponsive.css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/service.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/serviceResponsive.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
 @endpush
 

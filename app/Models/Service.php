@@ -98,4 +98,15 @@ class Service extends Model
     {
         return $this->reviews()->avg('rating');
     }
+
+    // relation with real state service
+    public function RealStateService()
+    {
+        return $this->hasMany(RealStateService::class);
+    }
+    // relation with real state service
+    public function CarService()
+    {
+        return $this->hasMany(CarService::class);
+    }
 }

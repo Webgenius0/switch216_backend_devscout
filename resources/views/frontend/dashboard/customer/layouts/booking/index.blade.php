@@ -21,7 +21,7 @@
                     <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
                         <div class="profile d-flex gap-2 flex-wrap">
                             <div class="profile-img">
-                                <img src="{{ asset('backend/assets') }}/images/user.png" alt="">
+                                <img src="{{ asset($booking->service->user->avatar ??'backend/assets/images/user.png') }}" alt="">
                             </div>
                             <div class="profile-info">
                                 <div class="profile-title">
@@ -53,18 +53,18 @@
                     <div class="text mt-3">
                         Description: {{ $booking->service->description ?? ' ' }}
                     </div>
-                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled' && $booking->status !== 'request_completed')
                         <a class="action mt-5 reschedule-booking-btn" type="button" data-booking-id="{{ $booking->id }}">
                             Reschedule
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled')
+                    @if ($booking->status !== 'completed' && $booking->status !== 'cancelled' && $booking->status !== 'request_completed')
                         <a href="{{ route('customer.booking.cancle', $booking->id) }}"
                             class="action mt-5 cancelled-booking-btn" type="button">
                             Cancle Booking
                         </a>
                     @endif
-                    @if ($booking->status !== 'completed' && !$booking->booking_date->isFuture())
+                    @if ($booking->status !== 'completed'&& $booking->status !== 'cancelled' && !$booking->booking_date->isFuture())
                         <a class="action mt-5 complete-booking-btn" type="button"
                             onclick="mark_as_complete({{ $booking->id }}, this)" data-booking-id="{{ $booking->id }}">
                             Mark As Complete

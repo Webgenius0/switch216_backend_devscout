@@ -54,11 +54,11 @@
                         Yet bed any for traveling assistance indulgence unpleasing. Not
                         thoughts all exercise blessing. Indulgence way everything joy.
                     </div>
-                    <a href="./service.html" class="button">See All service</a>
+                    <a href="{{ route('service.category') }}" class="button">See All service</a>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="team-process-img-con">
-                        <img src="{{ asset('frontend/assets') }}/images/provider-3.png" class="bg-img" alt="background image" />
+                        <img src="{{ asset('frontend/assets/images/provider-3.png') }}" class="bg-img" alt="background image" />
                         <div class="overlay"></div>
                         <div class="content">
                             <div class="icon">
@@ -80,7 +80,7 @@
             </div>
             <div class="team-process-items" data-aos="fade-up">
                 <div class="team-process-item">
-                    <img src="{{ asset('frontend/assets') }}/images/8007e75bbf14e5b0ffe7d55beda69cd6.png" class="bg-img" alt="background image" />
+                    <img src="{{ asset('frontend/assets/images/8007e75bbf14e5b0ffe7d55beda69cd6.png') }}" class="bg-img" alt="background image" />
                     <div class="overlay"></div>
                     <div class="content">
                         <div class="icon">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="team-process-item">
-                    <img src="{{ asset('frontend/assets') }}/images/image.png" class="bg-img" alt="background image" />
+                    <img src="{{ asset('frontend/assets/images/image.png') }}" class="bg-img" alt="background image" />
                     <div class="overlay"></div>
                     <div class="content">
                         <div class="icon">
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="team-process-item">
-                    <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png" class="bg-img" alt="background image" />
+                    <img src="{{ asset('frontend/assets/images/f151d0d72bbcaed3d430ee0f80860b92.png') }}" class="bg-img" alt="background image" />
                     <div class="overlay"></div>
                     <div class="content">
                         <div class="icon">
@@ -146,7 +146,7 @@
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
                     <div class="video-container">
-                        <video id="work-video" src="{{ asset('frontend/assets') }}/images/work-video.mp4" type="video/mp4"></video>
+                        <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}" type="video/mp4"></video>
                         <button id="work-video-play-button" class="play-button">
                             &#9658;
                         </button>
@@ -163,7 +163,7 @@
                         bed any for travelling assistance indulgence unpleasing. Not
                         thoughts all exercise blessing. Indulgence way everything joy.
                     </p>
-                    <a href="./service.html" class="button">See All</a>
+                    <a href="{{ route('service.category') }}" class="button">See All</a>
                 </div>
             </div>
         </section>
@@ -175,12 +175,12 @@
                 <h2 class="title">
                     Join with us to explore the next revolution of future
                 </h2>
-                <form class="subscribe-form">
+                {{-- <form class="subscribe-form">
                     <fieldset>
                         <input type="email" placeholder="Your Email Address" />
                     </fieldset>
                     <button type="submit">Sign Up</button>
-                </form>
+                </form> --}}
             </div>
             <svg class="left-icon" width="310" height="369" viewBox="0 0 310 369" fill="none"
                 xmlns="http://www.w3.org/2000/svg">

@@ -10,6 +10,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
     <!-- Include Dropzone CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 38px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -18,164 +24,17 @@
             <div class="mb-4">
                 <h4 class="fs-20 mb-1">Create Service</h4>
                 <p class="fs-15">Create new service here.</p>
+                <p class="fs-15">Provider Tag: {{ $categories[0]->name }}</p>
             </div>
-
-            <form action="{{ route('contractor.services.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <!-- Category -->
-                    <div class="col-md-6">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Category<span style="color: red">*</span></label>
-                            <select id="category" class="form-select @error('category_id') is-invalid @enderror"
-                                name="category_id" required>
-                                <option value="" selected disabled>Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ old('category_id') == $category->id ? 'selected' : '' }}
-                                        data-subcategories="{{ json_encode($category->subCategories) }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Subcategory -->
-                    <div class="col-md-6">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Subcategory<span style="color: red">*</span></label>
-                            <select id="subcategory" class="form-select @error('subcategory_id') is-invalid @enderror"
-                                name="subcategory_id" {{ old('subcategory_id') ? '' : 'disabled' }} required>
-                                <option value="" selected disabled>Select Subcategory</option>
-                                @if (old('subcategory_id'))
-                                    <option value="{{ old('subcategory_id') }}" selected>
-                                        {{ \App\Models\SubCategory::find(old('subcategory_id'))->name }}
-                                    </option>
-                                @endif
-                            </select>
-                            @error('subcategory_id')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- Is Emergency -->
-                    <div class="col-md-6">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Is Emergency?<span style="color: red">*</span></label>
-                            <select class="form-select @error('is_emergency') is-invalid @enderror" name="is_emergency"
-                                required>
-                                <option value="0" {{ old('is_emergency') == '0' ? 'selected' : '' }}>No</option>
-                                <option value="1" {{ old('is_emergency') == '1' ? 'selected' : '' }}>Yes</option>
-                            </select>
-                            @error('is_emergency')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- Is Emergency -->
-                    <div class="col-md-6">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Service Type<span style="color: red">*</span></label>
-                            <select class="form-select @error('type') is-invalid @enderror" name="type" required>
-                                <option value="sell" {{ old('type') == 'sell' ? 'selected' : '' }}>Sell</option>
-                                <option value="rent" {{ old('type') == 'rent' ? 'selected' : '' }}>Rent</option>
-                                <option value="event" {{ old('type') == 'event' ? 'selected' : '' }}>Event
-                                </option>
-                                <option value="single" {{ old('type') == 'single' ? 'selected' : '' }}>Others
-                                </option>
-                            </select>
-                            @error('type')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <!-- Title -->
-                    <div class="col-md-12">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Title <span style="color: red">*</span></label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                                value="{{ old('title') }}" required placeholder="Enter Title here">
-                            @error('title')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="col-md-12">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Description<span style="color: red">*</span></label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="4" required
-                                placeholder="Enter Description here">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Cover Image -->
-                    <div class="col-md-12">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Cover Image<span style="color: red">*</span></label>
-                            <input type="file" class="form-control dropify @error('cover_image') is-invalid @enderror"
-                                name="cover_image" accept="image/jpeg,image/png,image/jpg" required id="cover_image">
-                            @error('cover_image')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Gallery Image Upload -->
-                    <div class="col-md-12">
-                        <div class="form-group mb-4">
-                            <label class="label text-secondary">Gallery Images<span style="color: red">*</span></label>
-                            <div id="gallery-dropzone"
-                                class="dropzone border rounded p-4 d-flex align-items-center justify-content-center">
-                                <div class="text-center">
-                                    <i class="ri-upload-cloud-2-line fs-40 text-primary"></i>
-                                    <p class="text-secondary m-0">Drag & Drop or Click to Upload</p>
-                                </div>
-                            </div>
-                            {{-- <input type="hidden" id="gallery-images"> --}}
-                            <input type="file" hidden class="form-control @error('cover_image') is-invalid @enderror"
-                                name="gallery_images[]" accept="image/jpeg,image/png,image/jpg" multiple id="gallery-images">
-                            @error('gallery_images')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Preview Container -->
-                    <div class="col-md-12 mt-3">
-                        <div id="preview-container" class="d-flex flex-wrap gap-3"></div>
-                    </div>
-
-
-
-
-                    <!-- Submit Button -->
-                    <div class="col-md-12 mt-3 text-end">
-
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
-
-                        {{-- <a href="{{ route('contractor.services.index') }}"
-                            class="btn btn-outline-dark py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
-                            <span class="py-sm-1 d-block">
-                                <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                <span>Cancle</span>
-                            </span>
-                        </a> --}}
-                        <button type="submit" class="btn btn-primary py-2 px-4 fw-medium">
-                            <i class="ri-check-line text-white fw-medium"></i> Submit
-                        </button>
-                    </div>
-                </div>
-            </form>
+            @if ($categories[0]->name === 'Real Estate')
+                @include('frontend.dashboard.contractor.layouts.services.real_state_form')
+            @elseif ($categories[0]->name === 'Car')
+                @include('frontend.dashboard.contractor.layouts.services.car_form')
+                {{-- @elseif ($categories[0]->name === 'Restaurant')
+                @include('frontend.dashboard.contractor.layouts.services.restaurant_form') --}}
+            @else
+                @include('frontend.dashboard.contractor.layouts.services.all_category_form')
+            @endif
 
         </div>
     </div>
@@ -184,14 +43,29 @@
 
 @push('scripts')
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.dropify').dropify();
         })
-    </script>
 
-    <!-- JavaScript to Enable & Filter Subcategories -->
-    <script>
+        $(document).ready(function() {
+            $('#car_brand').select2({
+                tags: true, // Allows users to enter new values
+                placeholder: "Select or type a new car brand",
+                allowClear: true,
+                tokenSeparators: [','], // Users can enter multiple values separated by commas
+            });
+            // $('#subcategory, #kilometers_driven, #fuel_type, #car_type').select2({
+            //     tags: false, // Allows users to enter new values
+            //     placeholder: "Select or type a new car brand",
+            //     allowClear: true,
+            //     tokenSeparators: [','], // Users can enter multiple values separated by commas
+            // });
+        });
+
+        //JavaScript to Enable & Filter Subcategories
         document.addEventListener('DOMContentLoaded', function() {
             const categorySelect = document.getElementById('category');
             const subcategorySelect = document.getElementById('subcategory');
@@ -215,8 +89,10 @@
             });
         });
     </script>
-
     <script>
+        // This JavaScript code is used in the service create page to enable and filter
+        // subcategories based on the category selected. It also handles the file upload
+        // for the gallery images.
         $(document).ready(function() {
             let uploadedImages = [];
             const dropzone = $('#gallery-dropzone');

@@ -138,9 +138,9 @@ class BookingCustomerController extends Controller
         }
 
         // Check if user already has a booking on the new date
-        $existingBooking = Booking::where('user_id', auth()->id())
-            ->whereDate('booking_date', $validatedData['booking_date'])
-            ->exists();
+        // $existingBooking = Booking::where('user_id', auth()->id())
+        //     ->whereDate('booking_date', $validatedData['booking_date'])
+        //     ->exists();
 
         // if ($existingBooking) {
         //     return response()->json([
@@ -190,7 +190,10 @@ class BookingCustomerController extends Controller
 
             // Prevent cancellation on the same day as the booking
             if ($booking->booking_date->isToday()) {
-                flash()->error('You cannot cancel a booking on the same day.');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You cannot cancel a booking on the runnig day.'
+                ], 404);
             }
             // Cancel the booking
             $booking->update([

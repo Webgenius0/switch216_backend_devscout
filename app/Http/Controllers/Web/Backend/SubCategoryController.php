@@ -171,8 +171,8 @@ class SubCategoryController extends Controller
             ], 403);
         }
         // delete the category
-        if (!empty($data->image)) {
-            Helper::fileDelete(public_path($data->image));
+        if (!empty($data->thumbnail) && $data->thumbnail !== 'uploads/category/demo_pic.jpg') {
+            Helper::fileDelete(public_path($data->thumbnail));
         }
         $data->delete();
 
