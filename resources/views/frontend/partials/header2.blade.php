@@ -20,14 +20,14 @@
                         Category
                     </span>
                     <div class="dropdown-item-menu">
-                        <a class="dropdown-item active" href="{{ route('house.index') }}">Real Estate</a>
-                        <a class="dropdown-item" href="{{ route('service.emergency', ['category' => 'Restaurant']) }}">Restaurant</a>
+                        <a class="dropdown-item active" href="{{ route('service.real_state') }}">Real Estate</a>
+                        <a class="dropdown-item" href="{{ route('service.restaurant') }}">Restaurant</a>
                         <a class="dropdown-item" href="{{ route('service.car') }}">Car</a>
                         <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                     </div>
                 </div>
-                <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-                <a href="{{route('service.emergency',['category' => 'Restaurant'])}}" class="nav-item">Restaurant</a>
+                <a href="{{ route('service.real_state') }}" class="nav-item">Real Estate</a>
+                <a href="{{route('service.restaurant')}}" class="nav-item">Restaurant</a>
                 <a href="{{ route('service.car') }}" class="nav-item">Car</a>
                 <a href="{{ route('service.emergency',['serching_is_emergency'=> 'true']) }}" class="nav-item">Emergency</a>
             </div>
@@ -160,14 +160,14 @@
                     Category
                 </span>
                 <div class="dropdown-item-menu">
-                    <a class="dropdown-item" href="{{ route('house.index') }}">Real Estate</a>
-                    <a class="dropdown-item" href="{{route('service.emergency',['category' => 'Restaurant'])}}">Restaurant</a>
+                    <a class="dropdown-item" href="{{ route('service.real_state') }}">Real Estate</a>
+                    <a class="dropdown-item" href="{{route('service.restaurant')}}">Restaurant</a>
                     <a class="dropdown-item" href="{{ route('service.car') }}">Car</a>
                     <a class="dropdown-item" href="{{ route('service.category') }}">All Category</a>
                 </div>
             </div>
-            <a href="{{ route('house.index') }}" class="nav-item">Real Estate</a>
-            <a href="{{route('service.emergency',['category' => 'Restaurant'])}}" class="nav-item">Restaurant</a>
+            <a href="{{ route('service.real_state') }}" class="nav-item">Real Estate</a>
+            <a href="{{route('service.restaurant')}}" class="nav-item">Restaurant</a>
             <a href="{{ route('service.car') }}" class="nav-item">Car</a>
             <a href="{{ route('service.emergency',['serching_is_emergency'=> 'true']) }}" class="nav-item">Emergency</a>
         </div>
