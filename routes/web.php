@@ -11,8 +11,11 @@ use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
+use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
+use App\Http\Controllers\Web\Frontend\RestaurantPageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
 use App\Models\SystemSetting;
+use App\Services\Web\Frontend\RealStatePageService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
@@ -40,6 +43,12 @@ Route::get('/services', [EmergencyPageController::class, 'index'])->name('servic
 //car page
 Route::get('/car-services', [CarPageController::class, 'index'])->name('service.car');
 Route::get('/car-services/list', [CarPageController::class, 'carList'])->name('service.car_list');
+
+//realState page
+Route::get('/real-state-services', [RealEstateServiceController::class, 'index'])->name('service.real_state');
+Route::get('/real-state-services/list', [RealEstateServiceController::class, 'realStateList'])->name('service.real_state_list');
+//realState page
+Route::get('/restaurant-services', [RestaurantPageController::class, 'index'])->name('service.restaurant');
 
 Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
@@ -73,9 +82,9 @@ Route::get('/about', function () {
 
 
 //food service all
-Route::get('/food', function () {
-    return view(view: 'frontend.layouts.food_service.index');
-})->name('food.index');
+// Route::get('/food', function () {
+//     return view(view: 'frontend.layouts.food_service.index');
+// })->name('food.index');
 
 // Route::get('/food-details', function () {
 //     return view(view: 'frontend.layouts.food_service.list');
@@ -110,9 +119,9 @@ Route::get('/error-404', function () {
 
 
 //house service all
-Route::get('/house', function () {
-    return view(view: 'frontend.layouts.house_service.index');
-})->name('house.index');
+// Route::get('/house', function () {
+//     return view(view: 'frontend.layouts.house_service.index');
+// })->name('house.index');
 
 // Route::get('/house-details', function () {
 //     return view(view: 'frontend.layouts.house_service.details');

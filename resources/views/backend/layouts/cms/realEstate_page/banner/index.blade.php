@@ -19,40 +19,41 @@
                     <p class="fs-15">Update Home Page Banner and site details here.</p>
                 </div>
 
-                <form action="{{ route('cms.car_page.banner.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cms.RealEstate_page.banner.update',$RealEstateService->id) ?? '' }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="row">
 
                         <!-- Subtitle Field -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group mb-4">
-                                <label class="label text-secondary">Image Upper Title<span
+                                <label class="label text-secondary">Title<span
                                         class="text-danger">*</span></label>
                                 <div class="form-group position-relative">
                                     <input type="text"
-                                        class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
-                                        name="sub_title" value="{{ old('sub_title') }}" placeholder="Enter Sub Title here">
+                                        class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
+                                        name="title" value="{{ old('title', $RealEstateService->title ?? '') }}" placeholder="Enter Title here">
                                 </div>
-                                @error('sub_title')
-                                    <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                @error('title')
+                                    <div id="title-error" class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
 
                         <!-- 2rd Subtitle Field -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group mb-4">
-                                <label class="label text-secondary">Image Upper Sub Title <span
+                                <label class="label text-secondary">Description<span
                                         class="text-danger">*</span></label>
                                 <div class="form-group position-relative">
                                     <input type="text"
-                                        class="form-control text-dark ps-5 h-55 @error('sub_description') is-invalid @enderror"
-                                        name="sub_description" value="{{ old('sub_description') }}"
-                                        placeholder="Enter 2rd Sub Title here">
+                                        class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
+                                        name="description" value="{{ old('description', $RealEstateService->description ?? '') }}"
+                                        placeholder="Enter description here">
                                 </div>
-                                @error('sub_description')
-                                    <div id="sub_description-error" class="text-danger">{{ $message }}</div>
+                                @error('description')
+                                    <div id="description-error" class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -62,17 +63,17 @@
                         <div class="form-group ">
                             <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
                             <input class="dropify form-control @error('background_image') is-invalid @enderror" type="file"
-                                name="background_image">
+                                name="background_image" data-default-file="{{ isset($RealEstateService) && $RealEstateService->background_image ? asset($RealEstateService->background_image) : '' }}">
                             @error('background_image')
                                 <div id="background_image" class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
-            </div>
+           
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 mt-4">
                     <div class="d-flex flex-wrap gap-3">
                         {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
                         <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
@@ -82,9 +83,8 @@
             </div>
             </form>
         </div>
+        </div>
     </div>
-
-
 
 @endsection
 

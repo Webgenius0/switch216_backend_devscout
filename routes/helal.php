@@ -19,6 +19,8 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController
 use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\RealEstateController;
+use App\Http\Controllers\Web\Backend\CMS\RestaurantController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
 use App\Http\Controllers\Web\Backend\DynamicPageController;
 use App\Http\Controllers\Web\Backend\NotificationController;
@@ -107,9 +109,16 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
     //! =============== Route for Care Page C_M_S ----------------------------- start
 
-    Route::get('/cms/car-page/banner',[CarController::class,'index'])->name('cms.car_page.banner');
-    Route::PUT('/cms/car-page/update/{id}',[CarController::class,'update'])->name('cms.car_page.banner.update');
+    Route::get('/cms/car-page/banner', [CarController::class, 'index'])->name('cms.car_page.banner');
+    Route::PUT('/cms/car-page/update/{id}', [CarController::class, 'update'])->name('cms.car_page.banner.update');
 
+    //! =============== Route for Restaurant Page C_M_S ----------------------------- start
+    Route::get('/cms/restaurant-page/banner', [RestaurantController::class, 'index'])->name('cms.restaurant_page.banner');
+    Route::PUT('/cms/restaurant-page/update/{id}', [RestaurantController::class, 'update'])->name('cms.restaurant_page.banner.update');
+    
+    //! =============== Route for Real Estate Page C_M_S ----------------------------- start
+    Route::get('/cms/RealEstate-page/banner', [RealEstateController::class, 'index'])->name('cms.RealEstate_page.banner');
+    Route::PUT('/cms/RealEstate-page/update/{id}', [RealEstateController::class, 'update'])->name('cms.RealEstate_page.banner.update');
 
 
     // ==================================== App route  start===========================================================
@@ -142,6 +151,3 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 // Public route for dynamic pages accessible to all users
 Route::get('/pages/{slug}', [DynamicPageController::class, 'showDaynamicPage'])->name('pages');
-
-
-

@@ -19,7 +19,7 @@
                     <p class="fs-15">Update Home Page Banner and site details here.</p>
                 </div>
 
-                <form action="{{ route('cms.car_page.banner.update',$CarService->id) ?? '' }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cms.restaurant_page.banner.update',$RestaurantService->id) ?? '' }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -32,7 +32,7 @@
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
-                                        name="title" value="{{ old('title', $CarService->title ?? '') }}" placeholder="Enter Title here">
+                                        name="title" value="{{ old('title', $RestaurantService->title ?? '') }}" placeholder="Enter Title here">
                                 </div>
                                 @error('title')
                                     <div id="title-error" class="text-danger">{{ $message }}</div>
@@ -49,7 +49,7 @@
                                 <div class="form-group position-relative">
                                     <input type="text"
                                         class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
-                                        name="description" value="{{ old('description', $CarService->description ?? '') }}"
+                                        name="description" value="{{ old('description', $RestaurantService->description ?? '') }}"
                                         placeholder="Enter description here">
                                 </div>
                                 @error('description')
@@ -63,7 +63,7 @@
                         <div class="form-group ">
                             <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
                             <input class="dropify form-control @error('background_image') is-invalid @enderror" type="file"
-                                name="background_image" data-default-file="{{ isset($CarService) && $CarService->background_image ? asset($CarService->background_image) : '' }}">
+                                name="background_image" data-default-file="{{ isset($RestaurantService) && $RestaurantService->background_image ? asset($RestaurantService->background_image) : '' }}">
                             @error('background_image')
                                 <div id="background_image" class="text-danger">{{ $message }}</div>
                             @enderror

@@ -4,19 +4,20 @@ namespace App\Http\Controllers\Web\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Services\Web\Frontend\RealStatePageService;
+use App\Services\Web\Frontend\RestaurantPageService;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Services\Web\Frontend\EmergencyPageService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class RealEstateServiceController extends Controller
+class RestaurantPageController extends Controller
 {
-    protected $realStatePageService;
+    protected $restaurantPageService;
 
-    public function __construct(RealStatePageService $realStatePageService)
+    public function __construct(RestaurantPageService $restaurantPageService)
     {
-        $this->realStatePageService = $realStatePageService;
+        $this->restaurantPageService = $restaurantPageService;
     }
     /**
      * Car Service Page.
@@ -24,13 +25,14 @@ class RealEstateServiceController extends Controller
     public function index(Request $request)
     {
         try {
-            $data = $this->realStatePageService->index();
-            return view('frontend.layouts.real_state_service.index', compact('data'));
+            $data = $this->restaurantPageService->index();
+            return view('frontend.layouts.restaurant_service.index', compact('data'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();
         }
     }
+
     /**
      * Lists all car services.
      **/
@@ -45,4 +47,5 @@ class RealEstateServiceController extends Controller
             return redirect()->back();
         }
     }
+
 }

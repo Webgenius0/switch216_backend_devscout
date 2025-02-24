@@ -2,7 +2,10 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Enums\Page;
+use App\Enums\Section;
 use App\Models\Category;
+use App\Models\CMS;
 use App\Models\SubCategory;
 use Exception;
 use App\Models\Booking;
@@ -20,12 +23,16 @@ class CarPageService
     public function index()
     {
         try {
+            $carPageBanner = CMS::where('page', Page::CarPage)->where('section', Section::CarBanner)->first();
             $car_Services = Service::with(['user', 'CarService'])->where('category_id', 3)->where("status", 'active')->latest()->take('6')->get();
             $carServiceSubCategorys = SubCategory::where('category_id', 3)->where("status", 'active')->get();
             $data = [
                 'car_Services' => $car_Services,
                 'carServiceSubCategorys' => $carServiceSubCategorys,
+                'carPageBanner' => $carPageBanner,
+
             ];
+            // dd($data['carPageBanner']->background_image ?? 'No Image Found');
             return $data;
         } catch (Exception $e) {
             Log::error('CarPageService::index' . $e->getMessage());
@@ -43,7 +50,7 @@ class CarPageService
             $services = Service::with(['user', 'CarService'])->where("status", 'active')->where('is_emergency', true)->latest()->get();
             return $services;
         } catch (Exception $e) {
-            Log::error('EmergencyPageService::index' . $e->getMessage());
+            Log::error('CarPageService::index' . $e->getMessage());
             throw $e;
         }
     }
@@ -110,6 +117,4 @@ class CarPageService
             throw $e;
         }
     }
-
-
 }
