@@ -33,4 +33,19 @@ class RestaurantPageController extends Controller
         }
     }
 
+    /**
+     * Lists all car services.
+     **/
+    public function realStateList(Request $request)
+    {
+        try {
+            $categories = Category::with('subCategories')->where("status", 'active')->get();
+            $services = $this->realStatePageService->index();
+            return view("frontend.layouts.real_state_service.list", compact('categories', 'services'));
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+
 }
