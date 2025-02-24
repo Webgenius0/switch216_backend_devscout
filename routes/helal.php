@@ -108,12 +108,8 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     //! =============== Route for Care Page C_M_S ----------------------------- start
 
     Route::get('/cms/car-page/banner',[CarController::class,'index'])->name('cms.car_page.banner');
-    Route::get('/cms/car-page/create',[CarController::class,'create'])->name('cms.car_page.banner.create');
-    Route::post('/cms/car-page/store',[CarController::class,'store'])->name('cms.car_page.banner.store');
-    Route::get('/cms/car-page/edit/{id}',[CarController::class,'edit'])->name('cms.car_page.banner.edit');
     Route::PUT('/cms/car-page/update/{id}',[CarController::class,'update'])->name('cms.car_page.banner.update');
-    Route::post('/cms/car-page/status/{id}',[CarController::class,'status'])->name('cms.car_page.banner.status');
-    Route::delete('/cms/car-page/destroy/{id}',[CarController::class,'destroy'])->name('cms.car_page.banner.destroy');
+
 
 
     // ==================================== App route  start===========================================================
