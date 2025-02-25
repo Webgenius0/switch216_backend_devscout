@@ -49,7 +49,7 @@ class RegisterContractorController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'instagram_social_link' => ['required', 'url'],
+            'instagram_social_link' => ['nullable', 'url'],
             'category_id' => 'required|exists:categories,id',
             'address' => 'required|string',
             'latitude' => 'required|numeric|between:-90,90',

@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
-use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
+use App\Http\Controllers\Web\Frontend\Contractor\AppointmentContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
@@ -14,7 +14,6 @@ use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
 use App\Http\Controllers\Web\Frontend\RestaurantPageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
-use App\Models\SystemSetting;
 use App\Services\Web\Frontend\RealStatePageService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -183,10 +182,10 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
-    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
-    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
-    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
+    Route::get('/contractor-booking', [AppointmentContactorController::class, 'index'])->name('contractor.booking.index');
+    Route::get('/contractor-booking/confirm/{bookingId}', [AppointmentContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
+    Route::get('/contractor-booking/cancle/{bookingId}', [AppointmentContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
+    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [AppointmentContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
 });
 
 

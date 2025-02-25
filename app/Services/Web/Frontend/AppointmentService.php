@@ -1,37 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Web\Frontend\Contractor;
+namespace App\Services\Web\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Service;
-use App\Services\Web\Frontend\BookingService;
 use Exception;
-use Illuminate\Console\View\Components\Confirm;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
-class BookingContactorController extends Controller
+class AppointmentService
 {
-    protected $bookingService;
+
     protected $user;
 
-    public function __construct(BookingService $bookingService)
+    /**
+     * AppointmentService constructor.
+     *
+     * Initialize the user from the auth session.
+     */
+    public function __construct()
     {
-        $this->bookingService = $bookingService;
         $this->user = Auth::user();
     }
-
-    public function index(Request $request)
+    /**
+     * Fetch all resources.
+     *
+     * @return mixed
+     */
+    public function index()
     {
-        $services = Service::where('user_id', Auth::user()->id)->get();
-        $bookings = Booking::whereIn('service_id', $services->pluck('id'))->get();
-
-        return view('frontend.dashboard.contractor.layouts.booking.index', compact('bookings'));
+        try {
+            $services = Service::where('user_id', $this->user->id)->get();
+            $bookings = Booking::whereIn('service_id', $services->pluck('id'))->latest()->get();
+            return $bookings;
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
-
 
     public function confirmBooking(string $bookingId)
     {
@@ -39,25 +44,28 @@ class BookingContactorController extends Controller
             // Find the booking
             $booking = Booking::where('id', $bookingId)
                 ->whereNotIn('status', ['completed', 'cancelled', 'confirmed', 'request_completed'])
+
                 ->with([
                     'service' => function ($query) {
-                        $query->where('user_id', $this->user->id); // Use Auth::user()->id instead
+                        $query->where('user_id', $this->user->id);
                     }
                 ])
                 ->first();
             if (!$booking) {
-                flash()->error('Something went wrong!');
-                return redirect()->back();
+                throw new Exception('Booking not found.', 404);
+            }
+            // Check if booking date has passed
+            if (Carbon::parse($booking->booking_date)->isPast()) {
+                throw new Exception('Booking date has already passed.', 400);
             }
             // Cancel the booking
             $booking->update([
                 'status' => 'confirmed',
             ]);
-            flash()->success('Your booking has been confirmed successfully.');
-            return redirect()->back();
+
+            return $booking;
         } catch (Exception $e) {
-            flash()->error('Something went wrong!');
-            return redirect()->back();
+            throw $e;
         }
     }
     public function cancleBooking(string $bookingId)
@@ -73,23 +81,20 @@ class BookingContactorController extends Controller
                 ])
                 ->first();
             if (!$booking) {
-                flash()->error('Something went wrong!');
-                return redirect()->back();
+                throw new Exception('Booking Not Found', 404);
             }
             // Prevent cancellation on the same day as the booking
             if ($booking->booking_date->isToday() && $booking->status === 'confirmed') {
-                flash()->error('You cannot cancel a booking on the running day.');
-                return redirect()->back();
+                throw new Exception('You cannot cancel a booking on the running day.', 400);
             }
             // Cancel the booking
             $booking->update([
                 'status' => 'cancelled',
             ]);
-            flash()->success('Your booking has been cancelled successfully.');
-            return redirect()->back();
+
+            return $booking;
         } catch (Exception $e) {
-            flash()->error('Something went wrong!' . $e->getMessage());
-            return redirect()->back();
+            throw $e;
         }
     }
     public function markAsComplete($bookingId)
@@ -105,26 +110,21 @@ class BookingContactorController extends Controller
                 ])
                 ->first();
             if (!$booking) {
-
+                throw new Exception('Booking Not Found', 404);
             }
-
             // Check if the booking date has passed
             if ($booking->booking_date->isFuture()) {
-                flash()->error('You cannot mark this booking as complete before the booking date.');
-                return redirect()->back();
+                throw new Exception('You cannot mark this booking as complete before the booking date.', 404);
             }
-
-
             // Mark booking as complete
             $booking->update([
                 'status' => 'request_completed',
             ]);
-            flash()->success('Booking marked as completed successfully request Sent.');
-            return redirect()->back();
+            return $booking;
 
         } catch (Exception $e) {
-            flash()->error('Something went wrong!' . $e->getMessage());
-            return redirect()->back();
+            throw $e;
         }
     }
+
 }
