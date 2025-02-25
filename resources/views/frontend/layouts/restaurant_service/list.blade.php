@@ -48,7 +48,6 @@
 @endsection
 
 
-
 @push('scripts')
 <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
@@ -69,5 +68,8 @@
             });
         }
     </script>
+    
     @livewireScripts
+
+    
 @endpush

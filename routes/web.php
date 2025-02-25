@@ -49,6 +49,7 @@ Route::get('/real-state-services', [RealEstateServiceController::class, 'index']
 Route::get('/real-state-services/list', [RealEstateServiceController::class, 'realStateList'])->name('service.real_state_list');
 //realState page
 Route::get('/restaurant-services', [RestaurantPageController::class, 'index'])->name('service.restaurant');
+Route::get('/restaurant-services/list', [RestaurantPageController::class, 'restaurantList'])->name('service.restaurant_list');
 
 Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
