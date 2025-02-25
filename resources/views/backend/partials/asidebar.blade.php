@@ -230,6 +230,60 @@ $systemSetting = App\Models\SystemSetting::first();
 
                 </ul>
             </li>
+            <!-- CMS Car Item -->
+            <li class="menu-item {{ request()->routeIs('cms.car_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Car Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.car_page.banner') }}"
+                            class="menu-link {{ request()->routeIs('cms.car_page.banner.*') ? 'active' : '' }}">
+                            Car Banner
+                        </a>
+
+                    </li>
+
+                </ul>
+            </li>
+            <!-- CMS Restaurant Item -->
+            <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Restaurant Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.restaurant_page.banner') }}"
+                            class="menu-link {{ request()->routeIs('cms.restaurant_page.banner.*') ? 'active' : '' }}">
+                            Restaurant Banner
+                        </a>
+
+                    </li>
+
+                </ul>
+            </li>
+            <!-- CMS Real Estate Item -->
+            <li class="menu-item {{ request()->routeIs('cms.RealEstate_page.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">handshake</span>
+                    <span class="title">Real Estate Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.RealEstate_page.banner') }}"
+                            class="menu-link {{ request()->routeIs('cms.RealEstate_page.banner.*') ? 'active' : '' }}">
+                            Real Estate Banner
+                        </a>
+
+                    </li>
+
+                </ul>
+            </li>
+
+
+
 
             <!-- Logout Menu Item -->
             <li class="menu-item">

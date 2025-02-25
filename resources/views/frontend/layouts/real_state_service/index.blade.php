@@ -17,13 +17,16 @@
 
 @section('content')
     <!-- banner section start -->
-    <section class="se--car-rental-banner " style="background-image: url('{{ asset('frontend/assets/images/home-rental.png') }}');">
+    <section class="se--car-rental-banner " style="background-image: url('{{ isset($data['realStateBanner']->background_image) ? asset($data['realStateBanner']->background_image) . '?t=' . time() : asset('frontend/assets/images/carBanner.png') }}');">
         <div class="provider-banner-content container se--banner-text-width  " data-aos="fade-up">
             <h2 class="banner-title ">
-                Agents. Tours. Loans. Homes. Best <span>Real Estate Service</span> in City
+
+                {{$data['realStateBanner']->title?? 'Agents. Tours. Loans. Homes. Best Real Estate Service in City'}} 
+                
             </h2>
             <p class="banner-text">
-                Explore top-rated DJs, photographers, caterers, and more for your next event.
+                {{$data['realStateBanner']->description?? 'Explore top-rated DJs, photographers, caterers, and more for your next event.'}} 
+                
             </p>
         </div>
     </section>

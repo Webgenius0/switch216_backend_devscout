@@ -5,6 +5,9 @@ namespace App\Enums;
 enum Page: string
 {
     case HomePage = 'home_page';
+    case CarPage = 'car_page';
+    case RestaurantPage = 'restaurant_page';
+    case RealEstatePage = 'RealEstate_page';
 
 }
 

@@ -17,13 +17,13 @@
 
 @section('content')
     <!-- banner section start -->
-    <section class="se--car-rental-banner " style="background-image: url('{{ asset('frontend/assets/images/carBanner.png') }}');">
+    <section class="se--car-rental-banner " style="background-image:url('{{ isset($data['carPageBanner']->background_image) ? asset($data['carPageBanner']->background_image) . '?t=' . time() : asset('frontend/assets/images/carBanner.png') }}');">
         <div class="provider-banner-content container se--banner-text-width  " data-aos="fade-up">
             <h2 class="banner-title ">
-                Agents. Tours. Loans. Homes. Best <span>Rent Service</span> in City
+               {{$data['carPageBanner']->title?? 'Agents. Tours. Loans. Homes. Best Rent Service in City'}} 
             </h2>
             <p class="banner-text">
-                Explore top-rated DJs, photographers, caterers, and more for your next event.
+                 {{$data['carPageBanner']->description?? 'Explore top-rated DJs, photographers, caterers, and more for your next event.'}} 
             </p>
         </div>
     </section>

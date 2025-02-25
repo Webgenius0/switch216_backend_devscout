@@ -28,6 +28,7 @@ class CarPageController extends Controller
         try {
             $data = $this->carPageService->index();
             // dd($carServicesSubCategorys);
+            // dd($data);
             return view('frontend.layouts.car_service.index', compact('data'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
