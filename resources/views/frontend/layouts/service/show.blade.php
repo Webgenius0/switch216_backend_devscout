@@ -53,10 +53,10 @@
                 <div class="profile-header-section">
                     <div class="profile-section">
                         <figure class="profile-img">
-                            <img src="{{ asset($service->user->avatar ?? '') }}" alt="Service provider profile" />
+                            <img src="{{ asset($service->user->avatar ?? 'frontend/assets/images/avatar_defult.png') }}" alt="Service provider profile" />
                         </figure>
                     </div>
-                    <div class="profile-details">
+                    <div class="profile-details col-md-2">
                         <h3 class="profile-name">{{ $service->user->name ?? '' }}</h3>
                         <div class="profile-location">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="22" viewBox="0 0 16 22"
@@ -73,11 +73,12 @@
                             <span>{{ $service->user->userAddresses()->first()->location ?? ' ' }}</span>
                         </div>
                         <div class="profile-tags">
-                            @forelse ($categoryNames as $item)
+                            {{$categoryNames->first()}}
+                            {{-- @forelse ($categoryNames as $item)
                                 <span>{{ $item }},</span>
                             @empty
                                 <span>No Category</span>
-                            @endforelse
+                            @endforelse --}}
                         </div>
                     </div>
                     <div class="profile-end " >
@@ -90,6 +91,7 @@
                             </svg>
                             <span>({{ $service->user->contractorRanking->average_rating ?? 0 }} Reviews) </span>
                         </div>
+                        @if ($service->user->instagram_social_link)
                         <a href="{{ $service->user->instagram_social_link ?? '' }}" target="_blank" class="action-button">
                             <span class="media-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32"
@@ -124,6 +126,8 @@
                             </span>
                             <span class="action-text">See our project in action</span>
                         </a>
+                        @endif
+                        
                     </div>
                 </div>
                 <!-- profile section end -->
@@ -186,8 +190,7 @@
                         <div class="comment-item">
                             <div class="comment-header">
                                 <figure class="comment-user-img">
-                                    <img
-                                        src="{{ asset($item->user->avatar ?? 'frontend/assets/images/comment-user.jpg') }}" />
+                                    <img src="{{ asset($item->user->avatar ?? 'frontend/assets/images/comment-user.jpg') }}" />
                                 </figure>
                                 <div class="comment-user-details">
                                     <h6 class="comment-user-name">{{ $item->user->name ?? '' }}</h6>

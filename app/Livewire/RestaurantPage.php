@@ -15,7 +15,6 @@ class RestaurantPage extends Component
     use WithPagination;
 
     public string $location = "";
-    public string $location_2 = '';
     public $category;
     public $subcategory = '';
     public $subcategories = [];

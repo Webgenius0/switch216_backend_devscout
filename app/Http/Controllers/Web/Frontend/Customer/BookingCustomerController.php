@@ -28,14 +28,16 @@ class BookingCustomerController extends Controller
      */
     public function index()
     {
-        // $booking= $this->bookingService->getAll();
-        $bookings = Booking::where("user_id", $this->user->id)->latest()->get();
+        $bookings = $this->bookingService->index();
         return view("frontend.dashboard.customer.layouts.booking.index", compact("bookings"));
     }
+    /**
+     * Fetch all bookings data
+     */
     public function getAllBooking()
     {
         try {
-            $bookings = Booking::where("user_id", $this->user->id)->latest()->get();
+            $bookings = $this->bookingService->getAllBooking();
             return Helper::jsonResponse(true, 'Bookings data fatced successfully', 200, $bookings);
         } catch (Exception $e) {
             Log::error('BookingCustomerController::getAllBooking-' . $e->getMessage());
@@ -48,51 +50,13 @@ class BookingCustomerController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         // Validate request data
         $validatedData = $request->validate([
             'service_id' => 'required|exists:services,id',
             'booking_date' => 'required|date|after:now', // Ensure it's a valid future date
         ]);
-        // dd($validatedData);
-        $bookingDate = $validatedData['booking_date'];
-        $serviceId = $validatedData['service_id'];
-
-        // Check if the user already has a booking for this service within the last 24 hours
-        // $existingBooking = Booking::where('user_id', $this->user->id)
-        //     ->where('service_id', $serviceId)
-        //     ->where('booking_date', '>=', now()->subDay()) // Check for last 24 hours
-        //     ->exists();
-
-        // if ($existingBooking) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'You already have a booking for this service within the last 24 hours.'
-        //     ], 400);
-        // }
-
-        // Check if the user has already booked ANY service on the same date
-        $sameDateBooking = Booking::where('user_id', $this->user->id)
-            ->where('service_id', $serviceId)
-            ->whereDate('booking_date', $bookingDate) // Check if any booking exists on the same date
-            ->exists();
-
-        if ($sameDateBooking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You already have a booking on this date.'
-            ], 400);
-        }
-
         try {
-            // Create the booking
-            $booking = Booking::create([
-                'user_id' => $this->user->id,
-                'service_id' => $serviceId,
-                'booking_date' => $bookingDate,
-                'status' => 'pending', // Default status
-            ]);
-
+            $booking = $this->bookingService->store($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Booking created successfully.',
@@ -109,6 +73,16 @@ class BookingCustomerController extends Controller
     }
 
 
+    /**
+     * Handle a request to reschedule an existing booking.
+     *
+     * Validates the incoming request to ensure the booking ID exists and the new booking date is in the future.
+     * Calls the BookingService to process the rescheduling, returning a JSON response indicating the success or failure
+     * of the operation, along with any relevant data or error messages.
+     *
+     * @param \Illuminate\Http\Request $request The incoming request containing the booking details.
+     * @return \Illuminate\Http\JsonResponse The response indicating the result of the reschedule operation.
+     */
     public function reSchedule(Request $request)
     {
         // Validate request
@@ -116,46 +90,8 @@ class BookingCustomerController extends Controller
             'booking_id' => 'required|exists:bookings,id',
             'booking_date' => 'required|date|after:now', // Ensure future date
         ]);
-
-        // Find the booking
-        $booking = Booking::where('id', $validatedData['booking_id'])
-            ->where('user_id', auth()->id()) // Ensure user owns the booking
-            ->first();
-
-        if (!$booking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking not found.'
-            ], 404);
-        }
-
-        // Prevent rescheduling if booking is confirmed
-        if ($booking->status === 'confirmed') {
-            return response()->json([
-                'success' => false,
-                'message' => 'You cannot reschedule a confirmed booking.'
-            ], 400);
-        }
-
-        // Check if user already has a booking on the new date
-        // $existingBooking = Booking::where('user_id', auth()->id())
-        //     ->whereDate('booking_date', $validatedData['booking_date'])
-        //     ->exists();
-
-        // if ($existingBooking) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'You already have a booking on this date.'
-        //     ], 400);
-        // }
-
         try {
-            // Store the reschedule request (instead of updating directly)
-            $booking->update([
-                'status' => 'pending_reschedule', // New status for reschedule request
-                'reschedule_booking_date' => $validatedData['booking_date'], // Store requested date
-            ]);
-
+            $booking = $this->bookingService->reSchedule($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Your reschedule request has been sent.',
@@ -165,41 +101,28 @@ class BookingCustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
 
+    /**
+     * Cancel an existing booking.
+     *
+     * Attempts to cancel the booking identified by the given booking ID.
+     * If successful, a success message is flashed and the user is redirected back.
+     * If an error occurs, an error message is flashed and the user is redirected back.
+     *
+     * @param string $bookingId The ID of the booking to be cancelled.
+     * @return \Illuminate\Http\RedirectResponse Redirects back to the previous page.
+     */
+
     public function cancelBooking(string $bookingId)
     {
         try {
-            // dd($bookingId);
-            // Find the booking
-            $booking = Booking::where('id', $bookingId)
-                ->where('user_id', auth()->id()) // Ensure user owns the booking
-                ->first();
-
-            if (!$booking) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Booking not found.'
-                ], 404);
-            }
-
-            // Prevent cancellation on the same day as the booking
-            if ($booking->booking_date->isToday()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You cannot cancel a booking on the runnig day.'
-                ], 404);
-            }
-            // Cancel the booking
-            $booking->update([
-                'status' => 'cancelled',
-            ]);
-            // dd($booking);
+            $this->bookingService->cancelBooking($bookingId);
             flash()->success('Your booking has been cancelled successfully.');
             return redirect()->back();
         } catch (Exception $e) {
@@ -209,34 +132,21 @@ class BookingCustomerController extends Controller
     }
 
 
+    /**
+     * Mark a booking as complete.
+     *
+     * Attempts to mark the booking identified by the given booking ID as complete.
+     * If successful, a JSON response indicating success is returned along with the updated booking data.
+     * If an error occurs, a JSON response with an error message is returned.
+     *
+     * @param int $bookingId The ID of the booking to be marked as complete.
+     * @return \Illuminate\Http\JsonResponse The response indicating the result of the operation.
+     */
+
     public function markAsComplete($bookingId)
     {
-        // Find the booking
-        $booking = Booking::where('id', $bookingId)
-            ->where('user_id', auth()->id()) // Ensure user owns the booking
-            ->first();
-
-        if (!$booking) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Booking not found.'
-            ], 404);
-        }
-
-        // Check if the booking date has passed
-        if ($booking->booking_date->isFuture()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You cannot mark this booking as complete before the booking date.'
-            ], 400);
-        }
-
         try {
-            // Mark booking as complete
-            $booking->update([
-                'status' => 'completed',
-            ]);
-
+            $booking = $this->bookingService->markAsComplete($bookingId);
             return response()->json([
                 'success' => true,
                 'message' => 'Booking marked as completed successfully.',
@@ -246,12 +156,22 @@ class BookingCustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Handles a request to leave a review for a booking.
+     *
+     * Validates the incoming request to ensure the booking ID exists and the review input is valid.
+     * Calls the BookingService to process the review, returning a JSON response indicating the success or failure
+     * of the operation, along with any relevant data or error messages.
+     *
+     * @param \Illuminate\Http\Request $request The incoming request containing the booking details.
+     * @return \Illuminate\Http\JsonResponse The response indicating the result of the review operation.
+     */
     public function givenReview(Request $request)
     {
         // Validate the review input
@@ -261,48 +181,12 @@ class BookingCustomerController extends Controller
             'review' => 'required|string|max:500',
         ]);
         try {
-            DB::beginTransaction();
-            // Find the booking
-            $booking = Booking::where('id', $validatedData['booking_id'])
-                ->where('user_id', auth()->id())
-                ->where('status', 'completed') // Only completed bookings can be reviewed
-                ->first();
-
-            if (!$booking) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You can only review completed bookings.',
-                ], 400);
-            }
-
-            // Check if a review already exists for this booking
-            $existingReview = Review::where('user_id', auth()->id())
-                ->where('service_id', $booking->service_id)
-                ->exists();
-
-            if ($existingReview) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You have already submitted a review for this booking.',
-                ], 400);
-            }
-
-            // Create the review
-            Review::create([
-                'service_id' => $booking->service_id,
-                'user_id' => auth()->id(),
-                'contactor_id' => $booking->service->user_id,
-                'booking_id' => $booking->id,
-                'rating' => $validatedData['rating'],
-                'review' => $validatedData['review'],
-            ]);
-            DB::commit();
+            $this->bookingService->givenReview($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Review submitted successfully.',
             ], 201);
         } catch (Exception $e) {
-            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong!',
