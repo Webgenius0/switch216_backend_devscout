@@ -2,24 +2,20 @@
     <h2 class="section-title">Top Cars in our city</h2>
     {{-- <p class="se--common--pera2 se--bottom">Looking for service? <a class="se--link" href="#">click here</a></p> --}}
     <div class="filters-container mt-2">
-        <fieldset class="filter-input-wrapper position-relative" wire:click.away="hideDropdown">
-            <input class="form-control"
-                wire:model.debounce.300ms="location"
-                wire:click="searchLocation"
-                placeholder="Location"
-                type="text"
-                id="locationInput"
-                autocomplete="off" />
-        
-            @if($showDropdown && !empty($locations))
-                <div id="locationDropdown" class="dropdown-menu show" style="display: block; max-height: 200px; overflow-y: auto;">
+        <fieldset class="filter-input-wrapper position-relative">
+            <input class="form-control" wire:model.live.debounce.250ms="location" wire:keyup="searchLocation" wire:click="searchLocation"
+                placeholder="Location" type="text" id="locationInput" autocomplete="off" />
+
+            @if(!empty($locations))
+                <div id="locationDropdown" class="dropdown-menu show" style="display: block;">
                     @foreach($locations as $city)
-                        <div class="dropdown-item" wire:click="selectLocation('{{ $city }}')">
+                        <div class="dropdown-item" wire:click="selectLocation('{{ $city }}')" >
                             {{ $city }}
                         </div>
                     @endforeach
                 </div>
             @endif
+            {{$location}}
         </fieldset>
         
         
