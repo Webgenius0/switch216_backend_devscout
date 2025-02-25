@@ -25,6 +25,9 @@ enum Section: string
     case RestaurantBanner = 'restaurant_banner';
     //// Car RealEstatePage section 
     case RealEstatePage = 'RealEstate_banner';
+
+    //// Car ServiceRegisterPage section 
+    case ServiceRegisterContainer = 'ServiceProvider_container';
     // footer section
     case SocialLinkContainer = 'social_link_container';
 }

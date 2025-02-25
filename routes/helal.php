@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController
 use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\RealEstateController;
@@ -119,6 +120,13 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     //! =============== Route for Real Estate Page C_M_S ----------------------------- start
     Route::get('/cms/RealEstate-page/banner', [RealEstateController::class, 'index'])->name('cms.RealEstate_page.banner');
     Route::PUT('/cms/RealEstate-page/update/{id}', [RealEstateController::class, 'update'])->name('cms.RealEstate_page.banner.update');
+
+    //! =============== Route for service provider Page C_M_S ----------------------------- start
+
+    Route::get('/cms/service-page/container',[ProviderRegisterPageController::class,'index'])->name('cms.service_page.container');
+    Route::put('/cms/service-page/container/update/{id}',[ProviderRegisterPageController::class,'ServiceContainerUpdate'])->name('cms.service_page.container.update');
+
+
 
 
     // ==================================== App route  start===========================================================
