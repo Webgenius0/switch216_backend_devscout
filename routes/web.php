@@ -3,12 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
-use App\Http\Controllers\Web\Frontend\Contractor\AppointmentContactorController;
+use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
-use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
+use App\Http\Controllers\Web\Frontend\Contractor\LiveNotificationController;
+use App\Http\Controllers\Web\Frontend\Customer\AppointmentCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
@@ -157,14 +158,14 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     })->name('customer.dashboard');
     // customer bookings 
 
-    Route::get('/customer-booking', [BookingCustomerController::class, 'index'])->name('customer.booking.index');
-    Route::get('/customer-bookings/all', [BookingCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
-    Route::post('/customer-booking', [BookingCustomerController::class, 'store'])->name('customer.booking.store');
-    Route::post('/customer-booking/complete/{bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
-    Route::get('/customer-booking/cancle/{bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
-    Route::post('/customer-booking/reschedule', [BookingCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
+    Route::get('/customer-booking', [AppointmentCustomerController::class, 'index'])->name('customer.booking.index');
+    Route::get('/customer-bookings/all', [AppointmentCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
+    Route::post('/customer-booking', [AppointmentCustomerController::class, 'store'])->name('customer.booking.store');
+    Route::post('/customer-booking/complete/{bookingId}', [AppointmentCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
+    Route::get('/customer-booking/cancle/{bookingId}', [AppointmentCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
+    Route::post('/customer-booking/reschedule', [AppointmentCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
 
-    Route::post('/customer-booking/given-review', [BookingCustomerController::class, 'givenReview'])->name('customer.booking.review');
+    Route::post('/customer-booking/given-review', [AppointmentCustomerController::class, 'givenReview'])->name('customer.booking.review');
 });
 
 
@@ -182,22 +183,32 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-booking', [AppointmentContactorController::class, 'index'])->name('contractor.booking.index');
-    Route::get('/contractor-booking/confirm/{bookingId}', [AppointmentContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
-    Route::get('/contractor-booking/cancle/{bookingId}', [AppointmentContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
-    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [AppointmentContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
+    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
+    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
+    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
+    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
 });
 
 
-//for customer and contractor only
+//for customer and contractor only chating
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
     Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index');
     Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
     Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
     Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
     Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
+
+
 });
 
+//for customer and contractor only notification
+Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('my-notifications')->group(function () {
+    // Routes for LiveNotificationController
+    Route::post('/mark-as-read', [LiveNotificationController::class, 'markAllAsRead'])->name('customer_or_contractor.notification.read');
+    Route::post('/mark-as-read/single/{id}', [LiveNotificationController::class, 'markAsSingleRead'])->name('customer_or_contractor.notification.read_single');
+    Route::delete('/delete/single/{id}', [LiveNotificationController::class, 'delete'])->name('customer_or_contractor.notification.delete');
+    Route::delete('/delete-all', [LiveNotificationController::class, 'deleteAll'])->name('customer_or_contractor.notification.deleteall');
+});
 
 
 //Language translate
