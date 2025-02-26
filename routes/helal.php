@@ -20,6 +20,7 @@ use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\RealEstateController;
 use App\Http\Controllers\Web\Backend\CMS\RestaurantController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
@@ -135,6 +136,9 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     Route::delete('/cms/service-page/container/image/destroy/{id}', [ProviderRegisterPageController::class, 'destroy'])->name('cms.service_page.container.image.destroy');
 
 
+      //! =============== Route for service provider Page C_M_S ----------------------------- start
+
+      Route::get('/cms/provider-page/process/container',[ProviderPageProcessContainerController::class,'index'])->name('cms.provider_page.process.index');
     // ==================================== App route  start===========================================================
 
     // Route for UserController

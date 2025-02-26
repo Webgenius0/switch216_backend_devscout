@@ -297,6 +297,16 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                 </ul>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.provider_page.process.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.provider_page.process.*') ? 'active' : '' }}">
+                            Process Container
+                        </a>
+
+                    </li>
+
+                </ul>
             </li>
 
 
