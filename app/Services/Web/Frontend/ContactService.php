@@ -76,7 +76,7 @@ class ContactService
             'message' => $contactMessage->message,
             'url' => route('admin_contact_us.index'),
             'type' => 'Contact Message',
-            'thumbnail' => asset('backend/admin/assets/images/messages_user.png'??''),
+            'thumbnail' => asset('backend/admin/assets/images/messages_user.png' ?? ''),
         ];
 
         foreach ($adminUsers as $admin) {
@@ -84,65 +84,4 @@ class ContactService
             Log::info('Notification sent to admin: ' . $admin->name);
         }
     }
-    /**
-     * Display a specific resource.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function show(int $id)
-    {
-        try {
-            // Logic to show a specific resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Show the form for editing a resource.
-     *
-     * @param int $id
-     * @return void
-     */
-    public function edit(int $id)
-    {
-        try {
-            // Logic for edit form
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Update a specific resource.
-     *
-     * @param int $id
-     * @param array $data
-     * @return mixed
-     */
-    public function update(int $id, array $data)
-    {
-        try {
-            // Logic to update a specific resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Delete a specific resource.
-     *
-     * @param int $id
-     * @return bool
-     */
-    public function destroy(int $id)
-    {
-        try {
-            // Logic to delete a specific resource
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
 }

@@ -6,21 +6,21 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Review;
-use App\Services\Web\Frontend\BookingService;
+use App\Services\Web\Frontend\AppointmentCustomerService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class BookingCustomerController extends Controller
+class AppointmentCustomerController extends Controller
 {
-    protected $bookingService;
+    protected $appointmentCustomerService;
     protected $user;
 
-    public function __construct(BookingService $bookingService)
+    public function __construct(AppointmentCustomerService $appointmentCustomerService)
     {
-        $this->bookingService = $bookingService;
+        $this->appointmentCustomerService = $appointmentCustomerService;
         $this->user = Auth::user();
     }
     /**
@@ -28,7 +28,7 @@ class BookingCustomerController extends Controller
      */
     public function index()
     {
-        $bookings = $this->bookingService->index();
+        $bookings = $this->appointmentCustomerService->index();
         return view("frontend.dashboard.customer.layouts.booking.index", compact("bookings"));
     }
     /**
@@ -37,10 +37,10 @@ class BookingCustomerController extends Controller
     public function getAllBooking()
     {
         try {
-            $bookings = $this->bookingService->getAllBooking();
+            $bookings = $this->appointmentCustomerService->getAllBooking();
             return Helper::jsonResponse(true, 'Bookings data fatced successfully', 200, $bookings);
         } catch (Exception $e) {
-            Log::error('BookingCustomerController::getAllBooking-' . $e->getMessage());
+            Log::error('AppointmentCustomerController::getAllBooking-' . $e->getMessage());
             return Helper::jsonErrorResponse('some things went wrong', 404);
         }
     }
@@ -56,7 +56,7 @@ class BookingCustomerController extends Controller
             'booking_date' => 'required|date|after:now', // Ensure it's a valid future date
         ]);
         try {
-            $booking = $this->bookingService->store($validatedData);
+            $booking = $this->appointmentCustomerService->store($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Booking created successfully.',
@@ -66,7 +66,7 @@ class BookingCustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -91,7 +91,7 @@ class BookingCustomerController extends Controller
             'booking_date' => 'required|date|after:now', // Ensure future date
         ]);
         try {
-            $booking = $this->bookingService->reSchedule($validatedData);
+            $booking = $this->appointmentCustomerService->reSchedule($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Your reschedule request has been sent.',
@@ -122,7 +122,7 @@ class BookingCustomerController extends Controller
     public function cancelBooking(string $bookingId)
     {
         try {
-            $this->bookingService->cancelBooking($bookingId);
+            $this->appointmentCustomerService->cancelBooking($bookingId);
             flash()->success('Your booking has been cancelled successfully.');
             return redirect()->back();
         } catch (Exception $e) {
@@ -146,7 +146,7 @@ class BookingCustomerController extends Controller
     public function markAsComplete($bookingId)
     {
         try {
-            $booking = $this->bookingService->markAsComplete($bookingId);
+            $booking = $this->appointmentCustomerService->markAsComplete($bookingId);
             return response()->json([
                 'success' => true,
                 'message' => 'Booking marked as completed successfully.',
@@ -181,7 +181,7 @@ class BookingCustomerController extends Controller
             'review' => 'required|string|max:500',
         ]);
         try {
-            $this->bookingService->givenReview($validatedData);
+            $this->appointmentCustomerService->givenReview($validatedData);
             return response()->json([
                 'success' => true,
                 'message' => 'Review submitted successfully.',
@@ -189,7 +189,7 @@ class BookingCustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong!',
+                'message' => $e->getMessage(),
                 'error' => $e->getMessage(),
             ], 500);
         }
