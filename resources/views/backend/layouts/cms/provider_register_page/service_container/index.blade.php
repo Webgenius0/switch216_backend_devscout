@@ -42,7 +42,7 @@
                         <form action="{{ route('cms.service_page.container.update', $ServiceRegisterContainer->id ?? '') }}"
                             method="POST">
                             @csrf
-                            @method("put")
+                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -67,10 +67,8 @@
                                         <label class="label text-secondary">Description<span
                                                 class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
-                                            <textarea 
-                                            class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
-                                            name="description"
-                                            placeholder="Enter Description here">{{ old('description', $ServiceRegisterContainer->description ?? '') }}</textarea>
+                                            <textarea class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror" name="description"
+                                                placeholder="Enter Description here">{{ old('description', $ServiceRegisterContainer->description ?? '') }}</textarea>
                                         </div>
                                         @error('description')
                                             <div id="description" class="text-danger">{{ $message }}</div>
@@ -177,9 +175,9 @@
         {{-- ---------------  --}}
 
 
-        <x-modal id="EditServiceContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
+        <x-modal id="EditProviderContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
             saveButton="Update">
-            <div id="EditServiceContainerContent"></div>
+            <div id="EditProviderContainerContent"></div>
         </x-modal>
 
         {{-- here this return a model  start --}}
@@ -228,7 +226,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.service_container.index') }}",
+                    url: "{{ route('cms.service_page.container.show') }}",
                     type: "get"
                 },
                 columns: [{
@@ -241,13 +239,12 @@
                         data: 'image',
                         name: 'image',
                         orderable: true,
-                        searchable: true,
+                        searchable: false,
                         render: function(data, type, row) {
-                            if (data.length > 50) {
-                                return data.substring(0, 50) + '...';
-                            } else {
-                                return data;
+                            if (data) {
+                                return `${data}`;
                             }
+                            return 'No Image';
                         }
                     },
                     {
@@ -366,87 +363,97 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('cms.home_page.service_container.status', ':id') }}';
+            let statusUrl = '{{ route('cms.service_page.container.image.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('cms.home_page.service_container.destroy', ':id') }}';
+            let deleteUrl = '{{ route('cms.service_page.container.image.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    
     <script>
         $(document).ready(function() {
-            $('.dropify').dropify();
-        })
-    </script>
+            let drEvent = $('.dropify').dropify(); 
 
-    <script>
-        $('#request-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            // Disable the submit button to prevent multiple submissions
-            let submitButton = $('#submitButton');
-            submitButton.prop('disabled', true).text('Submitting...');
-
-            let storeurl = '{{ route('cms.home_page.service_container.store') }}';
-            let formData = new FormData(this); // Collect form data
-            $.ajax({
-                url: storeurl, // Route to handle form submission
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        flasher.success(response?.message);
-                        $('#basic_tables').DataTable().ajax.reload();
-                        $('#request-form').trigger("reset");
-                        $('.btn-close').trigger('click');
-                    } else {
-                        flasher.error('Something went wrong.');
-                    }
-                },
-                error: function(response) {
-                    // Check if there are validation errors
-                    if (response.responseJSON.errors) {
-                        $('#show-error').html(
-                            `<div class="text-danger">${response.responseJSON.message}</div>`
-                        );
-                    }
-                },
-                complete: function() {
-                    // Re-enable the submit button after the request completes
-                    submitButton.prop('disabled', false).text('Submit Request');
-                }
+            // Reset Dropify when opening the "Add New" modal
+            $('#CreateServiceContainer').on('show.bs.modal', function() {
+                let dropifyInstance = drEvent.data('dropify');
+                dropifyInstance.resetPreview();
+                dropifyInstance.clearElement();
             });
 
+            // Handle form submission
+            $('#request-form').on('submit', function(event) {
+                event.preventDefault();
+                let submitButton = $('#submitButton');
+                submitButton.prop('disabled', true).text('Submitting...');
+
+                let updateUrl = '{{ route('cms.service_page.container.image.store') }}';
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: updateUrl,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            flasher.success(response?.message);
+                            $('#basic_tables').DataTable().ajax.reload();
+
+                            // Reset form and Dropify after successful submission
+                            $('#request-form')[0].reset();
+                            let dropifyInstance = drEvent.data('dropify');
+                            dropifyInstance.resetPreview();
+                            dropifyInstance.clearElement();
+
+                            // Close modal
+                            $('.btn-close').trigger('click');
+                        } else {
+                            flasher.error('Something went wrong.');
+                        }
+                    },
+                    error: function(response) {
+                        if (response.responseJSON.errors) {
+                            $('#show-error').html(
+                                `<div class="text-danger">${response.responseJSON.message}</div>`
+                            );
+                        }
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Submit');
+                    }
+                });
+            });
         });
     </script>
-
     for update data
     <script>
         function viewModel(id) {
-            let url = '{{ route('cms.home_page.service_container.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('cms.service_page.container.image.edit', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(resp) {
-                    $('#EditServiceContainerContent').html(resp);
+                    $('#EditProviderContainerContent').html(resp);
                     $('#request-form-update').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
                         // Disable the submit button to prevent multiple submissions
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('cms.home_page.service_container.update', ':id') }}'
+                        let url = '{{ route('cms.service_page.container.image.update', ':id') }}'
                             .replace(
                                 ':id', id);
                         let formData = new FormData(this); // Collect form data
                         $.ajax({
-                            url: storeurl, // Route to handle form submission
+                            url: url, // Route to handle form submission
                             type: "POST",
                             data: formData,
                             processData: false,

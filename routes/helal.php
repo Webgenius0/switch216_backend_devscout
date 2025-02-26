@@ -116,17 +116,23 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
     //! =============== Route for Restaurant Page C_M_S ----------------------------- start
     Route::get('/cms/restaurant-page/banner', [RestaurantController::class, 'index'])->name('cms.restaurant_page.banner');
     Route::PUT('/cms/restaurant-page/update/{id}', [RestaurantController::class, 'update'])->name('cms.restaurant_page.banner.update');
-    
+
     //! =============== Route for Real Estate Page C_M_S ----------------------------- start
     Route::get('/cms/RealEstate-page/banner', [RealEstateController::class, 'index'])->name('cms.RealEstate_page.banner');
     Route::PUT('/cms/RealEstate-page/update/{id}', [RealEstateController::class, 'update'])->name('cms.RealEstate_page.banner.update');
 
     //! =============== Route for service provider Page C_M_S ----------------------------- start
 
-    Route::get('/cms/service-page/container',[ProviderRegisterPageController::class,'index'])->name('cms.service_page.container');
-    Route::put('/cms/service-page/container/update/{id}',[ProviderRegisterPageController::class,'ServiceContainerUpdate'])->name('cms.service_page.container.update');
+    Route::get('/cms/service-page/container', [ProviderRegisterPageController::class, 'index'])->name('cms.service_page.container');
+    Route::put('/cms/service-page/container/update/{id}', [ProviderRegisterPageController::class, 'ServiceContainerUpdate'])->name('cms.service_page.container.update');
 
-
+    // service provider Image Section
+    Route::get('/cms/service-page/container/show', [ProviderRegisterPageController::class, 'show'])->name('cms.service_page.container.show');
+    Route::post('/cms/service-page/container/image/store', [ProviderRegisterPageController::class, 'store'])->name('cms.service_page.container.image.store');
+    Route::get('/cms/service-page/container/image/edit/{id}', [ProviderRegisterPageController::class, 'edit'])->name('cms.service_page.container.image.edit');
+    Route::put('/cms/service-page/container/image/update/{id}', [ProviderRegisterPageController::class, 'update'])->name('cms.service_page.container.image.update');
+    Route::post('/cms/service-page/container/image/status/{id}', [ProviderRegisterPageController::class, 'status'])->name('cms.service_page.container.image.status');
+    Route::delete('/cms/service-page/container/image/destroy/{id}', [ProviderRegisterPageController::class, 'destroy'])->name('cms.service_page.container.image.destroy');
 
 
     // ==================================== App route  start===========================================================
