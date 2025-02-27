@@ -139,6 +139,17 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
       //! =============== Route for service provider Page C_M_S ----------------------------- start
 
       Route::get('/cms/provider-page/process/container',[ProviderPageProcessContainerController::class,'index'])->name('cms.provider_page.process.index');
+      Route::put('/cms/provider-page/process/container/update/{id}',[ProviderPageProcessContainerController::class,'ProcessContainerUpdate'])->name('cms.provider_page.process.update');
+
+      // Provider Multiple image Section
+      Route::get('/cms/provider-page/process/container/show',[ProviderPageProcessContainerController::class,'show'])->name('cms.provider_page.process.show');
+      Route::post('/cms/provider-page/process/container/store',[ProviderPageProcessContainerController::class,'store'])->name('cms.provider_page.process.store');
+      Route::get('/cms/provider-page/process/container/edit/{id}',[ProviderPageProcessContainerController::class,'edit'])->name('cms.provider_page.process.edit');
+      Route::put('/cms/provider-page/process/container/update/{id}',[ProviderPageProcessContainerController::class,'update'])->name('cms.provider_page.process.update');
+      Route::post('/cms/provider-page/process/container/status/{id}',[ProviderPageProcessContainerController::class,'status'])->name('cms.provider_page.process.status');
+      Route::delete('/cms/provider-page/process/container/destroy/{id}',[ProviderPageProcessContainerController::class,'destroy'])->name('cms.provider_page.process.destroy');
+
+   
     // ==================================== App route  start===========================================================
 
     // Route for UserController

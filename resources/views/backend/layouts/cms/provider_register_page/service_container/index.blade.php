@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Home Service List</h3>
+            <h3 class="mb-0">Provider Service List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,10 +20,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Service</span>
+                        <span class="fw-medium">Provider Service</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Service List</span>
+                        <span class="fw-medium">Provider Service List</span>
                     </li>
                 </ol>
             </nav>
@@ -35,8 +35,8 @@
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Home Page Service Container</h4>
-                            <p class="fs-15">Update Home Page Service Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS Provider Page Service Container</h4>
+                            <p class="fs-15">Update Provider Page Service Container and site details here.</p>
                         </div>
 
                         <form action="{{ route('cms.service_page.container.update', $ServiceRegisterContainer->id ?? '') }}"

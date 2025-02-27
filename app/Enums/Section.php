@@ -29,6 +29,8 @@ enum Section: string
     //// Car ServiceRegisterPage section 
     case ServiceRegisterContainer = 'ServiceProvider_container';
     case ServiceRegisterImageContainer = 'ServiceProviderImage_container';
+    case ProviderProcessContainer = 'ProviderProcess_container';
+    case ProviderProcessImageContainer = 'provider_process_image_container';
     // footer section
     case SocialLinkContainer = 'social_link_container';
 }

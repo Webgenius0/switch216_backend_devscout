@@ -193,7 +193,6 @@ class ProviderRegisterPageController extends Controller
     {
 
         $data = CMS::find($id);
-        // check here BookingRequest hotel_id === identifyHotel
         if (empty($data)) {
             return response()->json([
                 "success" => false,
@@ -220,7 +219,6 @@ class ProviderRegisterPageController extends Controller
     public function destroy(string $id)
     {
         $data = CMS::findOrFail($id);
-        // check here BookingRequest hotel_id === identifyHotel
         if (empty($data)) {
             return response()->json([
                 "success" => false,
