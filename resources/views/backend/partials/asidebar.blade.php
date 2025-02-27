@@ -307,6 +307,16 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                 </ul>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('cms.provider_page.work.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.provider_page.work.*') ? 'active' : '' }}">
+                            Provider Work Container
+                        </a>
+
+                    </li>
+
+                </ul>
             </li>
 
 
