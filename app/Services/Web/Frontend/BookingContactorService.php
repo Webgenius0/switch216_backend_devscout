@@ -202,7 +202,7 @@ class BookingContactorService
         $notificationData = [
             'title' => $type,
             'message' => $this->getNotificationMessage($type, $booking),
-            'url' => route('contractor.booking.index'),
+            'url' => route('customer.booking.index'),
             'type_id' => $booking->id,
             'type' => 'Booking Notification',
             'thumbnail' => asset('backend/admin/assets/images/appointment_notification.png' ?? ''),

@@ -284,7 +284,6 @@ class AppointmentCustomerService
             }
 
             // Check if a review already exists for this booking
-            // Check if a review already exists for this booking
             $existingReview = Review::where('user_id', $this->user->id)
                 ->where('service_id', $booking->service_id)
                 ->where('booking_id', $booking->id)

@@ -6,22 +6,11 @@
      </svg>
      <div class="section-title">Welcome {{ Auth::user()->name ?? 'Mr. John Doe' }} 👋</div>
      <div class="header-actions">
-         {{-- <div class="search-bar">
-             <input placeholder="Search Here..." type="text" />
-             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                 <path
-                     d="M8.625 16.8125C4.3875 16.8125 0.9375 13.3625 0.9375 9.125C0.9375 4.8875 4.3875 1.4375 8.625 1.4375C12.8625 1.4375 16.3125 4.8875 16.3125 9.125C16.3125 13.3625 12.8625 16.8125 8.625 16.8125ZM8.625 2.5625C5.0025 2.5625 2.0625 5.51 2.0625 9.125C2.0625 12.74 5.0025 15.6875 8.625 15.6875C12.2475 15.6875 15.1875 12.74 15.1875 9.125C15.1875 5.51 12.2475 2.5625 8.625 2.5625Z"
-                     fill="#A9A9A9" />
-                 <path
-                     d="M16.4981 17.5626C16.3556 17.5626 16.2131 17.5101 16.1006 17.3976L14.6006 15.8976C14.3831 15.6801 14.3831 15.3201 14.6006 15.1026C14.8181 14.8851 15.1781 14.8851 15.3956 15.1026L16.8956 16.6026C17.1131 16.8201 17.1131 17.1801 16.8956 17.3976C16.7831 17.5101 16.6406 17.5626 16.4981 17.5626Z"
-                     fill="#A9A9A9" />
-             </svg>
-         </div> --}}
          <div >
             <a type="button" class="btn bg-warning" href="{{route('home')}}">Visit Site</a>
         </div>
          <div class="notification-container">
-             <div class="notification-btn">
+             <div class="notification-btn" onclick="markAllRead()">
                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41"
                      fill="none">
                      <rect x="0.5" y="1" width="39" height="39" rx="7.5" fill="white" stroke="#E8E8E8" />
@@ -35,45 +24,42 @@
                          d="M20.0195 31.3101C19.0295 31.3101 18.0695 30.9101 17.3695 30.2101C16.6695 29.5101 16.2695 28.5501 16.2695 27.5601H17.7695C17.7695 28.1501 18.0095 28.7301 18.4295 29.1501C18.8495 29.5701 19.4295 29.8101 20.0195 29.8101C21.2595 29.8101 22.2695 28.8001 22.2695 27.5601H23.7695C23.7695 29.6301 22.0895 31.3101 20.0195 31.3101Z"
                          fill="#A9A9A9" />
                  </svg>
+                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notification-count">
+                    {{ Auth::user()->notifications()->whereNull('read_at')->count() }}
+                </span>
              </div>
              <div class="notification-dropdown">
-                 <div style="font-size: 20px;" class="mb-3">
-                     Notifications (10)
-                 </div>
-                 <a href="" class="d-flex gap-2 ">
-                     <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 448 512">
-                         <path
-                             d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
-                     </svg>
-                     <div class=" d-flex flex-column gap-1 ">
-                         <span>New User Signed Up</span>
-                         <span>2 hours ago</span>
-                     </div>
-                 </a>
-                 <a href="" class="d-flex gap-2 ">
-                     <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 448 512">
-                         <path
-                             d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
-                     </svg>
-                     <div class=" d-flex flex-column gap-1 ">
-                         <span>New User Signed Up</span>
-                         <span>2 hours ago</span>
-                     </div>
-                 </a>
-                 <a href="" class="d-flex gap-2 ">
-                     <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 448 512">
-                         <path
-                             d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z" />
-                     </svg>
-                     <div class=" d-flex flex-column gap-1 ">
-                         <span>New User Signed Up</span>
-                         <span>2 hours ago</span>
-                     </div>
-                 </a>
-             </div>
+                <div style="font-size: 20px;" class="mb-3 d-flex justify-content-between align-items-center title" >
+                   <span id="notification-count"> Notifications ({{ Auth::user()->notifications()->whereNull('read_at')->count() }})</span>
+                    
+                    <button class="p-0 m-0  border-0 fs-08 btn btn-outline-danger btn-sm"  onclick="deleteAllNotification()">Clear All</button>
+                </div>
+                <div class="max-h-217" data-simplebar id="notification-list">
+                @foreach (Auth::user()->notifications as $notification)
+                <div class="notification-menu {{ $notification->read_at ? '' : 'unseen' }}"  id="notification_{{ $notification->id }}">
+                   <a href="{{ $notification->data['url'] ?? '' }}" class="dropdown-item" >
+                       <div class="d-flex align-items-center">
+                           <div class="flex-shrink-0">
+                               <div class="d-flex align-items-center">
+                                   <div class="rounded bg-light" style="width: 40px; height: 40px; overflow: hidden;">
+                                       <img src="{{ $notification->data['thumbnail'] ?? 'default-thumbnail.jpg' }}" 
+                                            alt="Notification Thumbnail" 
+                                            class="img-fluid rounded">
+                                   </div>
+                               </div>
+                               {{-- <i
+                                   class="material-symbols-outlined text-primary">sms</i> --}}
+                           </div>
+                           <div class="flex-grow-1 ms-3">
+                               <p>{{ $notification->data['title'] ?? 'Untitled Notification' }}</p>
+                               <span class="fs-13">{{ $notification->created_at->diffForHumans() }}</span>
+                           </div>
+                       </div>
+                   </a>
+               </div>
+                @endforeach
+            </div>
+            </div>
          </div>
 
          <div class="profile-dropdown-container">
