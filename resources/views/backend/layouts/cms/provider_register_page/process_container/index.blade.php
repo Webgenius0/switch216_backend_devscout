@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Provider Service List</h3>
+            <h3 class="mb-0">Provider process Service List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,10 +20,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Provider Service</span>
+                        <span class="fw-medium">Provider process Service</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Provider Service List</span>
+                        <span class="fw-medium">Provider process List</span>
                     </li>
                 </ol>
             </nav>
@@ -35,8 +35,8 @@
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Provider Page Service Container</h4>
-                            <p class="fs-15">Update Provider Page Service Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS Provider Page Process Container</h4>
+                            <p class="fs-15">Update Provider Page Process Container and site details here.</p>
                         </div>
 
                         <form action="{{ route('cms.provider_page.process.update', $ProviderProcessContainer->id ?? '') }}"
@@ -121,7 +121,7 @@
                                 data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                    <span>Add New Provider Container Content</span>
+                                    <span>Add New process Container Content</span>
                                 </span>
                             </a>
                         </div>
@@ -134,7 +134,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Sub Title</th>
                                             <th scope="col">Sub Description</th>
-                                            <th scope="col">Bg Image</th>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>

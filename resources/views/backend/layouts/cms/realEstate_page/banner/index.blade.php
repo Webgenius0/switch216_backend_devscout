@@ -8,15 +8,15 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">CMS Home Page Banner</h3>
+            <h3 class="mb-0">CMS Real Estate Page Banner</h3>
         </div>
 
         <div class="card bg-white border-0 rounded-3 mb-4">
             <div class="card-body p-4">
 
                 <div class="mb-4">
-                    <h4 class="fs-20 mb-1">CMS Home Page Banner</h4>
-                    <p class="fs-15">Update Home Page Banner and site details here.</p>
+                    <h4 class="fs-20 mb-1">CMS Real Estate Page Banner</h4>
+                    <p class="fs-15">Update Real Estate Page Banner and site details here.</p>
                 </div>
 
                 <form action="{{ route('cms.RealEstate_page.banner.update',$RealEstateService->id) ?? '' }}" method="POST" enctype="multipart/form-data">

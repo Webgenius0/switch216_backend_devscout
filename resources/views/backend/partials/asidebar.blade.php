@@ -231,93 +231,84 @@ $systemSetting = App\Models\SystemSetting::first();
                 </ul>
             </li>
             <!-- CMS Car Item -->
-            <li class="menu-item {{ request()->routeIs('cms.car_page.*') ? 'open' : '' }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+            <li class="menu-item {{ request()->routeIs('cms.car_page.*') ? 'open active' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">directions_car</span>
                     <span class="title">Car Page</span>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.car_page.banner') ? 'active' : '' }}">
                         <a href="{{ route('cms.car_page.banner') }}"
-                            class="menu-link {{ request()->routeIs('cms.car_page.banner.*') ? 'active' : '' }}">
+                            class="menu-link {{ request()->routeIs('cms.car_page.banner') ? 'active' : '' }}">
                             Car Banner
                         </a>
-
                     </li>
-
                 </ul>
             </li>
             <!-- CMS Restaurant Item -->
-            <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open' : '' }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+            <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open active' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">table_restaurant</span>
                     <span class="title">Restaurant Page</span>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.restaurant_page.banner') ? 'active' : '' }}">
                         <a href="{{ route('cms.restaurant_page.banner') }}"
-                            class="menu-link {{ request()->routeIs('cms.restaurant_page.banner.*') ? 'active' : '' }}">
+                            class="menu-link {{ request()->routeIs('cms.restaurant_page.banner') ? 'active' : '' }}">
                             Restaurant Banner
                         </a>
-
                     </li>
-
                 </ul>
             </li>
+            
             <!-- CMS Real Estate Item -->
-            <li class="menu-item {{ request()->routeIs('cms.RealEstate_page.*') ? 'open' : '' }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+            <li class="menu-item {{ request()->routeIs('cms.RealEstate_page.*') ? 'open active' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">home_work</span>
                     <span class="title">Real Estate Page</span>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.RealEstate_page.banner') ? 'active' : '' }}">
                         <a href="{{ route('cms.RealEstate_page.banner') }}"
-                            class="menu-link {{ request()->routeIs('cms.RealEstate_page.banner.*') ? 'active' : '' }}">
+                            class="menu-link {{ request()->routeIs('cms.RealEstate_page.banner') ? 'active' : '' }}">
                             Real Estate Banner
                         </a>
-
                     </li>
-
                 </ul>
             </li>
+            
             <!-- CMS Service Provider Item -->
-            <li class="menu-item {{ request()->routeIs('cms.service_page.*') ? 'open' : '' }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+            <li class="menu-item {{ request()->routeIs('cms.service_page.*') || request()->routeIs('cms.provider_page.process.*') || request()->routeIs('cms.provider_page.work.*') ? 'open active' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">app_registration</span>
                     <span class="title">Provider Register Page</span>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.service_page.container') ? 'active' : '' }}">
                         <a href="{{ route('cms.service_page.container') }}"
-                            class="menu-link {{ request()->routeIs('cms.service_page.container.*') ? 'active' : '' }}">
+                            class="menu-link {{ request()->routeIs('cms.service_page.container') ? 'active' : '' }}">
                             Service Container
                         </a>
-
                     </li>
-
                 </ul>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.provider_page.process.*') ? 'active' : '' }}">
                         <a href="{{ route('cms.provider_page.process.index') }}"
                             class="menu-link {{ request()->routeIs('cms.provider_page.process.*') ? 'active' : '' }}">
                             Process Container
                         </a>
-
                     </li>
-
                 </ul>
                 <ul class="menu-sub">
-                    <li class="menu-item">
+                    <li class="menu-item {{ request()->routeIs('cms.provider_page.work.*') ? 'active' : '' }}">
                         <a href="{{ route('cms.provider_page.work.index') }}"
                             class="menu-link {{ request()->routeIs('cms.provider_page.work.*') ? 'active' : '' }}">
                             Provider Work Container
                         </a>
-
                     </li>
-
                 </ul>
             </li>
+            
 
 
 
