@@ -2,89 +2,60 @@
     <h2 class="section-title">Top Cars in our city</h2>
     {{-- <p class="se--common--pera2 se--bottom">Looking for service? <a class="se--link" href="#">click here</a></p> --}}
     <div class="filters-container mt-2">
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Car Type</label> --}}
-                <input class="form-control" wire:model.live.debounce.250ms="location" placeholder="Location"
-                    type="text" />
-            </div>
-        </div>
-        <!-- Property Type -->
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Property Type</label> --}}
-                <select class="form-select" name="property_type" wire:model.change="property_type">
-                    <option value="" selected>Property Type</option>
-                    <option value="House">House</option>
-                    <option value="Apartment">Apartment</option>
-                    <option value="Land">Land</option>
-                    <option value="Commercial">Commercial
-                    </option>
-                </select>
-            </div>
-        </div>
-        <!-- Number of Bedrooms -->
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Number of Bedrooms</label> --}}
-                <select class="form-select" name="bedrooms" wire:model.change="bedrooms">
-                    <option value="" selected>Number of Bedrooms</option>
-                    <option value="1">1 Bedroom</option>
-                    <option value="2">2 Bedrooms</option>
-                    <option value="3">3+ Bedrooms</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Number of Bathrooms -->
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Number of Bathrooms</label> --}}
-                <select class="form-select" name="bathrooms" wire:model.change="bathrooms">
-                    <option value="" selected>Number of Bathrooms</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Furnished? -->
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Furnished?</label> --}}
-                <select class="form-select" name="is_furnished" wire:model.change="is_furnished">
-                    <option value="" selected>Furnished?</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-            </div>
-        </div>
-        <!-- Price Range -->
-        <div class="col-md-2">
-            <div class="form-group mb-4">
-                {{-- <label class="label text-secondary">Price</label> --}}
-                <select class="form-select @error('price') is-invalid @enderror" name="price" id="price"
-                    wire:model.change="price_range">
-                    <option value="" selected>Select Price Range</option>
-                    <option value="0 - 10,000">0 - 10,000</option>
-                    <option value="10,000 - 50,000">10,000 - 50,000</option>
-                    <option value="50,000 - 100,000">50,000 - 100,000</option>
-                    <option value="100,000+">100,000+</option>
-                </select>
-            </div>
-        </div>
-
+        <fieldset class="filter-input-wrapper position-relative">
+            <input class="form-control" wire:model.live.debounce.250ms="location" 
+                placeholder="Location" type="text" id="locationInput" autocomplete="off" />
+                <div id="locationDropdown" class="dropdown-menu"></div>
+            {{-- @if(!empty($locations))
+                <div id="locationDropdown" class="dropdown-menu show" style="display: block;">
+                    @foreach($locations as $city)
+                        <div class="dropdown-item" wire:click="selectLocation('{{ $city }}')" >
+                            {{ $city }}
+                        </div>
+                    @endforeach
+                </div>
+            @endif --}}
+        </fieldset>
+        
+        
+        {{-- <div class="search-item">
+            <div class="item-title">Location</div>
+            <input id="locationInput" name="location" class="search-input" placeholder="Select location" type="text" autocomplete="off" />
+            <div id="locationDropdown" class="dropdown-menu"></div>
+        </div> --}}
+        <!-- Category Dropdown -->
+        {{-- <fieldset class="filter-input-wrapper">
+            <select wire:model="category" wire:change="resetSubcategory" class="form-control">
+                <option value="">Select Category</option>
+                @foreach ($categories as $categoryItem)
+                    <option value="{{ $categoryItem->name }}">{{ $categoryItem->name }}</option>
+                @endforeach
+            </select>
+        </fieldset> --}}
         <!-- Subcategory Dropdown -->
+        {{-- Debugging output --}}
+
+
         <fieldset class="filter-input-wrapper">
-            <select wire:change="subcategory" class="form-control" hidden>
-                <option value="">Subcategory</option>
-                {{-- @foreach ($subcategories as $subCategoryItem)
-                <option value="{{ $subCategoryItem->id }}">{{ $subCategoryItem->name }}</option>
-            @endforeach --}}
+            <select wire:model.change="subcategory" class="form-control">
+                <option value="">Subcategory </option>
+                @foreach ($subCategories as $subCategoryItem)
+                    <option value="{{ $subCategoryItem->name }}">{{ $subCategoryItem->name }}</option>
+                    
+                @endforeach
+                <option value="" hidden> .................................................... </option>
             </select>
         </fieldset>
-
+        {{-- <fieldset class="filter-input-wrapper">
+            <select wire:model.change="serching_type" class="form-control">
+                <option value="" selected>Type </option>
+                <option value="sell">Buy</option>
+                <option value="rent">Rent</option>
+                <option value="event">Event</option>
+                <option value="single">Others</option>
+                <option value="0" hidden> .......................... </option>
+            </select>
+        </fieldset> --}}
 
 
         <fieldset class="filter-input-wrapper">

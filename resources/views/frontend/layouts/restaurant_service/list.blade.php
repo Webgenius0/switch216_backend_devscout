@@ -22,6 +22,7 @@
 .filters-container {
     gap:5px !important;
 }
+
 </style>
 @livewireStyles
 
@@ -48,15 +49,12 @@
 @endsection
 
 
-
 @push('scripts')
 <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";
-
         const searchDate = document.getElementById('searchDate');
-
         if (searchDate) {
             const picker = new easepick.create({
                 element: searchDate,

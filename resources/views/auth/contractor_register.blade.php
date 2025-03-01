@@ -109,7 +109,7 @@
                                     <label for="instagram_social_link">Instagram Social Link</label>
                                     <input type="text" id="instagram_social_link" name="instagram_social_link"
                                         placeholder="https://www.instagram.com/kolchie...."
-                                        value="{{ old('instagram_social_link') }}" required />
+                                        value="{{ old('instagram_social_link') }}" />
                                     <span class="text-red-600 text-sm"
                                         style="color: red">{{ $errors->first('instagram_social_link') }}</span>
                                 </div>

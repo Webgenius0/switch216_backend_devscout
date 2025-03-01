@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
@@ -8,13 +10,13 @@ use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
-use App\Http\Controllers\Web\Frontend\Customer\BookingCustomerController;
+use App\Http\Controllers\Web\Frontend\Contractor\LiveNotificationController;
+use App\Http\Controllers\Web\Frontend\Customer\AppointmentCustomerController;
 use App\Http\Controllers\Web\Frontend\EmergencyPageController;
 use App\Http\Controllers\Web\Frontend\HomePageController;
 use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
 use App\Http\Controllers\Web\Frontend\RestaurantPageController;
 use App\Http\Controllers\Web\Frontend\ServiceController;
-use App\Models\SystemSetting;
 use App\Services\Web\Frontend\RealStatePageService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,7 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/provider', [ServiceProviderRegisterPageController::class, 'index'])->name('provider.index');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
 Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
 Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
@@ -49,6 +52,7 @@ Route::get('/real-state-services', [RealEstateServiceController::class, 'index']
 Route::get('/real-state-services/list', [RealEstateServiceController::class, 'realStateList'])->name('service.real_state_list');
 //realState page
 Route::get('/restaurant-services', [RestaurantPageController::class, 'index'])->name('service.restaurant');
+Route::get('/restaurant-services/list', [RestaurantPageController::class, 'restaurantList'])->name('service.restaurant_list');
 
 Route::get('/service-category', [ServiceController::class, 'categoryList'])->name('service.category');
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
@@ -137,17 +141,17 @@ Route::get('/error-404', function () {
 //     return view(view: 'frontend.layouts.provider.register');
 // })->name('provider.register');
 
-Route::get('/provider', function () {
-    return view(view: 'frontend.layouts.provider.index');
-})->name('provider.index');
+// Route::get('/provider', function () {
+//     return view(view: 'frontend.layouts.provider.index');
+// })->name('provider.index');
 
 Route::get('/provider-list', function () {
     return view(view: 'frontend.layouts.provider.index');
 })->name('provider.list');
 
-Route::get('/provider-details', function () {
-    return view(view: 'frontend.layouts.provider.details');
-})->name('provider.details');
+// Route::get('/provider-details', function () {
+//     return view(view: 'frontend.layouts.provider.details');
+// })->name('provider.details');
 
 
 //for customer only
@@ -157,14 +161,14 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     })->name('customer.dashboard');
     // customer bookings 
 
-    Route::get('/customer-booking', [BookingCustomerController::class, 'index'])->name('customer.booking.index');
-    Route::get('/customer-bookings/all', [BookingCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
-    Route::post('/customer-booking', [BookingCustomerController::class, 'store'])->name('customer.booking.store');
-    Route::post('/customer-booking/complete/{bookingId}', [BookingCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
-    Route::get('/customer-booking/cancle/{bookingId}', [BookingCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
-    Route::post('/customer-booking/reschedule', [BookingCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
+    Route::get('/customer-booking', [AppointmentCustomerController::class, 'index'])->name('customer.booking.index');
+    Route::get('/customer-bookings/all', [AppointmentCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
+    Route::post('/customer-booking', [AppointmentCustomerController::class, 'store'])->name('customer.booking.store');
+    Route::post('/customer-booking/complete/{bookingId}', [AppointmentCustomerController::class, 'markAsComplete'])->name('customer.booking.mark_as_complete');
+    Route::get('/customer-booking/cancle/{bookingId}', [AppointmentCustomerController::class, 'cancelBooking'])->name('customer.booking.cancle');
+    Route::post('/customer-booking/reschedule', [AppointmentCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
 
-    Route::post('/customer-booking/given-review', [BookingCustomerController::class, 'givenReview'])->name('customer.booking.review');
+    Route::post('/customer-booking/given-review', [AppointmentCustomerController::class, 'givenReview'])->name('customer.booking.review');
 });
 
 
@@ -189,7 +193,7 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
 });
 
 
-//for customer and contractor only
+//for customer and contractor only chating
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
     Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index');
     Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
@@ -198,6 +202,14 @@ Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->gr
     Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
 });
 
+//for customer and contractor only notification
+Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('my-notifications')->group(function () {
+    // Routes for LiveNotificationController
+    Route::post('/mark-as-read', [LiveNotificationController::class, 'markAllAsRead'])->name('customer_or_contractor.notification.read');
+    Route::post('/mark-as-read/single/{id}', [LiveNotificationController::class, 'markAsSingleRead'])->name('customer_or_contractor.notification.read_single');
+    Route::delete('/delete/single/{id}', [LiveNotificationController::class, 'delete'])->name('customer_or_contractor.notification.delete');
+    Route::delete('/delete-all', [LiveNotificationController::class, 'deleteAll'])->name('customer_or_contractor.notification.deleteall');
+});
 
 
 //Language translate
@@ -215,7 +227,6 @@ Route::post('/set-locale/{locale}', function ($locale) {
         // Log::info('Session Local set ::' . $locale);
     }
     return response()->noContent();
-
 })->name('setLocale');
 
 

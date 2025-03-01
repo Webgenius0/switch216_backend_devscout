@@ -24,7 +24,7 @@ class RestaurantPageService
     {
         try {
             $restaurantBanner = CMS::where('page', Page::RestaurantPage)->where('section', Section::RestaurantBanner)->first();
-            $restaurant_service = Service::with(['user', 'RealStateService'])->where('category_id', 2)->where("status", 'active')->latest()->take('6')->get();
+            $restaurant_service = Service::with(['user'])->where('category_id', 2)->where("status", 'active')->latest()->take('6')->get();
             $restaurantServiceSubCategorys = SubCategory::where('category_id', 2)->where("status", 'active')->get();
             $data = [
                 'restaurant_service' => $restaurant_service,
@@ -32,6 +32,23 @@ class RestaurantPageService
                 'restaurantBanner' => $restaurantBanner
             ];
             return $data;
+        } catch (Exception $e) {
+            Log::error('RestaurantPageService::index' . $e->getMessage());
+            throw $e;
+        }
+    }
+
+
+    /**
+     * Fetch all resources.
+     *
+     * @return mixed
+     */
+    public function restaurantList()
+    {
+        try {
+            $services = Service::with(['user'])->where("status", 'active')->latest()->get();
+            return $services;
         } catch (Exception $e) {
             Log::error('RestaurantPageService::index' . $e->getMessage());
             throw $e;

@@ -85,7 +85,7 @@
     <!-- Success Modal -->
 
 
-    <!-- Success Modal -->
+    <!-- for review Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -148,7 +148,7 @@
 
                     <div class="mb-3">
                         <label for="booking_date" class="form-label fw-bold">New Booking Date:</label>
-                        <input type="date" name="booking_date" id="booking_date" class="form-control" required>
+                        <input type="date" name="booking_date" id="booking_date" class="form-control" required min="{{ date('Y-m-d') }}">
                         <span id="rescheduleFormError"> </span>
                     </div>
 
@@ -276,6 +276,7 @@
                         }
                     },
                     error: function(xhr) {
+                        $('#rescheduleFormError').empty();
                         $('#rescheduleFormError').append(`
                         <div style="color:red">${xhr.responseJSON.message}</div>
                         `);

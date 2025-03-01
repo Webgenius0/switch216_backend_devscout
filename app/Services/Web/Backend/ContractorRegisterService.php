@@ -59,7 +59,7 @@ class ContractorRegisterService
                 $user = User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
-                    'instagram_social_link' => $data['instagram_social_link'],
+                    'instagram_social_link' => $data['instagram_social_link'] ?? null,
                     'password' => Hash::make($data['password']),
                     'role' => 'contractor',
                     'avatar' => $data['avatar'],
@@ -82,7 +82,7 @@ class ContractorRegisterService
                 $user = User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
-                    'instagram_social_link' => $data['instagram_social_link'],
+                    'instagram_social_link' => $data['instagram_social_link'] ?? null,
                     'password' => Hash::make($data['password']),
                     'role' => 'contractor',
                 ]);

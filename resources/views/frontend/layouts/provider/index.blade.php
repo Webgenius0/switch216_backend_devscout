@@ -20,27 +20,58 @@
         <section class="banner-provider container">
             <div class="gr"></div>
             <h1 class="banner-title" data-aos="fade-up">
-                Join as a service provider
+                {{ $ServiceProvider_container->title ?? ' dsfsadf' }}
             </h1>
             <p class="banner-text" data-aos="fade-up">
-                Connect with more clients, manage appointments, and streamline
-                <br class="d-none d-sm-block" />
-                your services—all in one place.
+                {{ $ServiceProvider_container->description ?? ' your services—all in one place.' }}
+                {{-- <br class="d-none d-sm-block" />
+                your services—all in one place. --}}
             </p>
-            <a href="{{route('provider.register')}}" class="button" data-aos="fade-up">Register Now</a>
+            <a href="{{ route('provider.register') }}" class="button"
+                data-aos="fade-up">{{ $ServiceProvider_container->button_text ?? ' Register Now' }}</a>
+
             <div class="banner-feature" data-aos="fade-up">
-                <div class="banner-feature-item">
+                @if ($ServiceProvider_container_image->isEmpty())
+                    <p>No images found</p> <!-- Debugging message -->
+                @endif
+
+                @foreach ($ServiceProvider_container_image as $image)
+                    <div class="banner-feature-item">
+                        @if (!empty($image->image))
+                            <img src="{{ asset($image->image) }}" alt="banner feature item">
+                        @else
+                            <div class="banner-feature-item">
+                                <img src="{{ asset('frontend/assets') }}/images/provider-3.png" alt="banner feature item" />
+                            </div>
+                            <div class="banner-feature-item">
+                                <img src="{{ asset('frontend/assets') }}/images/8007e75bbf14e5b0ffe7d55beda69cd6.png"
+                                    alt="banner feature item" />
+                            </div>
+                            <div class="banner-feature-item">
+                                <img src="{{ asset('frontend/assets') }}/images/image.png" alt="banner feature item" />
+                            </div>
+                            <div class="banner-feature-item">
+                                <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png"
+                                    alt="banner feature item" />
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+            {{-- <div class="banner-feature-item">
                     <img src="{{ asset('frontend/assets') }}/images/provider-3.png" alt="banner feature item" />
                 </div>
                 <div class="banner-feature-item">
-                    <img src="{{ asset('frontend/assets') }}/images/8007e75bbf14e5b0ffe7d55beda69cd6.png" alt="banner feature item" />
+                    <img src="{{ asset('frontend/assets') }}/images/8007e75bbf14e5b0ffe7d55beda69cd6.png"
+                        alt="banner feature item" />
                 </div>
                 <div class="banner-feature-item">
                     <img src="{{ asset('frontend/assets') }}/images/image.png" alt="banner feature item" />
                 </div>
                 <div class="banner-feature-item">
-                    <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png" alt="banner feature item" />
-                </div>
+                    <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png"
+                        alt="banner feature item" />
+                </div> --}}
             </div>
         </section>
         <!-- provider banner end -->
@@ -49,16 +80,17 @@
         <section class="team-process container">
             <div class="row gy-4">
                 <div class="col-md-6" data-aos="fade-right">
-                    <div class="title">We have best team and best process</div>
+                    <div class="title">{{$ProviderProcess_container->title ?? 'We have best team and best process'}}</div>
                     <div class="text">
-                        Yet bed any for traveling assistance indulgence unpleasing. Not
-                        thoughts all exercise blessing. Indulgence way everything joy.
+                   {{$ProviderProcess_container->description ?? '     Yet bed any for traveling assistance indulgence unpleasing. Not
+                        thoughts all exercise blessing. Indulgence way everything joy.'}}
                     </div>
-                    <a href="{{ route('service.category') }}" class="button">See All service</a>
+                    <a href="{{ route('service.category') }}" class="button">{{$ProviderProcess_container->button_text ?? 'See All service'}}</a>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="team-process-img-con">
-                        <img src="{{ asset('frontend/assets/images/provider-3.png') }}" class="bg-img" alt="background image" />
+                        <img src="{{ asset($provider_process_image_container->background_image ?? 'frontend/assets/images/provider-3.png') }}" class="bg-img"
+                            alt="background image" />
                         <div class="overlay"></div>
                         <div class="content">
                             <div class="icon">
@@ -69,18 +101,40 @@
                                         fill="#FF6600" />
                                 </svg>
                             </div>
-                            <div class="title">Multi service</div>
+                            <div class="title">{{$provider_process_image_container->sub_title ?? 'Multi service'}}</div>
                             <div class="text">
-                                Track your performance and client engagement with real-time
-                                data.
+                                {{$provider_process_image_container->sub_description ?? 'Track your performance and client engagement with real-time
+                                data.'}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="team-process-items" data-aos="fade-up">
+                @forelse ( $provider_process_image_container_content as $data )
                 <div class="team-process-item">
-                    <img src="{{ asset('frontend/assets/images/8007e75bbf14e5b0ffe7d55beda69cd6.png') }}" class="bg-img" alt="background image" />
+                    <img src="{{ asset($data->background_image) }}" class="bg-img"
+                        alt="background image" />
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="40" viewBox="0 0 34 40"
+                                fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M12.8734 0.970192C14.1547 0.332163 15.5675 0 17 0C18.4325 0 19.8453 0.332163 21.1266 0.970192L31.0469 5.90883C31.9344 6.35092 32.6808 7.03045 33.2024 7.87129C33.7239 8.71213 34.0001 9.68104 34 10.6694V25.2744C34.0001 26.8334 33.6022 28.3668 32.8436 29.7304C32.085 31.094 30.9907 32.243 29.6635 33.0694L19.8327 39.1905C18.9833 39.7195 18.0017 40 17 40C15.9983 40 15.0167 39.7195 14.1673 39.1905L4.33646 33.0694C3.00934 32.243 1.91503 31.094 1.15644 29.7304C0.397846 28.3668 -0.000106614 26.8334 5.83989e-08 25.2744V10.6694C-0.000146631 9.68104 0.276055 8.71213 0.797651 7.87129C1.31925 7.03045 2.06563 6.35092 2.95314 5.90883L12.8734 0.970192ZM23.8583 17.044C24.0014 16.9111 24.1163 16.7509 24.1959 16.5728C24.2756 16.3948 24.3184 16.2026 24.3218 16.0077C24.3253 15.8129 24.2893 15.6193 24.216 15.4386C24.1427 15.2578 24.0336 15.0937 23.8953 14.9558C23.7569 14.818 23.5921 14.7094 23.4106 14.6364C23.2292 14.5634 23.0349 14.5275 22.8392 14.531C22.6436 14.5344 22.4506 14.5771 22.2719 14.6564C22.0931 14.7357 21.9323 14.8501 21.7989 14.9927L15.0571 21.7078L12.2011 18.8631C11.9249 18.6067 11.5596 18.4671 11.1821 18.4738C10.8046 18.4804 10.4444 18.6327 10.1774 18.8987C9.91045 19.1646 9.75752 19.5233 9.75086 19.8993C9.7442 20.2754 9.88433 20.6393 10.1417 20.9144L14.0274 24.7848C14.3006 25.0566 14.671 25.2093 15.0571 25.2093C15.4433 25.2093 15.8136 25.0566 16.0869 24.7848L23.8583 17.044Z"
+                                    fill="#FF6600" />
+                            </svg>
+                        </div>
+                        <div class="title">{{$data->sub_title}}</div>
+                        <div class="text">
+                           {{$data->sub_description}}
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="team-process-item">
+                    <img src="{{ asset('frontend/assets/images/8007e75bbf14e5b0ffe7d55beda69cd6.png') }}" class="bg-img"
+                        alt="background image" />
                     <div class="overlay"></div>
                     <div class="content">
                         <div class="icon">
@@ -118,7 +172,8 @@
                     </div>
                 </div>
                 <div class="team-process-item">
-                    <img src="{{ asset('frontend/assets/images/f151d0d72bbcaed3d430ee0f80860b92.png') }}" class="bg-img" alt="background image" />
+                    <img src="{{ asset('frontend/assets/images/f151d0d72bbcaed3d430ee0f80860b92.png') }}" class="bg-img"
+                        alt="background image" />
                     <div class="overlay"></div>
                     <div class="content">
                         <div class="icon">
@@ -136,6 +191,8 @@
                         </div>
                     </div>
                 </div>
+                @endforelse
+                
             </div>
             <div class="gr"></div>
         </section>
@@ -146,7 +203,8 @@
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
                     <div class="video-container">
-                        <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}" type="video/mp4"></video>
+                        <video id="work-video" src="{{ asset($provider_work_container->image) }}"
+                            type="video/mp4"></video>
                         <button id="work-video-play-button" class="play-button">
                             &#9658;
                         </button>
@@ -154,16 +212,16 @@
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <h2 class="title">
-                        Service Provider <br />
-                        showing Work
+                     {{$provider_work_container->title ?? 'Service Provider
+                    showing Work'}}
                     </h2>
                     <p class="des">
-                        Yet bed any for travelling assistance indulgence unpleasing. Not
+                        {{$provider_work_container->description ?? 'Yet bed any for travelling assistance indulgence unpleasing. Not
                         thoughts all exercise blessing. Indulgence way everything joy. Yet
                         bed any for travelling assistance indulgence unpleasing. Not
-                        thoughts all exercise blessing. Indulgence way everything joy.
+                        thoughts all exercise blessing. Indulgence way everything joy.'}}
                     </p>
-                    <a href="{{ route('service.category') }}" class="button">See All</a>
+                    <a href="{{ route('service.category') }}" class="button">{{$provider_work_container->button_text ?? 'See All'}}</a>
                 </div>
             </div>
         </section>
@@ -212,5 +270,5 @@
 
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
 @endpush
