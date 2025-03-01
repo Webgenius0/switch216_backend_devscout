@@ -76,4 +76,8 @@
     .skiptranslate {
         display: none !important;
     }
+    body {
+  top: 0px !important;
+  position: static !important;
+}
 </style>

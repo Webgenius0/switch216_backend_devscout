@@ -22,45 +22,11 @@
                 documents—all in
                 one place for a smooth preparation experience.
             </div>
-
-            <!-- search container start -->
-            <form class="banner-search-container">
-                <div class="item">
-                    <div class="label-title">Location</div>
-                    <input placeholder="Search" type="text">
-                </div>
-                <div class="item">
-                    <div class="label-title">Service Type</div>
-                    <select style="height: 56px; background-color: #fff; border-color: #424242;" class="form-select type"
-                        aria-label="Default select example">
-                        <option value="">Select</option>
-                        <option value="1">Party events</option>
-                        <option value="1">Houses for sale and rent</option>
-                        <option value="1">Food</option>
-                        <option value="1">Repair</option>
-                        <option value="1">Beauty and wellness</option>
-                        <option value="1">Education and childcare</option>
-                        <option value="1">IT service</option>
-                    </select>
-                </div>
-                <button class="search-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
-                        fill="none">
-                        <path
-                            d="M13.5938 23.4375C19.0303 23.4375 23.4375 19.0303 23.4375 13.5938C23.4375 8.1572 19.0303 3.75 13.5938 3.75C8.1572 3.75 3.75 8.1572 3.75 13.5938C3.75 19.0303 8.1572 23.4375 13.5938 23.4375Z"
-                            stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M20.5547 20.5547L26.2501 26.2501" stroke="white" stroke-width="3" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-            </form>
-            <!-- search container end -->
-
         </div>
         <!-- dashboard-banner-content end -->
 
         <!-- dashboard appointments start -->
-        <div class="section-title mt-5">Upcoming Appointments</div>
+        {{-- <div class="section-title mt-5">Upcoming Appointments</div>
         <div class="dashboard-appointments mt-5">
             <div class="item">
                 <div class="top d-flex align-items-center justify-content-between gap-3 flex-wrap ">
@@ -358,7 +324,7 @@
                     Reschedule
                 </a>
             </div>
-        </div>
+        </div> --}}
         <!-- dashboard appointments end -->
 
     </div>
