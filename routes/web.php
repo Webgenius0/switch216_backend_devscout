@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
@@ -33,6 +35,7 @@ Route::get('/map-api-key', function () {
 
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/provider', [ServiceProviderRegisterPageController::class, 'index'])->name('provider.index');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
 Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
 Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
@@ -138,17 +141,17 @@ Route::get('/error-404', function () {
 //     return view(view: 'frontend.layouts.provider.register');
 // })->name('provider.register');
 
-Route::get('/provider', function () {
-    return view(view: 'frontend.layouts.provider.index');
-})->name('provider.index');
+// Route::get('/provider', function () {
+//     return view(view: 'frontend.layouts.provider.index');
+// })->name('provider.index');
 
 Route::get('/provider-list', function () {
     return view(view: 'frontend.layouts.provider.index');
 })->name('provider.list');
 
-Route::get('/provider-details', function () {
-    return view(view: 'frontend.layouts.provider.details');
-})->name('provider.details');
+// Route::get('/provider-details', function () {
+//     return view(view: 'frontend.layouts.provider.details');
+// })->name('provider.details');
 
 
 //for customer only
@@ -197,8 +200,6 @@ Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->gr
     Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
     Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
     Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
-
-
 });
 
 //for customer and contractor only notification
@@ -226,7 +227,6 @@ Route::post('/set-locale/{locale}', function ($locale) {
         // Log::info('Session Local set ::' . $locale);
     }
     return response()->noContent();
-
 })->name('setLocale');
 
 

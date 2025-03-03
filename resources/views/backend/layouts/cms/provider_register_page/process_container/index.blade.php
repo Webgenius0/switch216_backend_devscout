@@ -8,7 +8,8 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">Home Service List</h3>
+            <h3 class="mb-0">Provider process Service List</h3>
+
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb align-items-center mb-0 lh-1">
@@ -19,10 +20,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Service</span>
+                        <span class="fw-medium">Provider process Service</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">Home Service List</span>
+                        <span class="fw-medium">Provider process List</span>
                     </li>
                 </ol>
             </nav>
@@ -34,24 +35,25 @@
                     <div class="card-body p-4">
 
                         <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS Home Page Service Container</h4>
-                            <p class="fs-15">Update Home Page Service Container and site details here.</p>
+                            <h4 class="fs-20 mb-1">CMS Provider Page Process Container</h4>
+                            <p class="fs-15">Update Provider Page Process Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.service_container.service_container_update') }}"
-                            method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cms.provider_page.process.update', $ProviderProcessContainer->id ?? '') }}"
+                            method="POST">
                             @csrf
+                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Item Upper Title<span
-                                                class="text-danger">*</span></label>
+                                        <label class="label text-secondary">Title<span class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
                                             <input type="text"
                                                 class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
-                                                name="title" value="{{ old('title', $ServiceContainer->title ?? '') }}"
-                                                required placeholder="Enter Title here">
+                                                name="title"
+                                                value="{{ old('title', $ProviderProcessContainer->title ?? '') }}" required
+                                                placeholder="Enter Title here">
                                         </div>
                                         @error('title')
                                             <div id="title-error" class="text-danger">{{ $message }}</div>
@@ -62,17 +64,14 @@
                                 <!-- Subtitle Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Image Upper Title<span
+                                        <label class="label text-secondary">Description<span
                                                 class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
-                                            <input type="text"
-                                                class="form-control text-dark ps-5 h-55 @error('sub_title') is-invalid @enderror"
-                                                name="sub_title"
-                                                value="{{ old('sub_title', $ServiceContainer->sub_title ?? '') }}"
-                                                placeholder="Enter Sub Title here">
+                                            <textarea class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror" name="description"
+                                                placeholder="Enter Description here">{{ old('description', $ProviderProcessContainer->description ?? '') }}</textarea>
                                         </div>
-                                        @error('sub_title')
-                                            <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                        @error('description')
+                                            <div id="description" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -85,7 +84,7 @@
                                             <input type="text"
                                                 class="form-control text-dark ps-5 h-55 @error('button_text') is-invalid @enderror"
                                                 name="button_text"
-                                                value="{{ old('button_text', $ServiceContainer->button_text ?? '') }}"
+                                                value="{{ old('button_text', $ProviderProcessContainer->button_text ?? '') }}"
                                                 placeholder="Enter Sub Title here">
                                         </div>
                                         @error('button_text')
@@ -93,33 +92,18 @@
                                         @enderror
                                     </div>
                                 </div>
-
                             </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group ">
-                                    <label class="label text-secondary mb-1">Image<span class="text-danger">*</span></label>
-                                    <input class="dropify form-control @error('image') is-invalid @enderror" type="file"
-                                        name="image"
-                                        data-default-file="{{ isset($ServiceContainer) && $ServiceContainer->image ? asset($ServiceContainer->image) : '' }}">
-                                    @error('image')
-                                        <div id="image-error" class="text-danger">{{ $message }}</div>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="d-flex flex-wrap gap-3">
+                                        {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
+                                        <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
+                                                class="ri-check-line text-white fw-medium"></i> Submit</button>
+                                    </div>
                                 </div>
                             </div>
-
+                        </form>
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="d-flex flex-wrap gap-3">
-                                {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
-                                <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
-                                        class="ri-check-line text-white fw-medium"></i> Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
                 </div>
             </div>
 
@@ -137,7 +121,7 @@
                                 data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
                                 <span class="py-sm-1 d-block">
                                     <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                    <span>Add New Service Container Content</span>
+                                    <span>Add New process Container Content</span>
                                 </span>
                             </a>
                         </div>
@@ -148,8 +132,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Sub Title</th>
+                                            <th scope="col">Sub Description</th>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -192,13 +177,13 @@
         {{-- ---------------  --}}
 
 
-        <x-modal id="EditServiceContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
+        <x-modal id="EditProviderProcessContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
             saveButton="Update">
-            <div id="EditServiceContainerContent"></div>
+            <div id="EditProviderProcessContainerContent"></div>
         </x-modal>
 
         {{-- here this return a model  start --}}
-        @include('backend.layouts.cms.home_page.service_container.create')
+        @include('backend.layouts.cms.provider_register_page.process_container.create')
 
 
     </div>
@@ -243,7 +228,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.service_container.index') }}",
+                    url: "{{ route('cms.provider_page.process.show') }}",
                     type: "get"
                 },
                 columns: [{
@@ -253,29 +238,39 @@
                         searchable: false
                     },
                     {
-                        data: 'title',
-                        name: 'title',
+                        data: 'sub_title',
+                        name: 'sub_title',
                         orderable: true,
-                        searchable: true,
+                        searchable: false,
                         render: function(data, type, row) {
-                            if (data.length > 50) {
-                                return data.substring(0, 50) + '...';
-                            } else {
-                                return data;
+                            if (data) {
+                                return `${data}`;
                             }
+                            return 'No Title Here';
                         }
                     },
                     {
-                        data: 'description',
-                        name: 'description',
+                        data: 'sub_description',
+                        name: 'sub_description',
                         orderable: true,
-                        searchable: true,
+                        searchable: false,
                         render: function(data, type, row) {
-                            if (data.length > 50) {
-                                return data.substring(0, 50) + '...';
-                            } else {
-                                return data;
+                            if (data) {
+                                return `${data}`;
                             }
+                            return 'No Sub Title';
+                        }
+                    },
+                    {
+                        data: 'background_image',
+                        name: 'background_image',
+                        orderable: true,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            if (data) {
+                                return `${data}`;
+                            }
+                            return 'No Image';
                         }
                     },
                     {
@@ -394,87 +389,97 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('cms.home_page.service_container.status', ':id') }}';
+            let statusUrl = '{{ route('cms.provider_page.process.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('cms.home_page.service_container.destroy', ':id') }}';
+            let deleteUrl = '{{ route('cms.provider_page.process.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    
     <script>
         $(document).ready(function() {
-            $('.dropify').dropify();
-        })
-    </script>
+            let drEvent = $('.dropify').dropify(); 
 
-    <script>
-        $('#request-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            // Disable the submit button to prevent multiple submissions
-            let submitButton = $('#submitButton');
-            submitButton.prop('disabled', true).text('Submitting...');
-
-            let storeurl = '{{ route('cms.home_page.service_container.store') }}';
-            let formData = new FormData(this); // Collect form data
-            $.ajax({
-                url: storeurl, // Route to handle form submission
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        flasher.success(response?.message);
-                        $('#basic_tables').DataTable().ajax.reload();
-                        $('#request-form').trigger("reset");
-                        $('.btn-close').trigger('click');
-                    } else {
-                        flasher.error('Something went wrong.');
-                    }
-                },
-                error: function(response) {
-                    // Check if there are validation errors
-                    if (response.responseJSON.errors) {
-                        $('#show-error').html(
-                            `<div class="text-danger">${response.responseJSON.message}</div>`
-                        );
-                    }
-                },
-                complete: function() {
-                    // Re-enable the submit button after the request completes
-                    submitButton.prop('disabled', false).text('Submit Request');
-                }
+            // Reset Dropify when opening the "Add New" modal
+            $('#CreateServiceContainer').on('show.bs.modal', function() {
+                let dropifyInstance = drEvent.data('dropify');
+                dropifyInstance.resetPreview();
+                dropifyInstance.clearElement();
             });
 
+            // Handle form submission
+            $('#request-form').on('submit', function(event) {
+                event.preventDefault();
+                let submitButton = $('#submitButton');
+                submitButton.prop('disabled', true).text('Submitting...');
+
+                let updateUrl = '{{ route('cms.provider_page.process.store') }}';
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: updateUrl,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            flasher.success(response?.message);
+                            $('#basic_tables').DataTable().ajax.reload();
+
+                            // Reset form and Dropify after successful submission
+                            $('#request-form')[0].reset();
+                            let dropifyInstance = drEvent.data('dropify');
+                            dropifyInstance.resetPreview();
+                            dropifyInstance.clearElement();
+
+                            // Close modal
+                            $('.btn-close').trigger('click');
+                        } else {
+                            flasher.error('Something went wrong.');
+                        }
+                    },
+                    error: function(response) {
+                        if (response.responseJSON.errors) {
+                            $('#show-error').html(
+                                `<div class="text-danger">${response.responseJSON.message}</div>`
+                            );
+                        }
+                    },
+                    complete: function() {
+                        submitButton.prop('disabled', false).text('Submit');
+                    }
+                });
+            });
         });
     </script>
-
     for update data
     <script>
         function viewModel(id) {
-            let url = '{{ route('cms.home_page.service_container.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('cms.provider_page.process.edit', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function(resp) {
-                    $('#EditServiceContainerContent').html(resp);
+                    $('#EditProviderProcessContainerContent').html(resp);
                     $('#request-form-update').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
                         // Disable the submit button to prevent multiple submissions
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('cms.home_page.service_container.update', ':id') }}'
+                        let url = '{{ route('cms.provider_page.process.update', ':id') }}'
                             .replace(
                                 ':id', id);
                         let formData = new FormData(this); // Collect form data
                         $.ajax({
-                            url: storeurl, // Route to handle form submission
+                            url: url, // Route to handle form submission
                             type: "POST",
                             data: formData,
                             processData: false,
