@@ -9,6 +9,7 @@ enum Page: string
     case RestaurantPage = 'restaurant_page';
     case RealEstatePage = 'RealEstate_page';
     case ServiceRegisterPage = 'ServiceRegister_page';
+    case AboutPage ='about_page';
 
 
 }

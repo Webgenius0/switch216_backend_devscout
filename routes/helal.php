@@ -10,7 +10,9 @@
 
 
 use App\Http\Controllers\Web\Backend\CategoryController;
+use App\Http\Controllers\Web\Backend\CMS\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\CarController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
@@ -85,6 +87,16 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
   Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
 
+
+  // home view container cms
+  Route::get('/cms/home-page/advertisement-container', [HomePageAdvertisementContainerController::class ,'index'])->name('cms.home_page.advertisement_container.index');
+  Route::post('/cms/home-page/advertisement-container/update', [HomePageAdvertisementContainerController::class ,'update'])->name('cms.home_page.advertisement_container.update');
+
+  // home view About us cms
+  Route::get('/cms/home-page/AboutUs-container',[AboutUsPageController::class,'index'])->name('cms.home_page.AboutUs-container.index');
+  Route::Post('/cms/home-page/service-container-update', [AboutUsPageController::class, 'AboutContainerUpdate'])->name('cms.home_page.service_container.service_container_update');
+  Route::post('/cms/home-page/service-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.home_page.service_container.status');
+ 
   // home platform work container cms 
   Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
   Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');
