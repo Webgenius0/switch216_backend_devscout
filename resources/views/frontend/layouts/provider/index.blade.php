@@ -203,7 +203,7 @@
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
                     <div class="video-container">
-                        <video id="work-video" src="{{ asset($provider_work_container->image) }}"
+                        <video id="work-video" src="{{ asset($provider_work_container->image?? 'frontend/assets/images/work-video.mp4') }}"
                             type="video/mp4"></video>
                         <button id="work-video-play-button" class="play-button">
                             &#9658;
