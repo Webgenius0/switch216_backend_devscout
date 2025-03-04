@@ -221,8 +221,8 @@ $systemSetting = App\Models\SystemSetting::first();
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('cms.home_page.AboutUs-container.index') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.AboutUs-container.index') ? 'active' : '' }}">
+                        <a href="{{ route('cms.home_page.about_us_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.about_us_container.index') ? 'active' : '' }}">
                             About Us
                         </a>
                     </li>

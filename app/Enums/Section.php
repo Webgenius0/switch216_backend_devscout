@@ -32,10 +32,9 @@ enum Section: string
     case ServiceRegisterImageContainer = 'ServiceProviderImage_container';
     case ProviderProcessContainer = 'ProviderProcess_container';
     case ProviderProcessImageContainer = 'provider_process_image_container';
-
     //about section
-
     case AboutContainer = 'about_container';
+    case AboutServiceContainer = 'about_service_container';
     // footer section
     case SocialLinkContainer = 'social_link_container';
 }

@@ -186,9 +186,6 @@ class ProviderRegisterPageController extends Controller
         }
     }
 
-
-
-
     public function status(Request $request, $id)
     {
 

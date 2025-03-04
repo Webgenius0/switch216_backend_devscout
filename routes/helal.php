@@ -89,14 +89,40 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
   // home view container cms
-  Route::get('/cms/home-page/advertisement-container', [HomePageAdvertisementContainerController::class ,'index'])->name('cms.home_page.advertisement_container.index');
-  Route::post('/cms/home-page/advertisement-container/update', [HomePageAdvertisementContainerController::class ,'update'])->name('cms.home_page.advertisement_container.update');
+  Route::get('/cms/home-page/advertisement-container', [HomePageAdvertisementContainerController::class, 'index'])->name('cms.home_page.advertisement_container.index');
+  Route::put('/cms/home-page/advertisement-container/update/{id}', [HomePageAdvertisementContainerController::class, 'update'])->name('cms.home_page.advertisement_container.update');
 
-  // home view About us cms
-  Route::get('/cms/home-page/AboutUs-container',[AboutUsPageController::class,'index'])->name('cms.home_page.AboutUs-container.index');
-  Route::Post('/cms/home-page/service-container-update', [AboutUsPageController::class, 'AboutContainerUpdate'])->name('cms.home_page.service_container.service_container_update');
-  Route::post('/cms/home-page/service-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.home_page.service_container.status');
- 
+
+  // About 1st view About us cms
+  Route::get('/cms/home-page/AboutUs-container/index', [AboutUsPageController::class, 'index'])->name('cms.home_page.about_us_container.index');
+  Route::put('/cms/home-page/service-container-update/{id}', [AboutUsPageController::class, 'AboutContainerUpdate'])->name('cms.home_page.about_us_container.update');
+
+
+  // About 2nd view About us cms
+
+  Route::get('/cms/home-page/AboutUs-container/show', [AboutUsPageController::class, 'show'])->name('cms.home_page.about_us_container.index.show');
+  Route::get('/cms/home-page/AboutUs-container/store', [AboutUsPageController::class, 'store'])->name('cms.home_page.about_us_container.store');
+
+
+
+
+  Route::get('/cms/provider-page/process/container/show', [ProviderPageProcessContainerController::class, 'show'])->name('cms.provider_page.process.show');
+  Route::post('/cms/provider-page/process/container/store', [ProviderPageProcessContainerController::class, 'store'])->name('cms.provider_page.process.store');
+  Route::get('/cms/provider-page/process/container/edit/{id}', [ProviderPageProcessContainerController::class, 'edit'])->name('cms.provider_page.process.edit');
+  Route::put('/cms/provider-page/process/container/update/{id}', [ProviderPageProcessContainerController::class, 'update'])->name('cms.provider_page.process.update');
+  Route::post('/cms/provider-page/process/container/status/{id}', [ProviderPageProcessContainerController::class, 'status'])->name('cms.provider_page.process.status');
+  Route::delete('/cms/provider-page/process/container/destroy/{id}', [ProviderPageProcessContainerController::class, 'destroy'])->name('cms.provider_page.process.destroy');
+
+
+
+
+
+
+
+
+
+
+
   // home platform work container cms 
   Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
   Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');

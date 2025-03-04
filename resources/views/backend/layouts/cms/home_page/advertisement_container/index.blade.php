@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">CMS Home Review List</h3>
+            <h3 class="mb-0">CMS Home Advertisement List</h3>
 
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -20,7 +20,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">CMS Home Review</span>
+                        <span class="fw-medium">CMS Home Advertisement</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <span class="fw-medium">CMS Home Review List</span>
@@ -39,9 +39,10 @@
                             <p class="fs-15">Update Home Page User Advertisement Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.advertisement_container.update') }}"
+                        <form action="{{ route('cms.home_page.advertisement_container.update', ['id' => $AdContainer->id]) }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -81,7 +82,7 @@
                                         <label class="label text-secondary mb-1">Image<span
                                                 class="text-danger">*</span></label>
                                         <input class="dropify form-control @error('image') is-invalid @enderror"
-                                            type="file" name="image" data-default-file="">
+                                            type="file" name="image" data-default-file="{{ isset($AdContainer) && $AdContainer->image ? asset($AdContainer->image) : '' }}">
                                         @error('image')
                                             <div id="image-error" class="text-danger">{{ $message }}</div>
                                         @enderror

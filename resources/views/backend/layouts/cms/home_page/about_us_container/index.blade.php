@@ -38,9 +38,10 @@
                             <p class="fs-15">Update About Page  Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.service_container.service_container_update') }}"
+                        <form action="{{ route('cms.home_page.about_us_container.update', $AboutContainer->id ?? '') }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -175,13 +176,13 @@
         {{-- ---------------  --}}
 
 
-        <x-modal id="EditServiceContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
+        <x-modal id="EditAboutContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
             saveButton="Update">
-            <div id="EditServiceContainerContent"></div>
+            <div id="EditAboutContainerContent"></div>
         </x-modal>
 
         {{-- here this return a model  start --}}
-        @include('backend.layouts.cms.home_page.service_container.create')
+        @include('backend.layouts.cms.home_page.about_us_container.create')
 
 
     </div>
@@ -226,7 +227,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.service_container.index') }}",
+                    url: "{{ route('cms.home_page.about_us_container.index') }}",
                     type: "get"
                 },
                 columns: [{
@@ -445,7 +446,7 @@
                 type: "GET",
                 url: url,
                 success: function(resp) {
-                    $('#EditServiceContainerContent').html(resp);
+                    $('#EditAboutContainerContent').html(resp);
                     $('#request-form-update').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
                         // Disable the submit button to prevent multiple submissions
