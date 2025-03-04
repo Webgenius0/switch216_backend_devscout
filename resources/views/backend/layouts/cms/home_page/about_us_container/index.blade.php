@@ -96,7 +96,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="d-flex flex-wrap gap-3">
+                            <div class="d-flex flex-wrap gap-3 p-4">
                                 {{-- <button type="submit" class="btn btn-danger py-2 px-4 fw-medium fs-16 text-white">Cancel</button> --}}
                                 <button type="submit" class="btn btn-primary py-2 px-4 fw-medium fs-16"> <i
                                         class="ri-check-line text-white fw-medium"></i> Submit</button>
@@ -227,7 +227,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.about_us_container.index') }}",
+                    url: "{{ route('cms.home_page.about_us_container.index.show') }}",
                     type: "get"
                 },
                 columns: [{
@@ -378,14 +378,14 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('cms.home_page.service_container.status', ':id') }}';
+            let statusUrl = '{{ route('cms.home_page.about_us_container.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('cms.home_page.service_container.destroy', ':id') }}';
+            let deleteUrl = '{{ route('cms.home_page.about_us_container.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>
@@ -403,7 +403,7 @@
             let submitButton = $('#submitButton');
             submitButton.prop('disabled', true).text('Submitting...');
 
-            let storeurl = '{{ route('cms.home_page.service_container.store') }}';
+            let storeurl = '{{ route('cms.home_page.about_us_container.store') }}';
             let formData = new FormData(this); // Collect form data
             $.ajax({
                 url: storeurl, // Route to handle form submission
@@ -441,7 +441,7 @@
     for update data
     <script>
         function viewModel(id) {
-            let url = '{{ route('cms.home_page.service_container.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('cms.home_page.about_us_container.edit', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
@@ -453,7 +453,7 @@
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('cms.home_page.service_container.update', ':id') }}'
+                        let storeurl = '{{ route('cms.home_page.about_us_container.update', ':id') }}'
                             .replace(
                                 ':id', id);
                         let formData = new FormData(this); // Collect form data

@@ -92,6 +92,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::get('/cms/home-page/advertisement-container', [HomePageAdvertisementContainerController::class, 'index'])->name('cms.home_page.advertisement_container.index');
   Route::put('/cms/home-page/advertisement-container/update/{id}', [HomePageAdvertisementContainerController::class, 'update'])->name('cms.home_page.advertisement_container.update');
 
+  
 
   // About 1st view About us cms
   Route::get('/cms/home-page/AboutUs-container/index', [AboutUsPageController::class, 'index'])->name('cms.home_page.about_us_container.index');
@@ -101,24 +102,11 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // About 2nd view About us cms
 
   Route::get('/cms/home-page/AboutUs-container/show', [AboutUsPageController::class, 'show'])->name('cms.home_page.about_us_container.index.show');
-  Route::get('/cms/home-page/AboutUs-container/store', [AboutUsPageController::class, 'store'])->name('cms.home_page.about_us_container.store');
-
-
-
-
-  Route::get('/cms/provider-page/process/container/show', [ProviderPageProcessContainerController::class, 'show'])->name('cms.provider_page.process.show');
-  Route::post('/cms/provider-page/process/container/store', [ProviderPageProcessContainerController::class, 'store'])->name('cms.provider_page.process.store');
-  Route::get('/cms/provider-page/process/container/edit/{id}', [ProviderPageProcessContainerController::class, 'edit'])->name('cms.provider_page.process.edit');
-  Route::put('/cms/provider-page/process/container/update/{id}', [ProviderPageProcessContainerController::class, 'update'])->name('cms.provider_page.process.update');
-  Route::post('/cms/provider-page/process/container/status/{id}', [ProviderPageProcessContainerController::class, 'status'])->name('cms.provider_page.process.status');
-  Route::delete('/cms/provider-page/process/container/destroy/{id}', [ProviderPageProcessContainerController::class, 'destroy'])->name('cms.provider_page.process.destroy');
-
-
-
-
-
-
-
+  Route::post('/cms/home-page/AboutUs-container/store', [AboutUsPageController::class, 'store'])->name('cms.home_page.about_us_container.store');
+  Route::get('/cms/home-page/AboutUs-container/edit/{id}', [AboutUsPageController::class, 'edit'])->name('cms.home_page.about_us_container.edit');
+  Route::put('/cms/home-page/AboutUs-container/update/{id}', [AboutUsPageController::class, 'update'])->name('cms.home_page.about_us_container.update');
+  Route::post('/cms/home-page/AboutUs-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.home_page.about_us_container.status');
+  Route::delete('/cms/home-page/AboutUs-container/destroy/{id}', [AboutUsPageController::class, 'destroy'])->name('cms.home_page.about_us_container.destroy');
 
 
 

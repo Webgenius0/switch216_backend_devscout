@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Web\Backend\CMS;
 
 
+use view;
+use Exception;
 use App\Enums\Page;
+use App\Models\CMS;
 use App\Enums\Section;
 use App\Helpers\Helper;
-use App\Http\Controllers\Controller;
-use App\Models\CMS;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class AboutUsPageController extends Controller
 {
@@ -52,7 +53,7 @@ class AboutUsPageController extends Controller
                 }
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), 'aboutImage', time() . '_' . getFileName($request->file('image')));
             }
-          $data =  CMS::updateOrCreate(
+            $data =  CMS::updateOrCreate(
                 [
                     'page' => Page::AboutPage->value,
                     'section' => Section::AboutContainer->value,
@@ -60,16 +61,16 @@ class AboutUsPageController extends Controller
                 $validatedData
             );
 
-          
+
             flash()->success('Service container update successfully');
-            return redirect()->route('cms.home_page.AboutUs-container.index');
+            return redirect()->route('cms.home_page.about_us_container.index');
         } catch (Exception $e) {
             Log::error("HomePageServiceContainerController::ServiceContainerUpdate" . $e->getMessage());
             flash()->error('Service container not update successfully');
-            return redirect()->route('cms.home_page.AboutUs-container.index');
+            return redirect()->route('cms.home_page.about_us_container.index');
         }
     }
-    
+
 
     public function show(Request $request)
     {
@@ -79,6 +80,7 @@ class AboutUsPageController extends Controller
             $data = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->latest();
             return DataTables::of($data)
 
+                ->addIndexColumn()
                 ->addColumn('status', function ($data) {
                     $status = '<div class="form-check form-switch">';
                     $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;width:40px"' . $data->id . '" name="status"';
@@ -86,7 +88,6 @@ class AboutUsPageController extends Controller
                     if ($data->status == "active") {
                         $status .= ' checked';
                     }
-
                     $status .= '>';
                     $status .= '</div>';
 
@@ -110,20 +111,18 @@ class AboutUsPageController extends Controller
         return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutServiceContainer"));
     }
 
-
     public function store(Request $request)
     {
 
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
 
         try {
-            if ($request->hasFile('image')) {
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'provider_register_image', time() . '_' . getFileName($request->file('image')));
-            }
-            $validatedData['page'] = Page::ServiceRegisterPage->value;
-            $validatedData['section'] = Section::ServiceRegisterImageContainer->value;
+
+            $validatedData['page'] = Page::AboutPage->value;
+            $validatedData['section'] = Section::AboutServiceContainer->value;
 
             CMS::Create($validatedData);
 
@@ -141,31 +140,25 @@ class AboutUsPageController extends Controller
     public function edit(string $id)
     {
         $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.provider_register_page.service_container.edit", compact("data"));
+        return view("backend.layouts.cms.home_page.about_us_container.edit", compact("data"));
     }
 
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
 
         try {
             $data = CMS::findOrFail($id);
 
-            if ($request->hasFile('image')) {
-                if ($data->image) {
-                    Helper::fileDelete(public_path($data->image));
-                }
-                $imagePath = Helper::fileUpload($request->file('image'), 'provider_register_image', time());
-
-                $data->image = $imagePath;
-            }
-
-            $data->save();
+            // Update fields
+            $data->update($validatedData);
 
             return response()->json([
                 "success" => true,
@@ -181,6 +174,7 @@ class AboutUsPageController extends Controller
             ]);
         }
     }
+
 
     public function status(Request $request, $id)
     {
