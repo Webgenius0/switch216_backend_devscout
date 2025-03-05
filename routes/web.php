@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
@@ -33,12 +34,15 @@ Route::get('/map-api-key', function () {
 })->name('map.api.key');
 
 
-
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/provider', [ServiceProviderRegisterPageController::class, 'index'])->name('provider.index');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
+
+Route::get('/about', [AboutUsPageController::class, 'index'])->name('about');
+
 Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
 Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
+
 //show single service with contractor profile
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 //emergency page
@@ -59,9 +63,9 @@ Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategory
 
 
 
-Route::get('/about', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('about');
+// Route::get('/about', function () {
+//     return view(view: 'frontend.layouts.about.index');
+// })->name('about');
 
 // Route::get('/contact', function () {
 //     return view(view: 'frontend.layouts.contact.index');

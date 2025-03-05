@@ -1654,15 +1654,20 @@
         <section class="user-review">
             <div class="container">
                 <h2 class="title" data-aos="fade-up">
-                    {{ $cms['review_user_container']->title ?? 'View Some ' }}</h2>
+                    {{-- {{ $cms['review_user_container']->title ?? 'View Some' }} --}}
+                    {{ $cms['advertisementSection']->title ?? 'View Some' }}
+                
+                </h2>
                 <p class="des" data-aos="fade-up">
-                    {{ $cms['review_user_container']->description ??
-                        "Lorem ipsum " }}
+                    {{-- {{ $cms['review_user_container']->description ??
+                        "Lorem ipsum " }} --}}
+                        {{$cms['advertisementSection']->description ?? 'Lorem ipsum'}}
                 </p>
             </div>
             <div class="new-banner-photo"  >
                 <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
-                <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
+                <img src="{{ asset($cms['advertisementSection']->image ?? 'frontend/assets/images/add_photo.jpg') }}"  alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
+                
                 </a> 
             </div>
         </section>
