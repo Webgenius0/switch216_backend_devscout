@@ -29,7 +29,7 @@ class AboutUsPageController extends Controller
                 'image' => null
             ]
         );
-        return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutContainer"));
+        return view("backend.layouts.cms.about_page.about_us_container.index", compact("AboutContainer"));
     }
 
     // update main service container
@@ -61,6 +61,8 @@ class AboutUsPageController extends Controller
                 $validatedData
             );
 
+            
+            $data->update($validatedData);
 
             flash()->success('Service container update successfully');
             return redirect()->route('cms.home_page.about_us_container.index');
@@ -163,7 +165,6 @@ class AboutUsPageController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "Service Container Content Updated Successfully",
-                "image_url" => asset($data->image)
             ]);
         } catch (Exception $e) {
             Log::error("ProviderRegisterController::update - " . $e->getMessage());

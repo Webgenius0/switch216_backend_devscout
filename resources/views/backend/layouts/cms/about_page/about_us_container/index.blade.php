@@ -227,7 +227,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.about_us_container.index.show') }}",
+                    url: "{{ route('cms.home_page.about_us_container.index') }}",
                     type: "get"
                 },
                 columns: [{
