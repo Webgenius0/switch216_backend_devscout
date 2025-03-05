@@ -9,36 +9,38 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
-<style>
-    .dropdown-menu {
-        position: absolute;
-        background: white;
-        border: 1px solid #ccc;
-        max-height: 150px;
-        overflow-y: auto;
-        width: 40%;
-        display: none;
-        margin-top: 80px;
-    }
-
-    .dropdown-menu div {
-        padding: 8px;
-        cursor: pointer;
-    }
-
-    .dropdown-menu div:hover {
-        background: #f0f0f0;
-    }
-    .new-banner-photo {
-        padding:30px 20px
-    }
-    @media screen and (min-width: 1300px){
-        .new-banner-photo {
-            padding:60px 400px
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
+    <style>
+        .dropdown-menu {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 40%;
+            display: none;
+            margin-top: 80px;
         }
-    }
-</style>
+
+        .dropdown-menu div {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu div:hover {
+            background: #f0f0f0;
+        }
+
+        .new-banner-photo {
+            padding: 30px 20px
+        }
+
+        @media screen and (min-width: 1300px) {
+            .new-banner-photo {
+                padding: 60px 400px
+            }
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -77,7 +79,7 @@
                             <p class="slide-des">
                                 {{ $d->description ??
                                     "Explore trusted professionals across multiple categories, from
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
                                 </h4>
                             </p>
                         </div>
@@ -131,7 +133,8 @@
                     </div>
                 </div>
                 <div class="slide-item">
-                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-05.jpg') }}" alt="Slide image" />
+                    <img class="slide-bg-img" src="{{ asset('frontend/assets/images/banner-05.jpg') }}"
+                        alt="Slide image" />
                     <div class="overlay"></div>
                     <div class="slide-content">
                         <h4 class="slide-title">Find the Perfect Service for Your Needs</h4>
@@ -186,7 +189,8 @@
 
         <div class="slide-nav">
             <button id="slide-prev-btn" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12"
+                    fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M-4.37114e-08 6C-6.78525e-08 5.44772 0.447715 5 1 5L17 5C17.5523 5 18 5.44771 18 6C18 6.55228 17.5523 7 17 7L1 7C0.447715 7 4.00344e-08 6.55228 -4.37114e-08 6Z"
                         fill="white" />
@@ -213,11 +217,12 @@
     <!-- search section start -->
     <div class="container search-container" data-aos="fade-up">
         <div class="search-section">
-            <form action="{{route('home.serchingStatic')}}" method="POST">
+            <form action="{{ route('home.serchingStatic') }}" method="POST">
                 @csrf
                 <div class="search-item">
                     <div class="item-title">Location</div>
-                    <input id="locationInput" name="location" class="search-input" placeholder="Select location" type="text" autocomplete="off" />
+                    <input id="locationInput" name="location" class="search-input" placeholder="Select location"
+                        type="text" autocomplete="off" />
                     <div id="locationDropdown" class="dropdown-menu"></div>
                 </div>
                 <div class="search-item">
@@ -332,8 +337,8 @@
                             </div>
                         @endif
 
-                        <a href="{{route('contact_us.index')}}" class="button"
-                            data-aos="fade-left">{{ $cms['service_container']->button_text ?? 'Contact Now' }}</a>
+                        <a href="{{ route('service.emergency') }}" class="button"
+                            data-aos="fade-left">{{ $cms['service_container']->button_text ?? 'Emergency' }}</a>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -384,9 +389,10 @@
                 <p class="des">
                     {{ $cms['process_container']->description ??
                         'Yet bed any for traveling assistance indulgence unpleasing. Not
-                                                                                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                                                                                    thoughts all exercise blessing. Indulgence way everything joy.' }}
                 </p>
-                <a href="{{ route('service.category') }}" class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
+                <a href="{{ route('service.category') }}"
+                    class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
             </div>
 
             @if (isset($cms['process_container_content']) && count($cms['process_container_content']) > 0)
@@ -399,7 +405,7 @@
                             <p class="item-des">
                                 {{ $d->description ??
                                     "Party we years to order allow asked of. We so opinion friends me
-                                                                                                                                                                                                                                message as delight." }}
+                                                                                                                                                                                                                                                                message as delight." }}
                             </p>
                         </div>
                     @endforeach
@@ -525,7 +531,7 @@
                                         <p class="icon-des">
                                             {{ $d->description ??
                                                 "Lorem Ipsum is simply dummy text of the printing and
-                                                                                                        typesetting industry. Lorem Ipsum has." }}
+                                                                                                                                                    typesetting industry. Lorem Ipsum has." }}
                                         </p>
                                     </div>
                                 </div>
@@ -656,9 +662,9 @@
                     <p class="des">
                         {{ $cms['provider_work_container']->description ??
                             'Yet bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                thoughts all exercise blessing. Indulgence way everything joy. Yet
-                                                                                                bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy. Yet
+                                                                                                                        bed any for travelling assistance indulgence unpleasing. Not
+                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy.' }}
                     </p>
                     <a href="#"
                         class="button">{{ $cms['provider_work_container']->button_text ?? 'Service Provider showing Work' }}</a>
@@ -1650,7 +1656,7 @@
         <!-- testimonial section end -->
 
 
-  <!-- ads section start -->
+        <!-- ads section start -->
         <section class="user-review">
             <div class="container">
                 <h2 class="title" data-aos="fade-up">
@@ -1659,15 +1665,13 @@
                 
                 </h2>
                 <p class="des" data-aos="fade-up">
-                    {{-- {{ $cms['review_user_container']->description ??
-                        "Lorem ipsum " }} --}}
-                        {{$cms['advertisementSection']->description ?? 'Lorem ipsum'}}
+                    {{ $cms['advertisementSection']->description ??
+                        "Lorem ipsum " }}
                 </p>
             </div>
-            <div class="new-banner-photo"  >
+            <div class="new-banner-photo">
                 <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
-                <img src="{{ asset($cms['advertisementSection']->image ?? 'frontend/assets/images/add_photo.jpg') }}"  alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
-                
+                <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
                 </a> 
             </div>
         </section>
@@ -1681,8 +1685,8 @@
                     <p class="des">
                         {{ $cms['faq_container']->description ??
                             "Yet bed any for assistance indulgence unpleasing. Not thoughts all
-                                                exercise blessing. Indulgence way everything joy alteration
-                                                boisterous the attachment." }}
+                                                                        exercise blessing. Indulgence way everything joy alteration
+                                                                        boisterous the attachment." }}
 
                     </p>
                     <a class="more-btn"
@@ -1712,8 +1716,8 @@
                                         <div class="accordion-body">
                                             {{ $d->description ??
                                                 'Yet bed any for assistance indulgence unpleasing. Not
-                                                                                    thoughts all exercise blessing. Indulgence way everything
-                                                                                    joy alteration boisterous the attachment.' }}
+                                                                                                                                thoughts all exercise blessing. Indulgence way everything
+                                                                                                                                joy alteration boisterous the attachment.' }}
                                         </div>
                                     </div>
                                 </div>
@@ -1739,14 +1743,12 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false"
-                                        aria-controls="faqTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
                                         Are there any additional fee?
                                     </button>
                                 </h2>
-                                <div id="faqTwo" class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordion">
+                                <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
                                         Yet bed any for assistance indulgence unpleasing. Not
                                         thoughts all exercise blessing. Indulgence way everything
@@ -1756,14 +1758,12 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false"
-                                        aria-controls="faqThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
                                         How can I get the app?
                                     </button>
                                 </h2>
-                                <div id="faqThree" class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordion">
+                                <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
                                         Yet bed any for assistance indulgence unpleasing. Not
                                         thoughts all exercise blessing. Indulgence way everything
@@ -1773,14 +1773,12 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#faqfour" aria-expanded="false"
-                                        aria-controls="faqfour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqfour" aria-expanded="false" aria-controls="faqfour">
                                         What features do you offer and other not?
                                     </button>
                                 </h2>
-                                <div id="faqfour" class="accordion-collapse collapse"
-                                    data-bs-parent="#faqAccordion">
+                                <div id="faqfour" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
                                         Yet bed any for assistance indulgence unpleasing. Not
                                         thoughts all exercise blessing. Indulgence way everything
@@ -1838,7 +1836,7 @@
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
     <script type="text/javascript">
         let assetEasepick = "{{ asset('frontend/assets/css/plugins/easepick-1.2.1.css') }}";
         let assetEasepickProvider = "{{ asset('frontend/assets/css/provider-profile-easepick.css') }}";
@@ -1858,56 +1856,55 @@
         }
     </script>
 
-<script>
-    $(document).ready(function () {
-    let cities = [];
+    <script>
+        $(document).ready(function() {
+            let cities = [];
 
-    // Load Morocco city list from JSON
-    $.getJSON("/backend/admin/assets/morocco_city_list.json", function (data) {
-        cities = data.results.map(city => city.name); // Extract only city names
-    });
-
-    $("#locationInput").on("input", function () {
-        let query = $(this).val().toLowerCase();
-        let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
-
-        let dropdown = $("#locationDropdown");
-        dropdown.empty().hide();
-
-        if (filteredCities.length > 0) {
-            dropdown.show();
-            filteredCities.forEach(city => {
-                dropdown.append(`<div class="dropdown-item">${city}</div>`);
+            // Load Morocco city list from JSON
+            $.getJSON("/backend/admin/assets/morocco_city_list.json", function(data) {
+                cities = data.results.map(city => city.name); // Extract only city names
             });
-        }
-    });
-    $("#locationInput").on("click", function () {
-        let query = $(this).val().toLowerCase();
-        let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
 
-        let dropdown = $("#locationDropdown");
-        dropdown.empty().hide();
+            $("#locationInput").on("input", function() {
+                let query = $(this).val().toLowerCase();
+                let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
 
-        if (filteredCities.length > 0) {
-            dropdown.show();
-            filteredCities.forEach(city => {
-                dropdown.append(`<div class="dropdown-item">${city}</div>`);
+                let dropdown = $("#locationDropdown");
+                dropdown.empty().hide();
+
+                if (filteredCities.length > 0) {
+                    dropdown.show();
+                    filteredCities.forEach(city => {
+                        dropdown.append(`<div class="dropdown-item">${city}</div>`);
+                    });
+                }
             });
-        }
-    });
-    // Click event for selecting a city
-    $(document).on("click", ".dropdown-item", function () {
-        $("#locationInput").val($(this).text());
-        $("#locationDropdown").hide();
-    });
+            $("#locationInput").on("click", function() {
+                let query = $(this).val().toLowerCase();
+                let filteredCities = cities.filter(city => city.toLowerCase().includes(query));
 
-    // Hide dropdown if clicked outside
-    $(document).click(function (e) {
-        if (!$(e.target).closest(".search-item").length) {
-            $("#locationDropdown").hide();
-        }
-    });
-});
+                let dropdown = $("#locationDropdown");
+                dropdown.empty().hide();
 
-</script>
+                if (filteredCities.length > 0) {
+                    dropdown.show();
+                    filteredCities.forEach(city => {
+                        dropdown.append(`<div class="dropdown-item">${city}</div>`);
+                    });
+                }
+            });
+            // Click event for selecting a city
+            $(document).on("click", ".dropdown-item", function() {
+                $("#locationInput").val($(this).text());
+                $("#locationDropdown").hide();
+            });
+
+            // Hide dropdown if clicked outside
+            $(document).click(function(e) {
+                if (!$(e.target).closest(".search-item").length) {
+                    $("#locationDropdown").hide();
+                }
+            });
+        });
+    </script>
 @endpush
