@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Backend\CMS;
 
+
+use view;
 use Exception;
 use App\Enums\Page;
 use App\Models\CMS;
@@ -12,77 +14,73 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
-class ProviderRegisterPageController extends Controller
+class AboutUsPageController extends Controller
 {
-
-    public function index()
+    public function index(Request $request)
     {
-        $ServiceRegisterContainer = CMS::firstOrCreate(
+        $AboutContainer = CMS::firstOrCreate(
             [
-                'page' => Page::ServiceRegisterPage,
-                'section' => Section::ServiceRegisterContainer
+                'page' => Page::AboutPage,
+                'section' => Section::AboutContainer
             ],
             [
                 'title' => '',
                 'description' => '',
-                'button_text' => null
+                'image' => null
             ]
         );
-
-        return view('backend.layouts.cms.provider_register_page.service_container.index', compact('ServiceRegisterContainer'));
+        return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutContainer"));
     }
 
-    // update main Process container
-    public function ServiceContainerUpdate(Request $request)
+    // update main service container
+    public function AboutContainerUpdate(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'button_text' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
 
-            $ServiceRegisterContainer = CMS::where('page', Page::ServiceRegisterPage)
-                ->where('section', Section::ServiceRegisterContainer)
+            $AboutContainer = CMS::where('page', Page::AboutPage)
+                ->where('section', Section::AboutContainer)
                 ->first();
 
-
-             if ($ServiceRegisterContainer) {
-                    $ServiceRegisterContainer->update($validatedData);
-                }else{
-                    CMS::updateOrCreate(
-                        [
-                            'page' => Page::ServiceRegisterPage->value,
-                            'section' => Section::ServiceRegisterContainer->value,
-                        ],
-                        $validatedData
-                    );
-
+            if ($request->hasFile('image')) {
+                if ($AboutContainer && $AboutContainer->image && file_exists(public_path($AboutContainer->image))) {
+                    Helper::fileDelete(public_path($AboutContainer->image));
                 }
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'aboutImage', time() . '_' . getFileName($request->file('image')));
+            }
+            $data =  CMS::updateOrCreate(
+                [
+                    'page' => Page::AboutPage->value,
+                    'section' => Section::AboutContainer->value,
+                ],
+                $validatedData
+            );
+
 
             flash()->success('Service container update successfully');
-            return redirect()->route('cms.service_page.container');
+            return redirect()->route('cms.home_page.about_us_container.index');
         } catch (Exception $e) {
-            Log::error("ServiceRegisterPageContainerController::ProcessContainerUpdate" . $e->getMessage());
-            flash()->error('Process container not update successfully');
-            return redirect()->route('cms.service_page.container');
+            Log::error("HomePageServiceContainerController::ServiceContainerUpdate" . $e->getMessage());
+            flash()->error('Service container not update successfully');
+            return redirect()->route('cms.home_page.about_us_container.index');
         }
     }
+
 
     public function show(Request $request)
     {
 
-        $ServiceRegisterImageContainer = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ServiceRegisterImageContainer)->first();
-        // dd($banner);
+        $AboutServiceContainer = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->first();
         if ($request->ajax()) {
-            $data = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ServiceRegisterImageContainer)->latest();
+            $data = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->latest();
             return DataTables::of($data)
-                ->addIndexColumn()
 
-                ->addColumn('image', function ($data) {
-                    return '<img src="' . asset($data->image) . '" class="wh-40 rounded-3" alt="user">';
-                })
+                ->addIndexColumn()
                 ->addColumn('status', function ($data) {
                     $status = '<div class="form-check form-switch">';
                     $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;width:40px"' . $data->id . '" name="status"';
@@ -90,7 +88,6 @@ class ProviderRegisterPageController extends Controller
                     if ($data->status == "active") {
                         $status .= ' checked';
                     }
-
                     $status .= '>';
                     $status .= '</div>';
 
@@ -100,7 +97,7 @@ class ProviderRegisterPageController extends Controller
                     return '<div class="action-wrapper">
                         <a type="button" href="javascript:void(0)"
                                 class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
-                                data-bs-toggle="modal" data-bs-target="#EditProviderContainer" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
+                                data-bs-toggle="modal" data-bs-target="#EditAboutContainer" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
                             </a>
                         <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
                         <i class="material-symbols-outlined fs-16 text-danger">delete</i>
@@ -108,26 +105,24 @@ class ProviderRegisterPageController extends Controller
              
                 </div>';
                 })
-                ->rawColumns(['image', 'status', 'action'])
+                ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.cms.provider_register_page.service_container.index", compact("ServiceRegisterImageContainer"));
+        return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutServiceContainer"));
     }
-
 
     public function store(Request $request)
     {
 
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
 
         try {
-            if ($request->hasFile('image')) {
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'provider_register_image', time() . '_' . getFileName($request->file('image')));
-            }
-            $validatedData['page'] = Page::ServiceRegisterPage->value;
-            $validatedData['section'] = Section::ServiceRegisterImageContainer->value;
+
+            $validatedData['page'] = Page::AboutPage->value;
+            $validatedData['section'] = Section::AboutServiceContainer->value;
 
             CMS::Create($validatedData);
 
@@ -145,31 +140,25 @@ class ProviderRegisterPageController extends Controller
     public function edit(string $id)
     {
         $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.provider_register_page.service_container.edit", compact("data"));
+        return view("backend.layouts.cms.home_page.about_us_container.edit", compact("data"));
     }
 
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
         ]);
 
         try {
             $data = CMS::findOrFail($id);
 
-            if ($request->hasFile('image')) {
-                if ($data->image) {
-                    Helper::fileDelete(public_path($data->image));
-                }
-                $imagePath = Helper::fileUpload($request->file('image'), 'provider_register_image', time());
-
-                $data->image = $imagePath;
-            }
-
-            $data->save();
+            // Update fields
+            $data->update($validatedData);
 
             return response()->json([
                 "success" => true,
@@ -185,6 +174,7 @@ class ProviderRegisterPageController extends Controller
             ]);
         }
     }
+
 
     public function status(Request $request, $id)
     {

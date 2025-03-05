@@ -1660,9 +1660,13 @@
         <section class="user-review">
             <div class="container">
                 <h2 class="title" data-aos="fade-up">
-                    {{ $cms['review_user_container']->title ?? 'View Some ' }}</h2>
+                    {{-- {{ $cms['review_user_container']->title ?? 'View Some' }} --}}
+                    {{ $cms['advertisementSection']->title ?? 'View Some' }}
+                
+                </h2>
                 <p class="des" data-aos="fade-up">
-                    {{ $cms['review_user_container']->description ?? 'Lorem ipsum ' }}
+                    {{ $cms['review_user_container']->description ??
+                        "Lorem ipsum " }}
                 </p>
             </div>
             <div class="new-banner-photo">

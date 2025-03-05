@@ -16,6 +16,7 @@ enum Section: string
     case ReviewUserContainer = 'review_user_container';
     case ReviewProviderContainer = 'review_provider_container';
     case FaqContainer = 'faq_container';
+    case AdvertisementContainer = 'advertisement_container';
     case FaqContainerContent = 'faq_container_content';
     case HeroBanner = 'hero_banner';
 
@@ -31,6 +32,9 @@ enum Section: string
     case ServiceRegisterImageContainer = 'ServiceProviderImage_container';
     case ProviderProcessContainer = 'ProviderProcess_container';
     case ProviderProcessImageContainer = 'provider_process_image_container';
+    //about section
+    case AboutContainer = 'about_container';
+    case AboutServiceContainer = 'about_service_container';
     // footer section
     case SocialLinkContainer = 'social_link_container';
 }

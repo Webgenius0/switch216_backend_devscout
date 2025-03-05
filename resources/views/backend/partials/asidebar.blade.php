@@ -215,6 +215,19 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
 
                     <li class="menu-item">
+                        <a href="{{ route('cms.home_page.advertisement_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.advertisement_container.index') ? 'active' : '' }}">
+                            Advertisement Container
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('cms.home_page.about_us_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.home_page.about_us_container.index') ? 'active' : '' }}">
+                            About Us
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
                         <a href="{{ route('cms.home_page.faq_container.index') }}"
                             class="menu-link {{ request()->routeIs('cms.home_page.faq_container.index') ? 'active' : '' }}">
                             Faq Container
