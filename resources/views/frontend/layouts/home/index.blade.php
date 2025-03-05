@@ -1665,14 +1665,15 @@
                 
                 </h2>
                 <p class="des" data-aos="fade-up">
-                    {{ $cms['advertisementSection']->description ??
+                    {{ $cms['review_user_container']->description ??
                         "Lorem ipsum " }}
                 </p>
             </div>
             <div class="new-banner-photo">
                 <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
-                <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
-                </a> 
+                    <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image"
+                        style="width:100%; height: 100%; object-fit:cover" />
+                </a>
             </div>
         </section>
         <!-- ads section end -->
