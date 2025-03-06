@@ -23,7 +23,7 @@ class RealStatePageService
     public function index()
     {
         try {
-            $realStateBanner = CMS::where('page', Page::RealEstatePage)->where('section', Section::RealEstatePage)->first();
+            $realStateBanner = CMS::where('page', Page::RealEstatePage)->where('section', Section::RealEstateBanner)->first();
             $real_state_service = Service::with(['user', 'RealStateService'])->where('category_id', 1)->where("status", 'active')->latest()->take('6')->get();
             $realStateServiceSubCategorys = SubCategory::where('category_id', 1)->where("status", 'active')->get();
             $data = [

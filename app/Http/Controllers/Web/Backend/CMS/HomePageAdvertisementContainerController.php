@@ -17,19 +17,10 @@ use Yajra\DataTables\DataTables;
 class HomePageAdvertisementContainerController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $AdContainer = CMS::firstOrCreate(
-            [
-                'page' => Page::HomePage,
-                'section' => Section::AdvertisementContainer
-            ],
-            [
-                'title' => '',
-                'description' => '',
-                'image' => null
-            ]
-        );
+        $AdContainer = CMS::where('page', Page::HomePage)->where('section', Section::AdvertisementContainer)->first();
+
 
         return view('backend.layouts.cms.home_page.advertisement_container.index', compact('AdContainer'));
     }
@@ -39,15 +30,19 @@ class HomePageAdvertisementContainerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'link_url' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $data = CMS::findOrFail($id);
+            $data = CMS::where('page', Page::HomePage)
+            ->where('section', Section::AdvertisementContainer)
+            ->first();
+
             if ($request->hasFile('image')) {
                 if ($data && $data->image && file_exists(public_path($data->image))) {
                     Helper::fileDelete(public_path($data->image));
@@ -55,9 +50,13 @@ class HomePageAdvertisementContainerController extends Controller
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), 'advertisement_image', time() . '_' . getFileName($request->file('image')));
             }
 
-            // dd($data);
-
-            $data->update($validatedData);
+                CMS::updateOrCreate(
+                [
+                    'page' => Page::HomePage->value,
+                    'section' => Section::AdvertisementContainer->value,
+                ],
+                $validatedData
+            );
             flash()->success('Banner Updated Successfully');
             return redirect()->route('cms.home_page.advertisement_container.index');
         } catch (Exception $e) {

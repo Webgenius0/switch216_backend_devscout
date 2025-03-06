@@ -13,66 +13,12 @@ use App\Http\Controllers\Controller;
 
 class ProviderPageProcessContainerController extends Controller{
     
-    public function index(){
-
-        $ProviderProcessContainer = CMS::firstOrCreate(
-            [
-                'page' => Page::ServiceRegisterPage,
-                'section' => Section::ProviderProcessContainer
-            ],
-            [
-                'title' => '',
-                'description' => '',
-                'button_text' => null
-            ]
-        );
-
-        return view('backend.layouts.cms.provider_register_page.process_container.index', compact('ProviderProcessContainer'));
-    }
-
-    public function ProcessContainerUpdate(Request $request){
-
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'button_text' => 'required|string',
-        ]);
-
-        try {
-
-            $ProviderProcessContainer = CMS::where('page', Page::ServiceRegisterPage)
-                ->where('section', Section::ProviderProcessContainer)
-                ->first();
+    public function index(Request $request){
 
 
-             if ($ProviderProcessContainer) {
-                    $ProviderProcessContainer->update($validatedData);
-                }else{
-                    CMS::updateOrCreate(
-                        [
-                            'page' => Page::ServiceRegisterPage->value,
-                            'section' => Section::ServiceRegisterContainer->value,
-                        ],
-                        $validatedData
-                    );
-
-                }
-
-            flash()->success('Service container update successfully');
-            return redirect()->route('cms.provider_page.process.index');
-        } catch (Exception $e) {
-            Log::error("ServiceRegisterPageContainerController::ProcessContainerUpdate" . $e->getMessage());
-            flash()->error('Process container not update successfully');
-            return redirect()->route('cms.provider_page.process.index');
-        }
-        
-    }
+        $ProviderProcessContainer = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ProviderProcessContainer)->first();
 
 
-    public function show(Request $request){
-
-        $ProviderProcessImageContainer = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ProviderProcessImageContainer)->first();
-        // dd($banner);
         if ($request->ajax()) {
             $data = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ProviderProcessImageContainer)->latest();
             return DataTables::of($data)
@@ -109,9 +55,93 @@ class ProviderPageProcessContainerController extends Controller{
                 ->rawColumns(['background_image', 'status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.cms.provider_register_page.process_container.index", compact("ProviderProcessImageContainer"));
 
+
+        return view('backend.layouts.cms.provider_register_page.process_container.index', compact('ProviderProcessContainer'));
     }
+
+    public function ProcessContainerUpdate(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'button_text' => 'required|string',
+        ]);
+
+        try {
+
+            $ProviderProcessContainer = CMS::where('page', Page::ServiceRegisterPage)
+                ->where('section', Section::ProviderProcessContainer)
+                ->first();
+
+
+             if ($ProviderProcessContainer) {
+                    $ProviderProcessContainer->update($validatedData);
+                }else{
+                    CMS::updateOrCreate(
+                        [
+                            'page' => Page::ServiceRegisterPage->value,
+                            'section' => Section::ProviderProcessContainer->value,
+                        ],
+                        $validatedData
+                    );
+
+                }
+
+            flash()->success('Service container update successfully');
+            return redirect()->route('cms.provider_page.process.index');
+        } catch (Exception $e) {
+            Log::error("ServiceRegisterPageContainerController::ProcessContainerUpdate" . $e->getMessage());
+            flash()->error('Process container not update successfully');
+            return redirect()->route('cms.provider_page.process.index');
+        }
+        
+    }
+
+
+    // public function show(Request $request){
+
+    //     $ProviderProcessImageContainer = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ProviderProcessImageContainer)->first();
+    //     // dd($banner);
+    //     if ($request->ajax()) {
+    //         $data = CMS::where('page', Page::ServiceRegisterPage)->where('section', Section::ProviderProcessImageContainer)->latest();
+    //         return DataTables::of($data)
+    //             ->addIndexColumn()
+
+    //             ->addColumn('background_image', function ($data) {
+    //                 return '<img src="' . asset($data->background_image) . '" class="wh-40 rounded-3" alt="user">';
+    //             })
+    //             ->addColumn('status', function ($data) {
+    //                 $status = '<div class="form-check form-switch">';
+    //                 $status .= '<input onclick="changeStatus(event,' . $data->id . ')" type="checkbox" class="form-check-input" style="border-radius: 25rem;width:40px"' . $data->id . '" name="status"';
+
+    //                 if ($data->status == "active") {
+    //                     $status .= ' checked';
+    //                 }
+
+    //                 $status .= '>';
+    //                 $status .= '</div>';
+
+    //                 return $status;
+    //             })
+    //             ->addColumn('action', function ($data) {
+    //                 return '<div class="action-wrapper">
+    //                     <a type="button" href="javascript:void(0)"
+    //                             class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
+    //                             data-bs-toggle="modal" data-bs-target="#EditProviderProcessContainer" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
+    //                         </a>
+    //                     <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
+    //                     <i class="material-symbols-outlined fs-16 text-danger">delete</i>
+    //                     </button>
+             
+    //             </div>';
+    //             })
+    //             ->rawColumns(['background_image', 'status', 'action'])
+    //             ->make(true);
+    //     }
+    //     return view("backend.layouts.cms.provider_register_page.process_container.index", compact("ProviderProcessImageContainer"));
+
+    // }
 
     public function store(Request $request)
     {

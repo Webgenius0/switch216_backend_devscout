@@ -42,7 +42,6 @@
                         <form action="{{ route('cms.provider_page.process.update', $ProviderProcessContainer->id ?? '') }}"
                             method="POST">
                             @csrf
-                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -228,7 +227,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.provider_page.process.show') }}",
+                    url: "{{ route('cms.provider_page.process.index') }}",
                     type: "get"
                 },
                 columns: [{

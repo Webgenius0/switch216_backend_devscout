@@ -29,36 +29,33 @@
             </p>
             <a href="{{ route('provider.register') }}" class="button"
                 data-aos="fade-up">{{ $ServiceProvider_container->button_text ?? ' Register Now' }}</a>
-
-            <div class="banner-feature" data-aos="fade-up">
-                @if ($ServiceProvider_container_image->isEmpty())
-                    <p>No images found</p> <!-- Debugging message -->
-                @endif
-
-                @foreach ($ServiceProvider_container_image as $image)
-                    <div class="banner-feature-item">
-                        @if (!empty($image->image))
-                            <img src="{{ asset($image->image) }}" alt="banner feature item">
-                        @else
-                            <div class="banner-feature-item">
-                                <img src="{{ asset('frontend/assets') }}/images/provider-3.png" alt="banner feature item" />
-                            </div>
-                            <div class="banner-feature-item">
-                                <img src="{{ asset('frontend/assets') }}/images/8007e75bbf14e5b0ffe7d55beda69cd6.png"
-                                    alt="banner feature item" />
-                            </div>
-                            <div class="banner-feature-item">
-                                <img src="{{ asset('frontend/assets') }}/images/image.png" alt="banner feature item" />
-                            </div>
-                            <div class="banner-feature-item">
-                                <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png"
-                                    alt="banner feature item" />
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-            {{-- <div class="banner-feature-item">
+                <div class="banner-feature" data-aos="fade-up">
+                    @foreach ($ServiceProvider_container_image as $image)
+                        <div class="banner-feature-item">
+                            <img src="{{ !empty($image->image) ? asset($image->image) : asset('frontend/assets/images/provider-3.png') }}" 
+                                 alt="banner feature item">
+                        </div>
+                    @endforeach
+                
+                    {{-- If there are no images in the loop, show default images --}}
+                    @if ($ServiceProvider_container_image->isEmpty())
+                        <div class="banner-feature-item">
+                            <img src="{{ asset('frontend/assets/images/provider-3.png') }}" alt="banner feature item" />
+                        </div>
+                        <div class="banner-feature-item">
+                            <img src="{{ asset('frontend/assets/images/8007e75bbf14e5b0ffe7d55beda69cd6.png') }}" alt="banner feature item" />
+                        </div>
+                        <div class="banner-feature-item">
+                            <img src="{{ asset('frontend/assets/images/image.png') }}" alt="banner feature item" />
+                        </div>
+                        <div class="banner-feature-item">
+                            <img src="{{ asset('frontend/assets/images/f151d0d72bbcaed3d430ee0f80860b92.png') }}" alt="banner feature item" />
+                        </div>
+                    @endif
+                </div>
+                
+            {{-- <div class="banner-feature" data-aos="fade-up">
+            <div class="banner-feature-item">
                     <img src="{{ asset('frontend/assets') }}/images/provider-3.png" alt="banner feature item" />
                 </div>
                 <div class="banner-feature-item">
@@ -71,8 +68,8 @@
                 <div class="banner-feature-item">
                     <img src="{{ asset('frontend/assets') }}/images/f151d0d72bbcaed3d430ee0f80860b92.png"
                         alt="banner feature item" />
-                </div> --}}
-            </div>
+                </div>
+            </div> --}}
         </section>
         <!-- provider banner end -->
 

@@ -19,9 +19,8 @@
                     <p class="fs-15">Update Home Page Banner and site details here.</p>
                 </div>
 
-                <form action="{{ route('cms.restaurant_page.banner.update',$RestaurantService->id) ?? '' }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cms.restaurant_page.banner.update',$RestaurantService->id ?? '') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     <div class="row">
 
                         <!-- Subtitle Field -->
