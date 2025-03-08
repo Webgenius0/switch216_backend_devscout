@@ -84,11 +84,11 @@
                                             class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
                                             name="link_url"
                                             value="{{ old('link_url',  $AdContainer->link_url ?? '') }}"
-                                            required placeholder="Enter any link here">
+                                            required placeholder="https://example.com">
                                         
                                         </div>
-                                        @error('title')
-                                            <div id="title-error" class="text-danger">{{ $message }}</div>
+                                        @error('link_url')
+                                            <div id="link_url-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>

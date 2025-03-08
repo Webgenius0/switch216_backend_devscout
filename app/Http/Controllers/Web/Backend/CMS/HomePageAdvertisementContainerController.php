@@ -35,7 +35,7 @@ class HomePageAdvertisementContainerController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'link_url' => 'required|string|max:255',
+            'link_url' => 'required|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
