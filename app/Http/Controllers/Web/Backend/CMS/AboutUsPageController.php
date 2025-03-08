@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Backend\CMS;
 
-
 use view;
 use Exception;
 use App\Enums\Page;
@@ -18,66 +17,9 @@ class AboutUsPageController extends Controller
 {
     public function index(Request $request)
     {
-        $AboutContainer = CMS::firstOrCreate(
-            [
-                'page' => Page::AboutPage,
-                'section' => Section::AboutContainer
-            ],
-            [
-                'title' => '',
-                'description' => '',
-                'image' => null
-            ]
-        );
-        return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutContainer"));
-    }
-
-    // update main service container
-    public function AboutContainerUpdate(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        try {
-
-            $AboutContainer = CMS::where('page', Page::AboutPage)
-                ->where('section', Section::AboutContainer)
-                ->first();
-
-            if ($request->hasFile('image')) {
-                if ($AboutContainer && $AboutContainer->image && file_exists(public_path($AboutContainer->image))) {
-                    Helper::fileDelete(public_path($AboutContainer->image));
-                }
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), 'aboutImage', time() . '_' . getFileName($request->file('image')));
-            }
-            $data =  CMS::updateOrCreate(
-                [
-                    'page' => Page::AboutPage->value,
-                    'section' => Section::AboutContainer->value,
-                ],
-                $validatedData
-            );
-
-
-            flash()->success('Service container update successfully');
-            return redirect()->route('cms.home_page.about_us_container.index');
-        } catch (Exception $e) {
-            Log::error("HomePageServiceContainerController::ServiceContainerUpdate" . $e->getMessage());
-            flash()->error('Service container not update successfully');
-            return redirect()->route('cms.home_page.about_us_container.index');
-        }
-    }
-
-
-    public function show(Request $request)
-    {
-
-        $AboutServiceContainer = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->first();
+        $AboutContainer = CMS::where('page', Page::AboutPage)->where('section', Section::AboutContainer)->first();
         if ($request->ajax()) {
-            $data = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->latest();
+            $data = CMS::where('page', Page::AboutPage)->where('section', Section::AboutServiceContainer)->latest()->get();
             return DataTables::of($data)
 
                 ->addIndexColumn()
@@ -108,7 +50,52 @@ class AboutUsPageController extends Controller
                 ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-        return view("backend.layouts.cms.home_page.about_us_container.index", compact("AboutServiceContainer"));
+        return view("backend.layouts.cms.about_page.about_us_container.index", compact("AboutContainer"));
+    }
+
+    // update main service container
+    public function AboutContainerUpdate(Request $request)
+    {
+        // Validate the input data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        try {
+            // Find the existing About Container record
+            $AboutContainer = CMS::where('page', Page::AboutPage)
+                ->where('section', Section::AboutContainer)
+                ->first(); // Ensure we fetch only one record
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                if ($AboutContainer && $AboutContainer->image && file_exists(public_path($AboutContainer->image))) {
+                    Helper::fileDelete(public_path($AboutContainer->image));
+                }
+                $validatedData['image'] = Helper::fileUpload(
+                    $request->file('image'),
+                    'aboutImage',
+                    time() . '_' . getFileName($request->file('image'))
+                );
+            }
+
+            // Use updateOrCreate() to avoid duplicate entries
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::AboutPage->value,
+                    'section' => Section::AboutContainer->value,
+                ],
+                $validatedData
+            );
+
+            flash()->success('Service container updated successfully');
+            return redirect()->route('cms.about_page.about_us_container.index');
+        } catch (Exception $e) {
+            flash()->error('Service container not updated successfully');
+            return redirect()->route('cms.about_page.about_us_container.index');
+        }
     }
 
     public function store(Request $request)
@@ -131,7 +118,7 @@ class AboutUsPageController extends Controller
                 "message" => "Content Updated Successfully"
             ]);
         } catch (Exception $e) {
-            Log::error("ProviderRegisterController::store" . $e->getMessage());
+            Log::error("AboutUsPageController::store" . $e->getMessage());
             flash()->error('Banner not created successfully');
             return redirect()->back();
         }
@@ -140,13 +127,12 @@ class AboutUsPageController extends Controller
     public function edit(string $id)
     {
         $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.home_page.about_us_container.edit", compact("data"));
+        return view("backend.layouts.cms.about_page.about_us_container.edit", compact("data"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
@@ -163,7 +149,6 @@ class AboutUsPageController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "Service Container Content Updated Successfully",
-                "image_url" => asset($data->image)
             ]);
         } catch (Exception $e) {
             Log::error("ProviderRegisterController::update - " . $e->getMessage());

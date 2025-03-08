@@ -39,10 +39,9 @@
                             <p class="fs-15">Update Home Page User Advertisement Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.advertisement_container.update', ['id' => $AdContainer->id]) }}"
+                        <form action="{{ route('cms.home_page.advertisement_container.update',  $AdContainer->id ?? '') }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -73,6 +72,23 @@
                                         </div>
                                         @error('description')
                                             <div id="description-error" class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- Title Field -->
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-4">
+                                        <label class="label text-secondary">Link url<span class="text-danger">*</span></label>
+                                        <div class="form-group position-relative">
+                                            <input type="text"
+                                            class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
+                                            name="link_url"
+                                            value="{{ old('link_url',  $AdContainer->link_url ?? '') }}"
+                                            required placeholder="Enter any link here">
+                                        
+                                        </div>
+                                        @error('title')
+                                            <div id="title-error" class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>

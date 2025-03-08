@@ -35,19 +35,18 @@
 
                         <div class="mb-4">
                             <h4 class="fs-20 mb-1">CMS About Us Container</h4>
-                            <p class="fs-15">Update About Page  Container and site details here.</p>
+                            <p class="fs-15">Update About Page Container and site details here.</p>
                         </div>
 
-                        <form action="{{ route('cms.home_page.about_us_container.update', $AboutContainer->id ?? '') }}"
+                        <form action="{{ route('cms.about_page.about_us_container.about_us_container_update') }}"
                             method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('POST')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
-                                        <label class="label text-secondary">Title<span
-                                                class="text-danger">*</span></label>
+                                        <label class="label text-secondary">Title<span class="text-danger">*</span></label>
                                         <div class="form-group position-relative">
                                             <input type="text"
                                                 class="form-control text-dark ps-5 h-55 @error('title') is-invalid @enderror"
@@ -60,24 +59,18 @@
                                     </div>
                                 </div>
 
-                                <!-- Subtitle Field -->
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-4">
-                                        <label class="label text-secondary">Description<span
-                                                class="text-danger">*</span></label>
-                                        <div class="form-group position-relative">
-                                            <input type="text"
-                                                class="form-control text-dark ps-5 h-55 @error('description') is-invalid @enderror"
-                                                name="description"
-                                                value="{{ old('description', $AboutContainer->description ?? '') }}"
-                                                placeholder="Enter description here">
-                                        </div>
-                                        @error('description')
-                                            <div id="description-error" class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <!-- Description Field -->
+                                <div class="form-group mb-4">
+                                    <label class="label text-secondary">Description<span
+                                            class="text-danger">*</span></label>
+                                    <div class="form-group position-relative">
+                                        <textarea class="form-control text-dark ps-5 h-55 " name="description" required=""
+                                            placeholder="Enter description here">{{ old('description', $AboutContainer->description ?? '') }}</textarea>
                                     </div>
+                                    @error('description')
+                                        <div id="sub_title-error" class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-
                             </div>
 
                             <div class="col-lg-12">
@@ -182,7 +175,7 @@
         </x-modal>
 
         {{-- here this return a model  start --}}
-        @include('backend.layouts.cms.home_page.about_us_container.create')
+        @include('backend.layouts.cms.about_page.about_us_container.create')
 
 
     </div>
@@ -227,7 +220,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.home_page.about_us_container.index.show') }}",
+                    url: "{{ route('cms.about_page.about_us_container.index') }}",
                     type: "get"
                 },
                 columns: [{
@@ -378,14 +371,14 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('cms.home_page.about_us_container.status', ':id') }}';
+            let statusUrl = '{{ route('cms.about_page.about_us_container.status', ':id') }}';
             showStatusChangeAlert(id, statusUrl);
         }
 
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('cms.home_page.about_us_container.destroy', ':id') }}';
+            let deleteUrl = '{{ route('cms.about_page.about_us_container.destroy', ':id') }}';
             showDeleteConfirm(id, deleteUrl);
         }
     </script>
@@ -403,7 +396,7 @@
             let submitButton = $('#submitButton');
             submitButton.prop('disabled', true).text('Submitting...');
 
-            let storeurl = '{{ route('cms.home_page.about_us_container.store') }}';
+            let storeurl = '{{ route('cms.about_page.about_us_container.store') }}';
             let formData = new FormData(this); // Collect form data
             $.ajax({
                 url: storeurl, // Route to handle form submission
@@ -438,10 +431,9 @@
         });
     </script>
 
-    for update data
     <script>
         function viewModel(id) {
-            let url = '{{ route('cms.home_page.about_us_container.edit', ':id') }}'.replace(':id', id);
+            let url = '{{ route('cms.about_page.about_us_container.edit', ':id') }}'.replace(':id', id);
             $.ajax({
                 type: "GET",
                 url: url,
@@ -453,7 +445,7 @@
                         let submitButton = $('#submitButtonUpdate');
                         submitButton.prop('disabled', true).text('Submitting...');
 
-                        let storeurl = '{{ route('cms.home_page.about_us_container.update', ':id') }}'
+                        let storeurl = '{{ route('cms.about_page.about_us_container.update', ':id') }}'
                             .replace(
                                 ':id', id);
                         let formData = new FormData(this); // Collect form data

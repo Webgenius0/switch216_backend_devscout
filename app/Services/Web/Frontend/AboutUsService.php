@@ -20,6 +20,7 @@ class AboutUsService{
             $aboutPageContainer = CMS::where('page', Page::AboutPage)->where('section', Section::AboutContainer)->first();
             $aboutServiceContainer = CMS::where('page', Page::AboutPage)
             ->where('section', Section::AboutServiceContainer)
+            ->where("status", 'active')
             ->get();
             $data = [
                 // 'car_Services' => $car_Services,

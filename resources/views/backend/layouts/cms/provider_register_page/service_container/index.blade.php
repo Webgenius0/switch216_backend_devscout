@@ -42,7 +42,6 @@
                         <form action="{{ route('cms.service_page.container.update', $ServiceRegisterContainer->id ?? '') }}"
                             method="POST">
                             @csrf
-                            @method('put')
                             <div class="row">
                                 <!-- Title Field -->
                                 <div class="col-lg-12">
@@ -226,7 +225,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-6 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('cms.service_page.container.show') }}",
+                    url: "{{ route('cms.service_page.container.index') }}",
                     type: "get"
                 },
                 columns: [{

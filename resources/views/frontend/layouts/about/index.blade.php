@@ -45,43 +45,44 @@
                 </figure>
             </div>
         </section>
-        {{-- <section class="about-card" data-aos="fade-up">
-            <div class="about-card-item">
-                <h5 class="card-title">Best Service</h5>
-                <p class="card-des">
-                    At Best Service Multiservices, we provide a wide range of
-                    professional solutions, from home services to business support,
-                    ensuring quality, efficiency, and customer satisfaction.
-                </p>
-            </div>
-            <div class="about-card-item">
-                <h5 class="card-title">24/7 Support</h5>
-                <p class="card-des">
-                    At Best Service Multi-services, we’re available 24/7 to provide you
-                    with reliable, round-the-clock solutions. No matter the time, we’re
-                    here to meet your needs with prompt and professional service.
-                </p>
-            </div>
-            <div class="about-card-item">
-                <h5 class="card-title">Support Us</h5>
-                <p class="card-des">
-                    Our journey at Best Service Multiservices has been built on trust,
-                    quality, and customer satisfaction, transforming challenges into
-                    success stories.
-                </p>
-            </div>
-        </section> --}}
 
         <section class="about-card" data-aos="fade-up">
-            @foreach($data['aboutServiceContainer'] as $service)
+            @if(!empty($data['aboutServiceContainer']) && count($data['aboutServiceContainer']) > 0)
+                @foreach($data['aboutServiceContainer'] as $service)
+                    <div class="about-card-item">
+                        <h5 class="card-title">{{ $service->title }}</h5>
+                        <p class="card-des">{{ $service->description }}</p>
+                    </div>
+                @endforeach
+            @else
                 <div class="about-card-item">
-                    <h5 class="card-title">{{ $service->title ?? 'Default Title' }}</h5>
-                    <p class="card-des">{{ $service->description ?? 'Default description goes here.' }}</p>
+                    <h5 class="card-title">Best Service</h5>
+                    <p class="card-des">
+                        At Best Service Multiservices, we provide a wide range of
+                        professional solutions, from home services to business support,
+                        ensuring quality, efficiency, and customer satisfaction.
+                    </p>
                 </div>
-            @endforeach
+                <div class="about-card-item">
+                    <h5 class="card-title">24/7 Support</h5>
+                    <p class="card-des">
+                        At Best Service Multiservices, we’re available 24/7 to provide you
+                        with reliable, round-the-clock solutions. No matter the time, we’re
+                        here to meet your needs with prompt and professional service.
+                    </p>
+                </div>
+                <div class="about-card-item">
+                    <h5 class="card-title">Support Us</h5>
+                    <p class="card-des">
+                        Our journey at Best Service Multiservices has been built on trust,
+                        quality, and customer satisfaction, transforming challenges into
+                        success stories.
+                    </p>
+                </div>
+            @endif
         </section>
         
-
+        
         </section>
 
     </main>

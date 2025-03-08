@@ -79,7 +79,7 @@
                             <p class="slide-des">
                                 {{ $d->description ??
                                     "Explore trusted professionals across multiple categories, from
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
                                 </h4>
                             </p>
                         </div>
@@ -389,7 +389,7 @@
                 <p class="des">
                     {{ $cms['process_container']->description ??
                         'Yet bed any for traveling assistance indulgence unpleasing. Not
-                                                                                                                                                                                    thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                                                                                                                            thoughts all exercise blessing. Indulgence way everything joy.' }}
                 </p>
                 <a href="{{ route('service.category') }}"
                     class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
@@ -405,7 +405,7 @@
                             <p class="item-des">
                                 {{ $d->description ??
                                     "Party we years to order allow asked of. We so opinion friends me
-                                                                                                                                                                                                                                                                message as delight." }}
+                                                                                                                                                                                                                                                                                                                                message as delight." }}
                             </p>
                         </div>
                     @endforeach
@@ -531,7 +531,7 @@
                                         <p class="icon-des">
                                             {{ $d->description ??
                                                 "Lorem Ipsum is simply dummy text of the printing and
-                                                                                                                                                    typesetting industry. Lorem Ipsum has." }}
+                                                                                                                                                                                                                                            typesetting industry. Lorem Ipsum has." }}
                                         </p>
                                     </div>
                                 </div>
@@ -662,9 +662,9 @@
                     <p class="des">
                         {{ $cms['provider_work_container']->description ??
                             'Yet bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy. Yet
-                                                                                                                        bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy. Yet
+                                                                                                                                                                        bed any for travelling assistance indulgence unpleasing. Not
+                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy.' }}
                     </p>
                     <a href="#"
                         class="button">{{ $cms['provider_work_container']->button_text ?? 'Service Provider showing Work' }}</a>
@@ -1662,17 +1662,17 @@
                 <h2 class="title" data-aos="fade-up">
                     {{-- {{ $cms['review_user_container']->title ?? 'View Some' }} --}}
                     {{ $cms['advertisementSection']->title ?? 'View Some' }}
-                
+
                 </h2>
                 <p class="des" data-aos="fade-up">
-                    {{ $cms['review_user_container']->description ??
-                        "Lorem ipsum " }}
+                    {{ $cms['advertisementSection']->description ?? 'Lorem ipsum ' }}
                 </p>
             </div>
             <div class="new-banner-photo">
-                <a href="https://ramafox.blogspot.com/?m=1" target="_blank">
-                    <img src="{{ asset('frontend/assets/images/add_photo.jpg') }}" alt="ads image"
-                        style="width:100%; height: 100%; object-fit:cover" />
+                <a href="{{ $cms['advertisementSection']->link_url ?? 'https://ramafox.blogspot.com/?m=1' }}"
+                    target="_blank">
+                    <img src="{{ $cms['advertisementSection']->image ?? asset('frontend/assets/images/add_photo.jpg') }}"
+                        alt="ads image" style="width:100%; height: 100%; object-fit:cover" />
                 </a>
             </div>
         </section>
@@ -1686,8 +1686,8 @@
                     <p class="des">
                         {{ $cms['faq_container']->description ??
                             "Yet bed any for assistance indulgence unpleasing. Not thoughts all
-                                                                        exercise blessing. Indulgence way everything joy alteration
-                                                                        boisterous the attachment." }}
+                                                                                                                        exercise blessing. Indulgence way everything joy alteration
+                                                                                                                        boisterous the attachment." }}
 
                     </p>
                     <a class="more-btn"
@@ -1717,8 +1717,8 @@
                                         <div class="accordion-body">
                                             {{ $d->description ??
                                                 'Yet bed any for assistance indulgence unpleasing. Not
-                                                                                                                                thoughts all exercise blessing. Indulgence way everything
-                                                                                                                                joy alteration boisterous the attachment.' }}
+                                                                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything
+                                                                                                                                                                                                                        joy alteration boisterous the attachment.' }}
                                         </div>
                                     </div>
                                 </div>

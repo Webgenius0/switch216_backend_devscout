@@ -220,12 +220,6 @@ $systemSetting = App\Models\SystemSetting::first();
                             Advertisement Container
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="{{ route('cms.home_page.about_us_container.index') }}"
-                            class="menu-link {{ request()->routeIs('cms.home_page.about_us_container.index') ? 'active' : '' }}">
-                            About Us
-                        </a>
-                    </li>
 
                     <li class="menu-item">
                         <a href="{{ route('cms.home_page.faq_container.index') }}"
@@ -244,20 +238,21 @@ $systemSetting = App\Models\SystemSetting::first();
                 </ul>
             </li>
             <!-- CMS Car Item -->
-            <li class="menu-item {{ request()->routeIs('cms.car_page.*') ? 'open active' : '' }}">
+            <li class="menu-item {{ request()->routeIs('cms.car_page.banner*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">directions_car</span>
                     <span class="title">Car Page</span>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item {{ request()->routeIs('cms.car_page.banner') ? 'active' : '' }}">
-                        <a href="{{ route('cms.car_page.banner') }}"
-                            class="menu-link {{ request()->routeIs('cms.car_page.banner') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('cms.car_page.banner.index') ? 'active' : '' }}">
+                        <a href="{{ route('cms.car_page.banner.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.car_page.banner.index') ? 'active' : '' }}">
                             Car Banner
                         </a>
                     </li>
                 </ul>
             </li>
+            
             <!-- CMS Restaurant Item -->
             <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -273,7 +268,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            
+
             <!-- CMS Real Estate Item -->
             <li class="menu-item {{ request()->routeIs('cms.RealEstate_page.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -289,17 +284,35 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            
+
+            <!-- CMS About Page Item -->
+            <li class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.*') ? 'open active' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <span class="material-symbols-outlined menu-icon">group</span>
+                    <span class="title">About Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li
+                        class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.index') ? 'active' : '' }}">
+                        <a href="{{ route('cms.about_page.about_us_container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.about_page.about_us_container.index') ? 'active' : '' }}">
+                            About Us Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <!-- CMS Service Provider Item -->
-            <li class="menu-item {{ request()->routeIs('cms.service_page.*') || request()->routeIs('cms.provider_page.process.*') || request()->routeIs('cms.provider_page.work.*') ? 'open active' : '' }}">
+            <li
+                class="menu-item {{ request()->routeIs('cms.service_page.*') || request()->routeIs('cms.provider_page.process.*') || request()->routeIs('cms.provider_page.work.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">app_registration</span>
                     <span class="title">Provider Register Page</span>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item {{ request()->routeIs('cms.service_page.container') ? 'active' : '' }}">
-                        <a href="{{ route('cms.service_page.container') }}"
-                            class="menu-link {{ request()->routeIs('cms.service_page.container') ? 'active' : '' }}">
+                        <a href="{{ route('cms.service_page.container.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.service_page.container.index') ? 'active' : '' }}">
                             Service Container
                         </a>
                     </li>
@@ -321,7 +334,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            
+
 
 
 
