@@ -9,31 +9,32 @@
  */
 
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Backend\UserController;
+use App\Http\Controllers\Web\Backend\CityController;
+use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\CategoryController;
-use App\Http\Controllers\Web\Backend\CMS\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\CarPageController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
+use App\Http\Controllers\Web\Backend\DynamicPageController;
+use App\Http\Controllers\Web\Backend\SubCategoryController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderPageWorkContainerController;
+use App\Http\Controllers\Web\Backend\NotificationController;
+use App\Http\Controllers\Web\Backend\SystemSettingController;
 use App\Http\Controllers\Web\Backend\CMS\RealEstateController;
 use App\Http\Controllers\Web\Backend\CMS\RestaurantController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
-use App\Http\Controllers\Web\Backend\DynamicPageController;
-use App\Http\Controllers\Web\Backend\NotificationController;
-use App\Http\Controllers\Web\Backend\ProfileController;
-use App\Http\Controllers\Web\Backend\SubCategoryController;
-use App\Http\Controllers\Web\Backend\SystemSettingController;
-use App\Http\Controllers\Web\Backend\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Backend\CMS\AboutUsPageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderPageWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
   // Route for the admin dashboard
@@ -193,6 +194,12 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //category
   Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
   Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
+  
+  // Route for CityController
+   Route::resource('/cities', CityController::class)->names('cities');
+    Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
+  
+
 
   // Routes for NotificationController
   Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notification.read');
