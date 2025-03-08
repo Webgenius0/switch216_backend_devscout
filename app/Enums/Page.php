@@ -7,8 +7,8 @@ enum Page: string
     case HomePage = 'home_page';
     case CarPage = 'car_page';
     case RestaurantPage = 'restaurant_page';
-    case RealEstatePage = 'RealEstate_page';
-    case ServiceRegisterPage = 'ServiceRegister_page';
+    case RealEstatePage = 'real_estate_page';
+    case ServiceRegisterPage = 'service_register_page';
     case AboutPage ='about_page';
 
 
