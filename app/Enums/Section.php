@@ -20,6 +20,9 @@ enum Section: string
     case FaqContainerContent = 'faq_container_content';
     case HeroBanner = 'hero_banner';
 
+    // City list section
+    case CityContainer = 'city_container';
+
     //// Car page section 
     case CarBanner = 'car_banner';
     //// Car Restaurant section 

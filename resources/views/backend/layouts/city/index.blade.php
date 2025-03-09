@@ -33,12 +33,6 @@
                 <div class="card bg-white border-0 rounded-3 mb-4">
                     <div class="card-body p-4">
 
-                        <div class="mb-4">
-                            <h4 class="fs-20 mb-1">CMS City Page Container</h4>
-                            <p class="fs-15">Update City Container and site details here.</p>
-                        </div>
-
-
                         <div class="col-xl-12 col-xxl-12 col-lg-12">
                             <div class="card bg-white border-0 rounded-3 mb-4">
                                 <div class="card-body p-0">
@@ -54,7 +48,7 @@
                                             data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
                                             <span class="py-sm-1 d-block">
                                                 <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                                <span>Add New Service Container Content</span>
+                                                <span>Add New City</span>
                                             </span>
                                         </a>
                                     </div>
@@ -114,50 +108,118 @@
 
 
         {{-- --------------- view modal------------ --}}
-        <div class="modal fade" id="viewServiceModal" tabindex="-1" aria-labelledby="ServiceModalLabel" aria-hidden="true">
+        <!-- Create Service Modal -->
+        <div class="modal fade" id="CreateServiceContainer" tabindex="-1" aria-labelledby="CreateServiceContainerLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="ServiceModalLabel" class="modal-title">Services Details</h5>
+                        <h5 id="CreateServiceContainerLabel" class="modal-title">Add New City</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form id="service-form">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="serviceName" class="form-label">City Name</label>
+                                <input type="text" class="form-control" id="serviceName" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="serviceStatus" class="form-label">Status</label>
+                                <select class="form-control" id="serviceStatus" name="status">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div id="show-error"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" id="submitButton" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-        {{-- ---------------  --}}
-
-
-        {{-- <x-modal id="EditServiceContainer" title="Update" labelledby="customModalLabel" size="modal-lg"
-            saveButton="Update">
-            <div id="EditServiceContainerContent"></div>
-        </x-modal>
-
-
-        @include('backend.layouts.cms.home_page.service_container.create') --}}
-
-
     </div>
+
+    {{-- --------------- view edit modal------------ --}}
+    <div class="modal fade" id="EditCityContainer" tabindex="-1" aria-labelledby="EditCityContainerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditCityContainerLabel">Edit City</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Hidden input to store city ID -->
+                    <input type="hidden" id="city_id">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">City Name</label>
+                        <input type="text" id="name" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" class="form-control">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="updateCity()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/data-tables.min.js"></script>
-    <!--buttons dataTables-->
-    <script src="{{ asset('backend') }}/admin/assets/datatables/datatables.buttons.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/jszip.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/pdfmake.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.html5.min.js"></script>
-    <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.print.min.js"></script>
+    <script>
+        $('#service-form').on('submit', function(event) {
+            event.preventDefault();
+
+            let submitButton = $('#submitButton');
+            submitButton.prop('disabled', true).text('Submitting...');
+
+            let storeUrl = '{{ route('cities.store') }}';
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: storeUrl,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        flasher.success(response?.message);
+                        $('#basic_tables').DataTable().ajax.reload();
+                        $('#service-form').trigger("reset");
+                        $('.btn-close').trigger('click');
+                    } else {
+                        flasher.error('Something went wrong.');
+                    }
+                },
+                error: function(response) {
+                    if (response.responseJSON.errors) {
+                        $('#show-error').html(
+                            `<div class="text-danger">${response.responseJSON.message}</div>`
+                        );
+                    }
+                },
+                complete: function() {
+                    submitButton.prop('disabled', false).text('Save');
+                }
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -237,8 +299,86 @@
                 dTable.search(this.value).draw();
             });
 
-
             // Custom pagination logic with ellipsis
+            function updateCustomPagination(totalPages, currentPage) {
+                const paginationContainer = $('#customPagination');
+                paginationContainer.empty();
+
+                const maxVisiblePages = 5; // Number of visible pages before and after the current page
+                let startPage, endPage;
+
+                // Determine the start and end page range
+                if (totalPages <= maxVisiblePages) {
+                    startPage = 1;
+                    endPage = totalPages;
+                } else {
+                    if (currentPage <= Math.floor(maxVisiblePages / 2)) {
+                        startPage = 1;
+                        endPage = maxVisiblePages;
+                    } else if (currentPage + Math.floor(maxVisiblePages / 2) >= totalPages) {
+                        startPage = totalPages - maxVisiblePages + 1;
+                        endPage = totalPages;
+                    } else {
+                        startPage = currentPage - Math.floor(maxVisiblePages / 2);
+                        endPage = currentPage + Math.floor(maxVisiblePages / 2);
+                    }
+                }
+
+                // Add first page and ellipsis if needed
+                if (startPage > 1) {
+                    paginationContainer.append(
+                        ` <li class="page-item col-1"><a class="page-link active" href="#" data-page="1">1</a></li>`
+                    );
+                    if (startPage > 2) {
+                        paginationContainer.append(`<span class="ellipsis">...</span>`);
+                    }
+                }
+
+                // Add the visible page range
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationContainer.append(
+                        ` <li class="page-item col-1"><a class="pagination-item page-link ${i === currentPage ? 'active' : ''}" href="#" data-page="${i}">${i}</a></li>`
+                    );
+                }
+
+                // Add ellipsis and last page if needed
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        paginationContainer.append(`<span class="ellipsis">...</span>`);
+                    }
+                    paginationContainer.append(
+                        `<li class="page-item col-1"><a class="pagination-item page-link "  data-page="${totalPages}">${totalPages}</a></li>`
+                    );
+                }
+
+                // Click event for pagination items
+                $('.pagination-item').on('click', function(e) {
+                    e.preventDefault();
+                    console.log('pagination-item')
+                    const page = $(this).data('page');
+                    if (!$(this).hasClass('disabled')) {
+                        dTable.page(page - 1).draw('page'); // DataTables is 0-based index, so subtract 1
+                    }
+                });
+
+                // Click event for 'Previous' button
+                $('#prevPage').off().on('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        dTable.page(currentPage - 2).draw('page');
+                    }
+                });
+
+                // Click event for 'Next' button
+                $('#nextPage').off().on('click', function(e) {
+                    e.preventDefault();
+                    // console.log('nextPage')
+                    if (currentPage < totalPages) {
+                        dTable.page(currentPage).draw('page');
+                    }
+                });
+            }
+
         });
     </script>
     <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
@@ -264,98 +404,66 @@
         })
     </script>
 
-    <script>
-        $('#request-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            // Disable the submit button to prevent multiple submissions
-            let submitButton = $('#submitButton');
-            submitButton.prop('disabled', true).text('Submitting...');
+    {{-- for update data --}}
 
-            let storeurl = '{{ route('cities.store') }}';
-            let formData = new FormData(this); // Collect form data
-            $.ajax({
-                url: storeurl, // Route to handle form submission
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        flasher.success(response?.message);
-                        $('#basic_tables').DataTable().ajax.reload();
-                        $('#request-form').trigger("reset");
-                        $('.btn-close').trigger('click');
-                    } else {
-                        flasher.error('Something went wrong.');
-                    }
-                },
-                error: function(response) {
-                    // Check if there are validation errors
-                    if (response.responseJSON.errors) {
-                        $('#show-error').html(
-                            `<div class="text-danger">${response.responseJSON.message}</div>`
-                        );
-                    }
-                },
-                complete: function() {
-                    // Re-enable the submit button after the request completes
-                    submitButton.prop('disabled', false).text('Submit Request');
-                }
-            });
-
-        });
-    </script>
-
-    for update data
     <script>
         function viewModel(id) {
-            let url = '{{ route('cities.edit', ':id') }}'.replace(':id', id);
             $.ajax({
+                url: "{{ route('cities.edit', ':id') }}".replace(':id', id), // Correctly replace :id in the URL
                 type: "GET",
-                url: url,
-                success: function(resp) {
-                    $('#EditServiceContainerContent').html(resp);
-                    $('#request-form-update').on('submit', function(event) {
-                        event.preventDefault(); // Prevent default form submission
-                        // Disable the submit button to prevent multiple submissions
-                        let submitButton = $('#submitButtonUpdate');
-                        submitButton.prop('disabled', true).text('Submitting...');
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        // Populate the form fields with the response data
+                        $('#EditCityContainer #city_id').val(response.data.id); // Store city ID in hidden input
+                        $('#EditCityContainer #name').val(response.data.name); // Populate city name field
+                        $('#EditCityContainer #status').val(response.data.status); // Populate status dropdown
 
-                        let storeurl = '{{ route('cities.update', ':id') }}'
-                            .replace(
-                                ':id', id);
-                        let formData = new FormData(this); // Collect form data
-                        $.ajax({
-                            url: storeurl, // Route to handle form submission
-                            type: "POST",
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function(response) {
-                                if (response.success) {
-                                    flasher.success(response?.message);
-                                    $('#basic_tables').DataTable().ajax.reload();
-                                    $('#request-form-update').trigger("reset");
-                                    $('.btn-close').trigger('click');
-                                } else {
-                                    flasher.error('Something went wrong.');
-                                }
-                            },
-                            error: function(response) {
-                                // Check if there are validation errors
-                                if (response.responseJSON.errors) {
-                                    $('#show-error').html(
-                                        `<div class="text-danger">${response.responseJSON.message}</div>`
-                                    );
-                                }
-                            },
-                            complete: function() {
-                                // Re-enable the submit button after the request completes
-                                submitButton.prop('disabled', false).text('Submit Request');
-                            }
-                        });
+                        // Show the modal
+                        $('#EditCityContainer').modal('show');
+                    } else {
+                        alert("Something went wrong!");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching city data:", error);
+                    alert("There was an error fetching the city data.");
+                }
+            });
+        }
+    </script>
 
-                    });
+    <script>
+        function updateCity() {
+            let city_id = $('#EditCityContainer #city_id').val(); // Get the city ID from the hidden field
+            let name = $('#EditCityContainer #name').val(); // Get the updated city name
+            let status = $('#EditCityContainer #status').val(); // Get the updated status
+
+            // Send the update request via AJAX
+            $.ajax({
+                url: "{{ route('cities.update', ':id') }}".replace(':id',
+                    city_id), // Dynamically replace :id with city_id
+                type: "PUT", // PUT for updating
+                data: {
+                    _token: "{{ csrf_token() }}", // CSRF token for protection
+                    name: name,
+                    status: status
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#EditCityContainer').modal('hide'); // Close modal on success
+                        $('#basic_tables').DataTable().ajax.reload(); // Reload the DataTable to reflect changes
+
+                        // Show a success message
+                        flasher.success(response.message);
+
+                    } else {
+                        flasher.error(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating city:", error);
+                    flasher.error(response.message);
                 }
             });
         }

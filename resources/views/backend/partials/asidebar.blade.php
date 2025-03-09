@@ -76,8 +76,8 @@ $systemSetting = App\Models\SystemSetting::first();
             <li class="menu-item open">
                 <a href="{{ route('cities.index') }}"
                     class="menu-link {{ request()->routeIs('cities.index') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined menu-icon">content_paste</span>
-                    <span class="title">City</span>
+                    <span class="material-symbols-outlined menu-icon">location_city</span>
+                    <span class="title">City List</span>
                 </a>
             </li>
             <li class="menu-item open">
