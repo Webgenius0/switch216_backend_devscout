@@ -36,9 +36,9 @@ class CityController extends Controller
                     return $status;
                 })
                 ->addColumn('action', function ($data) {
-                    return '<div class="action-wrapper">
+                    return '<div class="action-wrapper d-flex justify-content-center">
                         <a type="button" href="javascript:void(0)"
-                                class="ps-0 border-0 bg-transparent lh-1 position-relative top-2"
+                                class="ps-0 border-0 bg-transparent lh-1 position-relative top-2 p-2"
                                 data-bs-toggle="modal" data-bs-target="#EditCityContainer" onclick="viewModel(' . $data->id . ')" ><i class="material-symbols-outlined fs-16 text-body">edit</i>
                             </a>
                         <button class="ps-0 border-0 bg-transparent lh-1 position-relative top-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete" onclick="deleteRecord(event,' . $data->id . ')">
@@ -98,32 +98,32 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, City $city)
-    {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'status' => 'required|in:active,inactive',
+public function update(Request $request, City $city)
+{
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'status' => 'required|in:active,inactive',
+    ]);
+
+    try {
+        // Update fields using the $city model directly
+        $city->update($validatedData);
+
+        return response()->json([
+            "success" => true,
+            "message" => "City Updated Successfully",
         ]);
-    
-        try {
-            // Update fields using the $city model directly
-            $city->update($validatedData);
-    
-            return response()->json([
-                "success" => true,
-                "message" => "City Updated Successfully",
-            ]);
-        } catch (Exception $e) {
-            Log::error("CityController::update - " . $e->getMessage());
-    
-            return response()->json([
-                "success" => false,
-                "message" => "City Container Content not Updated"
-            ]);
-        }
+    } catch (Exception $e) {
+        Log::error("CityController::update - " . $e->getMessage());
+
+        return response()->json([
+            "success" => false,
+            "message" => "City Container Content not Updated"
+        ]);
     }
-    
+}
+
 
     public function status($id){
 

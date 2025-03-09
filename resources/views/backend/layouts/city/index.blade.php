@@ -61,11 +61,13 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Status</th>
-                                                        <th scope="col">Action</th>
+                                                        <th class="text-center" scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tbody>
+                                                    {{-- Data will be fetched using AJAX --}}
+                                                
+
                                                 </tbody>
                                             </table>
                                         </div>
