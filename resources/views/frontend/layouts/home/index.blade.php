@@ -1,3 +1,6 @@
+@php
+    $citiesName = \App\Models\City::pluck('name')->toArray(); // Fetch only city names
+@endphp
 @extends('frontend.app')
 
 @section('title')
@@ -79,7 +82,7 @@
                             <p class="slide-des">
                                 {{ $d->description ??
                                     "Explore trusted professionals across multiple categories, from
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    party planners to contractors, all in one place." }}
                                 </h4>
                             </p>
                         </div>
@@ -389,7 +392,7 @@
                 <p class="des">
                     {{ $cms['process_container']->description ??
                         'Yet bed any for traveling assistance indulgence unpleasing. Not
-                                                                                                                                                                                                                            thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                                                                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
                 </p>
                 <a href="{{ route('service.category') }}"
                     class="button">{{ $cms['process_container']->button_text ?? 'See All Service' }}</a>
@@ -405,7 +408,7 @@
                             <p class="item-des">
                                 {{ $d->description ??
                                     "Party we years to order allow asked of. We so opinion friends me
-                                                                                                                                                                                                                                                                                                                                message as delight." }}
+                                                                                                                                                                                                                                                                                                                                                                message as delight." }}
                             </p>
                         </div>
                     @endforeach
@@ -531,7 +534,7 @@
                                         <p class="icon-des">
                                             {{ $d->description ??
                                                 "Lorem Ipsum is simply dummy text of the printing and
-                                                                                                                                                                                                                                            typesetting industry. Lorem Ipsum has." }}
+                                                                                                                                                                                                                                                                                        typesetting industry. Lorem Ipsum has." }}
                                         </p>
                                     </div>
                                 </div>
@@ -662,9 +665,9 @@
                     <p class="des">
                         {{ $cms['provider_work_container']->description ??
                             'Yet bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy. Yet
-                                                                                                                                                                        bed any for travelling assistance indulgence unpleasing. Not
-                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything joy.' }}
+                                                                                                                                                                                                thoughts all exercise blessing. Indulgence way everything joy. Yet
+                                                                                                                                                                                                bed any for travelling assistance indulgence unpleasing. Not
+                                                                                                                                                                                                thoughts all exercise blessing. Indulgence way everything joy.' }}
                     </p>
                     <a href="#"
                         class="button">{{ $cms['provider_work_container']->button_text ?? 'Service Provider showing Work' }}</a>
@@ -1686,8 +1689,8 @@
                     <p class="des">
                         {{ $cms['faq_container']->description ??
                             "Yet bed any for assistance indulgence unpleasing. Not thoughts all
-                                                                                                                        exercise blessing. Indulgence way everything joy alteration
-                                                                                                                        boisterous the attachment." }}
+                                                                                                                                                exercise blessing. Indulgence way everything joy alteration
+                                                                                                                                                boisterous the attachment." }}
 
                     </p>
                     <a class="more-btn"
@@ -1717,8 +1720,8 @@
                                         <div class="accordion-body">
                                             {{ $d->description ??
                                                 'Yet bed any for assistance indulgence unpleasing. Not
-                                                                                                                                                                                                                        thoughts all exercise blessing. Indulgence way everything
-                                                                                                                                                                                                                        joy alteration boisterous the attachment.' }}
+                                                                                                                                                                                                                                                                    thoughts all exercise blessing. Indulgence way everything
+                                                                                                                                                                                                                                                                    joy alteration boisterous the attachment.' }}
                                         </div>
                                     </div>
                                 </div>
@@ -1831,6 +1834,7 @@
                     fill-opacity="0.05" />
             </svg>
         </section>
+ 
         <!-- subscribe section end -->
     </main>
     <!-- main section end -->
@@ -1859,12 +1863,16 @@
 
     <script>
         $(document).ready(function() {
-            let cities = [];
-
+            // let cities = [{{$cities}}];
+            let cities = @json($cities);
+            
             // Load Morocco city list from JSON
-            $.getJSON("/backend/admin/assets/morocco_city_list.json", function(data) {
-                cities = data.results.map(city => city.name); // Extract only city names
-            });
+            // $.getJSON("/backend/admin/assets/morocco_city_list.json", function(data) {
+            //     cities = data.results.map(city => city.name); // Extract only city names
+            // } );
+            
+            // Input event for filtering cities
+            
 
             $("#locationInput").on("input", function() {
                 let query = $(this).val().toLowerCase();
