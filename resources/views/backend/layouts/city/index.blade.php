@@ -331,25 +331,13 @@
                     paginationContainer.append(
                         ` <li class="page-item col-1"><a class="page-link active" href="#" data-page="1">1</a></li>`
                     );
-                    if (startPage > 2) {
-                        paginationContainer.append(`<span class="ellipsis">...</span>`);
-                    }
+                   
                 }
 
                 // Add the visible page range
                 for (let i = startPage; i <= endPage; i++) {
                     paginationContainer.append(
                         ` <li class="page-item col-1"><a class="pagination-item page-link ${i === currentPage ? 'active' : ''}" href="#" data-page="${i}">${i}</a></li>`
-                    );
-                }
-
-                // Add ellipsis and last page if needed
-                if (endPage < totalPages) {
-                    if (endPage < totalPages - 1) {
-                        paginationContainer.append(`<span class="ellipsis">...</span>`);
-                    }
-                    paginationContainer.append(
-                        `<li class="page-item col-1"><a class="pagination-item page-link "  data-page="${totalPages}">${totalPages}</a></li>`
                     );
                 }
 
@@ -383,6 +371,12 @@
 
         });
     </script>
+
+
+                
+
+
+
     <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
     <script>
         // Use the status change alert
