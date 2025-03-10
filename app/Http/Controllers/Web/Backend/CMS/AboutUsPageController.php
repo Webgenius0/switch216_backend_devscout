@@ -151,7 +151,7 @@ class AboutUsPageController extends Controller
                 "message" => "Service Container Content Updated Successfully",
             ]);
         } catch (Exception $e) {
-            Log::error("ProviderRegisterController::update - " . $e->getMessage());
+            Log::error("AboutUsPageController::update - " . $e->getMessage());
 
             return response()->json([
                 "success" => false,

@@ -20,17 +20,20 @@ enum Section: string
     case FaqContainerContent = 'faq_container_content';
     case HeroBanner = 'hero_banner';
 
+    // City list section
+    case CityContainer = 'city_container';
+
     //// Car page section 
     case CarBanner = 'car_banner';
     //// Car Restaurant section 
     case RestaurantBanner = 'restaurant_banner';
     //// Car RealEstatePage section 
-    case RealEstateBanner = 'RealEstate_banner';
+    case RealEstateBanner = 'real_estate_banner';
 
     //// Car ServiceRegisterPage section 
-    case ServiceRegisterContainer = 'ServiceProvider_container';
-    case ServiceRegisterImageContainer = 'ServiceProviderImage_container';
-    case ProviderProcessContainer = 'ProviderProcess_container';
+    case ServiceRegisterContainer = 'service_provider_container';
+    case ServiceRegisterImageContainer = 'service_provider_image_container';
+    case ProviderProcessContainer = 'provider_process_container';
     case ProviderProcessImageContainer = 'provider_process_image_container';
     //about section
     case AboutContainer = 'about_container';

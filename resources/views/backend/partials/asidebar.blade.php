@@ -72,6 +72,14 @@ $systemSetting = App\Models\SystemSetting::first();
                     <span class="title">Sub Category</span>
                 </a>
             </li>
+            <!-- Sub city Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('cities.index') }}"
+                    class="menu-link {{ request()->routeIs('cities.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">location_city</span>
+                    <span class="title">City List</span>
+                </a>
+            </li>
             <li class="menu-item open">
                 <a href="{{ route('admin_contact_us.index') }}"
                     class="menu-link {{ request()->routeIs('admin_contact_us.index') ? 'active' : '' }}">
