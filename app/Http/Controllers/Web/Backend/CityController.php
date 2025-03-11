@@ -70,7 +70,7 @@ class CityController extends Controller
             'status' => $request->status,
         ]);
     
-        return response()->json(['success' => true, 'message' => 'Service added successfully!']);
+        return response()->json(['success' => true, 'message' => 'City added successfully!']);
     }
 
     /**
@@ -132,7 +132,7 @@ public function update(Request $request, City $city)
         if (empty($data)) {
             return response()->json([
                 "success" => false,
-                "message" => "Item not found."
+                "message" => "City not found."
             ], 404);
         }
 
@@ -145,7 +145,7 @@ public function update(Request $request, City $city)
         $data->save();
         return response()->json([
             'success' => true,
-            'message' => 'Item status changed successfully.'
+            'message' => 'City status changed successfully.'
         ]);
     }
 
@@ -160,7 +160,7 @@ public function update(Request $request, City $city)
         if (empty($data)) {
             return response()->json([
                 "success" => false,
-                "message" => "Item not found."
+                "message" => "City not found."
             ], 404);
         }
 
@@ -168,7 +168,7 @@ public function update(Request $request, City $city)
 
         return response()->json([
             "success" => true,
-            "message" => "Item deleted successfully."
+            "message" => "City deleted successfully."
         ]);
     }
 }
