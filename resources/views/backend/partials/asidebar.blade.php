@@ -80,6 +80,16 @@ $systemSetting = App\Models\SystemSetting::first();
                     <span class="title">City List</span>
                 </a>
             </li>
+            <!-- Ranking Provider Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('ranks.index') }}"
+                    class="menu-link {{ request()->routeIs('ranks.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">
+                        hotel_class
+                        </span>
+                    <span class="title">Rank List</span>
+                </a>
+            </li>
             <li class="menu-item open">
                 <a href="{{ route('admin_contact_us.index') }}"
                     class="menu-link {{ request()->routeIs('admin_contact_us.index') ? 'active' : '' }}">

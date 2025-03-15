@@ -13,9 +13,10 @@ class ContractorRankingController extends Controller
     public function __construct(ContractorRankingService $rankingService)
     {
         $this->rankingService = $rankingService;
+
     }
 
-    public function show($userId)
+    public function show($userId = '')
     {
         try {
             $ranking = $this->rankingService->getRankingByUserId($userId);

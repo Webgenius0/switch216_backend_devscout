@@ -75,7 +75,6 @@ class User extends Authenticatable
         'is_otp_verified',
         'created_at',
         'updated_at',
-        'role',
         'status',
         'remember_token',
     ];
@@ -147,6 +146,14 @@ class User extends Authenticatable
     public function contractorRanking()
     {
         return $this->hasOne(ContractorRanking::class, 'user_id');
+    }
+
+    /**
+     * Get the  ranks associated with the user.
+     */
+
+    public function ranks(){
+        return $this->hasOne(Rank::class, 'user_id');
     }
 
 

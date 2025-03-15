@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 return new class extends Migration {
     /**
@@ -17,6 +18,7 @@ return new class extends Migration {
             $table->foreignId('contactor_id')->constrained('users')->onDelete('cascade'); // Link to User
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade'); // Link to Booking
             $table->tinyInteger('rating')->unsigned()->default(0); // Rating (1-5 scale)
+            $table->string('response_rate')->nullable(); // Status (0: Inactive, 1: Active)
             $table->text('review')->nullable(); // Review content
             $table->timestamps();
         });

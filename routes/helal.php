@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\ContractorRankingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\UserController;
 use App\Http\Controllers\Web\Backend\CityController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
+use App\Http\Controllers\Web\Backend\RankController;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
   // Route for the admin dashboard
@@ -70,6 +72,8 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
   // cms all-------------------------------------------------
   // cms all-------------------------------------------------
+
+
 
 
   //! =============== Route for Home Page C_M_S ----------------------------- start
@@ -194,11 +198,21 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //category
   Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
   Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
-  
+
   // Route for CityController
-   Route::resource('/cities', CityController::class)->names('cities');
-    Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
-  
+  Route::resource('/cities', CityController::class)->names('cities');
+  Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
+
+
+  //! =============== Route for Provider Rating Page ----------------------------- start
+  // Route for Provider Rating Page
+  Route::get('provider-rating-page', [ContractorRankingController::class, 'show'])->name('provider_rating_page.index');
+  Route::post('provider-rating-page/{userId}', [ContractorRankingController::class, 'update'])->name('provider_rating_page.update');
+
+  // Route for RankController
+  Route::resource('ranks', RankController::class)->names('ranks');
+  // Route::get('/rank/{userId}', [RankController::class, 'rank.index']);
+  Route::post('ranks/status/{id}', [RankController::class, 'status'])->name('ranks.status');
 
 
   // Routes for NotificationController
