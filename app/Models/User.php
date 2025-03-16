@@ -120,6 +120,11 @@ class User extends Authenticatable
         return $this->hasMany(Service::class, 'user_id');
     }
 
+    public function completedJobs()
+{
+    return $this->hasMany(Booking::class, 'user_id')->where('status', 'completed');
+}
+
     /**
      * Get the bookings made by the user (customer).
      */

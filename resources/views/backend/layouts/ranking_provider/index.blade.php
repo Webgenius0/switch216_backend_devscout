@@ -142,8 +142,8 @@
                         searchable: false
                     },
                     {
-                        data: 'user',
-                        name: 'user',
+                        data: 'name',
+                        name: 'name',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {
@@ -168,8 +168,8 @@
                         }
                     },
                     {
-                        data: 'completed_services',
-                        name: 'completed_services',
+                        data: 'progress',
+                        name: 'progress',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {

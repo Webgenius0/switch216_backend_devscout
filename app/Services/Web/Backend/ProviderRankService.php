@@ -4,6 +4,7 @@ namespace App\Services\Web\Backend;
 
 use App\Models\Rank;
 use App\Models\Service;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -14,10 +15,9 @@ public function getRankingByUserId($userId)
 {
     try {
         // Find the ranking by user_id and explicitly load 'role' along with other user data
-        $ranking = Rank::where('user_id', $userId)
-                        ->with(['user' => function($query) {
-                            $query->select('id', 'name', 'email', 'role'); // Ensure 'role' is included
-                        }])
+        $ranking = User::where('role', 'contractor')
+                        ->where('id', $userId)
+                        ->with('rank')
                         ->first();
 
 
@@ -27,6 +27,7 @@ public function getRankingByUserId($userId)
         throw $e;
     }
 }
+
 
     
     // updateRank function

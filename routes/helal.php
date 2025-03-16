@@ -212,6 +212,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route for RankController
   Route::resource('ranks', RankController::class)->names('ranks');
   // Route::get('/rank/{userId}', [RankController::class, 'rank.index']);
+  Route::get('/update-service-provider-ranks', [RankController::class, 'updateServiceProviderRanks']);
   Route::post('ranks/status/{id}', [RankController::class, 'status'])->name('ranks.status');
 
 
