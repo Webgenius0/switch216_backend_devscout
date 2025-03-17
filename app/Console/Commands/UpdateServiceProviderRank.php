@@ -2,68 +2,84 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+
+use Exception;
 use App\Models\Rank;
 use App\Models\User;
-use App\Models\Booking;
 use App\Models\Review;
+use App\Models\Booking;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateServiceProviderRank extends Command
 {
     protected $signature = 'rank:update-providers';
     protected $description = 'Update service provider ranks based on completed jobs, rating, and response rate';
 
+
     public function handle()
     {
-        $serviceProviders = User::whereHas('services')->get(); // Get all service providers
-
-        foreach ($serviceProviders as $provider) {
-            $completedJobs = Booking::where('contactor_id', $provider->id)
-                                    ->where('status', 'completed')
-                                    ->count();
-
-            $averageRating = Review::where('contactor_id', $provider->id)
-                                   ->avg('rating');
-
-            $responseRate = $this->calculateResponseRate($provider);
-
-            $newRank = $this->determineRank($completedJobs, $averageRating, $responseRate);
-
-            // Update rank
-            Rank::updateOrCreate(
-                ['contactor_id' => $provider->id],
-                [
-                    'completed_jobs' => $completedJobs,
-                    'average_rating' => $averageRating ?? 0,
-                    'response_rate' => $responseRate,
-                    'rank' => $newRank
-                ]
-            );
+        try {
+            // Fetch all contractors (users with the role 'contractor')
+            $contractors = User::where('role', 'contractor')->get();
+    
+            foreach ($contractors as $contractor) {
+                // Count completed jobs for this contractor
+                $completedJobs = Booking::where('user_id', $contractor->id)
+                                        ->where('status', 'completed')
+                                        ->count();
+    
+                // Calculate the average rating for this contractor
+                $averageRating = Rank::where('user_id', $contractor->id)->avg('rating') ?? 0;
+    
+                // Calculate response rate dynamically
+                $responseRate = $this->calculateResponseRate($completedJobs);
+    
+                // Determine the rank of the contractor
+                $newRank = $this->determineRank($completedJobs, $averageRating);
+    
+                //create the rank record for this contractor
+                Rank::updateOrCreate(
+                    ['user_id' => $contractor->id],
+                    [
+                        'completed_jobs' => $completedJobs,
+                        'average_rating' => $averageRating,
+                        'response_rate' => $responseRate,
+                        'rank' => $newRank
+                    ]
+                );
+            }
+    
+            $this->info('Service provider ranks updated successfully!');
+    
+        } catch (Exception $e) {
+            Log::error('Error updating ranks: ' . $e->getMessage());
         }
-
-        $this->info('Service provider ranks updated successfully!');
     }
+    
 
-    private function calculateResponseRate($provider)
+    private function determineRank($completedJobs, $averageRating)
     {
-        $totalBookings = Booking::where('contactor_id', $provider->id)->count();
-        $responses = Booking::where('contactor_id', $provider->id)
-                            ->whereIn('status', ['confirmed', 'completed'])
-                            ->count();
-
-        return $totalBookings > 0 ? ($responses / $totalBookings) * 100 : 0;
-    }
-
-    private function determineRank($completedJobs, $averageRating, $responseRate)
-    {
-        if ($completedJobs >= 50 && $averageRating >= 4.8 && $responseRate >= 80) {
+        if ($completedJobs >= 50) {
             return 'Expert Pro';
-        } elseif ($completedJobs >= 20 && $averageRating >= 4.8 && $responseRate >= 60) {
+        } elseif ($completedJobs >= 20) {
             return 'Pro';
-        } elseif ($completedJobs >= 5 && $averageRating >= 4.5) {
+        } elseif ($completedJobs >= 5) {
             return 'Gold';
-        } else {
-            return 'Silver';
         }
+        return 'Silver';
     }
+    
+    private function calculateResponseRate($completedJobs)
+    {
+        if ($completedJobs >= 50) {
+            return '80%';
+        } elseif ($completedJobs >= 20) {
+            return '60%';
+        } elseif ($completedJobs >= 5) {
+            return '50%';
+        }
+        return '0%';
+    }
+    
 }

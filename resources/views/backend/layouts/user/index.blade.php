@@ -30,7 +30,6 @@
         </div>
         {{-- ---------------------- --}}
         <div class="row justify-content-center">
-
             
                 <div class="card bg-white border-0 rounded-3 ">
                     <div class="card-body p-0">

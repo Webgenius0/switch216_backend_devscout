@@ -71,7 +71,7 @@ class RankController extends Controller
                             return '50%';
                         } elseif ($data->completed_jobs_count >= 20) {
                             return '60%';
-                        } elseif ($data->completed_jobs_count >= 50) {
+                        } elseif ($data->completed_jobs_count >= 50) { 
                             return '80%';
                         }
                         return '0%'; 

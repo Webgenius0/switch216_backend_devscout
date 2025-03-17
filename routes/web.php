@@ -1,27 +1,28 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Web\Frontend\AboutUsPageController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
-use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
+use App\Services\Web\Frontend\RealStatePageService;
 use App\Http\Controllers\Web\Frontend\CarPageController;
+use App\Http\Controllers\Web\Frontend\ServiceController;
+use App\Http\Controllers\Web\Frontend\HomePageController;
+use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
-use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
+use App\Http\Controllers\Web\Frontend\EmergencyPageController;
+use App\Http\Controllers\Web\Frontend\RestaurantPageController;
 use App\Http\Controllers\Web\Frontend\Contractor\ChatController;
-use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
+use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\Contractor\BookingContactorController;
+use App\Http\Controllers\Web\Frontend\Contractor\LiveNotificationController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorPricingController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
-use App\Http\Controllers\Web\Frontend\Contractor\LiveNotificationController;
 use App\Http\Controllers\Web\Frontend\Customer\AppointmentCustomerController;
-use App\Http\Controllers\Web\Frontend\EmergencyPageController;
-use App\Http\Controllers\Web\Frontend\HomePageController;
-use App\Http\Controllers\Web\Frontend\RealEstateServiceController;
-use App\Http\Controllers\Web\Frontend\RestaurantPageController;
-use App\Http\Controllers\Web\Frontend\ServiceController;
-use App\Services\Web\Frontend\RealStatePageService;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
+use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 
 // Route::get('/', function () {
 //     // return view('welcome');
@@ -194,6 +195,9 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
     Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
     Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
+
+    //contractor pricing
+    Route::get('pricing', [ContractorPricingController::class, 'index'])->name('contractor.pricing.index');
 });
 
 
