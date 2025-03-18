@@ -36,7 +36,9 @@ use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
+use App\Http\Controllers\Web\Backend\ContractorSubscriptionPackageController;
 use App\Http\Controllers\Web\Backend\RankController;
+use App\Models\ContractorSubscriptionPackage;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
   // Route for the admin dashboard
@@ -208,6 +210,12 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // Route for Provider Rating Page
   Route::get('provider-rating-page', [ContractorRankingController::class, 'show'])->name('provider_rating_page.index');
   Route::post('provider-rating-page/{userId}', [ContractorRankingController::class, 'update'])->name('provider_rating_page.update');
+
+  //! =============== Route for Contractor Subscription Package Page ----------------------------- start
+  // Route for Contractor Subscription Package Page
+  Route::resource('contractor-subscription-package', ContractorSubscriptionPackageController::class)->names('contractor_subscription_package');
+
+  Route::post('contractor-subscription-package/status/{id}', [ContractorSubscriptionPackageController::class, 'status'])->name('contractor_subscription_package.status');
 
   // Route for RankController
   Route::resource('ranks', RankController::class)->names('ranks');

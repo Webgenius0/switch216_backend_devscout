@@ -86,8 +86,16 @@ $systemSetting = App\Models\SystemSetting::first();
                     class="menu-link {{ request()->routeIs('ranks.index') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">
                         hotel_class
-                        </span>
+                    </span>
                     <span class="title">Rank List</span>
+                </a>
+            </li>
+            <!-- Sub contractor subscription package Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('contractor_subscription_package.index') }}"
+                    class="menu-link {{ request()->routeIs('contractor_subscription_package.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">location_city</span>
+                    <span class="title">Subscription Package</span>
                 </a>
             </li>
             <li class="menu-item open">
@@ -270,7 +278,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            
+
             <!-- CMS Restaurant Item -->
             <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -304,7 +312,8 @@ $systemSetting = App\Models\SystemSetting::first();
             </li>
 
             <!-- CMS About Page Item -->
-            <li class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.*') ? 'open active' : '' }}">
+            <li
+                class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">group</span>
                     <span class="title">About Page</span>

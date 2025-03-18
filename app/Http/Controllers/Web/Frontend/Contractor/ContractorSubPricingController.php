@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web\Frontend\Contractor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ContractorPricingController extends Controller{
+class ContractorSubPricingController extends Controller{
     public function index(){
-        return view('frontend.dashboard.contractor.layouts.pricing.contractor_package.index');
+        return view('frontend.dashboard.contractor.layouts.pricing.contractor_sub_package.index');
     }
 
     public function create(){

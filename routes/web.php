@@ -22,6 +22,7 @@ use App\Http\Controllers\Web\Frontend\Contractor\ContractorServiceController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorSettingController;
 use App\Http\Controllers\Web\Frontend\Customer\AppointmentCustomerController;
 use App\Http\Controllers\Web\Frontend\Contractor\ContractorDashboardController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorSubPricingController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 
 // Route::get('/', function () {
@@ -198,6 +199,9 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
 
     //contractor pricing
     Route::get('pricing', [ContractorPricingController::class, 'index'])->name('contractor.pricing.index');
+
+     //contractor Sub pricing
+    Route::get('pricing/sub-package', [ContractorSubPricingController::class, 'index'])->name('contractor.sub_pricing.index');
 });
 
 
