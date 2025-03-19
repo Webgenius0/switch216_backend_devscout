@@ -94,7 +94,9 @@ $systemSetting = App\Models\SystemSetting::first();
             <li class="menu-item open">
                 <a href="{{ route('contractor_subscription_package.index') }}"
                     class="menu-link {{ request()->routeIs('contractor_subscription_package.index') ? 'active' : '' }}">
-                    <span class="material-symbols-outlined menu-icon">location_city</span>
+                    <span class="material-symbols-outlined menu-icon">
+                        subscriptions
+                        </span>
                     <span class="title">Subscription Package</span>
                 </a>
             </li>

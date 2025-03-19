@@ -36,13 +36,7 @@
                         <div class="col-xl-12 col-xxl-12 col-lg-12">
                             <div class="card bg-white border-0 rounded-3 mb-4">
                                 <div class="card-body p-0">
-                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
-                                        <span class="position-relative table-src-form me-0">
-                                            <input type="text" class="form-control" placeholder="Search here"
-                                                id="customSearchBox">
-                                            <i
-                                                class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
-                                        </span>
+                                    <div class="text-end p-4">
                                         <a href="javascript:void(0)"
                                             class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
                                             data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
@@ -53,7 +47,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="default-table-area style-two all-products">
+                                    <div class="default-table-area style-two all-products border-0">
                                         <div class="table-responsive">
                                             <table class="table align-middle" id="basic_tables">
                                                 <thead>
@@ -170,8 +164,8 @@
     </div>
 
     {{-- --------------- view edit modal------------ --}}
-    <div class="modal fade" id="EditSubscriptionContainer" tabindex="-1" aria-labelledby="EditSubscriptionContainerLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="EditSubscriptionContainer" tabindex="-1"
+        aria-labelledby="EditSubscriptionContainerLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -223,6 +217,10 @@
 @endsection
 
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
     <script>
         $('#service-form').on('submit', function(event) {
             event.preventDefault();
@@ -263,7 +261,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             let dTable = $('#basic_tables').DataTable({
                 order: [],
@@ -294,6 +292,7 @@
                     url: "{{ route('contractor_subscription_package.index') }}",
                     type: "get"
                 },
+                
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -462,8 +461,58 @@
             }
 
         });
-    </script>
+    </script> --}}
 
+    <script>
+        $(document).ready(function() {
+            $('#basic_tables').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('contractor_subscription_package.index') }}",
+                    type: "GET",
+                    error: function(xhr, status, error) {
+                        console.log("AJAX Error:", xhr.responseText);
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    },
+                    {
+                        data: 'price',
+                        name: 'price'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'button_text',
+                        name: 'button_text'
+                    },
+                    {
+                        data: 'button_link',
+                        name: 'button_link'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
+    </script>
 
     <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
     <script>
@@ -493,48 +542,49 @@
     <script>
         function viewModel(id) {
             $.ajax({
-                url: "{{ route('contractor_subscription_package.edit', ':id') }}".replace(':id', id), // Correctly replace :id in the URL
+                url: "{{ route('contractor_subscription_package.edit', ':id') }}".replace(':id',
+                id), // Correctly replace :id in the URL
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
-                    if (response.success) {
-                        // Populate the form fields with the response data
-                        $('#EditSubscriptionContainer #contractor_subscription_package_id').val(response.data.id); // Store city ID in hidden input
-                        $('#EditSubscriptionContainer #title').val(response.data.title);
-                        $('#EditSubscriptionContainer #price').val(response.data.price); 
-                        $('#EditSubscriptionContainer #description').val(response.data.description); 
-                        $('#EditSubscriptionContainer #button_text').val(response.data.button_text); 
-                        $('#EditSubscriptionContainer #button_link').val(response.data.button_link); 
-                        $('#EditSubscriptionContainer #status').val(response.data.status);
+            if (response.success) {
+                $('#EditSubscriptionContainer #contractor_subscription_package_id').val(response.data.id);
+                $('#EditSubscriptionContainer #subscriptionTitle').val(response.data.title);
+                $('#EditSubscriptionContainer #subscriptionPrice').val(response.data.price);
+                $('#EditSubscriptionContainer #subscriptionDescription').val(response.data.description);
+                $('#EditSubscriptionContainer #subscriptionButtontext').val(response.data.button_text);
+                $('#EditSubscriptionContainer #subscriptionButtonLink').val(response.data.button_link);
+                $('#EditSubscriptionContainer #status').val(response.data.status);
 
-                        // Show the modal
-                        $('#EditSubscriptionContainer').modal('show');
-                    } else {
-                        alert("Something went wrong!");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching city data:", error);
-                    alert("There was an error fetching the city data.");
-                }
-            });
+                $('#EditSubscriptionContainer').modal('show'); // Show modal
+            } else {
+                alert("Something went wrong!");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching subscription data:", error);
+            alert("There was an error fetching the subscription data.");
+        }
+    });
         }
     </script>
 
-    <script>
+    {{-- <script>
         function updateSubscription() {
-            let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id').val(); // Get the city ID from the hidden field
-            let title = $('#EditSubscriptionContainer #title').val(); // Get the updated city name
-            let price	 = $('#EditSubscriptionContainer #price').val(); // Get the updated city name
-            let description	 = $('#EditSubscriptionContainer #description').val(); // Get the updated city name
-            let button_text	 = $('#EditSubscriptionContainer #button_text').val(); // Get the updated city name
-            let button_link	 = $('#EditSubscriptionContainer #button_link').val(); // Get the updated city name
-            let status = $('#EditSubscriptionContainer #status').val(); // Get the updated status
+            let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id')
+                .val(); // Get the city ID from the hidden field
+            let title = $('#EditSubscriptionContainer #subscriptionTitle').val(); 
+            let price = $('#EditSubscriptionContainer #subscriptionPrice').val(); 
+            let description = $('#EditSubscriptionContainer #subscriptionDescription').val();
+            let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val(); 
+            let button_link = $('#EditSubscriptionContainer #subscriptionButtonLink').val(); 
+            let status = $('#EditSubscriptionContainer #status').val();
+
 
             // Send the update request via AJAX
             $.ajax({
                 url: "{{ route('contractor_subscription_package.update', ':id') }}".replace(':id',
-                contractor_subscription_package_id), // Dynamically replace :id with city_id
+                    contractor_subscription_package_id), // Dynamically replace :id with city_id
                 type: "PUT", // PUT for updating
                 data: {
                     _token: "{{ csrf_token() }}", // CSRF token for protection
@@ -554,7 +604,52 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error("Error updating city:", error);
+                    console.error("Error updating Subscription:", error);
+                    flasher.error(response.message);
+                }
+            });
+        }
+    </script> --}}
+
+    <script>
+        function updateSubscription() {
+            let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id')
+                .val(); // Get the city ID from the hidden field
+            let title = $('#EditSubscriptionContainer #subscriptionTitle').val();
+            let price = $('#EditSubscriptionContainer #subscriptionPrice').val();
+            let description = $('#EditSubscriptionContainer #subscriptionDescription').val();
+            let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val();
+            let button_link = $('#EditSubscriptionContainer #subscriptionButtonLink').val();
+            let status = $('#EditSubscriptionContainer #status').val();
+
+            // Send the update request via AJAX
+            $.ajax({
+                url: "{{ route('contractor_subscription_package.update', ':id') }}".replace(':id',
+                    contractor_subscription_package_id), // Dynamically replace :id with city_id
+                type: "PUT", // PUT for updating
+                data: {
+                    _token: "{{ csrf_token() }}", // CSRF token for protection
+                    title: title,
+                    price: price,
+                    description: description,
+                    button_text: button_text,
+                    button_link: button_link,
+                    status: status
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#EditSubscriptionContainer').modal('hide'); // Close modal on success
+                        $('#basic_tables').DataTable().ajax.reload(); // Reload the DataTable to reflect changes
+
+                        // Show a success message
+                        flasher.success(response.message);
+
+                    } else {
+                        flasher.error(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating Subscription:", error);
                     flasher.error(response.message);
                 }
             });

@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
@@ -81,7 +81,32 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="row">
+            @foreach ($pricing as $package)
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">{{ $package->title }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">
+                                ${{ $package->price }} <small class="text-muted">/ mo</small>
+                            </h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{ $package->description }} users included</li>
+                            </ul>
+                            <button type="button" class="btn btn-lg btn-block {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
+                                {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
+        
     </div>
 @endsection
 
