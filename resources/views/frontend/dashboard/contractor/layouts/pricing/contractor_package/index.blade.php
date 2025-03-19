@@ -95,6 +95,9 @@
                                 ${{ $package->price }} <small class="text-muted">/ mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{ $package->days }} Days</li>
+                            </ul>
+                            <ul class="list-unstyled mt-3 mb-4">
                                 <li>{{ $package->description }} users included</li>
                             </ul>
                             <button type="button" class="btn btn-lg btn-block {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('button_text');
             $table->string('button_link');
+            $table->string('days');
 
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('created_at')->useCurrent();

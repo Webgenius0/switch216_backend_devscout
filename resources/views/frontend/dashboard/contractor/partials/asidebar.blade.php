@@ -155,7 +155,8 @@
         </div> --}}
 
 
-
+        <a class="{{ request()->routeIs('contractor.pricing.index') ? 'active' : '' }}"
+            href="{{ route('contractor.pricing.index') }}">Package</a>
         <!-- First Accordion -->
 <div class="accordion" id="sidebarAccordion1">
     <div class="accordion-item">

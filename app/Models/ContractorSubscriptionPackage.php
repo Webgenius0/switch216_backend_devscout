@@ -10,7 +10,7 @@ class ContractorSubscriptionPackage extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'price', 'description', 'button_text', 'button_link', 'status'];
+    protected $fillable = ['title', 'price', 'description','days', 'button_text', 'button_link', 'status'];
 
 
 

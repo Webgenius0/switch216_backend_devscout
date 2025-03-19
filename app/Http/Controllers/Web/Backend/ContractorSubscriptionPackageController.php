@@ -16,9 +16,9 @@ class ContractorSubscriptionPackageController extends Controller
      * Display a listing of the resource.
      */
 
-
     public function index(Request $request)
     {
+        $ContractorSubscription = ContractorSubscriptionPackage::all();
         if ($request->ajax()) {
             $data = ContractorSubscriptionPackage::latest()->get();
     
@@ -51,7 +51,7 @@ class ContractorSubscriptionPackageController extends Controller
                 ->make(true);
         }
     
-        return view('backend.layouts.subscription_package.index');
+        return view('backend.layouts.subscription_package.index',compact('ContractorSubscription'));
     }
     
 
@@ -66,30 +66,28 @@ class ContractorSubscriptionPackageController extends Controller
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
+            'days'        => 'required|numeric',
             'button_text' => 'required|string',
             'button_link' => 'required|string',
             'status' => 'required|in:active,inactive',
         ]);
 
-        ContractorSubscriptionPackage::create([
+       $data =  ContractorSubscriptionPackage::create([
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description,
+            'days'        => $request->days,
             'button_text' => $request->button_text,
             'button_link' => $request->button_link,
             'status' => $request->status,
         ]);
 
+
+
         return response()->json(['success' => true, 'message' => 'Subscription added successfully!']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(City $city)
-    // {
 
-    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -108,54 +106,56 @@ class ContractorSubscriptionPackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, ContractorSubscriptionPackage $ContractorSubscriptionPackage)
-    // {
-    //     // Validate the incoming request data
-    //     $validatedData = $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'price' => 'required|numeric',
-    //         'description' => 'required|string',
-    //         'button_text' => 'required|string',
-    //         'button_link' => 'required|string',
-    //     ]);
+    public function update(Request $request, ContractorSubscriptionPackage $ContractorSubscriptionPackage)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'required|string',
+            'days'        => 'required|numeric',
+            'button_text' => 'required|string',
+            'button_link' => 'required|string',
+        ]);
 
-    //     try {
-    //         // Update fields using the $city model directly
-    //         $ContractorSubscriptionPackage->update($validatedData);
+        try {
+            // Update fields using the $city model directly
+            $ContractorSubscriptionPackage->update($validatedData);
 
-    //         return response()->json([
-    //             "success" => true,
-    //             "message" => "ContractorSubscriptionPackage Updated Successfully",
-    //         ]);
-    //     } catch (Exception $e) {
-    //         Log::error("ContractorSubscriptionPackage::update - " . $e->getMessage());
+            return response()->json([
+                "success" => true,
+                "message" => "ContractorSubscriptionPackage Updated Successfully",
+            ]);
+        } catch (Exception $e) {
+            Log::error("ContractorSubscriptionPackage::update - " . $e->getMessage());
 
-    //         return response()->json([
-    //             "success" => false,
-    //             "message" => "ContractorSubscriptionPackage Container Content not Updated"
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                "success" => false,
+                "message" => "ContractorSubscriptionPackage Container Content not Updated"
+            ]);
+        }
+    }
     
-    public function update(Request $request, $id)
-{
-    $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'price' => 'required|numeric',
-        'description' => 'required|string',
-        'button_text' => 'required|string',
-        'button_link' => 'required|string',
-        'status' => 'required|in:active,inactive',
-    ]);
+//     public function update(Request $request, $id)
+// {
+//     $validated = $request->validate([
+//         'title' => 'required|string|max:255',
+//         'price' => 'required|numeric',
+//         'description' => 'required|string',
+//         'days'        => 'required|numeric',
+//         'button_text' => 'required|string',
+//         'button_link' => 'required|string',
+//         'status' => 'required|in:active,inactive',
+//     ]);
 
-    $package = ContractorSubscriptionPackage::findOrFail($id);
-    $package->update($validated);
+//     $package = ContractorSubscriptionPackage::findOrFail($id);
+//     $package->update($validated);
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Subscription updated successfully!'
-    ]);
-}
+//     return response()->json([
+//         'success' => true,
+//         'message' => 'Subscription updated successfully!'
+//     ]);
+// }
 
 
     public function status($id)

@@ -8,7 +8,7 @@
 @section('content')
     <div class="main-content-container overflow-hidden">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-            <h3 class="mb-0">City List</h3>
+            <h3 class="mb-0">Service List</h3>
 
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb align-items-center mb-0 lh-1">
@@ -19,10 +19,10 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">City</span>
+                        <span class="fw-medium">Service</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="fw-medium">City List</span>
+                        <span class="fw-medium">Service List</span>
                     </li>
                 </ol>
             </nav>
@@ -39,10 +39,10 @@
                                     <div class="text-end p-4">
                                         <a href="javascript:void(0)"
                                             class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
-                                            data-bs-toggle="modal" data-bs-target="#CreateServiceContainer">
+                                            data-bs-toggle="modal" data-bs-target="#CreateSubscription">
                                             <span class="py-sm-1 d-block">
                                                 <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                                <span>Add New City</span>
+                                                <span>Add New Subscription</span>
                                             </span>
                                         </a>
                                     </div>
@@ -56,6 +56,7 @@
                                                         <th scope="col">Title</th>
                                                         <th scope="col">Price</th>
                                                         <th scope="col">Description</th>
+                                                        <th scope="col">Days</th>
                                                         <th scope="col">Button Text</th>
                                                         <th scope="col">Button Link</th>
                                                         <th scope="col">Status</th>
@@ -109,12 +110,12 @@
 
         {{-- --------------- view modal------------ --}}
         <!-- Create Service Modal -->
-        <div class="modal fade" id="CreateServiceContainer" tabindex="-1" aria-labelledby="CreateServiceContainerLabel"
+        <div class="modal fade" id="CreateSubscription" tabindex="-1" aria-labelledby="CreateSubscriptionLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="CreateServiceContainerLabel" class="modal-title">Add New City</h5>
+                        <h5 id="CreateSubscriptionLabel" class="modal-title">Add New Subscription</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -132,6 +133,11 @@
                                 <label for="subscriptionDescription" class="form-label">Description</label>
 
                                 <textarea class="form-control" id="subscriptionDescription" name="description" id=""></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subscriptionDays" class="form-label">Days</label>
+                                <input type="text" class="form-control" id="subscriptionDays"
+                                    name="days" required>
                             </div>
                             <div class="mb-3">
                                 <label for="subscriptionButtontext" class="form-label">Button Text</label>
@@ -189,6 +195,11 @@
                         <textarea class="form-control" id="subscriptionDescription" name="description" id=""></textarea>
                     </div>
                     <div class="mb-3">
+                        <label for="subscriptionDays" class="form-label">Days</label>
+                        <input type="text" class="form-control" id="subscriptionDays" name="days"
+                            required>
+                    </div>
+                    <div class="mb-3">
                         <label for="subscriptionButtontext" class="form-label">Button Text</label>
                         <input type="text" class="form-control" id="subscriptionButtontext" name="button_text"
                             required>
@@ -217,9 +228,11 @@
 @endsection
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
 
     <script>
         $('#service-form').on('submit', function(event) {
@@ -245,6 +258,7 @@
                         $('.btn-close').trigger('click');
                     } else {
                         flasher.error('Something went wrong.');
+                        
                     }
                 },
                 error: function(response) {
@@ -270,7 +284,7 @@
                     [10, 25, 50, 100, 200, 500, -1],
                     [10, 25, 50, 100, 200, 500, "All"]
                 ],
-                processing: true,
+                processing: false,
                 responsive: true,
                 serverSide: true,
                 paging: true, // Disable built-in pagination
@@ -328,6 +342,19 @@
                     {
                         data: 'description',
                         name: 'description',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data.length > 50) {
+                                return data.substring(0, 50) + '...';
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        data: 'days',
+                        name: 'days',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {
@@ -463,10 +490,159 @@
         });
     </script> --}}
 
+{{--     
+<script>
+    $(document).ready(function() {
+    let dTable = $('#basic_tables').DataTable({
+        order: [],
+        destroy: true,
+        lengthMenu: [
+            [10, 25, 50, 100, 200, 500, -1],
+            [10, 25, 50, 100, 200, 500, "All"]
+        ],
+        processing: false,
+        responsive: true,
+        serverSide: true,
+        paging: true,
+        language: {
+            lengthMenu: `<span style="margin-left: 20px;">Show _MENU_ entries</span>`,
+            processing: `<div class="text-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>`
+        },
+        ajax: {
+            url: "{{ route('contractor_subscription_package.index') }}",
+            type: "get"
+        },
+        columns: [
+            {
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: 'title',
+                name: 'title',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'price',
+                name: 'price',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'description',
+                name: 'description',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'days',
+                name: 'days',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'button_text',
+                name: 'button_text',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'button_link',
+                name: 'button_link',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'status',
+                name: 'status',
+                orderable: true,
+                searchable: false
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
+            },
+        ],
+        drawCallback: function(settings) {
+            const totalPages = Math.ceil(settings._iRecordsDisplay / settings._iDisplayLength);
+            const currentPage = settings._iDisplayStart / settings._iDisplayLength + 1;
+            updateCustomPagination(totalPages, currentPage);
+        }
+    });
+
+    $('#customSearchBox').on('keyup', function() {
+        dTable.search(this.value).draw();
+    });
+
+    // Custom pagination logic with ellipsis
+    function updateCustomPagination(totalPages, currentPage) {
+        const paginationContainer = $('#customPagination');
+        paginationContainer.empty();
+
+        const maxVisiblePages = 5;
+        let startPage, endPage;
+
+        if (totalPages <= maxVisiblePages) {
+            startPage = 1;
+            endPage = totalPages;
+        } else {
+            if (currentPage <= Math.floor(maxVisiblePages / 2)) {
+                startPage = 1;
+                endPage = maxVisiblePages;
+            } else if (currentPage + Math.floor(maxVisiblePages / 2) >= totalPages) {
+                startPage = totalPages - maxVisiblePages + 1;
+                endPage = totalPages;
+            } else {
+                startPage = currentPage - Math.floor(maxVisiblePages / 2);
+                endPage = currentPage + Math.floor(maxVisiblePages / 2);
+            }
+        }
+
+        if (startPage > 1) {
+            paginationContainer.append(`<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>`);
+            paginationContainer.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            paginationContainer.append(
+                `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`
+            );
+        }
+
+        if (endPage < totalPages) {
+            paginationContainer.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
+            paginationContainer.append(
+                `<li class="page-item"><a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a></li>`
+            );
+        }
+
+        $('.page-item a').on('click', function(e) {
+            e.preventDefault();
+            const page = $(this).data('page');
+            if (!$(this).hasClass('disabled') && page !== currentPage) {
+                dTable.page(page - 1).draw('page');
+            }
+        });
+    }
+});
+
+</script> --}}
+
+
+
     <script>
         $(document).ready(function() {
             $('#basic_tables').DataTable({
-                processing: true,
+                processing: false,
                 serverSide: true,
                 ajax: {
                     url: "{{ route('contractor_subscription_package.index') }}",
@@ -490,6 +666,10 @@
                     {
                         data: 'description',
                         name: 'description'
+                    },
+                    {
+                        data: 'days',
+                        name: 'days'
                     },
                     {
                         data: 'button_text',
@@ -552,6 +732,7 @@
                 $('#EditSubscriptionContainer #subscriptionTitle').val(response.data.title);
                 $('#EditSubscriptionContainer #subscriptionPrice').val(response.data.price);
                 $('#EditSubscriptionContainer #subscriptionDescription').val(response.data.description);
+                $('#EditSubscriptionContainer #subscriptionDays').val(response.data.days);
                 $('#EditSubscriptionContainer #subscriptionButtontext').val(response.data.button_text);
                 $('#EditSubscriptionContainer #subscriptionButtonLink').val(response.data.button_link);
                 $('#EditSubscriptionContainer #status').val(response.data.status);
@@ -569,48 +750,6 @@
         }
     </script>
 
-    {{-- <script>
-        function updateSubscription() {
-            let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id')
-                .val(); // Get the city ID from the hidden field
-            let title = $('#EditSubscriptionContainer #subscriptionTitle').val(); 
-            let price = $('#EditSubscriptionContainer #subscriptionPrice').val(); 
-            let description = $('#EditSubscriptionContainer #subscriptionDescription').val();
-            let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val(); 
-            let button_link = $('#EditSubscriptionContainer #subscriptionButtonLink').val(); 
-            let status = $('#EditSubscriptionContainer #status').val();
-
-
-            // Send the update request via AJAX
-            $.ajax({
-                url: "{{ route('contractor_subscription_package.update', ':id') }}".replace(':id',
-                    contractor_subscription_package_id), // Dynamically replace :id with city_id
-                type: "PUT", // PUT for updating
-                data: {
-                    _token: "{{ csrf_token() }}", // CSRF token for protection
-                    name: name,
-                    status: status
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $('#EditSubscriptionContainer').modal('hide'); // Close modal on success
-                        $('#basic_tables').DataTable().ajax.reload(); // Reload the DataTable to reflect changes
-
-                        // Show a success message
-                        flasher.success(response.message);
-
-                    } else {
-                        flasher.error(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error updating Subscription:", error);
-                    flasher.error(response.message);
-                }
-            });
-        }
-    </script> --}}
-
     <script>
         function updateSubscription() {
             let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id')
@@ -618,6 +757,7 @@
             let title = $('#EditSubscriptionContainer #subscriptionTitle').val();
             let price = $('#EditSubscriptionContainer #subscriptionPrice').val();
             let description = $('#EditSubscriptionContainer #subscriptionDescription').val();
+            let days = $('#EditSubscriptionContainer #subscriptionDays').val();
             let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val();
             let button_link = $('#EditSubscriptionContainer #subscriptionButtonLink').val();
             let status = $('#EditSubscriptionContainer #status').val();
@@ -632,6 +772,7 @@
                     title: title,
                     price: price,
                     description: description,
+                    days: days,
                     button_text: button_text,
                     button_link: button_link,
                     status: status
