@@ -36,7 +36,13 @@
                         <div class="col-xl-12 col-xxl-12 col-lg-12">
                             <div class="card bg-white border-0 rounded-3 mb-4">
                                 <div class="card-body p-0">
-                                    <div class="text-end p-4">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 p-4">
+                                        <span class="position-relative table-src-form me-0">
+                                            <input type="text" class="form-control" placeholder="Search here"
+                                                id="customSearchBox">
+                                            <i
+                                                class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
+                                        </span>
                                         <a href="javascript:void(0)"
                                             class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
                                             data-bs-toggle="modal" data-bs-target="#CreateSubscription">
@@ -46,7 +52,6 @@
                                             </span>
                                         </a>
                                     </div>
-
                                     <div class="default-table-area style-two all-products border-0">
                                         <div class="table-responsive">
                                             <table class="table align-middle" id="basic_tables">
@@ -275,7 +280,7 @@
         });
     </script>
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             let dTable = $('#basic_tables').DataTable({
                 order: [],
@@ -488,10 +493,10 @@
             }
 
         });
-    </script> --}}
+    </script>
 
-{{--     
-<script>
+    
+{{-- <script>
     $(document).ready(function() {
     let dTable = $('#basic_tables').DataTable({
         order: [],
@@ -639,7 +644,7 @@
 
 
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#basic_tables').DataTable({
                 processing: false,
@@ -692,7 +697,7 @@
                 ]
             });
         });
-    </script>
+    </script> --}}
 
     <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
     <script>

@@ -92,13 +92,13 @@
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">
-                                ${{ $package->price }} <small class="text-muted">/ mo</small>
+                                ${{ $package->price }} <small class="text-muted" style="font-size: 0.4em;">{{ $package->days }} Days</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>{{ $package->days }} Days</li>
                             </ul>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>{{ $package->description }} users included</li>
+                                <li>{{ $package->description }}</li>
                             </ul>
                             <button type="button" class="btn btn-lg btn-block {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
                                 {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}

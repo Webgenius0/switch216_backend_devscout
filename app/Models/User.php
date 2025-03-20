@@ -157,7 +157,7 @@ class User extends Authenticatable
      * Get the  ranks associated with the user.
      */
 
-    public function ranks(){
+    public function rank(){
         return $this->hasOne(Rank::class, 'user_id');
     }
 
