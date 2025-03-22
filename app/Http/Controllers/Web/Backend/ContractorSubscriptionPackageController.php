@@ -21,12 +21,8 @@ class ContractorSubscriptionPackageController extends Controller
         $ContractorSubscription = ContractorSubscriptionPackage::all();
         if ($request->ajax()) {
             $data = ContractorSubscriptionPackage::latest()->get();
-    
+
             // Debugging: Check if data is fetched correctly
-            if ($data->isEmpty()) {
-                return response()->json(['error' => 'No data found'], 400);
-            }
-    
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($data) {
@@ -50,10 +46,10 @@ class ContractorSubscriptionPackageController extends Controller
                 ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-    
-        return view('backend.layouts.subscription_package.index',compact('ContractorSubscription'));
+
+        return view('backend.layouts.subscription_package.index', compact('ContractorSubscription'));
     }
-    
+
 
 
     /**
@@ -68,25 +64,21 @@ class ContractorSubscriptionPackageController extends Controller
             'description' => 'required|string',
             'days'        => 'required|numeric',
             'button_text' => 'required|string',
-            'button_link' => 'required|string',
-            'status' => 'required|in:active,inactive',
         ]);
+        
 
-       $data =  ContractorSubscriptionPackage::create([
+        ContractorSubscriptionPackage::create([
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description,
             'days'        => $request->days,
             'button_text' => $request->button_text,
-            'button_link' => $request->button_link,
-            'status' => $request->status,
         ]);
 
 
 
         return response()->json(['success' => true, 'message' => 'Subscription added successfully!']);
     }
-
 
 
     /**
@@ -106,56 +98,26 @@ class ContractorSubscriptionPackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContractorSubscriptionPackage $ContractorSubscriptionPackage)
+
+
+        public function update(Request $request, $id)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
             'days'        => 'required|numeric',
             'button_text' => 'required|string',
-            'button_link' => 'required|string',
         ]);
 
-        try {
-            // Update fields using the $city model directly
-            $ContractorSubscriptionPackage->update($validatedData);
+        $package = ContractorSubscriptionPackage::findOrFail($id);
+        $package->update($validated);
 
-            return response()->json([
-                "success" => true,
-                "message" => "ContractorSubscriptionPackage Updated Successfully",
-            ]);
-        } catch (Exception $e) {
-            Log::error("ContractorSubscriptionPackage::update - " . $e->getMessage());
-
-            return response()->json([
-                "success" => false,
-                "message" => "ContractorSubscriptionPackage Container Content not Updated"
-            ]);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Subscription updated successfully!'
+        ]);
     }
-    
-//     public function update(Request $request, $id)
-// {
-//     $validated = $request->validate([
-//         'title' => 'required|string|max:255',
-//         'price' => 'required|numeric',
-//         'description' => 'required|string',
-//         'days'        => 'required|numeric',
-//         'button_text' => 'required|string',
-//         'button_link' => 'required|string',
-//         'status' => 'required|in:active,inactive',
-//     ]);
-
-//     $package = ContractorSubscriptionPackage::findOrFail($id);
-//     $package->update($validated);
-
-//     return response()->json([
-//         'success' => true,
-//         'message' => 'Subscription updated successfully!'
-//     ]);
-// }
 
 
     public function status($id)

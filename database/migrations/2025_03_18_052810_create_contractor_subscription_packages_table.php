@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->decimal('price', 10, 2);
-            $table->string('description');
+            $table->longText('description');
             $table->string('button_text');
-            $table->string('button_link');
             $table->string('days');
 
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

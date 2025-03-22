@@ -2,7 +2,13 @@
 @section('title', 'CMS Page')
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css">
+    {{-- CKEditor CDN --}}
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script> --}}
+    {{-- <style>
+        .ck-editor__editable_inline {
+            min-height: 300px;
+        }
+    </style> --}}
 @endpush
 
 @section('content')
@@ -63,7 +69,6 @@
                                                         <th scope="col">Description</th>
                                                         <th scope="col">Days</th>
                                                         <th scope="col">Button Text</th>
-                                                        <th scope="col">Button Link</th>
                                                         <th scope="col">Status</th>
                                                         <th class="text-center" scope="col">Action</th>
                                                     </tr>
@@ -135,31 +140,18 @@
                                 <input type="number" class="form-control" id="subscriptionPrice" name="price" required>
                             </div>
                             <div class="mb-3">
-                                <label for="subscriptionDescription" class="form-label">Description</label>
-
-                                <textarea class="form-control" id="subscriptionDescription" name="description" id=""></textarea>
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="subscriptionDays" class="form-label">Days</label>
-                                <input type="text" class="form-control" id="subscriptionDays"
-                                    name="days" required>
+                                <input type="text" class="form-control" id="subscriptionDays" name="days"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="subscriptionButtontext" class="form-label">Button Text</label>
                                 <input type="text" class="form-control" id="subscriptionButtontext"
                                     name="button_text" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="subscriptionButtonLink" class="form-label">Button Link</label>
-                                <input type="text" class="form-control" id="subscriptionButtonLink"
-                                    name="button_link" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="subscriptionStatus" class="form-label">Status</label>
-                                <select class="form-control" id="subscriptionStatus" name="status">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
                             </div>
                             <div id="show-error"></div>
                             <div class="modal-footer">
@@ -196,30 +188,17 @@
                         <input type="number" class="form-control" id="subscriptionPrice" name="price" required>
                     </div>
                     <div class="mb-3">
-                        <label for="subscriptionDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="subscriptionDescription" name="description" id=""></textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description1" name="description" required>{{ $subscription->description ?? '' }}  </textarea>
                     </div>
                     <div class="mb-3">
                         <label for="subscriptionDays" class="form-label">Days</label>
-                        <input type="text" class="form-control" id="subscriptionDays" name="days"
-                            required>
+                        <input type="text" class="form-control" id="subscriptionDays" name="days" required>
                     </div>
                     <div class="mb-3">
                         <label for="subscriptionButtontext" class="form-label">Button Text</label>
                         <input type="text" class="form-control" id="subscriptionButtontext" name="button_text"
                             required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="subscriptionButtonLink" class="form-label">Button Link</label>
-                        <input type="text" class="form-control" id="subscriptionButtonLink" name="button_link"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select id="status" class="form-control">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -233,10 +212,46 @@
 @endsection
 
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <script>
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     // Initialize CKEditor for the first textarea if it exists
+        //     if (document.querySelector('#description')) {
+        //         ClassicEditor
+        //             .create(document.querySelector('#description'), {
+        //                 removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'ImageUpload',
+        //                     'MediaEmbed'
+        //                 ],
+        //                 toolbar: ['bold', 'italic', 'heading', '|', 'undo', 'redo']
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error initializing CKEditor on #description:', error);
+        //             });
+        //     }
+
+        //     // Initialize CKEditor for the second textarea if it exists
+        //     if (document.querySelector('#description1')) {
+        //         ClassicEditor
+        //             .create(document.querySelector('#description1'), {
+        //                 removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'ImageUpload',
+        //                     'MediaEmbed'
+        //                 ],
+        //                 toolbar: ['bold', 'italic', 'heading', '|', 'undo', 'redo']
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error initializing CKEditor on #description1:', error);
+        //             });
+        //     }
+        // });
+    </script>
+
+
+
 
 
     <script>
@@ -248,7 +263,11 @@
 
             let storeUrl = '{{ route('contractor_subscription_package.store') }}';
             let formData = new FormData(this);
-
+            // console.log(formData);
+            // formData.forEach((value, key) => {
+            //     console.log(key, value);
+            // });
+            console.log(document.querySelector('#description').value);
             $.ajax({
                 url: storeUrl,
                 type: "POST",
@@ -263,7 +282,7 @@
                         $('.btn-close').trigger('click');
                     } else {
                         flasher.error('Something went wrong.');
-                        
+
                     }
                 },
                 error: function(response) {
@@ -311,7 +330,7 @@
                     url: "{{ route('contractor_subscription_package.index') }}",
                     type: "get"
                 },
-                
+
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -373,19 +392,6 @@
                     {
                         data: 'button_text',
                         name: 'button_text',
-                        orderable: true,
-                        searchable: true,
-                        render: function(data, type, row) {
-                            if (data.length > 50) {
-                                return data.substring(0, 50) + '...';
-                            } else {
-                                return data;
-                            }
-                        }
-                    },
-                    {
-                        data: 'button_link',
-                        name: 'button_link',
                         orderable: true,
                         searchable: true,
                         render: function(data, type, row) {
@@ -495,209 +501,7 @@
         });
     </script>
 
-    
-{{-- <script>
-    $(document).ready(function() {
-    let dTable = $('#basic_tables').DataTable({
-        order: [],
-        destroy: true,
-        lengthMenu: [
-            [10, 25, 50, 100, 200, 500, -1],
-            [10, 25, 50, 100, 200, 500, "All"]
-        ],
-        processing: false,
-        responsive: true,
-        serverSide: true,
-        paging: true,
-        language: {
-            lengthMenu: `<span style="margin-left: 20px;">Show _MENU_ entries</span>`,
-            processing: `<div class="text-center">
-                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>`
-        },
-        ajax: {
-            url: "{{ route('contractor_subscription_package.index') }}",
-            type: "get"
-        },
-        columns: [
-            {
-                data: 'DT_RowIndex',
-                name: 'DT_RowIndex',
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: 'title',
-                name: 'title',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'price',
-                name: 'price',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'description',
-                name: 'description',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'days',
-                name: 'days',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'button_text',
-                name: 'button_text',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'button_link',
-                name: 'button_link',
-                orderable: true,
-                searchable: true
-            },
-            {
-                data: 'status',
-                name: 'status',
-                orderable: true,
-                searchable: false
-            },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false
-            },
-        ],
-        drawCallback: function(settings) {
-            const totalPages = Math.ceil(settings._iRecordsDisplay / settings._iDisplayLength);
-            const currentPage = settings._iDisplayStart / settings._iDisplayLength + 1;
-            updateCustomPagination(totalPages, currentPage);
-        }
-    });
 
-    $('#customSearchBox').on('keyup', function() {
-        dTable.search(this.value).draw();
-    });
-
-    // Custom pagination logic with ellipsis
-    function updateCustomPagination(totalPages, currentPage) {
-        const paginationContainer = $('#customPagination');
-        paginationContainer.empty();
-
-        const maxVisiblePages = 5;
-        let startPage, endPage;
-
-        if (totalPages <= maxVisiblePages) {
-            startPage = 1;
-            endPage = totalPages;
-        } else {
-            if (currentPage <= Math.floor(maxVisiblePages / 2)) {
-                startPage = 1;
-                endPage = maxVisiblePages;
-            } else if (currentPage + Math.floor(maxVisiblePages / 2) >= totalPages) {
-                startPage = totalPages - maxVisiblePages + 1;
-                endPage = totalPages;
-            } else {
-                startPage = currentPage - Math.floor(maxVisiblePages / 2);
-                endPage = currentPage + Math.floor(maxVisiblePages / 2);
-            }
-        }
-
-        if (startPage > 1) {
-            paginationContainer.append(`<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>`);
-            paginationContainer.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-            paginationContainer.append(
-                `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`
-            );
-        }
-
-        if (endPage < totalPages) {
-            paginationContainer.append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-            paginationContainer.append(
-                `<li class="page-item"><a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a></li>`
-            );
-        }
-
-        $('.page-item a').on('click', function(e) {
-            e.preventDefault();
-            const page = $(this).data('page');
-            if (!$(this).hasClass('disabled') && page !== currentPage) {
-                dTable.page(page - 1).draw('page');
-            }
-        });
-    }
-});
-
-</script> --}}
-
-
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('#basic_tables').DataTable({
-                processing: false,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('contractor_subscription_package.index') }}",
-                    type: "GET",
-                    error: function(xhr, status, error) {
-                        console.log("AJAX Error:", xhr.responseText);
-                    }
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'title',
-                        name: 'title'
-                    },
-                    {
-                        data: 'price',
-                        name: 'price'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
-                    },
-                    {
-                        data: 'days',
-                        name: 'days'
-                    },
-                    {
-                        data: 'button_text',
-                        name: 'button_text'
-                    },
-                    {
-                        data: 'button_link',
-                        name: 'button_link'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
-        });
-    </script> --}}
 
     <script src="{{ asset('backend/admin/assets/custom-actions.js') }}"></script>
     <script>
@@ -728,20 +532,46 @@
         function viewModel(id) {
             $.ajax({
                 url: "{{ route('contractor_subscription_package.edit', ':id') }}".replace(':id',
-                id), // Correctly replace :id in the URL
+                    id), // Correctly replace :id in the URL
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
+                    if (response.success) {
+                        $('#EditSubscriptionContainer #contractor_subscription_package_id').val(response.data
+                            .id);
+                        $('#EditSubscriptionContainer #subscriptionTitle').val(response.data.title);
+                        $('#EditSubscriptionContainer #subscriptionPrice').val(response.data.price);
+                        $('#EditSubscriptionContainer #description1').val(response.data.description);
+                        $('#EditSubscriptionContainer #subscriptionDays').val(response.data.days);
+                        $('#EditSubscriptionContainer #subscriptionButtontext').val(response.data.button_text);
+                        $('#EditSubscriptionContainer').modal('show'); // Show modal
+                    } else {
+                        alert("Something went wrong!");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching subscription data:", error);
+                    alert("There was an error fetching the subscription data.");
+                }
+            });
+        }
+    </script>
+
+    {{-- <script>
+        function viewModel(id) {
+    $.ajax({
+        url: "{{ route('contractor_subscription_package.edit', ':id') }}".replace(':id', id),
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
             if (response.success) {
                 $('#EditSubscriptionContainer #contractor_subscription_package_id').val(response.data.id);
                 $('#EditSubscriptionContainer #subscriptionTitle').val(response.data.title);
                 $('#EditSubscriptionContainer #subscriptionPrice').val(response.data.price);
-                $('#EditSubscriptionContainer #subscriptionDescription').val(response.data.description);
+                // Updated line: Use the correct ID for description
+                $('#EditSubscriptionContainer #description1').val(response.data.description);
                 $('#EditSubscriptionContainer #subscriptionDays').val(response.data.days);
                 $('#EditSubscriptionContainer #subscriptionButtontext').val(response.data.button_text);
-                $('#EditSubscriptionContainer #subscriptionButtonLink').val(response.data.button_link);
-                $('#EditSubscriptionContainer #status').val(response.data.status);
-
                 $('#EditSubscriptionContainer').modal('show'); // Show modal
             } else {
                 alert("Something went wrong!");
@@ -752,8 +582,9 @@
             alert("There was an error fetching the subscription data.");
         }
     });
-        }
-    </script>
+}
+
+    </script> --}}
 
     <script>
         function updateSubscription() {
@@ -761,11 +592,10 @@
                 .val(); // Get the city ID from the hidden field
             let title = $('#EditSubscriptionContainer #subscriptionTitle').val();
             let price = $('#EditSubscriptionContainer #subscriptionPrice').val();
-            let description = $('#EditSubscriptionContainer #subscriptionDescription').val();
+            let description = $('#EditSubscriptionContainer #description1').val();
             let days = $('#EditSubscriptionContainer #subscriptionDays').val();
             let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val();
-            let button_link = $('#EditSubscriptionContainer #subscriptionButtonLink').val();
-            let status = $('#EditSubscriptionContainer #status').val();
+
 
             // Send the update request via AJAX
             $.ajax({
@@ -779,8 +609,6 @@
                     description: description,
                     days: days,
                     button_text: button_text,
-                    button_link: button_link,
-                    status: status
                 },
                 success: function(response) {
                     if (response.success) {
@@ -801,4 +629,44 @@
             });
         }
     </script>
+
+    {{-- <script>
+        function updateSubscription() {
+    let contractor_subscription_package_id = $('#EditSubscriptionContainer #contractor_subscription_package_id').val();
+    let title = $('#EditSubscriptionContainer #subscriptionTitle').val();
+    let price = $('#EditSubscriptionContainer #subscriptionPrice').val();
+    // Updated line: Use the correct ID for description
+    let description = $('#EditSubscriptionContainer #description1').val();
+    let days = $('#EditSubscriptionContainer #subscriptionDays').val();
+    let button_text = $('#EditSubscriptionContainer #subscriptionButtontext').val();
+
+    $.ajax({
+        url: "{{ route('contractor_subscription_package.update', ':id') }}".replace(':id', contractor_subscription_package_id),
+        type: "PUT",
+        data: {
+            _token: "{{ csrf_token() }}",
+            title: title,
+            price: price,
+            description: description,
+            days: days,
+            button_text: button_text,
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#EditSubscriptionContainer').modal('hide');
+                $('#basic_tables').DataTable().ajax.reload();
+                flasher.success(response.message);
+            } else {
+                flasher.error(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error updating Subscription:", error);
+            // Optional: provide a fallback error message
+            flasher.error(xhr.responseJSON ? xhr.responseJSON.message : 'Error updating subscription.');
+        }
+    });
+}
+
+    </script> --}}
 @endpush

@@ -7,6 +7,50 @@
     @include('frontend.dashboard.contractor.partials.header')
 @endsection
 @push('styles')
+    <style>
+        .pricing-card {
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: gray;
+            font-size: 16px;
+        }
+
+        .btn-custom {
+            background: #f44336;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+
+        .btn-custom:hover {
+            background: #d32f2f;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -83,7 +127,7 @@
             </div>
         </div> --}}
 
-        <div class="row">
+        {{-- <div class="row">
             @foreach ($pricing as $package)
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
@@ -108,8 +152,34 @@
                     </div>
                 </div>
             @endforeach
+        </div> --}}
+
+        <!-- Card 1 -->
+        <div class="row">
+
+                @foreach ($pricing as $package)
+                <div class="col-md-4 mb-5">
+                    <div class="pricing-card">
+                        <h5>📁 {{ $package->title }}</h5>
+                        <p class="text-muted">{{ $package->description }}</p>
+                        <p class="price">{{ $package->days }} <span class="text-muted">/day</span></p>
+                        <p class="">${{ $package->price }}</p>
+                        <button type="button"
+                            class="btn-custom w-100 {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
+                            {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
+                        </button>
+                    </div>
+               
+    
+            </div>
+            @endforeach
+
         </div>
-        
+            
+
+
+
+
     </div>
 @endsection
 
