@@ -79,16 +79,16 @@
             <div class="footer-nav-section">
                 <h6 class="footer-nav-section-title">Support Us</h6>
                 <ul>
-                    <li><a href="#">FAQ`s</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Support Center</a></li>
+                    {{-- <li><a href="#">FAQ`s</a></li> --}}
+                    <li><a href="{{route('contact_us.index')}}">Contact Us</a></li>
+                    {{-- <li><a href="#">Support Center</a></li> --}}
                 </ul>
             </div>
             <div class="footer-nav-section">
                 <h6 class="footer-nav-section-title">Resources</h6>
                 <ul>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Tems of service</a></li>
+                    <li><a href="{{route('contact_us.index')}}">Contact</a></li>
+                    {{-- <li><a href="#">Tems of service</a></li> --}}
                 </ul>
             </div>
             <div class="footer-nav-section">
@@ -110,11 +110,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex flex-wrap gap-2 align-items-center justify-content-end">
-                        <a class="meta-link" href="#">Terms & Conditions</a>
+                        {{-- <a class="meta-link" href="#">Terms & Conditions</a>
+                        <span>,</span> --}}
+                        {{-- <a class="meta-link" href="#">Privacy Policy</a>
                         <span>,</span>
-                        <a class="meta-link" href="#">Privacy Policy</a>
-                        <span>,</span>
-                        <a class="meta-link" href="#">Cookies Policy</a>
+                        <a class="meta-link" href="#">Cookies Policy</a> --}}
                     </div>
                 </div>
             </div>

@@ -17,15 +17,15 @@
 
 @section('content')
     <!-- banner section start -->
-    <section class="se--car-rental-banner " style="background-image: url('{{ isset($data['realStateBanner']->background_image) ? asset($data['realStateBanner']->background_image) . '?t=' . time() : asset('frontend/assets/images/carBanner.png') }}');">
+    <section class="se--car-rental-banner " style="background-image: url('{{ isset($data['realStateBanner']->background_image) ? asset($data['realStateBanner']->background_image) . '?t=' . time() : asset('frontend/assets/images/home-rental.png') }}');">
         <div class="provider-banner-content container se--banner-text-width  " data-aos="fade-up">
             <h2 class="banner-title ">
 
-                {{$data['realStateBanner']->title?? 'Agents. Tours. Loans. Homes. Best Real Estate Service in City'}} 
+                {{$data['realStateBanner']->title ?? 'Agents. Tours. Loans. Homes. Best Real Estate Service in City'}} 
                 
             </h2>
             <p class="banner-text">
-                {{$data['realStateBanner']->description?? 'Explore top-rated DJs, photographers, caterers, and more for your next event.'}} 
+                {{$data['realStateBanner']->description ?? 'Explore top-rated DJs, photographers, caterers, and more for your next event.'}} 
                 
             </p>
         </div>
@@ -47,7 +47,7 @@
                     <div class="se--choose--plane-container">
                         @forelse ($data['realStateServiceSubCategorys'] as $carServicesSubCategory )
                         <a href="{{route('service.real_state_list',['category' => 'Real Estate','subcategory'=> $carServicesSubCategory->name])}}" class="se-choose--plan-box" data-aos="fade-right">
-                           <img src="{{ asset($carServicesSubCategory->thumbnail) }}" alt="No Image" width="200" height="200" style="border-bottom-left-radius: 60px;">
+                           <img src="{{ asset($carServicesSubCategory->thumbnail ?? '') }}" alt="No Image" width="200" height="200" style="border-bottom-left-radius: 60px;">
                             <h1 class="se--plan-box-header">{{$carServicesSubCategory->name?? ''}}</h1>
                             <p class="se--plan-box-pera">{{$carServicesSubCategory->description?? ''}}</p>
                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Services\Web\Frontend;
 
+use App\Enums\Page;
 use App\Models\CMS;
 use Exception;
 
@@ -33,14 +34,20 @@ class CmsService
             ];
 
             // Fetch all required sections in a single query
-            $cmsData = CMS::where('page', 'home_page') 
+            $cmsData = CMS::where('page', 'home_page')
                 ->where('status', 'active')
                 ->whereIn('section', array_keys($sections))
                 ->orderBy('created_at', 'desc')
                 ->get();
 
+            $advertisementSection = CMS::where('page', 'home_page')
+                ->where('section', 'advertisement_container')
+                ->where('status', 'active')->first();
+
             // Process the sections into the desired format
-            $cms = [];
+            $cms = [
+                'advertisementSection' => $advertisementSection
+            ];
             foreach ($sections as $key => $config) {
                 $filteredData = $cmsData->where('section', $key);
                 $cms[$key] = $config['type'] === 'first'
@@ -50,7 +57,7 @@ class CmsService
 
             return $cms;
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -64,7 +71,7 @@ class CmsService
         try {
             // Logic for create form
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -79,7 +86,7 @@ class CmsService
         try {
             // Logic to store a new resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -94,7 +101,7 @@ class CmsService
         try {
             // Logic to show a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -109,7 +116,7 @@ class CmsService
         try {
             // Logic for edit form
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -125,7 +132,7 @@ class CmsService
         try {
             // Logic to update a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
 
@@ -140,9 +147,7 @@ class CmsService
         try {
             // Logic to delete a specific resource
         } catch (Exception $e) {
-             throw $e;
+            throw $e;
         }
     }
-
-
 }

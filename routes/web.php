@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\Customer\CustomerSettingController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
 use App\Http\Controllers\Web\Frontend\ContactPageController;
@@ -33,12 +35,15 @@ Route::get('/map-api-key', function () {
 })->name('map.api.key');
 
 
-
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/provider', [ServiceProviderRegisterPageController::class, 'index'])->name('provider.index');
 Route::post('/serchingStatic', [HomePageController::class, 'serchingStatic'])->name('home.serchingStatic');
+
+Route::get('/about', [AboutUsPageController::class, 'index'])->name('about');
+
 Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contact_us.index');
 Route::post('/contact-us', [ContactPageController::class, 'store'])->name('contact_us.store');
+
 //show single service with contractor profile
 Route::get('/service/single/{id}', [EmergencyPageController::class, 'show'])->name('service.single_show');
 //emergency page
@@ -59,9 +64,9 @@ Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategory
 
 
 
-Route::get('/about', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('about');
+// Route::get('/about', function () {
+//     return view(view: 'frontend.layouts.about.index');
+// })->name('about');
 
 // Route::get('/contact', function () {
 //     return view(view: 'frontend.layouts.contact.index');
@@ -159,8 +164,14 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::get('dashboard', function () {
         return view('frontend.dashboard.customer.layouts.home.index');
     })->name('customer.dashboard');
-    // customer bookings 
 
+    //profile settings
+    Route::get('settings-profile', [CustomerSettingController::class, 'index'])->name('customer.settings.index');
+    Route::post('settings-profile', [CustomerSettingController::class, 'updateProfile'])->name('customer.settings.update');
+    Route::get('settings-password', [CustomerSettingController::class, 'password'])->name('customer.settings.password');
+    Route::post('settings-password', [CustomerSettingController::class, 'passwordUpdate'])->name('customer.settings.password_update');
+    
+    // customer bookings 
     Route::get('/customer-booking', [AppointmentCustomerController::class, 'index'])->name('customer.booking.index');
     Route::get('/customer-bookings/all', [AppointmentCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
     Route::post('/customer-booking', [AppointmentCustomerController::class, 'store'])->name('customer.booking.store');
@@ -169,6 +180,8 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('/customer-booking/reschedule', [AppointmentCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
 
     Route::post('/customer-booking/given-review', [AppointmentCustomerController::class, 'givenReview'])->name('customer.booking.review');
+
+
 });
 
 

@@ -9,29 +9,32 @@
  */
 
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Backend\UserController;
+use App\Http\Controllers\Web\Backend\CityController;
+use App\Http\Controllers\Web\Backend\ProfileController;
 use App\Http\Controllers\Web\Backend\CategoryController;
-use App\Http\Controllers\Web\Backend\CMS\CarController;
+use App\Http\Controllers\Web\Backend\CMS\CarPageController;
+use App\Http\Controllers\Web\Backend\DynamicPageController;
+use App\Http\Controllers\Web\Backend\SubCategoryController;
 use App\Http\Controllers\Web\Backend\CMS\HomePageController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
-use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
-use App\Http\Controllers\Web\Backend\CMS\ProviderPageWorkContainerController;
+use App\Http\Controllers\Web\Backend\NotificationController;
+use App\Http\Controllers\Web\Backend\SystemSettingController;
 use App\Http\Controllers\Web\Backend\CMS\RealEstateController;
 use App\Http\Controllers\Web\Backend\CMS\RestaurantController;
 use App\Http\Controllers\Web\Backend\ContactMessageController;
-use App\Http\Controllers\Web\Backend\DynamicPageController;
-use App\Http\Controllers\Web\Backend\NotificationController;
-use App\Http\Controllers\Web\Backend\ProfileController;
-use App\Http\Controllers\Web\Backend\SubCategoryController;
-use App\Http\Controllers\Web\Backend\SystemSettingController;
-use App\Http\Controllers\Web\Backend\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Backend\CMS\AboutUsPageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageFaqContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageReviewContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageServiceContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderPageWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageSocialLinkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\ProviderPageProcessContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePagePlatFormWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageProviderWorkContainerController;
+use App\Http\Controllers\Web\Backend\CMS\HomePageAdvertisementContainerController;
 
 Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function () {
   // Route for the admin dashboard
@@ -85,6 +88,26 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   Route::Post('/cms/home-page/process-container-update', [HomePageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.home_page.process_container.process_container_update');
   Route::post('/cms/home-page/process-container/status/{id}', [HomePageProcessContainerController::class, 'status'])->name('cms.home_page.process_container.status');
 
+
+  // home view container cms
+  Route::get('/cms/home-page/advertisement-container', [HomePageAdvertisementContainerController::class, 'index'])->name('cms.home_page.advertisement_container.index');
+  Route::post('/cms/home-page/advertisement-container/update', [HomePageAdvertisementContainerController::class, 'update'])->name('cms.home_page.advertisement_container.update');
+
+
+  // About 1st view About us cms
+  Route::get('/cms/about-page/AboutUs-container/index', [AboutUsPageController::class, 'index'])->name('cms.about_page.about_us_container.index');
+  Route::post('/cms/about-page/service-container-update', [AboutUsPageController::class, 'AboutContainerUpdate'])->name('cms.about_page.about_us_container.about_us_container_update');
+
+
+  // About 2nd view About us cms
+  Route::post('/cms/about-page/AboutUs-container/store', [AboutUsPageController::class, 'store'])->name('cms.about_page.about_us_container.store');
+  Route::get('/cms/about-page/AboutUs-container/edit/{id}', [AboutUsPageController::class, 'edit'])->name('cms.about_page.about_us_container.edit');
+  Route::put('/cms/about-page/AboutUs-container/update/{id}', [AboutUsPageController::class, 'update'])->name('cms.about_page.about_us_container.update');
+  Route::post('/cms/about-page/AboutUs-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.about_page.about_us_container.status');
+  Route::delete('/cms/about-page/AboutUs-container/destroy/{id}', [AboutUsPageController::class, 'destroy'])->name('cms.about_page.about_us_container.destroy');
+
+
+
   // home platform work container cms 
   Route::resource('/cms/home-page/platform-work-container', HomePagePlatFormWorkContainerController::class)->names(names: 'cms.home_page.platform_work_container');
   Route::Post('/cms/home-page/platform-work-container-update', [HomePagePlatFormWorkContainerController::class, 'PlatFormWorkContainerUpdate'])->name('cms.home_page.platform_work_container.platform_work_container_update');
@@ -93,6 +116,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   // home provider work container  cms 
   Route::get('/cms/home-page/provider-work-container', [HomePageProviderWorkContainerController::class, 'index'])->name('cms.home_page.provider_work_container.index');
   Route::Post('/cms/home-page/provider-work-container-update', [HomePageProviderWorkContainerController::class, 'ProviderWorkContainerUpdate'])->name('cms.home_page.provider_work_container.provider_work_container_update');
+
 
   // home Review container  cms 
   Route::get('/cms/home-page/review-container', [HomePageReviewContainerController::class, 'index'])->name('cms.home_page.review_container.index');
@@ -112,24 +136,24 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
   //! =============== Route for Care Page C_M_S ----------------------------- start
 
-  Route::get('/cms/car-page/banner', [CarController::class, 'index'])->name('cms.car_page.banner');
-  Route::PUT('/cms/car-page/update/{id}', [CarController::class, 'update'])->name('cms.car_page.banner.update');
+  Route::get('/cms/car-page/banner', [CarPageController::class, 'index'])->name('cms.car_page.banner.index');
+  Route::post('/cms/car-page/update', [CarPageController::class, 'update'])->name('cms.car_page.banner.update');
 
   //! =============== Route for Restaurant Page C_M_S ----------------------------- start
   Route::get('/cms/restaurant-page/banner', [RestaurantController::class, 'index'])->name('cms.restaurant_page.banner');
-  Route::PUT('/cms/restaurant-page/update/{id}', [RestaurantController::class, 'update'])->name('cms.restaurant_page.banner.update');
+  Route::post('/cms/restaurant-page/update', [RestaurantController::class, 'update'])->name('cms.restaurant_page.banner.update');
 
   //! =============== Route for Real Estate Page C_M_S ----------------------------- start
   Route::get('/cms/RealEstate-page/banner', [RealEstateController::class, 'index'])->name('cms.RealEstate_page.banner');
-  Route::PUT('/cms/RealEstate-page/update/{id}', [RealEstateController::class, 'update'])->name('cms.RealEstate_page.banner.update');
+  Route::post('/cms/RealEstate-page/update', [RealEstateController::class, 'update'])->name('cms.RealEstate_page.banner.update');
 
   //! =============== Route for service provider Page C_M_S ----------------------------- start
 
-  Route::get('/cms/service-page/container', [ProviderRegisterPageController::class, 'index'])->name('cms.service_page.container');
-  Route::put('/cms/service-page/container/update/{id}', [ProviderRegisterPageController::class, 'ServiceContainerUpdate'])->name('cms.service_page.container.update');
+  Route::get('/cms/service-page/container', [ProviderRegisterPageController::class, 'index'])->name('cms.service_page.container.index');
+  Route::post('/cms/service-page/container/update', [ProviderRegisterPageController::class, 'ServiceContainerUpdate'])->name('cms.service_page.container.update');
 
   // service provider Image Section
-  Route::get('/cms/service-page/container/show', [ProviderRegisterPageController::class, 'show'])->name('cms.service_page.container.show');
+
   Route::post('/cms/service-page/container/image/store', [ProviderRegisterPageController::class, 'store'])->name('cms.service_page.container.image.store');
   Route::get('/cms/service-page/container/image/edit/{id}', [ProviderRegisterPageController::class, 'edit'])->name('cms.service_page.container.image.edit');
   Route::put('/cms/service-page/container/image/update/{id}', [ProviderRegisterPageController::class, 'update'])->name('cms.service_page.container.image.update');
@@ -140,7 +164,7 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //! =============== Route for service provider Page C_M_S ----------------------------- start
 
   Route::get('/cms/provider-page/process/container', [ProviderPageProcessContainerController::class, 'index'])->name('cms.provider_page.process.index');
-  Route::put('/cms/provider-page/process/container/update/{id}', [ProviderPageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.provider_page.process.update');
+  Route::post('/cms/provider-page/process/container/update', [ProviderPageProcessContainerController::class, 'ProcessContainerUpdate'])->name('cms.provider_page.process.update');
 
   // Provider Multiple image Section
   Route::get('/cms/provider-page/process/container/show', [ProviderPageProcessContainerController::class, 'show'])->name('cms.provider_page.process.show');
@@ -170,6 +194,12 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //category
   Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
   Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
+  
+  // Route for CityController
+   Route::resource('/cities', CityController::class)->names('cities');
+    Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
+  
+
 
   // Routes for NotificationController
   Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notification.read');

@@ -6,6 +6,7 @@ use App\Enums\Page;
 use App\Enums\SecondSection;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\CMS;
 use App\Services\Web\Frontend\CmsService;
 use Illuminate\Http\Request;
@@ -55,9 +56,10 @@ class HomePageController extends Controller
         // Fetch CMS data for the homepage
         $cms = $this->cmsService->get();
         $categories = Category::with('subCategories')->where("status", 'active')->get();
-
+        // cities name
+        $cities  = City::where('status', 'active')->pluck('name');
         // Return the view with optimized data
-        return view("frontend.layouts.home.index", compact('cms', 'categories'));
+        return view("frontend.layouts.home.index", compact('cms', 'categories', 'cities'));
     }
 
     public function serchingStatic(Request $request)

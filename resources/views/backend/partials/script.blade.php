@@ -27,6 +27,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.all.min.js"
         integrity="sha256-BpyIV7Y3e2pnqy8TQGXxsmOiQ4jXNDTOTBGL2TEJeDY=" crossorigin="anonymous"></script>
 
+        {{-- new add --}}
+        <script src="{{ asset('frontend/assets/js/plugins/jquery-3.7.1.min.js') }}"></script>
+        <script src="{{ asset('backend') }}/admin/assets/datatables/data-tables.min.js"></script>
+        <!--buttons dataTables-->
+        <script src="{{ asset('backend') }}/admin/assets/datatables/datatables.buttons.min.js"></script>
+        <script src="{{ asset('backend') }}/admin/assets/datatables/jszip.min.js"></script>
+        <script src="{{ asset('backend') }}/admin/assets/datatables/pdfmake.min.js"></script>
+        <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.html5.min.js"></script>
+        <script src="{{ asset('backend') }}/admin/assets/datatables/buttons.print.min.js"></script>
+  
+
 
     <!-- for live notification -->
     <script>
@@ -101,7 +112,7 @@
 
             Echo.private('App.Models.User.' + {{ auth()->id() }})
                 .notification((notification) => {
-                    console.log(notification);
+                    // console.log(notification);
                     let notificationCount = parseInt($("#notification-count").text());
                     if (notificationCount >= 0) {
                         $("#notification-count").text(notificationCount + 1);

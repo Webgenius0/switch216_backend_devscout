@@ -16,26 +16,19 @@ class RestaurantController extends Controller
 
     public function index(Request $request)
     {
-        $RestaurantService = CMS::firstOrCreate(
-            [
-                'page' => Page::RestaurantPage,
-                'section' => Section::RestaurantBanner
-            ],
-            [
-                'title' => '',
-                'description' => '',
-                'background_image' => null
-            ]
-        );
 
+        $RestaurantService = CMS::where('page', Page::RestaurantPage)->where('section', Section::RestaurantBanner)->first();
+
+    
         return view('backend.layouts.cms.restaurant_page.banner.index', compact('RestaurantService'));
     }
+
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -43,17 +36,26 @@ class RestaurantController extends Controller
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         try {
-            $data = CMS::findOrFail($id);
+
+            $RestaurantBanner = CMS::where('page', Page::RestaurantPage)
+            ->where('section', Section::RestaurantBanner)
+            ->first();
+            
             if ($request->hasFile('background_image')) {
-                if ($data && $data->background_image && file_exists(public_path($data->background_image))) {
-                    Helper::fileDelete(public_path($data->background_image));
+                if ($RestaurantBanner && $RestaurantBanner->background_image && file_exists(public_path($RestaurantBanner->background_image))) {
+                    Helper::fileDelete(public_path($RestaurantBanner->background_image));
                 }
+
                 $validatedData['background_image'] = Helper::fileUpload($request->file('background_image'), 'restaurant_bgImage', time() . '_' . getFileName($request->file('background_image')));
             }
 
-            // dd($data);
-
-            $data->update($validatedData);
+            CMS::updateOrCreate(
+                [
+                    'page' => Page::RestaurantPage->value,
+                    'section' => Section::RestaurantBanner->value,
+                ],
+                $validatedData
+            );
             flash()->success('Banner Updated Successfully');
             return redirect()->route('cms.restaurant_page.banner');
         } catch (Exception $e) {
