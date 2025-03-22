@@ -38,7 +38,7 @@
         <div class="accordion" id="sidebarAccordion">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <a class="accordion-button item {{ request()->routeIs('contractor.settings.*') ? '' : 'collapsed' }}"
+                    <a class="accordion-button item {{ request()->routeIs('customer.settings.*') ? '' : 'collapsed' }}"
                         type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                         aria-controls="collapseOne">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -54,13 +54,13 @@
                     </a>
                 </h2>
                 <div id="collapseOne"
-                    class="accordion-collapse collapse {{ request()->routeIs('contractor.settings.*') ? 'show' : '' }} "
+                    class="accordion-collapse collapse {{ request()->routeIs('customer.settings.*') ? 'show' : '' }} "
                     aria-labelledby="headingOne" data-bs-parent="#sidebarAccordion">
                     <div class="accordion-body">
-                        <a class="{{ request()->routeIs('contractor.settings.index') ? 'active' : '' }}"
-                            href="{{ route('contractor.settings.index') }}">Profile</a>
-                        <a class="{{ request()->routeIs('contractor.settings.password') ? 'active' : '' }}"
-                            href="{{ route('contractor.settings.password') }}">Password</a>
+                        <a class="{{ request()->routeIs('customer.settings.index') ? 'active' : '' }}"
+                            href="{{ route('customer.settings.index') }}">Profile</a>
+                        <a class="{{ request()->routeIs('customer.settings.password') ? 'active' : '' }}"
+                            href="{{ route('customer.settings.password') }}">Password</a>
                     </div>
                 </div>
             </div>
