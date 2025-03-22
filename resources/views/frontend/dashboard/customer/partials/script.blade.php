@@ -79,7 +79,7 @@
 
        Echo.private('App.Models.User.' + {{ auth()->id() }})
            .notification((notification) => {
-               console.log(notification);
+            //    console.log(notification);
                let notificationCount = parseInt($("#notification-count").text());
                if (notificationCount >= 0) {
                    $("#notification-count").text(notificationCount + 1);

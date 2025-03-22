@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Frontend\Contractor;
+namespace App\Http\Controllers\Web\Frontend\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Services\Web\Settings\ProfileService;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-class ContractorSettingController extends Controller
+class CustomerSettingController extends Controller
 {
     protected $profileService;
     protected $user;
@@ -27,20 +27,18 @@ class ContractorSettingController extends Controller
     public function index()
     {
         $contractor = $this->profileService->get();
-        return view('frontend.dashboard.contractor.layouts.settings.index', compact('contractor'));
+        return view('frontend.dashboard.customer.layouts.settings.index', compact('contractor'));
     }
 
-
     /**
-     * Display the form to update the contractor's password.
+     * Display the form to update the customer's password.
      */
     public function password()
     {
-        return view('frontend.dashboard.contractor.layouts.settings.password');
+        return view('frontend.dashboard.customer.layouts.settings.password');
     }
-    
     /**
-     * Update the contractor's password.
+     * Update the customer's password.
      */
     public function passwordUpdate(Request $request)
     {
@@ -64,9 +62,9 @@ class ContractorSettingController extends Controller
                 return redirect()->back();
             }
             flash()->success('Password updated successfully');
-            return redirect()->route('contractor.dashboard');
+            return redirect()->route('customer.dashboard');
         } catch (Exception $e) {
-            Log::error('ContractorSettingController::passwordUpdate ' . $e->getMessage());
+            Log::error('CustomerSettingController::passwordUpdate ' . $e->getMessage());
             // Flash error message
             flash()->error('Something went wrong');
             return redirect()->back();
@@ -89,14 +87,14 @@ class ContractorSettingController extends Controller
             $updatedProfile = $this->profileService->update($this->user, $validatedData);
             if ($updatedProfile) {
                 flash()->success('Profile Update Succesfull');
-                return redirect()->route('contractor.dashboard');
+                return redirect()->route('customer.dashboard');
             } else {
                 // Flash error message
                 flash()->error('Something went wrong');
                 return redirect()->back();
             }
         } catch (Exception $e) {
-            Log::error('ContractorSettingController::updateProfile ' . $e->getMessage());
+            Log::error('CustomerSettingController::updateProfile ' . $e->getMessage());
             // Flash error message
             flash()->error('Something went wrong');
             return redirect()->back();
