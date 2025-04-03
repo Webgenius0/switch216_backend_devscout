@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorSubscriptionController;
 use App\Http\Controllers\Web\Frontend\Customer\CustomerSettingController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
@@ -203,6 +204,10 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
     Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
     Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
+
+    // contractor Subscription
+    Route::get('/my-subscription', [ContractorSubscriptionController::class, 'index'])->name('contractor.subscription.index');
+    Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
 });
 
 

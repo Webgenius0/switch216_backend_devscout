@@ -1,0 +1,109 @@
+@extends('frontend.dashboard.contractor.app')
+
+@section('title')
+    Dashboard Contrator
+@endsection
+@section('header')
+    @include('frontend.dashboard.contractor.partials.header')
+@endsection
+@push('styles')
+    <style>
+        .pricing-card {
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: gray;
+            font-size: 16px;
+        }
+
+        .btn-custom {
+            background: #233cca;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+
+        .btn-custom:hover {
+            background: #d32f2f;
+        }
+    </style>
+@endpush
+
+@section('content')
+    <div class="container-fluid">
+        {{-- <div class="row">
+            <div class="col-md-12">
+                <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                    <h1 class="display-4">View All Pakages</h1>
+                    <p class="lead">Quickly build an effective pricing table for your potential customers with this
+                        Bootstrap example. It’s built with default Bootstrap components and utilities with little
+                        customization.</p>
+                </div>
+            </div>
+        </div> --}}
+        <!-- Card 1 -->
+        <div class="row mt-4">
+
+                @foreach ($pakesges as $package)
+                <div class="col-md-3 mb-5">
+
+                    <div class="pricing-card shadow-lg p-4 rounded-lg text-center bg-white">
+                        <h5 class="font-bold text-xl text-gray-900 flex items-center justify-center gap-2">
+                            📁 {{ $package->title }}
+                        </h5>
+                     
+                        
+                        <div class="mt-4">
+                            <p class="text-lg font-semibold text-gray-700">
+                                {{ $package->days }} <span class="text-gray-500">/day</span>
+                            </p>
+                            <p class="text-2xl font-bold text-gray-900">${{ $package->price }}</p>
+                        </div>
+                    
+                        <button type="button"
+                            class="btn-custom w-100 {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
+                            {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
+                        </button>
+                        <div class="text-dark text-left mt-2 leading-relaxed">
+                            <p >{!! $package->description !!}</p> 
+                         </div>
+                    </div>
+                    
+            </div>
+            @endforeach
+
+        </div>
+            
+
+
+
+
+    </div>
+@endsection
+
+@push('scripts')
+@endpush
