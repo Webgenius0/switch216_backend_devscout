@@ -68,36 +68,40 @@
         <!-- Card 1 -->
         <div class="row mt-4">
 
-                @foreach ($pakesges as $package)
+            @foreach ($pakesges as $package)
                 <div class="col-md-3 mb-5">
 
                     <div class="pricing-card shadow-lg p-4 rounded-lg text-center bg-white">
                         <h5 class="font-bold text-xl text-gray-900 flex items-center justify-center gap-2">
                             📁 {{ $package->title }}
                         </h5>
-                     
-                        
+
+
                         <div class="mt-4">
                             <p class="text-lg font-semibold text-gray-700">
                                 {{ $package->days }} <span class="text-gray-500">/day</span>
                             </p>
                             <p class="text-2xl font-bold text-gray-900">${{ $package->price }}</p>
                         </div>
-                    
-                        <button type="button"
+
+                        <a href="{{ route('contractor.subscription.create_payment_intent',$package->id) }}" type="button"
                             class="btn-custom w-100 {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
                             {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
-                        </button>
+                        </a>
+                        {{-- <button type="button" id="getSubscription" onclick="getSubscription({{ $package->id }})"
+                            class="btn-custom w-100 {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
+                            {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
+                        </button> --}}
                         <div class="text-dark text-left mt-2 leading-relaxed">
-                            <p >{!! $package->description !!}</p> 
-                         </div>
+                            <p>{!! $package->description !!}</p>
+                        </div>
                     </div>
-                    
-            </div>
+
+                </div>
             @endforeach
 
         </div>
-            
+
 
 
 
@@ -106,4 +110,48 @@
 @endsection
 
 @push('scripts')
+    <script>
+        // $('#getSubscription').click(function() {
+        //     console.log('ok');
+        // })
+
+        function getSubscription(packageId) {
+            console.log(packageId);
+            if (event) {
+                event.preventDefault();
+            }
+
+            Swal.fire({
+                title: 'Confirm Subscription',
+                text: 'Do you want to proceed with the subscription?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('contractor.subscription.make_subscribe', ':id') }}'.replace(':id',
+                            packageId),
+                        type: 'POST',
+                        data: {
+                            package_id: packageId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                window.location.href = response.url;
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function(xhr) {
+                            flasher.error("Something went wrong!");
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
 @endpush

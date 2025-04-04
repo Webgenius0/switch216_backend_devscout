@@ -6,6 +6,7 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Auth\SocialLoginController;
 use App\Http\Controllers\API\Auth\UserController;
+use App\Http\Controllers\Web\Backend\StripePaymentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,3 +34,4 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::post('/update-password', [UserController::class, 'changePassword']);
     Route::delete('/delete-profile', [UserController::class, 'deleteProfile']);
 });
+Route::post('/payment/webhook/stripe', [StripePaymentController::class, 'handleWebhook']);

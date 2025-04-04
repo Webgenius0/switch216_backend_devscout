@@ -18,6 +18,15 @@ class ContractorSubscription extends Model
         'end_date',
         'status',
     ];
+    protected $casts = [
+        'contractor_id' => 'integer',
+        'subscription_package_id' => 'integer',
+        'amount_paid' => 'float',
+        'payment_status' => 'string',
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'status' => 'string',
+    ];
 
     public function contractor()
     {

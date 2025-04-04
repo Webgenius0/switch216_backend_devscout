@@ -36,24 +36,24 @@ class ContractorSubscriptionController extends Controller
             $pakesges = $this->contractorSubcriptionService->getPakeges();
             return view('frontend.dashboard.contractor.layouts.subcription.package', compact('pakesges'));
         } catch (Exception $e) {
-            Log::error('ContractorSubscriptionController::getPakeges'. $e->getMessage());
+            Log::error('ContractorSubscriptionController::getPakeges' . $e->getMessage());
             flash()->error('Something went wrong');
             return redirect()->back();
         }
     }
 
-    public function store(Request $request)
+    public function makeSubscribe(Request $request, int $packageId)
     {
-        $request->validate([
-            'subscription_package_id' => 'required|exists:subcription_packages,id',
-            'amount_paid' => 'required|numeric|min:0',
-            'payment_status' => 'required|in:pending,completed,failed',
-        ]);
+        // $request->validate([
+        //     'subscription_package_id' => 'required|exists:subcription_packages,id',
+        //     'amount_paid' => 'required|numeric|min:0',
+        //     'payment_status' => 'required|in:pending,completed,failed',
+        // ]);
 
         $user = Auth::user(); // Get logged-in contractor
 
-        $package = SubcriptionPackage::findOrFail($request->subscription_package_id);
-
+        $package = SubcriptionPackage::findOrFail($packageId);
+        dd($package);
         // Get active subscription for the same package
         $existingSubscription = ContractorSubscription::where('contractor_id', $user->id)
             ->where('subscription_package_id', $package->id)
@@ -89,7 +89,7 @@ class ContractorSubscriptionController extends Controller
         );
 
 
-        
+
         return response()->json(['message' => 'Subscription updated successfully!', 'subscription' => $subscription]);
     }
 }
