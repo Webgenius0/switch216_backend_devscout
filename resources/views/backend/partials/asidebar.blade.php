@@ -72,12 +72,33 @@ $systemSetting = App\Models\SystemSetting::first();
                     <span class="title">Sub Category</span>
                 </a>
             </li>
+             
             <!-- Sub city Menu Item -->
             <li class="menu-item open">
                 <a href="{{ route('cities.index') }}"
                     class="menu-link {{ request()->routeIs('cities.index') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">location_city</span>
                     <span class="title">City List</span>
+                </a>
+            </li>
+            <!-- Ranking Provider Menu Item -->
+            <li class="menu-item open">
+                <a href=""
+                    class="menu-link {{ request()->routeIs('ranks.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">
+                        hotel_class
+                    </span>
+                    <span class="title">Rank List</span>
+                </a>
+            </li>
+            <!-- Subscription package Menu Item -->
+            <li class="menu-item open">
+                <a href="{{ route('subcription_pakage.index') }}"
+                    class="menu-link {{ request()->routeIs('subcription_pakage.index') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined menu-icon">
+                        subscriptions
+                        </span>
+                    <span class="title">Subscription Package</span>
                 </a>
             </li>
             <li class="menu-item open">

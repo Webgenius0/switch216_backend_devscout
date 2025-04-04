@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Backend\StripePaymentController;
 use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorSubscriptionController;
 use App\Http\Controllers\Web\Frontend\Customer\CustomerSettingController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
@@ -203,8 +205,15 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
     Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
     Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
-});
 
+    // contractor Subscription
+    Route::get('/my-subscription', [ContractorSubscriptionController::class, 'index'])->name('contractor.subscription.index');
+    Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
+    Route::post('/make-subscription/{pakageId}', [ContractorSubscriptionController::class, 'makeSubscribe'])->name('contractor.subscription.make_subscribe');
+    Route::get('/create-payment-intent/{pakageId}', [StripePaymentController::class, 'createPaymentIntent'])->name('contractor.subscription.create_payment_intent');
+});
+Route::get('stripe/payment-success', [StripePaymentController::class, 'paymentSuccess'])->name('contractor.payment.success');
+Route::get('stripe/payment-cancel', [StripePaymentController::class, 'paymentCancel'])->name('contractor.payment.cancel');
 
 //for customer and contractor only chating
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
