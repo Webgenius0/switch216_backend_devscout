@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Backend;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\ContractorSubscription;
 use App\Models\Payment;
 use App\Models\SubcriptionPackage;
 use App\Models\User;
@@ -131,15 +132,27 @@ class StripePaymentController extends Controller
     protected function handlePaymentSuccess($paymentIntent): void
     {
         Log::info('Payment succeeded: ' . json_encode($paymentIntent));
+
+        //* Create a contractor subscription
+        $contractorSubscription = ContractorSubscription::create([
+            'contractor_id' => $paymentIntent->metadata->user_id,
+            'subscription_package_id' => $paymentIntent->metadata->package_id,
+            'amount_paid' => $paymentIntent->amount / 100,
+            'payment_status' => 'completed',
+            'start_date' => now(),
+            'end_date' => now()->addDays(SubcriptionPackage::find($paymentIntent->metadata->package_id)->days),
+            'status' => 'active',
+        ]);
         //* Record the successful payment in the database
-        $payment = Payment::create([
+        Payment::create([
             'user_id' => $paymentIntent->metadata->user_id,
-            'subscription_id' => $paymentIntent->metadata->package_id,
+            'subscription_id' => $contractorSubscription->id,
             'amount' => $paymentIntent->amount / 100,
             'transaction_id' => $paymentIntent->metadata->transaction_id,
             'payment_method' => $paymentIntent->metadata->payment_method,
             'status' => 'completed',
         ]);
+    
         //* Send a notification to the contractor
         $contractor = User::find($paymentIntent->metadata->user_id);
         $notificationData = [
