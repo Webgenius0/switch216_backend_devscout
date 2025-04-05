@@ -218,11 +218,11 @@ Route::get('stripe/payment-cancel', [StripePaymentController::class, 'paymentCan
 
 //for customer and contractor only chating
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
-    Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index');
-    Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
-    Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
-    Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
-    Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
+    Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index')->middleware('check_contractor_subscription');
+    Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms')->middleware('check_contractor_subscription');
+    Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages')->middleware('check_contractor_subscription');
+    Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message')->middleware('check_contractor_subscription');
+    Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat')->middleware('check_contractor_subscription');
 });
 
 //for customer and contractor only notification

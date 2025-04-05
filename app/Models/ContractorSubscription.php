@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class ContractorSubscription extends Model
 {
@@ -37,4 +38,15 @@ class ContractorSubscription extends Model
     {
         return $this->belongsTo(SubcriptionPackage::class, 'subscription_package_id');
     }
+    /**
+     * Get the remaining days for the active subscription.
+     */
+    public function getRemainingDays()
+{
+    if ($this->status === 'active') {
+        return \Carbon\Carbon::now()->diffInDays($this->end_date, false); // returns int
+    }
+    return 0;
+}
+
 }

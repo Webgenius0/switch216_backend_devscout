@@ -28,8 +28,7 @@ class ContractorSubscriptionController extends Controller
     public function index()
     {
         $subcriptions = $this->contractorSubcriptionService->index();
-            // dd($subcription->toArray());
-        return view('frontend.dashboard.contractor.layouts.booking.index', compact('subcriptions'));
+        return view('frontend.dashboard.contractor.layouts.subcription.index', compact('subcriptions'));
     }
 
     public function getPakeges()
