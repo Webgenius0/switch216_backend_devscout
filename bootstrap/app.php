@@ -28,6 +28,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_customer' => \App\Http\Middleware\CheckIsCostomerMiddleWare::class,
             'is_customer_or_contractor' => \App\Http\Middleware\CheckIsCustomerOrContractorMiddleWare::class,
         ]);
+        $middleware->validateCsrfTokens(
+            except: [
+                'api/payment/webhook/stripe',
+                '/payment/webhook/stripe',
+            ]
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
