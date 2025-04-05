@@ -27,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_contractor' => \App\Http\Middleware\CheckIsContractorMiddleWare::class,
             'is_customer' => \App\Http\Middleware\CheckIsCostomerMiddleWare::class,
             'is_customer_or_contractor' => \App\Http\Middleware\CheckIsCustomerOrContractorMiddleWare::class,
+            'check_contractor_subscription' => \App\Http\Middleware\CheckContractorSubscription::class,
         ]);
         $middleware->validateCsrfTokens(
             except: [

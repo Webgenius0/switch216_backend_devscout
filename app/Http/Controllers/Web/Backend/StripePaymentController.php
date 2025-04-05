@@ -110,19 +110,23 @@ class StripePaymentController extends Controller
         }
 
         try {
+            DB::beginTransaction();
             switch ($event->type) {
                 case 'payment_intent.succeeded':
                     $this->handlePaymentSuccess($event->data->object);
+                    DB::commit();
                     return Helper::jsonResponse(true, 'Payment successful', 200, []);
 
                 case 'payment_intent.payment_failed':
                     $this->handlePaymentFailure($event->data->object);
+                    DB::commit();
                     return Helper::jsonResponse(true, 'Payment failed', 200, []);
 
                 default:
                     return Helper::jsonResponse(true, 'Unhandled event type', 200, []);
             }
         } catch (Exception $e) {
+            DB::rollBack();
             Log::error('Stripe webhook error (handler): ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
         }
@@ -152,7 +156,7 @@ class StripePaymentController extends Controller
             'payment_method' => $paymentIntent->metadata->payment_method,
             'status' => 'completed',
         ]);
-    
+
         //* Send a notification to the contractor
         $contractor = User::find($paymentIntent->metadata->user_id);
         $notificationData = [

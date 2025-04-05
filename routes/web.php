@@ -172,7 +172,7 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('settings-profile', [CustomerSettingController::class, 'updateProfile'])->name('customer.settings.update');
     Route::get('settings-password', [CustomerSettingController::class, 'password'])->name('customer.settings.password');
     Route::post('settings-password', [CustomerSettingController::class, 'passwordUpdate'])->name('customer.settings.password_update');
-    
+
     // customer bookings 
     Route::get('/customer-booking', [AppointmentCustomerController::class, 'index'])->name('customer.booking.index');
     Route::get('/customer-bookings/all', [AppointmentCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
@@ -197,14 +197,15 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
 
     // manage services from contactor 
-    Route::resource('services', ContractorServiceController::class)->names('contractor.services');
+    Route::resource('services', ContractorServiceController::class)->names('contractor.services')->middleware('check_contractor_subscription');
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
-    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
-    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
-    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
+    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index')->middleware('check_contractor_subscription');
+    ;
+    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm')->middleware('check_contractor_subscription');
+    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle')->middleware('check_contractor_subscription');
+    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete')->middleware('check_contractor_subscription');
 
     // contractor Subscription
     Route::get('/my-subscription', [ContractorSubscriptionController::class, 'index'])->name('contractor.subscription.index');
