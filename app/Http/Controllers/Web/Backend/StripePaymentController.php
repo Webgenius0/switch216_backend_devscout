@@ -90,12 +90,10 @@ class StripePaymentController extends Controller
     public function handleWebhook(Request $request): JsonResponse
     {
         Log::info('Stripe webhook received');
-        //? Verify the webhook signature
-        $stripe_webhook_secret = Stripe::setApiKey(config('services.stripe.webhook_secret'));
 
         $payload = $request->getContent();
         $sigHeader = $request->header('Stripe-Signature');
-        $endpointSecret = $stripe_webhook_secret;
+        $endpointSecret = config('services.stripe.webhook_secret');
 
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
@@ -103,12 +101,10 @@ class StripePaymentController extends Controller
             Log::error('Stripe webhook error: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 400, []);
         } catch (SignatureVerificationException $e) {
-            Log::error('Stripe webhook error: ' . $e->getMessage());
+            Log::error('Stripe webhook signature error: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 400, []);
         }
 
-
-        //? Handle the event based on its type
         try {
             switch ($event->type) {
                 case 'payment_intent.succeeded':
@@ -123,10 +119,11 @@ class StripePaymentController extends Controller
                     return Helper::jsonResponse(true, 'Unhandled event type', 200, []);
             }
         } catch (Exception $e) {
-            Log::error('Stripe webhook error 2nd catch: ' . $e->getMessage());
+            Log::error('Stripe webhook error (handler): ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
         }
     }
+
 
     protected function handlePaymentSuccess($paymentIntent): void
     {
