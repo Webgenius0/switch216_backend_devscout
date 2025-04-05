@@ -57,11 +57,13 @@ class StripePaymentController extends Controller
                         'quantity' => 1,
                     ]
                 ],
-                'metadata' => [
-                    'user_id' => $user_id,
-                    'subscription_id' => $package->id,
-                    'transaction_id' => $transactionId,
-                    'payment_method' => 'stripe',
+                'payment_intent_data' => [
+                    'metadata' => [
+                        'user_id' => $user_id,
+                        'package_id' => $package->id,
+                        'transaction_id' => $transactionId,
+                        'payment_method' => 'stripe',
+                    ],
                 ],
                 'mode' => 'payment',
                 'success_url' => route('contractor.payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
@@ -97,6 +99,7 @@ class StripePaymentController extends Controller
 
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+            Log::info('Stripe webhook event: ' . json_encode($event));
         } catch (UnexpectedValueException $e) {
             Log::error('Stripe webhook error: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 400, []);
@@ -127,7 +130,7 @@ class StripePaymentController extends Controller
 
     protected function handlePaymentSuccess($paymentIntent): void
     {
-        Log::info('Payment succeeded: ' . $paymentIntent->id);
+        Log::info('Payment succeeded: ' . json_encode($paymentIntent));
         //* Record the successful payment in the database
         $payment = Payment::create([
             'user_id' => $paymentIntent->metadata->user_id,
