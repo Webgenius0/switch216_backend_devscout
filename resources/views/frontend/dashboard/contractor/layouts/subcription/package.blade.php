@@ -69,7 +69,7 @@
         <div class="row mt-4 flex flex-wrap">
 
             @foreach ($pakesges as $package)
-                <div class="col-md-3 mb-5 flex">
+                <div class="col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt-2 mb-5 flex">
 
                     <div class="pricing-card shadow-lg p-4 rounded-lg text-center bg-white flex flex-col h-full w-full">
                         <h5 class="font-bold text-xl text-gray-900 flex items-center justify-center gap-2">
