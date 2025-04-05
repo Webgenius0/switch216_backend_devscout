@@ -66,18 +66,18 @@
             </div>
         </div> --}}
         <!-- Card 1 -->
-        <div class="row mt-4">
+        <div class="row mt-4 flex flex-wrap">
 
             @foreach ($pakesges as $package)
-                <div class="col-md-3 mb-5">
+                <div class="col-md-3 mb-5 flex">
 
-                    <div class="pricing-card shadow-lg p-4 rounded-lg text-center bg-white">
+                    <div class="pricing-card shadow-lg p-4 rounded-lg text-center bg-white flex flex-col h-full w-full">
                         <h5 class="font-bold text-xl text-gray-900 flex items-center justify-center gap-2">
                             📁 {{ $package->title }}
                         </h5>
 
 
-                        <div class="mt-4">
+                        <div class="mt-4 mb-3">
                             <p class="text-lg font-semibold text-gray-700">
                                 {{ $package->days }} <span class="text-gray-500">/day</span>
                             </p>
@@ -92,7 +92,7 @@
                             class="btn-custom w-100 {{ $package->price == 0 ? 'btn-outline-primary' : 'btn-primary' }}">
                             {{ $package->button_text ?? ($package->price == 0 ? 'Sign up for free' : 'Get started') }}
                         </button> --}}
-                        <div class="text-dark text-left mt-2 leading-relaxed">
+                        <div class="text-dark text-left mt-3 leading-relaxed">
                             <p>{!! $package->description !!}</p>
                         </div>
                     </div>
