@@ -100,8 +100,10 @@ class StripePaymentController extends Controller
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
         } catch (UnexpectedValueException $e) {
+            Log::error('Stripe webhook error: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 400, []);
         } catch (SignatureVerificationException $e) {
+            Log::error('Stripe webhook error: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 400, []);
         }
 
@@ -121,6 +123,7 @@ class StripePaymentController extends Controller
                     return Helper::jsonResponse(true, 'Unhandled event type', 200, []);
             }
         } catch (Exception $e) {
+            Log::error('Stripe webhook error 2nd catch: ' . $e->getMessage());
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
         }
     }
