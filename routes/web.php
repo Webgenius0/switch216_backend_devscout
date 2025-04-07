@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Backend\StripePaymentController;
 use App\Http\Controllers\Web\Frontend\AboutUsPageController;
 use App\Http\Controllers\Web\Backend\CMS\ProviderRegisterPageController;
+use App\Http\Controllers\Web\Frontend\Contractor\ContractorSubscriptionController;
 use App\Http\Controllers\Web\Frontend\Customer\CustomerSettingController;
 use App\Http\Controllers\Web\Frontend\ProviderRegisterPageController as ServiceProviderRegisterPageController;
 use App\Http\Controllers\Web\Frontend\CarPageController;
@@ -170,7 +172,7 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('settings-profile', [CustomerSettingController::class, 'updateProfile'])->name('customer.settings.update');
     Route::get('settings-password', [CustomerSettingController::class, 'password'])->name('customer.settings.password');
     Route::post('settings-password', [CustomerSettingController::class, 'passwordUpdate'])->name('customer.settings.password_update');
-    
+
     // customer bookings 
     Route::get('/customer-booking', [AppointmentCustomerController::class, 'index'])->name('customer.booking.index');
     Route::get('/customer-bookings/all', [AppointmentCustomerController::class, 'getAllBooking'])->name('customer.booking.get_all');
@@ -195,24 +197,32 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::post('settings-password', [ContractorSettingController::class, 'passwordUpdate'])->name('contractor.settings.password_update');
 
     // manage services from contactor 
-    Route::resource('services', ContractorServiceController::class)->names('contractor.services');
+    Route::resource('services', ContractorServiceController::class)->names('contractor.services')->middleware('check_contractor_subscription');
     Route::post('services/status/{id}', [ContractorServiceController::class, 'status'])->name('contractor.services.status');
     Route::post('services/emargence/{id}', [ContractorServiceController::class, 'emargence'])->name('contractor.services.emargence');
 
-    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index');
-    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm');
-    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle');
-    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete');
-});
+    Route::get('/contractor-booking', [BookingContactorController::class, 'index'])->name('contractor.booking.index')->middleware('check_contractor_subscription');
+    ;
+    Route::get('/contractor-booking/confirm/{bookingId}', [BookingContactorController::class, 'confirmBooking'])->name('contractor.booking.confirm')->middleware('check_contractor_subscription');
+    Route::get('/contractor-booking/cancle/{bookingId}', [BookingContactorController::class, 'cancleBooking'])->name('contractor.booking.cancle')->middleware('check_contractor_subscription');
+    Route::get('/contractor-booking/mark-as-complete/{bookingId}', [BookingContactorController::class, 'markAsComplete'])->name('contractor.booking.mark_as_complete')->middleware('check_contractor_subscription');
 
+    // contractor Subscription
+    Route::get('/my-subscription', [ContractorSubscriptionController::class, 'index'])->name('contractor.subscription.index');
+    Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
+    Route::post('/make-subscription/{pakageId}', [ContractorSubscriptionController::class, 'makeSubscribe'])->name('contractor.subscription.make_subscribe');
+    Route::get('/create-payment-intent/{pakageId}', [StripePaymentController::class, 'createPaymentIntent'])->name('contractor.subscription.create_payment_intent');
+});
+Route::get('stripe/payment-success', [StripePaymentController::class, 'paymentSuccess'])->name('contractor.payment.success');
+Route::get('stripe/payment-cancel', [StripePaymentController::class, 'paymentCancel'])->name('contractor.payment.cancel');
 
 //for customer and contractor only chating
 Route::middleware(['auth:web', 'is_customer_or_contractor'])->prefix('chat')->group(function () {
-    Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index');
-    Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms');
-    Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages');
-    Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message');
-    Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat');
+    Route::get('/messages', [ChatController::class, 'index'])->name('contractor.message.index')->middleware('check_contractor_subscription');
+    Route::get('/messages/chat-room', [ChatController::class, 'chatRooms'])->name('contractor.message.chat_rooms')->middleware('check_contractor_subscription');
+    Route::get('/messages/single/{chatRoomId}', [ChatController::class, 'getMessages'])->name('contractor.message.get_messages')->middleware('check_contractor_subscription');
+    Route::post('/messages/send-message/{userId}', [ChatController::class, 'sendMessage'])->name('contractor.message.send_message')->middleware('check_contractor_subscription');
+    Route::get('/messages/{serviceId}/start-chat', [ChatController::class, 'startChat'])->name('contractor.message.start_chat')->middleware('check_contractor_subscription');
 });
 
 //for customer and contractor only notification

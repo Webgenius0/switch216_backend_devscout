@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\SubcriptionPackageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\UserController;
 use App\Http\Controllers\Web\Backend\CityController;
@@ -194,11 +195,16 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
   //category
   Route::resource('sub-categories', SubCategoryController::class)->names(names: 'sub_category');
   Route::post('sub-categories/status/{id}', [SubCategoryController::class, 'status'])->name('sub_category.status');
-  
+
   // Route for CityController
-   Route::resource('/cities', CityController::class)->names('cities');
-    Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
-  
+  Route::resource('/cities', CityController::class)->names('cities');
+  Route::post('/cities/status/{id}', [CityController::class, 'status'])->name('cities.status');
+
+  // Route for SubcriptionPackageController
+  Route::resource('/subcription-pakages', SubcriptionPackageController::class)->names('subcription_pakage');
+  Route::post('/subcription-pakages/status/{id}', [SubcriptionPackageController::class, 'status'])->name('subcription_pakage.status');
+
+
 
 
   // Routes for NotificationController

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -174,4 +175,25 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany(Review::class, 'contactor_id')->count();
     // }
+
+
+    public function contractorSubscriptions()
+    {
+        return $this->hasMany(ContractorSubscription::class, 'contractor_id');
+    }
+
+    public function getUserSubscriptionRemainingDays()
+    {
+        $latestSubscription = $this->contractorSubscriptions()
+            ->where('status', 'active')
+            ->where('end_date', '>=', Carbon::now())
+            ->orderByDesc('end_date')
+            ->first();
+
+        if (!$latestSubscription) {
+            return 0; // No active subscription found
+        }
+
+        return max(Carbon::now()->diffInDays($latestSubscription->end_date, false), 0);
+    }
 }

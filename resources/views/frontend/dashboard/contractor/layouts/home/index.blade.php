@@ -23,7 +23,15 @@
                 one place for a smooth preparation experience.
             </div>
 
+            @php
+                $remainingDays = Auth::user()->getUserSubscriptionRemainingDays();
+            @endphp
 
+            @if ($remainingDays > 0)
+            <div class="title"><span style="color: green">Your remaining subscription days: {{ intval($remainingDays) }} day(s)</span> </div>  
+            @else
+                <p class="text-red-600">You have no active subscription or it has expired.</p>
+            @endif
         </div>
         <!-- dashboard-banner-content end -->
 
