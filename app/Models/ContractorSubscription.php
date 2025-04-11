@@ -43,10 +43,22 @@ class ContractorSubscription extends Model
      */
     public function getRemainingDays()
     {
-        if ($this->status !== 'active' || Carbon::now()->greaterThanOrEqualTo($this->end_date)) {
+        if (
+            $this->status !== 'active' ||
+            Carbon::now()->greaterThanOrEqualTo($this->end_date)
+        ) {
             return '0 days, 0 hours, 0 minutes';
         }
-        $diff = Carbon::now()->diff($this->end_date);
-        return "{$diff->d} days, {$diff->h} hours, {$diff->i} minutes";
+
+        $now = Carbon::now();
+        $end = Carbon::parse($this->end_date); // make sure it's Carbon instance
+
+        $totalMinutes = $now->diffInMinutes($end);
+
+        $days = floor($totalMinutes / (60 * 24));
+        $hours = floor(($totalMinutes % (60 * 24)) / 60);
+        $minutes = $totalMinutes % 60;
+
+        return "{$days} days, {$hours} hours, {$minutes} minutes";
     }
 }

@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -183,26 +185,68 @@ class User extends Authenticatable
     }
 
     public function getUserSubscriptionRemainingDays()
-{
-    $latestSubscription = $this->contractorSubscriptions()
-        ->where('status', 'active')
-        ->where('end_date', '>=', Carbon::now())
-        ->orderByDesc('end_date')
-        ->first();
+    {
+        $latestSubscription = $this->contractorSubscriptions()
+            ->where('status', 'active')
+            ->where('end_date', '>=', Carbon::now())
+            ->orderByDesc('end_date')
+            ->first();
 
-    if (!$latestSubscription) {
-        return '0 days, 0 hours, 0 minutes'; // No active subscription
+        if (!$latestSubscription) {
+            return '0 days, 0 hours, 0 minutes'; // No active subscription
+        }
+
+        $now = Carbon::now();
+        $end = Carbon::parse($latestSubscription->end_date); // ensure it's a Carbon instance
+
+        if ($now->greaterThanOrEqualTo($end)) {
+            return '0 days, 0 hours, 0 minutes';
+        }
+
+        $totalMinutes = $now->diffInMinutes($end);
+
+        $days = floor($totalMinutes / (60 * 24));
+        $hours = floor(($totalMinutes % (60 * 24)) / 60);
+        $minutes = $totalMinutes % 60;
+
+        return "{$days} days, {$hours} hours, {$minutes} minutes";
     }
 
-    $now = Carbon::now();
-    $end = $latestSubscription->end_date;
 
-    if ($now->greaterThanOrEqualTo($end)) {
-        return '0 days, 0 hours, 0 minutes';
+    public function getContactorProfileCounter()
+    {
+        try {
+            $ContactorReviewCount = Review::where('contactor_id', $this->id)->count();
+            $services = Service::where('user_id', $this->id)->get();
+
+            $ContactorCompleteBookingCount = Booking::whereIn('service_id', $services->pluck('id'))
+                ->where('status', 'completed')->count();
+                // $ContactorCompleteBookingCount=50;
+            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))
+                ->whereIn('status', ['confirmed'])->count();
+
+            $averageRating = Review::where('contactor_id', $this->id)
+                ->whereNotNull('rating')->avg('rating');
+            // dd( $averageRating);
+            if ($ContactorCompleteBookingCount >= 50 && $averageRating >= 4.8) {
+                $rank = 'Expert Pro';
+            } elseif ($ContactorCompleteBookingCount >= 20 && $averageRating >= 4.8) {
+                $rank = 'Pro';
+            } elseif ($ContactorCompleteBookingCount >= 5 && $averageRating >= 4.5) {
+                $rank = 'Gold';
+            } else {
+                $rank = 'Silver';
+            }
+
+            return [
+                'contactor_ranking_tag' => $rank,
+                'contactor_average_rating' => $averageRating ?? 0,
+                'client_review_count' => $ContactorReviewCount,
+                'complete_booking_count' => $ContactorCompleteBookingCount,
+                'pending_booking_count' => $ContactorPendingBookingCount
+            ];
+        } catch (Exception $e) {
+            Log::error('some thing went wrong' . $e->getMessage());
+        }
     }
-
-    $diff = $now->diff($end);
-
-    return "{$diff->d} days, {$diff->h} hours, {$diff->i} minutes";
-}
 }

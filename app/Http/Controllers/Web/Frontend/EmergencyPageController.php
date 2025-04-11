@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Services\Web\Frontend\EmergencyPageService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class EmergencyPageController extends Controller
@@ -41,6 +42,7 @@ class EmergencyPageController extends Controller
     public function show($id)
     {
         try {
+
             $service = $this->emergencyService->show($id);
             $categoryNames = $this->emergencyService->getContactorCategoryList($service->user_id);
             $ServiceTitleWithDescription = $this->emergencyService->ServiceTitleWithDescription($service->user_id);

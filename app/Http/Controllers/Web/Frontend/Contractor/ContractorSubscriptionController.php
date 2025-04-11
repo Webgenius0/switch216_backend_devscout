@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Web\Frontend\Contractor;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContractorSubscription;
-use App\Models\SubcriptionPackage;
 use App\Services\Web\Frontend\ContractorSubcriptionService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,10 +25,12 @@ class ContractorSubscriptionController extends Controller
     public function index()
     {
         $subcriptions = $this->contractorSubcriptionService->index();
-        // dd($subcriptions);
         return view('frontend.dashboard.contractor.layouts.subcription.index', compact('subcriptions'));
     }
 
+    /**
+     * Display a listing of all the subscription packages
+     */
     public function getPakeges()
     {
         try {
