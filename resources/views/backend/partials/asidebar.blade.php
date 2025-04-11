@@ -82,7 +82,7 @@ $systemSetting = App\Models\SystemSetting::first();
                 </a>
             </li>
             <!-- Ranking Provider Menu Item -->
-            <li class="menu-item open">
+            {{-- <li class="menu-item open">
                 <a href=""
                     class="menu-link {{ request()->routeIs('ranks.index') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">
@@ -90,7 +90,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </span>
                     <span class="title">Rank List</span>
                 </a>
-            </li>
+            </li> --}}
             <!-- Subscription package Menu Item -->
             <li class="menu-item open">
                 <a href="{{ route('subcription_pakage.index') }}"
