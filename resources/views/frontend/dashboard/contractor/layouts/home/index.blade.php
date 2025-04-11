@@ -28,9 +28,14 @@
             @endphp
 
             @if ($remainingDays > 0)
-            <div class="title"><span style="color: green">Your remaining subscription days: {{ intval($remainingDays) }} day(s)</span> </div>  
+                <div
+                    class="title bg-green-100 border border-green-300 text-green-800 text-sm rounded-lg px-4 py-2 mt-2 shadow-sm">
+                    <strong style="color: green">Your remaining subscription:</strong><br> {{ $remainingDays }}
+                </div>
             @else
-                <p class="text-red-600">You have no active subscription or it has expired.</p>
+                <div class=" bg-red-100 border border-red-300 text-red-700 text-sm rounded-lg px-4 py-2 mt-2 shadow-sm">
+                    <strong>Notice:</strong> You have no active subscription or it has expired.
+                </div>
             @endif
         </div>
         <!-- dashboard-banner-content end -->

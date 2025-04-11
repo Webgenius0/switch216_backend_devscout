@@ -183,17 +183,26 @@ class User extends Authenticatable
     }
 
     public function getUserSubscriptionRemainingDays()
-    {
-        $latestSubscription = $this->contractorSubscriptions()
-            ->where('status', 'active')
-            ->where('end_date', '>=', Carbon::now())
-            ->orderByDesc('end_date')
-            ->first();
+{
+    $latestSubscription = $this->contractorSubscriptions()
+        ->where('status', 'active')
+        ->where('end_date', '>=', Carbon::now())
+        ->orderByDesc('end_date')
+        ->first();
 
-        if (!$latestSubscription) {
-            return 0; // No active subscription found
-        }
-
-        return max(Carbon::now()->diffInDays($latestSubscription->end_date, false), 0);
+    if (!$latestSubscription) {
+        return '0 days, 0 hours, 0 minutes'; // No active subscription
     }
+
+    $now = Carbon::now();
+    $end = $latestSubscription->end_date;
+
+    if ($now->greaterThanOrEqualTo($end)) {
+        return '0 days, 0 hours, 0 minutes';
+    }
+
+    $diff = $now->diff($end);
+
+    return "{$diff->d} days, {$diff->h} hours, {$diff->i} minutes";
+}
 }

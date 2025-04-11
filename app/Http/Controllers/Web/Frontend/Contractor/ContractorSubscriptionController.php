@@ -28,6 +28,7 @@ class ContractorSubscriptionController extends Controller
     public function index()
     {
         $subcriptions = $this->contractorSubcriptionService->index();
+        // dd($subcriptions);
         return view('frontend.dashboard.contractor.layouts.subcription.index', compact('subcriptions'));
     }
 
@@ -43,54 +44,4 @@ class ContractorSubscriptionController extends Controller
         }
     }
 
-    public function makeSubscribe(Request $request, int $packageId)
-    {
-        // $request->validate([
-        //     'subscription_package_id' => 'required|exists:subcription_packages,id',
-        //     'amount_paid' => 'required|numeric|min:0',
-        //     'payment_status' => 'required|in:pending,completed,failed',
-        // ]);
-
-        $user = Auth::user(); // Get logged-in contractor
-
-        $package = SubcriptionPackage::findOrFail($packageId);
-        dd($package);
-        // Get active subscription for the same package
-        $existingSubscription = ContractorSubscription::where('contractor_id', $user->id)
-            ->where('subscription_package_id', $package->id)
-            ->where('status', 'active')
-            ->latest()
-            ->first();
-
-        $startDate = Carbon::today();
-        $daysToAdd = (int) $package->days;
-
-        if ($existingSubscription) {
-            // Extend end date if already subscribed
-            $startDate = Carbon::parse($existingSubscription->end_date)->greaterThan(Carbon::today())
-                ? Carbon::parse($existingSubscription->end_date)
-                : Carbon::today();
-        }
-
-        $endDate = $startDate->copy()->addDays($daysToAdd);
-
-        // Create or update subscription
-        $subscription = ContractorSubscription::updateOrCreate(
-            [
-                'contractor_id' => $user->id,
-                'subscription_package_id' => $package->id,
-            ],
-            [
-                'amount_paid' => $request->amount_paid,
-                'payment_status' => $request->payment_status,
-                'start_date' => $startDate,
-                'end_date' => $endDate,
-                'status' => 'active',
-            ]
-        );
-
-
-
-        return response()->json(['message' => 'Subscription updated successfully!', 'subscription' => $subscription]);
-    }
 }

@@ -109,7 +109,7 @@
     </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
     <script>
         // $('#getSubscription').click(function() {
         //     console.log('ok');
@@ -154,4 +154,4 @@
 
         }
     </script>
-@endpush
+@endpush --}}
