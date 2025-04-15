@@ -136,7 +136,6 @@
         </div>
         <div class="nav-items">
             <a class="nav-item active" href="{{ route('home') }}">Home</a>
-            <a class="nav-item" href="">Service</a>
             <div class="nav-item dropdown-items">
                 <span class="dropdown-item-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Category

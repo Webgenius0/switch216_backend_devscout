@@ -31,7 +31,7 @@ class AboutUsService{
             // dd($data['carPageBanner']->background_image ?? 'No Image Found');
             return $data;
         } catch (Exception $e) {
-            Log::error('CarPageService::index' . $e->getMessage());
+            Log::error('AboutUsService::index' . $e->getMessage());
             throw $e;
         }
     }
