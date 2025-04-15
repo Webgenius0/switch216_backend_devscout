@@ -4,8 +4,8 @@ $systemSetting = App\Models\SystemSetting::first();
 <!-- Start Sidebar Area -->
 <div class="sidebar-area" id="sidebar-area">
     <div class="logo position-relative">
-        <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative">
-            <img src="{{ asset($systemSetting->logo ?? 'backend/admin/assets/logo.png') }}" alt="logo-icon">
+        <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative flex ">
+            <img src="{{ asset($systemSetting->logo ?? 'backend/admin/assets/logo.png') }}" alt="logo-icon" style="height: 100px">
             {{-- <span class="logo-text fw-bold text-dark">Switch</span> --}}
         </a>
         <button
@@ -15,7 +15,7 @@ $systemSetting = App\Models\SystemSetting::first();
         </button>
     </div>
 
-    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
+    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar style="height: calc(100vh - 100px)">
         <ul class="menu-inner">
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">MAIN</span>
