@@ -79,11 +79,34 @@ class EmergencyPageService
         try {
             $ContactorReviewCount = Review::where('contactor_id', $contactor_id)->count();
             $services = Service::where('user_id', $contactor_id)->get();
-            // dd($services);
+            // dd($contactor_id);
             $ContactorCompleteBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->where('status', 'completed')->count();
-            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->whereIn('status', ['pending', 'pending_reschedule'])->count();
+            $ContactorCompleteBookingCount = 5;
+            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->whereIn('status', ['confirmed'])->count();
 
-            return ['client_review_count' => $ContactorReviewCount, 'complete_booking_count' => $ContactorCompleteBookingCount, 'pending_booking_count' => $ContactorPendingBookingCount];
+            // here check contactor rating 
+            $averageRating = Review::where('contactor_id', $contactor_id)
+                ->whereNotNull('rating')
+                ->avg('rating');
+            
+            // now i check ranking
+            if ($ContactorCompleteBookingCount >= 50 && $averageRating >= 4.8) {
+                $rank = 'Expert Pro';
+            } elseif ($ContactorCompleteBookingCount >= 20 && $averageRating >= 4.8) {
+                $rank = 'Pro';
+            } elseif ($ContactorCompleteBookingCount >= 5 && $averageRating >= 4.5) {
+                $rank = 'Gold';
+            } else {
+                $rank = 'Silver';
+            }
+            // dd('ranK:'.$rank. '==complete_work:'.$ContactorCompleteBookingCount.'===total_review:'.$ContactorReviewCount.'== avarage_rating:'.$averageRating);
+            return [
+                'contactor_ranking_tag' => $rank,
+                'contactor_average_rating' => $averageRating ?? 0,
+                'client_review_count' => $ContactorReviewCount,
+                'complete_booking_count' => $ContactorCompleteBookingCount,
+                'pending_booking_count' => $ContactorPendingBookingCount
+            ];
         } catch (Exception $e) {
             throw $e;
         }

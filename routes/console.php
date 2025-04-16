@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\AutoCompleteBookings;
+use App\Console\Commands\UpdateContactorStatistics;
 use App\Console\Commands\UpdateContractorRanking;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -16,5 +17,7 @@ Artisan::command('inspire', function () {
 // Schedule::call( function () {
 //     logger()->info('test it');
 // })->everySecond();
-
-Schedule::call(AutoCompleteBookings::class)->hourly();
+// Schedule::command(AutoCompleteBookings::class)->everyMinute();
+Schedule::command(UpdateContactorStatistics::class)->everySecond();
+// Schedule::call(AutoCompleteBookings::class)->hourly();
+// Schedule::call(UpdateContactorStatistics::class)->everyFiveSeconds();

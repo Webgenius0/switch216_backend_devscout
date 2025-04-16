@@ -37,9 +37,9 @@
                 <div class="se--choose--your-services">
                     <div class="se--choose-col-1" data-aos="fade-right">
                         <h1 class="se--common-header">Chose Your service</h1>
-                        <p class="se--common--pera">Find top-rated providers, compare services, and book with confidence to
+                        {{-- <p class="se--common--pera">Find top-rated providers, compare services, and book with confidence to
                             meet
-                            your needs.</p>
+                            your needs.</p> --}}
 
                     </div>
                     <div class="se--choose--plane-container">
@@ -66,8 +66,8 @@
             <div class="container">
                 <div class="se--houses--layout" data-aos="fade-down">
                     <div class="se--houses-col--1">
-                        <h1 class="se--section--header">Cars For You in Hoover, AL</h1>
-                        <p class="se--common--pera2">Based on Cars you recently viewed <a class="se--link"
+                        <h1 class="se--section--header">Cars For You in Hoover,</h1>
+                        <p class="se--common--pera2">Based on Cars recently Posts <a class="se--link"
                                 href="{{route('service.car_list')}}">click here</a>
                         </p>
 

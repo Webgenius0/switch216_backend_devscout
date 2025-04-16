@@ -20,9 +20,14 @@
         @endphp
 
         @if ($remainingDays > 0)
-            <p class="text-green-600">Your remaining subscription days: {{intval( $remainingDays) }} day(s)</p>
+            <div class="bg-green-100 border border-green-300 text-green-800 text-sm rounded-md px-4 py-2 mt-2 shadow-sm"
+                style="color: green">
+                <strong>Subscription Active:</strong> {{ $remainingDays }}
+            </div>
         @else
-            <p class="text-red-600">You have no active subscription or it has expired.</p>
+            <div class="bg-red-100 border border-red-300 text-red-700 text-sm rounded-md px-4 py-2 mt-2 shadow-sm">
+                <strong>Notice:</strong> You have no active subscription or it has expired.
+            </div>
         @endif
 
         <div class="">
@@ -61,7 +66,7 @@
                             </tr>
                             <tr class="border-b hover:bg-gray-100 bg-warning">
                                 <td class="py-3 px-6 font-medium">Remaining Days:</td>
-                                <td class="py-3 px-6">{{ intval($subcription->getRemainingDays()) }} day(s)</td>
+                                <td class="py-3 px-6">{{ $subcription->getRemainingDays() }}</td>
                             </tr>
                             <tr class="border-b hover:bg-gray-100">
                                 <td class="py-3 px-6 font-medium">Package Description:</td>

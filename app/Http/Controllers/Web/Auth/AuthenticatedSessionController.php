@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Enums\Page;
+use App\Enums\Section;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\CMS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $LoginVideoContainer = CMS::where('page', Page::LoginPage)->where('section', Section::LoginVideoContainer)->select('image')->first();
+        return view('auth.login', compact('LoginVideoContainer'));
     }
 
     /**
@@ -30,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         // Retrieve the authenticated user
         $user = auth()->user();
-      
+
         // if ($user->status == 'inactive') {
         //     Auth::guard('web')->logout();
         //     $request->session()->invalidate();

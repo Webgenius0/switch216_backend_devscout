@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('subscription_package_id')->constrained('subcription_packages')->onDelete('cascade');
             $table->decimal('amount_paid', 10, 2);
             $table->string('payment_status')->default('pending'); // pending, completed, failed
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date'); 
+            $table->dateTime('end_date');
             $table->enum('status', ['active', 'expired'])->default('active');
             $table->timestamps();
         });

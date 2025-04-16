@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Enums\Page;
+use App\Enums\Section;
 use App\Http\Controllers\Controller;
+use App\Models\CMS;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +22,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.customer_register');
+        $LoginVideoContainer = CMS::where('page', Page::LoginPage)->where('section', Section::LoginVideoContainer)->select('image')->first();
+        return view('auth.customer_register', compact('LoginVideoContainer'));
     }
 
     /**

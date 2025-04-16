@@ -342,11 +342,11 @@
 }
 
 .se--car-rental-banner {
-  height: 600px;
+  height: 300px;
   width: 100%;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  /* background-size: cover; */
+  /* background-position: center center; */
   position: relative;
   padding-top: 50px;
   padding-left: 16px;
@@ -504,4 +504,19 @@
 
 .dragover {
   border: 2px dashed #ff6600;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .se--car-rental-banner {
+    height: 600px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    padding-top: 50px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

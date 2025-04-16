@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Web\Backend\CMS\LoginPageController;
 use App\Http\Controllers\Web\Backend\SubcriptionPackageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\UserController;
@@ -96,16 +97,20 @@ Route::middleware(['auth:web', 'role_check'])->prefix('admin')->group(function (
 
 
   // About 1st view About us cms
-  Route::get('/cms/about-page/AboutUs-container/index', [AboutUsPageController::class, 'index'])->name('cms.about_page.about_us_container.index');
+  Route::get('/cms/about-page/about-us-container/index', [AboutUsPageController::class, 'index'])->name('cms.about_page.about_us_container.index');
   Route::post('/cms/about-page/service-container-update', [AboutUsPageController::class, 'AboutContainerUpdate'])->name('cms.about_page.about_us_container.about_us_container_update');
+
+  // Login page cms
+  Route::get('/cms/login-page/video', [LoginPageController::class, 'index'])->name('cms.login_page.login_page_video.index');
+  Route::post('/cms/login-page/video-update', [LoginPageController::class, 'VideoUpdate'])->name('cms.login_page.login_page_video.login_page_video_update');
 
 
   // About 2nd view About us cms
-  Route::post('/cms/about-page/AboutUs-container/store', [AboutUsPageController::class, 'store'])->name('cms.about_page.about_us_container.store');
-  Route::get('/cms/about-page/AboutUs-container/edit/{id}', [AboutUsPageController::class, 'edit'])->name('cms.about_page.about_us_container.edit');
-  Route::put('/cms/about-page/AboutUs-container/update/{id}', [AboutUsPageController::class, 'update'])->name('cms.about_page.about_us_container.update');
-  Route::post('/cms/about-page/AboutUs-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.about_page.about_us_container.status');
-  Route::delete('/cms/about-page/AboutUs-container/destroy/{id}', [AboutUsPageController::class, 'destroy'])->name('cms.about_page.about_us_container.destroy');
+  Route::post('/cms/about-page/about-us-container/store', [AboutUsPageController::class, 'store'])->name('cms.about_page.about_us_container.store');
+  Route::get('/cms/about-page/about-us-container/edit/{id}', [AboutUsPageController::class, 'edit'])->name('cms.about_page.about_us_container.edit');
+  Route::put('/cms/about-page/about-us-container/update/{id}', [AboutUsPageController::class, 'update'])->name('cms.about_page.about_us_container.update');
+  Route::post('/cms/about-page/about-us-container/status/{id}', [AboutUsPageController::class, 'status'])->name('cms.about_page.about_us_container.status');
+  Route::delete('/cms/about-page/about-us-container/destroy/{id}', [AboutUsPageController::class, 'destroy'])->name('cms.about_page.about_us_container.destroy');
 
 
 

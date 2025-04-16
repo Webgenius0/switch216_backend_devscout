@@ -53,9 +53,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
-                    <figure class="auth-img">
-                        <img src="{{ asset('frontend/assets') }}/images/auth.png" alt="auth image" />
-                    </figure>
+                    {{-- <figure class="auth-img">
+                        <img src="{{ asset('frontend/assets/images/auth.png') }}" alt="auth image" />
+                    </figure> --}}
+                    <div class="video-container">
+                        @if (!empty($LoginVideoContainer->image))
+                            <video id="work-video" src="{{ asset($LoginVideoContainer->image) }}"
+                                type="video/mp4"></video>
+                        @else
+                            <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
+                                type="video/mp4"></video>
+                        @endif
+
+                        <button id="work-video-play-button" class="play-button">
+                            &#9658;
+                        </button>
+                    </div>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="auth-step-form-container">
@@ -88,6 +101,8 @@
                                         value="{{ old('name') }}" required />
                                     <span class="text-red-600 text-sm"
                                         style="color: red">{{ $errors->first('name') }}</span>
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors }}</span>
                                 </div>
 
                                 <div class="form-group">
@@ -127,9 +142,24 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('category_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('category_id') }}</span>
+                                    
+                                </div>
+                                <!-- Sub Category -->
+                                <div class="form-group mb-4">
+                                    <label class="label text-secondary">Subcategory<span style="color: red">*</span></label>
+                                    <select id="subcategory" class="form-select @error('subcategory_id') is-invalid @enderror"
+                                        name="subcategory_id" {{ old('subcategory_id') ? '' : 'disabled' }} required>
+                                        <option value="" selected disabled>Select Subcategory</option>
+                                        @if (old('subcategory_id'))
+                                            <option value="{{ old('subcategory_id') }}" selected>
+                                                {{ \App\Models\SubCategory::find(old('subcategory_id'))->name }}
+                                            </option>
+                                        @endif
+                                    </select>
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('subcategory_id') }}</span>
                                 </div>
 
                                 <div class="form-group">
@@ -175,112 +205,151 @@
 @endsection
 
 @push('scripts')
-    <script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
-    <script>
-        let currentMarker;
-        const defaultLat = 34.0522; // Default: Los Angeles
-        const defaultLng = -118.2437;
-        let mapTilerKey = '';
+<script type="text/javascript" src="{{ asset('frontend/assets/js/plugins/aos-2.3.1.min.js') }}"></script>
+<script>
+    let currentMarker;
+    const defaultLat = 34.0522; // Default: Los Angeles
+    const defaultLng = -118.2437;
+    let mapTilerKey = '';
 
-        const map = L.map('map', {
-            center: [defaultLat, defaultLng],
-            zoom: 13,
-            zoomControl: true,
-            scrollWheelZoom: false
+    const map = L.map('map', {
+        center: [defaultLat, defaultLng],
+        zoom: 13,
+        zoomControl: true,
+        scrollWheelZoom: false
+    });
+
+    $.ajax({
+        url: "{{ route('map.api.key') }}",
+        method: "GET",
+        success: function(response) {
+            mapTilerKey = response.key;
+            initializeMap();
+        },
+        error: function() {
+            alert("Failed to load Map API key!");
+        }
+    });
+
+    function initializeMap() {
+        L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
+            maxZoom: 18,
+            tileSize: 512,
+            zoomOffset: -1
+        }).addTo(map);
+    }
+
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 500);
+
+    function updateMarker(lat, lng) {
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+        if (currentMarker) {
+            currentMarker.setLatLng([lat, lng]);
+        } else {
+            currentMarker = L.marker([lat, lng], {
+                draggable: true
+            }).addTo(map)
+              .bindPopup('You are here!')
+              .openPopup();
+
+            currentMarker.on('dragend', function(e) {
+                const { lat, lng } = e.target.getLatLng();
+                updateMarker(lat, lng);
+            });
+        }
+
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('address').value = data.display_name || 'Unknown';
+            })
+            .catch(() => {
+                document.getElementById('address').value = 'Location not found';
+            });
+    }
+
+    function locateUser() {
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by this browser.");
+            return;
+        }
+
+        navigator.permissions.query({ name: 'geolocation' }).then(result => {
+            if (result.state === 'granted' || result.state === 'prompt') {
+                getLocation();
+            } else if (result.state === 'denied') {
+                alert("You've denied location access. To re-enable:\n\n1. Click the lock icon 🔒 near the address bar.\n2. Go to 'Site settings'.\n3. Set 'Location' permission to 'Allow'.\n4. Refresh this page.");
+            }
         });
-        $.ajax({
-            url: "{{ route('map.api.key') }}",
-            method: "GET",
-            success: function(response) {
-                mapTilerKey = response.key;
-                initializeMap();
+    }
+
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                map.setView([lat, lng], 13);
+                updateMarker(lat, lng);
             },
-            error: function() {
-                alert("Failed to load Map API key!");
+            () => {
+                alert("Location access denied or unavailable. Using default.");
+                updateMarker(defaultLat, defaultLng);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 5000
             }
+        );
+    }
+
+    // Add a "Find Me" button
+    const locateButton = L.control({ position: 'topright' });
+    locateButton.onAdd = function () {
+        const div = L.DomUtil.create('div', 'map-button');
+        div.innerHTML = '📍 Find Me';
+        div.style.cursor = 'pointer';
+        div.style.background = '#fff';
+        div.style.padding = '5px 10px';
+        div.style.borderRadius = '5px';
+        div.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+        div.onclick = locateUser;
+        return div;
+    };
+    locateButton.addTo(map);
+
+    window.onload = () => {
+        locateUser(); // auto trigger on load
+    };
+</script>
+
+<script>
+    //JavaScript to Enable & Filter Subcategories
+    document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('category');
+            const subcategorySelect = document.getElementById('subcategory');
+
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.options[this.selectedIndex];
+                const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
+
+                // Clear and disable subcategory dropdown if no category selected
+                subcategorySelect.innerHTML =
+                    '<option value="" selected disabled>Select Subcategory</option>';
+                subcategorySelect.disabled = true;
+
+                if (subcategories.length > 0) {
+                    subcategories.forEach(subcategory => {
+                        let option = new Option(subcategory.name, subcategory.id);
+                        subcategorySelect.appendChild(option);
+                    });
+                    subcategorySelect.disabled = false; // Enable subcategory dropdown
+                }
+            });
         });
-
-        function initializeMap() {
-            L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${mapTilerKey}`, {
-                // attribution: '© MapTiler contributors',
-                maxZoom: 18,
-                tileSize: 512,
-                zoomOffset: -1
-            }).addTo(map);
-        }
-
-
-        // Ensure full map rendering
-        setTimeout(() => {
-            map.invalidateSize();
-        }, 500);
-
-        function updateMarker(lat, lng) {
-            document.getElementById('latitude').value = lat;
-            document.getElementById('longitude').value = lng;
-
-            if (currentMarker) {
-                currentMarker.setLatLng([lat, lng]);
-            } else {
-                currentMarker = L.marker([lat, lng], {
-                        draggable: true
-                    }).addTo(map)
-                    .bindPopup('You are here!')
-                    .openPopup();
-
-                currentMarker.on('dragend', function(e) {
-                    let {
-                        lat,
-                        lng
-                    } = e.target.getLatLng();
-                    updateMarker(lat, lng);
-                });
-            }
-
-            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('address').value = data.display_name || 'Unknown';
-                })
-                .catch(() => {
-                    document.getElementById('address').value = 'Location not found';
-                });
-        }
-
-        function locateUser() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        map.setView([lat, lng], 13);
-                        updateMarker(lat, lng);
-                    },
-                    () => {
-                        alert("Location access denied! Using default location.");
-                        updateMarker(defaultLat, defaultLng);
-                    }, {
-                        enableHighAccuracy: true,
-                        timeout: 5000
-                    }
-                );
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-
-        // Add a "Find Me" button
-        const locateButton = L.control({
-            position: 'topright'
-        });
-        locateButton.onAdd = function() {
-            const div = L.DomUtil.create('div', 'map-button');
-            div.innerHTML = '📍 Find Me';
-            div.onclick = locateUser;
-            return div;
-        };
-        locateButton.addTo(map);
-
-        locateUser(); // Auto-locate on load
-    </script>
+</script>
 @endpush
+

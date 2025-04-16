@@ -72,8 +72,10 @@ class ContractorServiceService
             $validatedData['verify'] = 'approved'; // Set the verify field to 'approved' but after complete the verification process change it to 'pending'
 
             $service = Service::create([
-                'category_id' => $validatedData['category_id'],
-                'subcategory_id' => $validatedData['subcategory_id'],
+                // 'category_id' => $validatedData['category_id'],
+                // 'subcategory_id' => $validatedData['subcategory_id'],
+                'category_id' => $this->contactorCategory()->category_id,
+                'subcategory_id' => $this->contactorCategory()->sub_category_id,
                 'user_id' => $validatedData['user_id'],
                 'verify' => $validatedData['verify'],
                 'is_emergency' => $validatedData['is_emergency'],
@@ -85,7 +87,7 @@ class ContractorServiceService
                 'gallery_images' => json_encode($galleryImages),
             ]);
 
-            if ($validatedData['category_id'] == 1) {
+            if ($this->contactorCategory()->category_id == 1) {
                 $realStateService = RealStateService::create([
                     'service_id' => $service->id,
                     // 'location' => $validatedData['location'],
@@ -98,7 +100,7 @@ class ContractorServiceService
                 ]);
                 Log::info('Real State service created success fully, id: ' . $realStateService->id);
             }
-            if ($validatedData['category_id'] == 3) {
+            if ($this->contactorCategory()->category_id == 3) {
                 $carService = CarService::create([
                     'service_id' => $service->id,
                     // 'location' => $validatedData['location'],

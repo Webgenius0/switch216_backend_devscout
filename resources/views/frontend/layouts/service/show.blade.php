@@ -92,14 +92,22 @@
                         </div>
                     </div>
                     <div class="profile-end ">
+                        @dd($service->user->getContactorProfileCounter())
                         <div class="profile-reviews" style="display: flex; align-items: center; gap: 10px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17"
-                                fill="none">
-                                <path
-                                    d="M7.2795 2.41205C7.35287 2.28615 7.45796 2.1817 7.58429 2.1091C7.71063 2.0365 7.85379 1.99829 7.9995 1.99829C8.14521 1.99829 8.28838 2.0365 8.41471 2.1091C8.54105 2.1817 8.64614 2.28615 8.7195 2.41205L10.5828 5.61071L14.2015 6.39471C14.3438 6.42565 14.4756 6.49335 14.5836 6.59107C14.6916 6.68879 14.7721 6.81312 14.8171 6.95166C14.8621 7.09021 14.87 7.23812 14.84 7.38066C14.81 7.5232 14.7432 7.65539 14.6462 7.76405L12.1795 10.5247L12.5528 14.208C12.5676 14.3531 12.544 14.4994 12.4845 14.6325C12.4249 14.7656 12.3315 14.8807 12.2136 14.9664C12.0956 15.0521 11.9573 15.1054 11.8123 15.1209C11.6674 15.1363 11.5209 15.1135 11.3875 15.0547L7.9995 13.5614L4.6115 15.0547C4.47811 15.1135 4.33163 15.1363 4.18667 15.1209C4.04171 15.1054 3.90336 15.0521 3.78542 14.9664C3.66748 14.8807 3.57408 14.7656 3.51455 14.6325C3.45502 14.4994 3.43144 14.3531 3.44617 14.208L3.8195 10.5247L1.35284 7.76471C1.25565 7.65606 1.18867 7.52382 1.15858 7.38119C1.12848 7.23856 1.13633 7.09053 1.18133 6.95188C1.22633 6.81323 1.30692 6.68882 1.41504 6.59105C1.52316 6.49328 1.65504 6.42558 1.7975 6.39471L5.41617 5.61071L7.2795 2.41205Z"
-                                    fill="#FFC700" />
-                            </svg>
-                            <span>({{ $service->user->contractorRanking->average_rating ?? 0 }} Reviews) </span>
+                            {{-- Star Rating --}}
+                            @for ($i = 0; $i < floor($ContactorProfileCounter['contactor_average_rating']); $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                    <path
+                                        d="M7.2795 2.41205C7.35287 2.28615 7.45796 2.1817 7.58429 2.1091C7.71063 2.0365 7.85379 1.99829 7.9995 1.99829C8.14521 1.99829 8.28838 2.0365 8.41471 2.1091C8.54105 2.1817 8.64614 2.28615 8.7195 2.41205L10.5828 5.61071L14.2015 6.39471C14.3438 6.42565 14.4756 6.49335 14.5836 6.59107C14.6916 6.68879 14.7721 6.81312 14.8171 6.95166C14.8621 7.09021 14.87 7.23812 14.84 7.38066C14.81 7.5232 14.7432 7.65539 14.6462 7.76405L12.1795 10.5247L12.5528 14.208C12.5676 14.3531 12.544 14.4994 12.4845 14.6325C12.4249 14.7656 12.3315 14.8807 12.2136 14.9664C12.0956 15.0521 11.9573 15.1054 11.8123 15.1209C11.6674 15.1363 11.5209 15.1135 11.3875 15.0547L7.9995 13.5614L4.6115 15.0547C4.47811 15.1135 4.33163 15.1363 4.18667 15.1209C4.04171 15.1054 3.90336 15.0521 3.78542 14.9664C3.66748 14.8807 3.57408 14.7656 3.51455 14.6325C3.45502 14.4994 3.43144 14.3531 3.44617 14.208L3.8195 10.5247L1.35284 7.76471C1.25565 7.65606 1.18867 7.52382 1.15858 7.38119C1.12848 7.23856 1.13633 7.09053 1.18133 6.95188C1.22633 6.81323 1.30692 6.68882 1.41504 6.59105C1.52316 6.49328 1.65504 6.42558 1.7975 6.39471L5.41617 5.61071L7.2795 2.41205Z"
+                                        fill="#FFC700" />
+                                </svg>
+                            @endfor
+                        
+                            {{-- Ranking Tag and Review Count --}}
+                            <span>
+                                Level: {{ $ContactorProfileCounter['contactor_ranking_tag'] ?? 0 }}
+                                (Total Reviews: {{ $ContactorProfileCounter['client_review_count'] ?? 0 }})
+                            </span>
                         </div>
                         @if ($service->user->instagram_social_link)
                             <a href="{{ $service->user->instagram_social_link ?? '' }}" target="_blank"
@@ -152,30 +160,31 @@
                 </article>
                 <!-- about section end -->
                 <hr class="separator" />
-        <!-- gallery modal start -->
-        <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Image Gallery</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- gallery modal start -->
+                <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Image Gallery</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="" id="modal-image" class="modal-img w-100" />
+                                <div class="d-flex align-items-center justify-content-center gap-4 mt-4">
+                                    <button class="btn btn-secondary" id="prev-btn">←</button>
+                                    <button class="btn btn-secondary" id="next-btn">→</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body text-center">
-                  <img src="" id="modal-image" class="modal-img w-100" />
-                  <div class="d-flex align-items-center justify-content-center gap-4 mt-4">
-                    <button class="btn btn-secondary" id="prev-btn">←</button>
-                    <button class="btn btn-secondary" id="next-btn">→</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- gallery modal end -->
+                <!-- gallery modal end -->
                 <!-- gallery section start -->
                 <div class="d-flex align-items-center justify-content-between">
                     <h2 class="profile-section-title">Best Services in gallery</h2>
                     <div class="see-all-img-btn">See All</div>
-                  </div>
+                </div>
                 <div class="gallery-section">
                     @php
                         $galleryImages = is_array($service->gallery_images)
@@ -561,46 +570,44 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
-          @php
-              $galleryImages = is_array($service->gallery_images)
-                  ? $service->gallery_images
-                  : json_decode($service->gallery_images, true);
-          @endphp
-          const images = [
-              @foreach ($galleryImages as $key => $gallery_image)
-                  "{{ asset($gallery_image) }}",
-              @endforeach
-          ];
-          let currentIndex = 0;
-    
-          function updateImage(index) {
-            $("#modal-image").attr("src", images[index]);
-          }
-    
-          $(".gallery-img").click(function () {
-            currentIndex = $(this).data("index");
-            updateImage(currentIndex);
-            $("#imageModal").modal("show");
-          });
-    
-          $(".see-all-img-btn").click(function () {
-            currentIndex = 0;
-            updateImage(currentIndex);
-            $("#imageModal").modal("show");
-          });
-    
-          $("#prev-btn").click(function () {
-            currentIndex =
-              currentIndex > 0 ? currentIndex - 1 : images.length - 1;
-            updateImage(currentIndex);
-          });
-    
-          $("#next-btn").click(function () {
-            currentIndex =
-              currentIndex < images.length - 1 ? currentIndex + 1 : 0;
-            updateImage(currentIndex);
-          });
+        $(document).ready(function() {
+            @php
+                $galleryImages = is_array($service->gallery_images) ? $service->gallery_images : json_decode($service->gallery_images, true);
+            @endphp
+            const images = [
+                @foreach ($galleryImages as $key => $gallery_image)
+                    "{{ asset($gallery_image) }}",
+                @endforeach
+            ];
+            let currentIndex = 0;
+
+            function updateImage(index) {
+                $("#modal-image").attr("src", images[index]);
+            }
+
+            $(".gallery-img").click(function() {
+                currentIndex = $(this).data("index");
+                updateImage(currentIndex);
+                $("#imageModal").modal("show");
+            });
+
+            $(".see-all-img-btn").click(function() {
+                currentIndex = 0;
+                updateImage(currentIndex);
+                $("#imageModal").modal("show");
+            });
+
+            $("#prev-btn").click(function() {
+                currentIndex =
+                    currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+                updateImage(currentIndex);
+            });
+
+            $("#next-btn").click(function() {
+                currentIndex =
+                    currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+                updateImage(currentIndex);
+            });
         });
-      </script>
+    </script>
 @endpush

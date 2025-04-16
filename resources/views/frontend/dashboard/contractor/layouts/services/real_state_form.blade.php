@@ -1,8 +1,8 @@
 <form action="{{ route('contractor.services.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row">
-        <!-- Category -->
-        <div class="col-md-4">
+        {{-- <!-- Category -->
+        <div class="col-md-4" >
             <div class="form-group mb-4">
                 <label class="label text-secondary">Category<span style="color: red">*</span></label>
                 <select id="category" class="form-select @error('category_id') is-invalid @enderror" name="category_id"
@@ -24,6 +24,7 @@
         <!-- Subcategory -->
         <div class="col-md-4">
             <div class="form-group mb-4">
+               
                 <label class="label text-secondary">Subcategory<span style="color: red">*</span></label>
                 <select id="subcategory" class="form-select @error('subcategory_id') is-invalid @enderror"
                     name="subcategory_id" {{ old('subcategory_id') ? '' : 'disabled' }} required>
@@ -38,7 +39,7 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+        </div> --}}
         <!-- Is Emergency -->
         <div class="col-md-4">
             <div class="form-group mb-4">

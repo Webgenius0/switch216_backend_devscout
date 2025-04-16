@@ -66,28 +66,28 @@
         });
 
         //JavaScript to Enable & Filter Subcategories
-        document.addEventListener('DOMContentLoaded', function() {
-            const categorySelect = document.getElementById('category');
-            const subcategorySelect = document.getElementById('subcategory');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const categorySelect = document.getElementById('category');
+        //     const subcategorySelect = document.getElementById('subcategory');
 
-            categorySelect.addEventListener('change', function() {
-                const selectedCategory = this.options[this.selectedIndex];
-                const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
+        //     categorySelect.addEventListener('change', function() {
+        //         const selectedCategory = this.options[this.selectedIndex];
+        //         const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
 
-                // Clear and disable subcategory dropdown if no category selected
-                subcategorySelect.innerHTML =
-                    '<option value="" selected disabled>Select Subcategory</option>';
-                subcategorySelect.disabled = true;
+        //         // Clear and disable subcategory dropdown if no category selected
+        //         subcategorySelect.innerHTML =
+        //             '<option value="" selected disabled>Select Subcategory</option>';
+        //         subcategorySelect.disabled = true;
 
-                if (subcategories.length > 0) {
-                    subcategories.forEach(subcategory => {
-                        let option = new Option(subcategory.name, subcategory.id);
-                        subcategorySelect.appendChild(option);
-                    });
-                    subcategorySelect.disabled = false; // Enable subcategory dropdown
-                }
-            });
-        });
+        //         if (subcategories.length > 0) {
+        //             subcategories.forEach(subcategory => {
+        //                 let option = new Option(subcategory.name, subcategory.id);
+        //                 subcategorySelect.appendChild(option);
+        //             });
+        //             subcategorySelect.disabled = false; // Enable subcategory dropdown
+        //         }
+        //     });
+        // });
     </script>
     <script>
         // This JavaScript code is used in the service create page to enable and filter

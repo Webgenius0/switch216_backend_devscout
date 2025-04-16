@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Enums\Page;
+use App\Enums\Section;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CMS;
 use App\Services\Web\Backend\ContractorRegisterService;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,11 +32,16 @@ class RegisterContractorController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::where('status', 'active')->get();
+        $categories = Category::
+            whereHas('subCategories', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->where('status', 'active')->get();
         $morocco_city = json_decode(file_get_contents(public_path('backend/admin/assets/morocco_city_list.json')), true);
+        $LoginVideoContainer = CMS::where('page', Page::LoginPage)->where('section', Section::LoginVideoContainer)->select('image')->first();
 
         // dd($morocco_city);
-        return view('auth.contractor_register', compact('morocco_city', 'categories'));
+        return view('auth.contractor_register', compact('morocco_city', 'categories', 'LoginVideoContainer'));
     }
 
     /**
@@ -48,13 +56,15 @@ class RegisterContractorController extends Controller
         $validateData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'instagram_social_link' => ['nullable', 'url'],
             'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'required|exists:sub_categories,id',
             'address' => 'required|string',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
-            'avatar' => 'file|mimes:jpg,jpeg,png,gif|max:2048',
+            'avatar' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
         // dd($validateData);
         try {

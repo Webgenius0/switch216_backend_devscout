@@ -19,30 +19,30 @@ class CheckContractorSubscription
     public function handle($request, Closure $next)
     {
 
-        $user = Auth::user();
-        // If the user is not authorized, redirect or abort
-        if ($user->role !== 'contractor') {
-            return $next($request);
-        }
-        // Check if the user has an active subscription
-        $subscriptions = ContractorSubscription::where('contractor_id', $user->id)
-            ->where('status', 'active')
-            ->where('end_date', '>=', now())
-            ->get();
+        // $user = Auth::user();
+        // // If the user is not authorized, redirect or abort
+        // if ($user->role !== 'contractor') {
+        //     return $next($request);
+        // }
+        // // Check if the user has an active subscription
+        // $subscriptions = ContractorSubscription::where('contractor_id', $user->id)
+        //     ->where('status', 'active')
+        //     ->where('end_date', '>=', now())
+        //     ->get();
 
-        $hasActiveDays = false;
-        // Check if the user has any active days
-        foreach ($subscriptions as $sub) {
-            if (Carbon::parse($sub->end_date)->isFuture()) {
-                $hasActiveDays = true;
-                break;
-            }
-        }
-        // If the user has no active days, redirect or abort
-        if (!$hasActiveDays) {
-            flash()->error('Your subscription has expired. Please renew to continue.');
-            return redirect()->route('contractor.subscription.index');
-        }
+        // $hasActiveDays = false;
+        // // Check if the user has any active days
+        // foreach ($subscriptions as $sub) {
+        //     if (Carbon::parse($sub->end_date)->isFuture()) {
+        //         $hasActiveDays = true;
+        //         break;
+        //     }
+        // }
+        // // If the user has no active days, redirect or abort
+        // if (!$hasActiveDays) {
+        //     flash()->error('Your subscription has expired. Please renew to continue.');
+        //     return redirect()->route('contractor.subscription.index');
+        // }
         // If the user has active days, continue
         return $next($request);
     }
