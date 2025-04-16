@@ -70,6 +70,8 @@
     .profile-dropdown1 a svg {
         margin-right: 10px;
     }
+
+    
 </style>
 @stack('styles')
 <style>

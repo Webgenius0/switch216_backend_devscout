@@ -24,8 +24,8 @@ class ContractorSubscription extends Model
         'subscription_package_id' => 'integer',
         'amount_paid' => 'float',
         'payment_status' => 'string',
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
         'status' => 'string',
     ];
 
@@ -42,11 +42,23 @@ class ContractorSubscription extends Model
      * Get the remaining days for the active subscription.
      */
     public function getRemainingDays()
-{
-    if ($this->status === 'active') {
-        return \Carbon\Carbon::now()->diffInDays($this->end_date, false); // returns int
-    }
-    return 0;
-}
+    {
+        if (
+            $this->status !== 'active' ||
+            Carbon::now()->greaterThanOrEqualTo($this->end_date)
+        ) {
+            return '0 days, 0 hours, 0 minutes';
+        }
 
+        $now = Carbon::now();
+        $end = Carbon::parse($this->end_date); // make sure it's Carbon instance
+
+        $totalMinutes = $now->diffInMinutes($end);
+
+        $days = floor($totalMinutes / (60 * 24));
+        $hours = floor(($totalMinutes % (60 * 24)) / 60);
+        $minutes = $totalMinutes % 60;
+
+        return "{$days} days, {$hours} hours, {$minutes} minutes";
+    }
 }

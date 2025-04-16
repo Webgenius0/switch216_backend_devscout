@@ -120,7 +120,7 @@ class ChatService
             $message = Message::create([
                 'chat_room_id' => $chatRoom->id,
                 'sender_id' => $this->user->id,
-                'receiver_id' => $chatRoom->customer_id,
+                'receiver_id' => $this->user->id === $chatRoom->contractor_id ? $chatRoom->customer_id : $chatRoom->contractor_id,
                 'content' => $validateData['content'],
                 'sent_at' => now(),
                 'message_type' => 'text',

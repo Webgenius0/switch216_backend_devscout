@@ -210,7 +210,6 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     // contractor Subscription
     Route::get('/my-subscription', [ContractorSubscriptionController::class, 'index'])->name('contractor.subscription.index');
     Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
-    Route::post('/make-subscription/{pakageId}', [ContractorSubscriptionController::class, 'makeSubscribe'])->name('contractor.subscription.make_subscribe');
     Route::get('/create-payment-intent/{pakageId}', [StripePaymentController::class, 'createPaymentIntent'])->name('contractor.subscription.create_payment_intent');
 });
 Route::get('stripe/payment-success', [StripePaymentController::class, 'paymentSuccess'])->name('contractor.payment.success');

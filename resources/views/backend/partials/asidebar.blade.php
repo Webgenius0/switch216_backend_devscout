@@ -4,8 +4,9 @@ $systemSetting = App\Models\SystemSetting::first();
 <!-- Start Sidebar Area -->
 <div class="sidebar-area" id="sidebar-area">
     <div class="logo position-relative">
-        <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative">
-            <img src="{{ asset($systemSetting->logo ?? 'backend/admin/assets/logo.png') }}" alt="logo-icon">
+        <a href="{{ route('admin.dashboard') }}" class="d-block text-decoration-none position-relative flex ">
+            <img src="{{ asset($systemSetting->logo ?? 'backend/admin/assets/logo.png') }}" alt="logo-icon"
+                style="height: 100px">
             {{-- <span class="logo-text fw-bold text-dark">Switch</span> --}}
         </a>
         <button
@@ -15,7 +16,8 @@ $systemSetting = App\Models\SystemSetting::first();
         </button>
     </div>
 
-    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
+    <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar
+        style="height: calc(100vh - 100px)">
         <ul class="menu-inner">
             <li class="menu-title small text-uppercase">
                 <span class="menu-title-text">MAIN</span>
@@ -72,7 +74,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     <span class="title">Sub Category</span>
                 </a>
             </li>
-             
+
             <!-- Sub city Menu Item -->
             <li class="menu-item open">
                 <a href="{{ route('cities.index') }}"
@@ -82,7 +84,7 @@ $systemSetting = App\Models\SystemSetting::first();
                 </a>
             </li>
             <!-- Ranking Provider Menu Item -->
-            <li class="menu-item open">
+            {{-- <li class="menu-item open">
                 <a href=""
                     class="menu-link {{ request()->routeIs('ranks.index') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">
@@ -90,14 +92,14 @@ $systemSetting = App\Models\SystemSetting::first();
                     </span>
                     <span class="title">Rank List</span>
                 </a>
-            </li>
+            </li> --}}
             <!-- Subscription package Menu Item -->
             <li class="menu-item open">
                 <a href="{{ route('subcription_pakage.index') }}"
                     class="menu-link {{ request()->routeIs('subcription_pakage.index') ? 'active' : '' }}">
                     <span class="material-symbols-outlined menu-icon">
                         subscriptions
-                        </span>
+                    </span>
                     <span class="title">Subscription Package</span>
                 </a>
             </li>
@@ -281,7 +283,7 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
-            
+
             <!-- CMS Restaurant Item -->
             <li class="menu-item {{ request()->routeIs('cms.restaurant_page.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -315,7 +317,8 @@ $systemSetting = App\Models\SystemSetting::first();
             </li>
 
             <!-- CMS About Page Item -->
-            <li class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.*') ? 'open active' : '' }}">
+            <li
+                class="menu-item {{ request()->routeIs('cms.about_page.about_us_container.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <span class="material-symbols-outlined menu-icon">group</span>
                     <span class="title">About Page</span>
@@ -330,8 +333,24 @@ $systemSetting = App\Models\SystemSetting::first();
                     </li>
                 </ul>
             </li>
+            <!-- CMS Login Page Item -->
+            <li class="menu-item {{ request()->routeIs('cms.login_page.login_page_video.*') ? 'open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle active">
+                    <span class="material-symbols-outlined menu-icon">app_registration</span>
+                    <span class="title">Login Page</span>
+                </a>
+                <ul class="menu-sub">
+                    <li
+                        class="menu-item {{ request()->routeIs('cms.login_page.login_page_video.index') ? 'active' : '' }}">
+                        <a href="{{ route('cms.login_page.login_page_video.index') }}"
+                            class="menu-link {{ request()->routeIs('cms.login_page.login_page_video.index') ? 'active' : '' }}">
+                            Video Section
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-            <!-- CMS Service Provider Item -->
+            <!-- CMS Service Provider Rgister -->
             <li
                 class="menu-item {{ request()->routeIs('cms.service_page.*') || request()->routeIs('cms.provider_page.process.*') || request()->routeIs('cms.provider_page.work.*') ? 'open active' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">

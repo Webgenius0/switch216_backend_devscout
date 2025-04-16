@@ -39,6 +39,7 @@ enum Section: string
     case AboutContainer = 'about_container';
     case AboutServiceContainer = 'about_service_container';
     // footer section
+    case LoginVideoContainer = 'login_video_container';
     case SocialLinkContainer = 'social_link_container';
 }
 

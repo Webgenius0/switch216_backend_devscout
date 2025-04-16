@@ -57,7 +57,7 @@ class HomePageController extends Controller
         $cms = $this->cmsService->get();
         $categories = Category::with('subCategories')->where("status", 'active')->get();
         // cities name
-        $cities  = City::where('status', 'active')->pluck('name');
+        $cities = City::where('status', 'active')->pluck('name');
         // Return the view with optimized data
         return view("frontend.layouts.home.index", compact('cms', 'categories', 'cities'));
     }
@@ -72,11 +72,13 @@ class HomePageController extends Controller
             // 'is_emergency' => 'nullable|boolean',
             'rating' => 'nullable|integer',
         ]);
-        return redirect()->route('service.emergency', [
-            'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
-            'location' => $validateData['location'] ?? null,
-            'rating' => $validateData['rating'] ?? null,
-        ]);
+        // dd($validateData);
+        return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null]);
+        // return redirect()->route('service.emergency', [
+        //     'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
+        //     'location' => $validateData['location'] ?? null,
+        //     'rating' => $validateData['rating'] ?? null,
+        // ]);
 
     }
 }

@@ -10,7 +10,7 @@ enum Page: string
     case RealEstatePage = 'real_estate_page';
     case ServiceRegisterPage = 'service_register_page';
     case AboutPage ='about_page';
-
+    case LoginPage ='login_page';
 
 }
 

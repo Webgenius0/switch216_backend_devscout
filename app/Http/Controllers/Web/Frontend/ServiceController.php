@@ -21,11 +21,12 @@ class ServiceController extends Controller
         }
     }
 
-    public function subCategoryList($id)
+    public function subCategoryList($id, Request $request)
     {
         try {
+            $locations = $request->query('location') ?? null;
             $category = Category::with(['subCategories'])->findOrFail($id);
-            return view("frontend.layouts.service.sub_category", compact('category'));
+            return view("frontend.layouts.service.sub_category", compact('category','locations'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();
