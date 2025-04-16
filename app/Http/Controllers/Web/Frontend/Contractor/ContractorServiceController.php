@@ -104,7 +104,7 @@ class ContractorServiceController extends Controller
                 }
             ])->get();
             $carBrands = CarBrand::get();
-            return view('frontend.dashboard.contractor.layouts.services.create', compact('categories', 'carBrands'));
+            return view('frontend.dashboard.contractor.layouts.services.create', compact('categories', 'carBrands', 'contactor_category'));
         } catch (Exception $e) {
             Log::error('ContractorServiceController::create-' . $e->getMessage());
             flash()->error('Something went wrong. Please try again later');
@@ -117,8 +117,9 @@ class ContractorServiceController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        if ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 1) {
+        $contactor_category = $this->ContractorServiceService->contactorCategory();
+        // if ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 1) {
+        if ( $contactor_category->category_id == 1) {
 
             $validatedData = $request->validate([
                 // 'category_id' => 'required|exists:categories,id',
@@ -137,7 +138,8 @@ class ContractorServiceController extends Controller
                 'bathrooms' => 'required|integer',
                 'is_furnished' => 'required|boolean',
             ]);
-        } elseif ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 3) {
+        // } elseif ($request->category_id !== null && $request->subcategory_id !== null && $request->category_id == 3) {
+        } elseif ($contactor_category->category_id == 3) {
 
             $validatedData = $request->validate([
                 // 'category_id' => 'required|exists:categories,id',
@@ -163,8 +165,8 @@ class ContractorServiceController extends Controller
             ]);
         } else {
             $validatedData = $request->validate([
-                'category_id' => 'required|exists:categories,id',
-                'subcategory_id' => 'required|exists:sub_categories,id',
+                // 'category_id' => 'required|exists:categories,id',
+                // 'subcategory_id' => 'required|exists:sub_categories,id',
                 'is_emergency' => 'required|boolean',
                 'type' => 'required|in:sell,rent,event,single',
                 'title' => 'required|string|max:255',
