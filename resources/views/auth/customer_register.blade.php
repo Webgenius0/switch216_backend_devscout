@@ -20,9 +20,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6" data-aos="fade-right">
-                    <figure class="auth-img">
-                        <img src="{{ asset('frontend/assets') }}/images/auth.png" alt="auth image" />
-                    </figure>
+                    {{-- <figure class="auth-img">
+                        <img src="{{ asset('frontend/assets/images/auth.png') }}" alt="auth image" />
+                    </figure> --}}
+                    <div class="video-container">
+                        @if (!empty($LoginVideoContainer->image))
+                            <video id="work-video" src="{{ asset($LoginVideoContainer->image) }}"
+                                type="video/mp4"></video>
+                        @else
+                            <video id="work-video" src="{{ asset('frontend/assets/images/work-video.mp4') }}"
+                                type="video/mp4"></video>
+                        @endif
+
+                        <button id="work-video-play-button" class="play-button">
+                            &#9658;
+                        </button>
+                    </div>
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <div class="auth-card">

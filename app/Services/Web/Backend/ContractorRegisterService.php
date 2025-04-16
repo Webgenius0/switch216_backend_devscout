@@ -77,6 +77,7 @@ class ContractorRegisterService
                 $contactorCategory = ContactorCategory::create([
                     'user_id' => $user->id,
                     'category_id' => $data['category_id'],
+                    'sub_category_id' => $data['sub_category_id'],
                 ]);
             } else {
                 $user = User::create([
