@@ -73,7 +73,7 @@ class HomePageController extends Controller
             'rating' => 'nullable|integer',
         ]);
         // dd($validateData);
-        return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null], );
+        return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null]);
         // return redirect()->route('service.emergency', [
         //     'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
         //     'location' => $validateData['location'] ?? null,

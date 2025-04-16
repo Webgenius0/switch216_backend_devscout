@@ -92,6 +92,7 @@
                         </div>
                     </div>
                     <div class="profile-end ">
+                        @dd($service->user->getContactorProfileCounter())
                         <div class="profile-reviews" style="display: flex; align-items: center; gap: 10px;">
                             {{-- Star Rating --}}
                             @for ($i = 0; $i < floor($ContactorProfileCounter['contactor_average_rating']); $i++)

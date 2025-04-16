@@ -213,26 +213,54 @@ class User extends Authenticatable
     }
 
 
+
     public function getContactorProfileCounter()
     {
         try {
+            $sixtyDaysAgo = Carbon::now()->subDays(60);
+            // dd($sixtyDaysAgo);
             $ContactorReviewCount = Review::where('contactor_id', $this->id)->count();
             $services = Service::where('user_id', $this->id)->get();
 
-            $ContactorCompleteBookingCount = Booking::whereIn('service_id', $services->pluck('id'))
-                ->where('status', 'completed')->count();
-                // $ContactorCompleteBookingCount=50;
-            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))
-                ->whereIn('status', ['confirmed'])->count();
+            $serviceIds = $services->pluck('id');
+
+            $ContactorCompleteBookingCount = Booking::whereIn('service_id', $serviceIds)
+                ->where('status', 'completed')
+                ->count();
+
+            $ContactorPendingBookingCount = Booking::whereIn('service_id', $serviceIds)
+                ->where('status', 'confirmed')
+                ->count();
 
             $averageRating = Review::where('contactor_id', $this->id)
-                ->whereNotNull('rating')->avg('rating');
-            // dd( $averageRating);
-            if ($ContactorCompleteBookingCount >= 50 && $averageRating >= 4.8) {
+                ->whereNotNull('rating')
+                ->latest() // order by created_at descending
+                ->take(50)
+                ->pluck('rating') // get only the rating values
+                ->avg(); // compute average
+
+            // LAST 60 DAYS CALCULATIONS
+            $last60DaysCompleteBookingCount = Booking::whereIn('service_id', $serviceIds)
+                ->where('status', 'completed')
+                ->where('created_at', '>=', $sixtyDaysAgo)
+                ->count();
+
+            $last60DaysAverageRating = Review::where('contactor_id', $this->id)
+                ->whereNotNull('rating')
+                ->latest()
+                ->where('created_at', '>=', $sixtyDaysAgo)
+                ->take(50)
+                ->pluck('rating')
+                ->avg();
+            $last60daysResponseRate = $this->getResponseRateAttribute();
+            Log::info('last60daysResponseRate' . $last60daysResponseRate);
+            // dd($last60daysResponseRate);
+            // RANK CALCULATION
+            if ($last60DaysCompleteBookingCount >= 50 && $last60DaysAverageRating >= 4.8 && $last60daysResponseRate >= 80) {
                 $rank = 'Expert Pro';
-            } elseif ($ContactorCompleteBookingCount >= 20 && $averageRating >= 4.8) {
+            } elseif ($last60DaysCompleteBookingCount >= 20 && $last60DaysAverageRating >= 4.8 && $last60daysResponseRate >= 60) {
                 $rank = 'Pro';
-            } elseif ($ContactorCompleteBookingCount >= 5 && $averageRating >= 4.5) {
+            } elseif ($last60DaysCompleteBookingCount >= 5 && $last60DaysAverageRating >= 4.5) {
                 $rank = 'Gold';
             } else {
                 $rank = 'Silver';
@@ -240,13 +268,65 @@ class User extends Authenticatable
 
             return [
                 'contactor_ranking_tag' => $rank,
-                'contactor_average_rating' => $averageRating ?? 0,
+                'contactor_average_rating' => round($averageRating ?? 0, 2),
                 'client_review_count' => $ContactorReviewCount,
                 'complete_booking_count' => $ContactorCompleteBookingCount,
-                'pending_booking_count' => $ContactorPendingBookingCount
+                'pending_booking_count' => $ContactorPendingBookingCount,
+
+                // LAST 60 DAYS DATA
+                'last_60_days_complete_booking_count' => $last60DaysCompleteBookingCount,
+                'last_60_days_average_rating' => round($last60DaysAverageRating ?? 0, 2),
+                'last_60_days_response_rate' => round($last60daysResponseRate ?? 0, 2),
             ];
         } catch (Exception $e) {
-            Log::error('some thing went wrong' . $e->getMessage());
+            Log::error('Something went wrong: ' . $e->getMessage());
         }
     }
+
+
+    public function getResponseRateAttribute()
+    {
+        $sixtyDaysAgo = now()->subDays(60);
+        $thresholdMinutes = 5; // 5 minutes under reply
+
+        // All messages received by contractor in last 60 days
+        $receivedMessages = Message::where('receiver_id', $this->id)
+            ->where('sent_at', '>=', $sixtyDaysAgo)
+            ->orderBy('sent_at')
+            ->get();
+
+        $fastReplyCount = 0;
+
+        foreach ($receivedMessages as $message) {
+            // Find the first reply from this user in the same chat room after this message
+            $reply = Message::where('chat_room_id', $message->chat_room_id)
+                ->where('sender_id', $this->id)
+                ->where('receiver_id', $message->sender_id)
+                ->where('sent_at', '>', $message->sent_at)
+                ->orderBy('sent_at')
+                ->first();
+
+            if ($reply) {
+                $responseTimeMinutes = $reply->sent_at->diffInMinutes($message->sent_at);
+
+                if ($responseTimeMinutes <= $thresholdMinutes) {
+                    $fastReplyCount++;
+                }
+            }
+        }
+
+        $totalReceived = $receivedMessages->count();
+
+        if ($totalReceived === 0) {
+            return 100; // or 0 — depends on your logic
+        }
+        // dd(round(($fastReplyCount / $totalReceived) * 100, 2));
+        return round(($fastReplyCount / $totalReceived) * 100, 2);
+    }
+
+
+
+
+
+
 }
