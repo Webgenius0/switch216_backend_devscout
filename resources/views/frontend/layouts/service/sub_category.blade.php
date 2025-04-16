@@ -68,7 +68,7 @@
             </p>
             <div class="service-container sub-service-container" data-aos="fade-down">
                 @forelse ($category->subCategories as $key=>$sub_category)
-                    <a href="{{ route('service.emergency', ['category' => $category->name, 'subcategory' => $sub_category->name]) }}"
+                    <a href="{{ route('service.emergency', ['category' => $category->name, 'subcategory' => $sub_category->name,'location' => $locations ?? null]) }}"
                         class="item">
                         <img src="{{ asset($sub_category->thumbnail) }}" alt="not photo find">
                         <h4 class="section-card-title mt-2 mt-xl-4">{{ $sub_category->name ?? '' }}</h4>
