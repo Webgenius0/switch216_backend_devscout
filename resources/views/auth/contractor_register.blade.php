@@ -101,6 +101,8 @@
                                         value="{{ old('name') }}" required />
                                     <span class="text-red-600 text-sm"
                                         style="color: red">{{ $errors->first('name') }}</span>
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors }}</span>
                                 </div>
 
                                 <div class="form-group">
@@ -140,27 +142,24 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('category_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('category_id') }}</span>
+                                    
                                 </div>
                                 <!-- Sub Category -->
-                                <div class="form-group">
-                                    <label class="label text-secondary">Sub Category<span style="color: red">*</span></label>
-                                    <select id="category" class="form-select @error('category_id') is-invalid @enderror"
-                                        name="category_id" required>
-                                        <option value="" selected disabled>Select Sub Category</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ old('category_id') == $category->id ? 'selected' : '' }}
-                                                data-subcategories="{{ json_encode($category->subCategories) }}">
-                                                {{ $category->name }}
+                                <div class="form-group mb-4">
+                                    <label class="label text-secondary">Subcategory<span style="color: red">*</span></label>
+                                    <select id="subcategory" class="form-select @error('subcategory_id') is-invalid @enderror"
+                                        name="subcategory_id" {{ old('subcategory_id') ? '' : 'disabled' }} required>
+                                        <option value="" selected disabled>Select Subcategory</option>
+                                        @if (old('subcategory_id'))
+                                            <option value="{{ old('subcategory_id') }}" selected>
+                                                {{ \App\Models\SubCategory::find(old('subcategory_id'))->name }}
                                             </option>
-                                        @endforeach
+                                        @endif
                                     </select>
-                                    @error('category_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <span class="text-red-600 text-sm"
+                                        style="color: red">{{ $errors->first('subcategory_id') }}</span>
                                 </div>
 
                                 <div class="form-group">
@@ -325,6 +324,32 @@
     window.onload = () => {
         locateUser(); // auto trigger on load
     };
+</script>
+
+<script>
+    //JavaScript to Enable & Filter Subcategories
+    document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('category');
+            const subcategorySelect = document.getElementById('subcategory');
+
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.options[this.selectedIndex];
+                const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
+
+                // Clear and disable subcategory dropdown if no category selected
+                subcategorySelect.innerHTML =
+                    '<option value="" selected disabled>Select Subcategory</option>';
+                subcategorySelect.disabled = true;
+
+                if (subcategories.length > 0) {
+                    subcategories.forEach(subcategory => {
+                        let option = new Option(subcategory.name, subcategory.id);
+                        subcategorySelect.appendChild(option);
+                    });
+                    subcategorySelect.disabled = false; // Enable subcategory dropdown
+                }
+            });
+        });
 </script>
 @endpush
 

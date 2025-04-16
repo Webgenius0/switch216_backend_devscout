@@ -1,7 +1,7 @@
 <form action="{{ route('contractor.services.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row">
-        <!-- Category -->
+        {{-- <!-- Category -->
         <div class="col-md-4">
             <div class="form-group mb-4">
                 <label class="label text-secondary">Category<span style="color: red">*</span></label>
@@ -38,7 +38,7 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+        </div> --}}
         <!-- Is Emergency -->
         <div class="col-md-4">
             <div class="form-group mb-4">

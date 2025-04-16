@@ -32,7 +32,11 @@ class RegisterContractorController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::with('subCategories')->where('status', 'active')->get();
+        $categories = Category::
+            whereHas('subCategories', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->where('status', 'active')->get();
         $morocco_city = json_decode(file_get_contents(public_path('backend/admin/assets/morocco_city_list.json')), true);
         $LoginVideoContainer = CMS::where('page', Page::LoginPage)->where('section', Section::LoginVideoContainer)->select('image')->first();
 
@@ -52,14 +56,15 @@ class RegisterContractorController extends Controller
         $validateData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'string', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'instagram_social_link' => ['nullable', 'url'],
             'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'required|exists:sub_categories,id',
+            'subcategory_id' => 'required|exists:sub_categories,id',
             'address' => 'required|string',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
-            'avatar' => 'file|mimes:jpg,jpeg,png,gif|max:2048',
+            'avatar' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
         // dd($validateData);
         try {

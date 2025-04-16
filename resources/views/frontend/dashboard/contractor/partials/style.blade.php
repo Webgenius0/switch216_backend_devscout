@@ -14,6 +14,11 @@
     .fl-wrapper {
         z-index: 999999 !important;
     }
+    .dropify-wrapper .dropify-preview .dropify-render img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 </style>
 
 @stack('styles')
