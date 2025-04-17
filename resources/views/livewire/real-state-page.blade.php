@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="rating">
-                            <span>{{ $service->user->getContactorProfileCounter()['contactor_ranking_tag'] ?? 'Silver' }}</span>
+                            <span>{{ $service->user->contactorStatistics()->first()?->rank ?? 'Silver' }}</span>
                             {{-- Star Rating --}}
                             {{-- @for ($i = 0; $i < floor($service->user->getContactorProfileCounter()['contactor_average_rating']); $i++)
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17"
@@ -136,7 +136,7 @@
                                         fill="#FFC700" />
                                 </svg>
                             @endfor --}}
-                            <span>({{ number_format($service->user->getContactorProfileCounter()['contactor_average_rating'] ?? '0', 1) }})</span>
+                            <span>({{ number_format($service->user->contactorStatistics()->first()?->last_60_days_average_rating ?? '0', 1) }})</span>
                         </div>
                     </div>
                     <p class="section-card-text mt-2 mb-2">

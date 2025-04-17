@@ -32,11 +32,12 @@ class EmergencyPage extends Component
     }
 
     public function render()
-    {
+{
+    $categories = Category::with('subCategories')->where('status', 'active')->get();
 
-        $categories = Category::with('subCategories')->where("status", 'active')->get();
-
-        $services = Service::where('status', 'active')
+    $services = Service::with(['user.contactorStatistics'])
+        ->leftJoin('users', 'services.user_id', '=', 'users.id')
+        ->leftJoin('contactor_statistics', 'users.id', '=', 'contactor_statistics.user_id')
         ->when($this->location, function ($query, $value) {
             $query->whereHas('user', function ($query) use ($value) {
                 $query->whereHas('userAddresses', function ($query) use ($value) {
@@ -44,39 +45,32 @@ class EmergencyPage extends Component
                 });
             });
         })
-            // ->when($this->category, function ($query, $categoryId) {
-            //     $query->where('category_id', $categoryId);
-            // })
-            ->when($this->category, function ($query, $categoryName) {
-                $query->whereHas('category', function ($q) use ($categoryName) {
-                    $q->where('name', 'LIKE', '%' . $categoryName . '%');
-                });
-            })
-            ->when($this->subcategory, function ($query, $subcategoryName) {
-                $query->whereHas('subcategory', function ($q) use ($subcategoryName) {
-                    $q->where('name', 'LIKE', '%' . $subcategoryName . '%');
-                });
-            })
-            ->when($this->serching_type, function ($query, $type) {
-                $query->where('type', $type);
-            })
-            ->when($this->serching_is_emergency, function ($query) {
-                $query->where('is_emergency', true);
-            })
-            // ->when($this->contractor_ranking, function ($query, $value) {
-            //     $query->whereHas('user', function ($query) use ($value) {
-            //         $query->whereHas('contractorRanking', function ($query) use ($value) {
-            //             $query->where('average_rating', '>=', $value); // Fixed this condition
-            //         });
-            //     });
-            // })
-            ->paginate(20);
+        ->when($this->category, function ($query, $categoryName) {
+            $query->whereHas('category', function ($q) use ($categoryName) {
+                $q->where('name', 'LIKE', '%' . $categoryName . '%');
+            });
+        })
+        ->when($this->subcategory, function ($query, $subcategoryName) {
+            $query->whereHas('subcategory', function ($q) use ($subcategoryName) {
+                $q->where('name', 'LIKE', '%' . $subcategoryName . '%');
+            });
+        })
+        ->when($this->serching_type, function ($query, $type) {
+            $query->where('services.type', $type);
+        })
+        ->when($this->serching_is_emergency, function ($query) {
+            $query->where('services.is_emergency', true);
+        })
+        ->where('services.status', 'active') // Fix ambiguity here
+        ->orderByDesc('contactor_statistics.last_60_days_average_rating')
+        ->select('services.*')
+        ->paginate(20);
 
+    return view('livewire.emergency-page', [
+        'services' => $services,
+        'categories' => $categories
+    ]);
+}
 
-        return view('livewire.emergency-page', [
-            'services' => $services,
-            'categories' => $categories
-        ]);
-    }
 }
 
