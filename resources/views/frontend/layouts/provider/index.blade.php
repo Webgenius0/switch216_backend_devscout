@@ -20,10 +20,11 @@
         <section class="banner-provider container">
             <div class="gr"></div>
             <h1 class="banner-title" data-aos="fade-up">
-                {{ $ServiceProvider_container->title ?? ' dsfsadf' }}
+                {{ $ServiceProvider_container->title ?? ' Join as a service provider' }}
             </h1>
             <p class="banner-text" data-aos="fade-up">
-                {{ $ServiceProvider_container->description ?? ' your services—all in one place.' }}
+                {{ $ServiceProvider_container->description ?? ' Connect with more clients, manage appointments, and streamline
+your services—all in one place.' }}
                 {{-- <br class="d-none d-sm-block" />
                 your services—all in one place. --}}
             </p>
