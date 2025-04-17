@@ -101,8 +101,6 @@
                                         value="{{ old('name') }}" required />
                                     <span class="text-red-600 text-sm"
                                         style="color: red">{{ $errors->first('name') }}</span>
-                                    <span class="text-red-600 text-sm"
-                                        style="color: red">{{ $errors }}</span>
                                 </div>
 
                                 <div class="form-group">
