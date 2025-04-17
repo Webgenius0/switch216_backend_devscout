@@ -326,7 +326,10 @@ class User extends Authenticatable
 
 
 
-
+    public function contactorStatistics()
+    {
+        return $this->hasOne(ContactorStatistic::class);
+    }
 
 
 }
