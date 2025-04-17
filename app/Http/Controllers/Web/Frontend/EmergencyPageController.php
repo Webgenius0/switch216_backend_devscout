@@ -48,7 +48,7 @@ class EmergencyPageController extends Controller
             $ServiceTitleWithDescription = $this->emergencyService->ServiceTitleWithDescription($service->user_id);
             $ContactorReviews = $this->emergencyService->ContactorReview($service->user_id);
 
-            $ContactorProfileCounter = $this->emergencyService->ContactorProfileCounter($service->user_id);
+            $ContactorProfileCounter = $this->emergencyService->contactorStatistics($service->user_id);
             // dd($ContactorProfileCounter);
             return view("frontend.layouts.service.show", compact("service", "categoryNames", "ServiceTitleWithDescription", "ContactorReviews", "ContactorProfileCounter"));
         } catch (Exception $e) {

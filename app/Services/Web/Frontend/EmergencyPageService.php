@@ -3,6 +3,7 @@
 namespace App\Services\Web\Frontend;
 
 use App\Models\Booking;
+use App\Models\ContactorStatistic;
 use App\Models\Review;
 use App\Models\Service;
 use Exception;
@@ -74,39 +75,12 @@ class EmergencyPageService
             throw $e;
         }
     }
-    public function ContactorProfileCounter($contactor_id)
+
+    public function contactorStatistics($contactor_id)
     {
         try {
-            $ContactorReviewCount = Review::where('contactor_id', $contactor_id)->count();
-            $services = Service::where('user_id', $contactor_id)->get();
-            // dd($contactor_id);
-            $ContactorCompleteBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->where('status', 'completed')->count();
-            $ContactorCompleteBookingCount = 5;
-            $ContactorPendingBookingCount = Booking::whereIn('service_id', $services->pluck('id'))->whereIn('status', ['confirmed'])->count();
-
-            // here check contactor rating 
-            $averageRating = Review::where('contactor_id', $contactor_id)
-                ->whereNotNull('rating')
-                ->avg('rating');
-            
-            // now i check ranking
-            if ($ContactorCompleteBookingCount >= 50 && $averageRating >= 4.8) {
-                $rank = 'Expert Pro';
-            } elseif ($ContactorCompleteBookingCount >= 20 && $averageRating >= 4.8) {
-                $rank = 'Pro';
-            } elseif ($ContactorCompleteBookingCount >= 5 && $averageRating >= 4.5) {
-                $rank = 'Gold';
-            } else {
-                $rank = 'Silver';
-            }
-            // dd('ranK:'.$rank. '==complete_work:'.$ContactorCompleteBookingCount.'===total_review:'.$ContactorReviewCount.'== avarage_rating:'.$averageRating);
-            return [
-                'contactor_ranking_tag' => $rank,
-                'contactor_average_rating' => $averageRating ?? 0,
-                'client_review_count' => $ContactorReviewCount,
-                'complete_booking_count' => $ContactorCompleteBookingCount,
-                'pending_booking_count' => $ContactorPendingBookingCount
-            ];
+            $contactorStatistics = ContactorStatistic::where('user_id', $contactor_id)->first();
+            return $contactorStatistics;
         } catch (Exception $e) {
             throw $e;
         }

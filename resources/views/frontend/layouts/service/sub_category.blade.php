@@ -9,50 +9,23 @@
 @endsection
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos-2.3.1.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/service.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/serviceResponsive.css') }}" />
 @endpush
 
 @section('content')
     <!-- banner section start -->
-    <section class="provider-banner">
-        <div class="provider-banner-content" data-aos="fade-up">
-            <h2 class="banner-title">
-                Find the Best <span>Party Services</span> in City
+    <section class="se--car-rental-banner " style="background-image: url('{{ isset($data['realStateBanner']->background_image) ? asset($data['realStateBanner']->background_image) . '?t=' . time() : asset('frontend/assets/images/home-rental.png') }}');">
+        <div class="provider-banner-content container se--banner-text-width  " data-aos="fade-up">
+            <h2 class="banner-title ">
+
+                {{$data['realStateBanner']->title ?? 'Agents. Tours. Loans. Homes. Best Real Estate Service in City'}} 
+                
             </h2>
             <p class="banner-text">
-                Explore top-rated DJs, photographers, caterers, and more for your next
-                event.
+                {{$data['realStateBanner']->description ?? 'Explore top-rated DJs, photographers, caterers, and more for your next event.'}} 
+                
             </p>
-            <!-- search section start -->
-            {{-- <div class="container banner-search-container search-container" data-aos="fade-up">
-        <div class="search-section">
-          <form action="./service.html">
-            <div class="search-item">
-              <div class="item-title">Location</div>
-              <input class="search-input" placeholder="Select location" type="text" />
-            </div>
-            <div class="search-item">
-              <div class="item-title">Service Type</div>
-              <select class="select">
-                <option value="">Select service</option>
-                <option value="contractor">Contractor</option>
-                <option value="plumber">plumber</option>
-                <option value="real_state">Real state</option>
-              </select>
-            </div>
-            <button type="submit" class="button">
-              <span>Search</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M9.0625 15.625C12.6869 15.625 15.625 12.6869 15.625 9.0625C15.625 5.43813 12.6869 2.5 9.0625 2.5C5.43813 2.5 2.5 5.43813 2.5 9.0625C2.5 12.6869 5.43813 15.625 9.0625 15.625Z"
-                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M13.7031 13.7031L17.5 17.5" stroke="white" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </button>
-          </form>
-        </div>
-      </div> --}}
-            <!-- search section end -->
         </div>
     </section>
     <!-- banner section end -->
@@ -61,11 +34,11 @@
     <main class="container m-top m-bottom">
         <section>
             <h2 class="section-title" data-aos="fade-up">
-                Contractors Service Providers in city
+                Service of {{ $category->name }}
             </h2>
-            <p class="section-text" data-aos="fade-left">
+            {{-- <p class="section-text" data-aos="fade-left">
                 Looking for service? <a class="active" href="">Click now</a>
-            </p>
+            </p> --}}
             <div class="service-container sub-service-container" data-aos="fade-down">
                 @forelse ($category->subCategories as $key=>$sub_category)
                     <a href="{{ route('service.emergency', ['category' => $category->name, 'subcategory' => $sub_category->name,'location' => $locations ?? null]) }}"

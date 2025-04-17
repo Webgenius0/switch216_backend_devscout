@@ -27,7 +27,7 @@
                 $remainingDays = Auth::user()->getUserSubscriptionRemainingDays();
             @endphp
 
-            @if ($remainingDays > 0)
+            @if ($remainingDays)
                 <div
                     class="title bg-green-100 border border-green-300 text-green-800 text-sm rounded-lg px-4 py-2 mt-2 shadow-sm">
                     <strong style="color: green">Your remaining subscription:</strong><br> {{ $remainingDays }}
