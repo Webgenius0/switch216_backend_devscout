@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Artisan;
 //     logger()->info('test it');
 // })->everySecond();
 Schedule::command(AutoCompleteBookings::class)->everyFourHours();
-Schedule::command(UpdateContactorStatistics::class)->everyThreeDays();
+Schedule::command(UpdateContactorStatistics::class)->cron('0 0 */3 * *');
 // Schedule::call(AutoCompleteBookings::class)->hourly();
 // Schedule::call(UpdateContactorStatistics::class)->everyFiveSeconds();
