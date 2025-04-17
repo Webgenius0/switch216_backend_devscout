@@ -6,18 +6,15 @@ use App\Console\Commands\UpdateContractorRanking;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote')->hourly();
+// Artisan::command('inspire', function () {
+//     $this->comment(Inspiring::quote());
+// })->purpose('Display an inspiring quote')->hourly();
 
-// Schedule::command(UpdateContractorRanking::class)->everyMinute();
-
-// Schedule::call(UpdateContractorRanking::class)->everyFifteenSeconds();
 
 // Schedule::call( function () {
 //     logger()->info('test it');
 // })->everySecond();
-// Schedule::command(AutoCompleteBookings::class)->everyMinute();
-Schedule::command(UpdateContactorStatistics::class)->everySecond();
+Schedule::command(AutoCompleteBookings::class)->everyFourHours();
+Schedule::command(UpdateContactorStatistics::class)->everyThreeDays();
 // Schedule::call(AutoCompleteBookings::class)->hourly();
 // Schedule::call(UpdateContactorStatistics::class)->everyFiveSeconds();
