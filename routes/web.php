@@ -252,4 +252,14 @@ Route::post('/set-locale/{locale}', function ($locale) {
 })->name('setLocale');
 
 
+Route::get('/get-locale', function () {
+    $locale = session('locale', App::getLocale());
+    Log::info('Session Local retrieved ::' . $locale);
+    return response()->json([
+        'success' => true,
+        'locale' => $locale]);
+})->name('setLocale.get');
+
+
+
 require __DIR__ . '/auth.php';
