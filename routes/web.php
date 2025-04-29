@@ -65,60 +65,6 @@ Route::get('/service-category', [ServiceController::class, 'categoryList'])->nam
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
 
 
-
-// Route::get('/about', function () {
-//     return view(view: 'frontend.layouts.about.index');
-// })->name('about');
-
-// Route::get('/contact', function () {
-//     return view(view: 'frontend.layouts.contact.index');
-// })->name('contact_us');
-
-//service all
-// Route::get('/service', function () {
-//     return view(view: 'frontend.layouts.service.index');
-// })->name('service.index');
-
-// Route::get('/service-category', function () {
-//     return view(view: 'frontend.layouts.service.category');
-// })->name('service.category');
-
-// Route::get('/service-sub-category', function () {
-//     return view(view: 'frontend.layouts.service.sub_category');
-// })->name('service.sub_category');
-
-// Route::get('/service-emergency', function () {
-//     return view(view: 'frontend.layouts.service.emergency');
-// })->name('service.emergency');
-
-
-//food service all
-// Route::get('/food', function () {
-//     return view(view: 'frontend.layouts.food_service.index');
-// })->name('food.index');
-
-// Route::get('/food-details', function () {
-//     return view(view: 'frontend.layouts.food_service.list');
-// })->name('food.details');
-
-// Route::get('/food-order', function () {
-//     return view(view: 'frontend.layouts.food_service.details');
-// })->name('food.order');
-
-
-//car service all
-// Route::get('/car', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.index');
-
-// Route::get('/car-details', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.details');
-
-// Route::get('/car-rental', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.rental');
-
 //error page
 Route::get('/error-comming-soon', function () {
     return view(view: 'frontend.layouts.about.index');
@@ -129,36 +75,9 @@ Route::get('/error-404', function () {
 })->name('error.404');
 
 
-//house service all
-// Route::get('/house', function () {
-//     return view(view: 'frontend.layouts.house_service.index');
-// })->name('house.index');
-
-// Route::get('/house-details', function () {
-//     return view(view: 'frontend.layouts.house_service.details');
-// })->name('house.details');
-
-// Route::get('/house-list', function () {
-//     return view(view: 'frontend.layouts.house_service.list');
-// })->name('house.list');
-
-
-//provider
-// Route::get('/provider/register', function () {
-//     return view(view: 'frontend.layouts.provider.register');
-// })->name('provider.register');
-
-// Route::get('/provider', function () {
-//     return view(view: 'frontend.layouts.provider.index');
-// })->name('provider.index');
-
 Route::get('/provider-list', function () {
     return view(view: 'frontend.layouts.provider.index');
 })->name('provider.list');
-
-// Route::get('/provider-details', function () {
-//     return view(view: 'frontend.layouts.provider.details');
-// })->name('provider.details');
 
 
 //for customer only
