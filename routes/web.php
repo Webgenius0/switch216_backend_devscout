@@ -254,7 +254,7 @@ Route::post('/set-locale/{locale}', function ($locale) {
 
 Route::get('/get-locale', function () {
     $locale = session('locale', App::getLocale());
-    Log::info('Session Local retrieved ::' . $locale);
+    // Log::info('Session Local retrieved ::' . $locale);
     return response()->json([
         'success' => true,
         'locale' => $locale]);

@@ -18,7 +18,7 @@
         href="{{ asset($systemSetting->favicon ?? 'backend/admin/assets/favicon.ico') }} ">
     <!-- Title -->
     <title>@yield('title') | {{ $systemSetting->system_name ?? 'Switch' }} </title>
- 
+
 </head>
 
 <body class="boxed-size">
@@ -31,7 +31,7 @@
         <div class="main-content d-flex flex-column">
 
             @include('backend.partials.header')
-            
+
             @yield('content')
 
             {{-- <div class="flex-grow-1"></div> --}}
