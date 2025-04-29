@@ -24,8 +24,9 @@ class RealEstateServiceController extends Controller
     public function index(Request $request)
     {
         try {
+            $locations = $request->query('location') ?? null;
             $data = $this->realStatePageService->index();
-            return view('frontend.layouts.real_state_service.index', compact('data'));
+            return view('frontend.layouts.real_state_service.index', compact('data', 'locations'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();
