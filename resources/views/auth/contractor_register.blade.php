@@ -367,14 +367,12 @@
             var url = '{{ route('setLocale.get') }}';
             $.get(url, function(data) {
                 if (data.success) {
-                    console.log(data.locale);
 
                     let currentLocale = data.locale;
 
                     if (currentLocale !== 'en') {
                         doGTranslate('en|' + currentLocale);
                     }
-                    // If it's 'en', no need to call doGTranslate at all
 
                 } else {
                     console.log('Error:', data.message);
