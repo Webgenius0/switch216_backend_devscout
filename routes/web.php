@@ -26,10 +26,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 
-// Route::get('/', function () {
-//     // return view('welcome');
-//     return view('frontend.layouts.home.index');
-// })->name('home');
 
 
 Route::get('/map-api-key', function () {
@@ -65,20 +61,6 @@ Route::get('/service-category', [ServiceController::class, 'categoryList'])->nam
 Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategoryList'])->name('service.sub_category');
 
 
-//error page
-Route::get('/error-comming-soon', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('error.comming_soon');
-
-Route::get('/error-404', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('error.404');
-
-
-Route::get('/provider-list', function () {
-    return view(view: 'frontend.layouts.provider.index');
-})->name('provider.list');
-
 
 //for customer only
 Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(function () {
@@ -101,7 +83,6 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('/customer-booking/reschedule', [AppointmentCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
 
     Route::post('/customer-booking/given-review', [AppointmentCustomerController::class, 'givenReview'])->name('customer.booking.review');
-
 
 });
 
@@ -131,6 +112,7 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
     Route::get('/create-payment-intent/{pakageId}', [StripePaymentController::class, 'createPaymentIntent'])->name('contractor.subscription.create_payment_intent');
 });
+
 Route::get('stripe/payment-success', [StripePaymentController::class, 'paymentSuccess'])->name('contractor.payment.success');
 Route::get('stripe/payment-cancel', [StripePaymentController::class, 'paymentCancel'])->name('contractor.payment.cancel');
 
@@ -176,7 +158,8 @@ Route::get('/get-locale', function () {
     // Log::info('Session Local retrieved ::' . $locale);
     return response()->json([
         'success' => true,
-        'locale' => $locale]);
+        'locale' => $locale
+    ]);
 })->name('setLocale.get');
 
 
