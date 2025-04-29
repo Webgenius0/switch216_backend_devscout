@@ -84,8 +84,8 @@
                                             <div class="content">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                                     viewBox="0 0 32 32" fill="none">
-                                                    <path d="M16 11V21M21 16H11M31 16C31 17.9698 ..." stroke="#222222"
-                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16 11V21M21 16H11M31 16C31 17.9698 31 19.9396 31 21.9094"
+                                                        stroke="#222222" />
                                                 </svg>
                                                 <div class="text">Upload Photo</div>
                                             </div>
@@ -171,7 +171,7 @@
 
                                 <div class="form-group">
                                     <label for="userPassword" class="input-label">Confirm Password</label>
-                                    <input type="password" id="userPassword" class="input-field" placeholder="******"
+                                    <input type="password" id="userPassword1" class="input-field" placeholder="******"
                                         required name="password_confirmation" />
                                     <span class="text-red-600 text-sm"
                                         style="color: red">{{ $errors->first('password_confirmation') }}</span>
@@ -367,20 +367,15 @@
             var url = '{{ route('setLocale.get') }}';
             $.get(url, function(data) {
                 if (data.success) {
-                    if (data.locale === 'es') {
-                        doGTranslate('en|es');
-                        doGTranslate('en|es');
-                    } else if (data.locale === 'ar') {
-                        doGTranslate('en|ar');
-                        doGTranslate('en|ar');
-                    } else if (data.locale === 'fr') {
-                        doGTranslate('en|fr');
-                        doGTranslate('en|fr');
-                    } else {
-                        doGTranslate('es|en');
-                        doGTranslate('es|en');
+                    console.log(data.locale);
+
+                    let currentLocale = data.locale;
+
+                    if (currentLocale !== 'en') {
+                        doGTranslate('en|' + currentLocale);
                     }
-                    return false;
+                    // If it's 'en', no need to call doGTranslate at all
+
                 } else {
                     console.log('Error:', data.message);
                 }
