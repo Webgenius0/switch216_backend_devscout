@@ -62,23 +62,47 @@ class HomePageController extends Controller
         return view("frontend.layouts.home.index", compact('cms', 'categories', 'cities'));
     }
 
+    // public function serchingStatic(Request $request)
+    // {
+    //     $validateData = $request->validate([
+    //         'location' => 'nullable|string|max:255',
+    //         'category' => 'nullable|string|max:255',
+    //         // 'sub_category_id' => 'nullable|integer|exists:sub_categories,id',
+    //         // 'date' => 'nullable|date',
+    //         // 'is_emergency' => 'nullable|boolean',
+    //         'rating' => 'nullable|integer',
+    //     ]);
+    //     // dd($validateData);
+    //     return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null]);
+    //     // return redirect()->route('service.emergency', [
+    //     //     'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
+    //     //     'location' => $validateData['location'] ?? null,
+    //     //     'rating' => $validateData['rating'] ?? null,
+    //     // ]);
+
+    // }
+
     public function serchingStatic(Request $request)
     {
         $validateData = $request->validate([
             'location' => 'nullable|string|max:255',
             'category' => 'nullable|string|max:255',
-            // 'sub_category_id' => 'nullable|integer|exists:sub_categories,id',
-            // 'date' => 'nullable|date',
-            // 'is_emergency' => 'nullable|boolean',
-            'rating' => 'nullable|integer',
+            // 'rating' => 'nullable|integer',
         ]);
-        // dd($validateData);
-        return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null]);
-        // return redirect()->route('service.emergency', [
-        //     'category' => $validateData['category'] ?? null, // Default to 'Real' if category is not provided
-        //     'location' => $validateData['location'] ?? null,
-        //     'rating' => $validateData['rating'] ?? null,
-        // ]);
 
+        // Lowercase the category to make matching case-insensitive
+        $categoryName = strtolower($validateData['category'] ?? '');
+
+        if ($categoryName === '3') {
+            return to_route('service.car', ['location' => $validateData['location'] ?? null]);
+        } elseif ($categoryName === '2') {
+            return to_route('service.restaurant', ['location' => $validateData['location'] ?? null]);
+        } elseif ($categoryName === '1') {
+            return to_route('service.real_state', ['location' => $validateData['location'] ?? null]);
+        }
+
+        // Default if not a static category
+        return to_route('service.sub_category', ['id' => $validateData['category'], 'location' => $validateData['location'] ?? null]);
     }
+
 }

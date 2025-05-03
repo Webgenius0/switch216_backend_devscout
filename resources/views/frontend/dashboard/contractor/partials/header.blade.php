@@ -71,7 +71,7 @@
              </div>
              <div class="profile-dropdown">
                  <a style="color: #F60;" class="mb-2">{{ Auth::user()->name ?? 'Mr. John Doe' }}</a>
-                 <a href="">
+                 <a href="{{ route('contractor.settings.index') }}">
                      <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 448 512">
                          <path
@@ -79,7 +79,7 @@
                      </svg>
                      <span>My Profile</span>
                  </a>
-                 <a href="">
+                 <a href="{{ route('contractor.settings.index') }}">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25"
                          fill="none">
                          <path fill-rule="evenodd" clip-rule="evenodd"
@@ -90,7 +90,7 @@
                      </svg>
                      <span>Setting</span>
                  </a>
-                 <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                 <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"
                          fill="none">
                          <path

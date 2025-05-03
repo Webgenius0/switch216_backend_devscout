@@ -175,6 +175,7 @@
 
 <script>
     function langChange(e) {
+        console.log(e.value)
         var url = '{{ route('setLocale', ':code') }}';
         $.ajax({
             type: "POST",

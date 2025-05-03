@@ -6,9 +6,9 @@
      </svg>
      <div class="section-title">Welcome {{ Auth::user()->name ?? 'Mr. John Doe' }} 👋</div>
      <div class="header-actions">
-         <div >
-            <a type="button" class="btn bg-warning" href="{{route('home')}}">Visit Site</a>
-        </div>
+         <div>
+             <a type="button" class="btn bg-warning" href="{{ route('home') }}">Visit Site</a>
+         </div>
          <div class="notification-container">
              <div class="notification-btn" onclick="markAllRead()">
                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41"
@@ -24,53 +24,57 @@
                          d="M20.0195 31.3101C19.0295 31.3101 18.0695 30.9101 17.3695 30.2101C16.6695 29.5101 16.2695 28.5501 16.2695 27.5601H17.7695C17.7695 28.1501 18.0095 28.7301 18.4295 29.1501C18.8495 29.5701 19.4295 29.8101 20.0195 29.8101C21.2595 29.8101 22.2695 28.8001 22.2695 27.5601H23.7695C23.7695 29.6301 22.0895 31.3101 20.0195 31.3101Z"
                          fill="#A9A9A9" />
                  </svg>
-                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notification-count">
-                    {{ Auth::user()->notifications()->whereNull('read_at')->count() }}
-                </span>
+                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                     id="notification-count">
+                     {{ Auth::user()->notifications()->whereNull('read_at')->count() }}
+                 </span>
              </div>
              <div class="notification-dropdown">
-                <div style="font-size: 20px;" class="mb-3 d-flex justify-content-between align-items-center title" >
-                   <span id="notification-count"> Notifications ({{ Auth::user()->notifications()->whereNull('read_at')->count() }})</span>
-                    
-                    <button class="p-0 m-0  border-0 fs-08 btn btn-outline-danger btn-sm"  onclick="deleteAllNotification()">Clear All</button>
-                </div>
-                <div class="max-h-217" data-simplebar id="notification-list">
-                @foreach (Auth::user()->notifications as $notification)
-                <div class="notification-menu {{ $notification->read_at ? '' : 'unseen' }}"  id="notification_{{ $notification->id }}">
-                   <a href="{{ $notification->data['url'] ?? '' }}" class="dropdown-item" >
-                       <div class="d-flex align-items-center">
-                           <div class="flex-shrink-0">
-                               <div class="d-flex align-items-center">
-                                   <div class="rounded bg-light" style="width: 40px; height: 40px; overflow: hidden;">
-                                       <img src="{{ $notification->data['thumbnail'] ?? 'default-thumbnail.jpg' }}" 
-                                            alt="Notification Thumbnail" 
-                                            class="img-fluid rounded">
-                                   </div>
-                               </div>
-                               {{-- <i
+                 <div style="font-size: 20px;" class="mb-3 d-flex justify-content-between align-items-center title">
+                     <span id="notification-count"> Notifications
+                         ({{ Auth::user()->notifications()->whereNull('read_at')->count() }})</span>
+
+                     <button class="p-0 m-0  border-0 fs-08 btn btn-outline-danger btn-sm"
+                         onclick="deleteAllNotification()">Clear All</button>
+                 </div>
+                 <div class="max-h-217" data-simplebar id="notification-list">
+                     @foreach (Auth::user()->notifications as $notification)
+                         <div class="notification-menu {{ $notification->read_at ? '' : 'unseen' }}"
+                             id="notification_{{ $notification->id }}">
+                             <a href="{{ $notification->data['url'] ?? '' }}" class="dropdown-item">
+                                 <div class="d-flex align-items-center">
+                                     <div class="flex-shrink-0">
+                                         <div class="d-flex align-items-center">
+                                             <div class="rounded bg-light"
+                                                 style="width: 40px; height: 40px; overflow: hidden;">
+                                                 <img src="{{ $notification->data['thumbnail'] ?? 'default-thumbnail.jpg' }}"
+                                                     alt="Notification Thumbnail" class="img-fluid rounded">
+                                             </div>
+                                         </div>
+                                         {{-- <i
                                    class="material-symbols-outlined text-primary">sms</i> --}}
-                           </div>
-                           <div class="flex-grow-1 ms-3">
-                               <p>{{ $notification->data['title'] ?? 'Untitled Notification' }}</p>
-                               <span class="fs-13">{{ $notification->created_at->diffForHumans() }}</span>
-                           </div>
-                       </div>
-                   </a>
-               </div>
-                @endforeach
-            </div>
-            </div>
+                                     </div>
+                                     <div class="flex-grow-1 ms-3">
+                                         <p>{{ $notification->data['title'] ?? 'Untitled Notification' }}</p>
+                                         <span class="fs-13">{{ $notification->created_at->diffForHumans() }}</span>
+                                     </div>
+                                 </div>
+                             </a>
+                         </div>
+                     @endforeach
+                 </div>
+             </div>
          </div>
 
          <div class="profile-dropdown-container">
              <div style="width: 36px; cursor: pointer; height: 36px;" class="profile-dropdown-btn">
-                     <img style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; "
-                      src="{{auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('backend/assets/images/user.png')}}"
-                                            alt="{{auth()->user()->name}}" class="w-12 h-12 rounded-full">
+                 <img style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; "
+                     src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('backend/assets/images/user.png') }}"
+                     alt="{{ auth()->user()->name }}" class="w-12 h-12 rounded-full">
              </div>
              <div class="profile-dropdown">
                  <a style="color: #F60;" class="mb-2">{{ Auth::user()->name ?? 'Mr. John Doe' }}</a>
-                 <a href="">
+                 <a href="{{ route('customer.settings.index') }}">
                      <svg width="18" height="18" fill="#6B6B6B" xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 448 512">
                          <path
@@ -78,7 +82,7 @@
                      </svg>
                      <span>My Profile</span>
                  </a>
-                 <a href="">
+                 <a href="{{ route('customer.settings.index') }}">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25"
                          fill="none">
                          <path fill-rule="evenodd" clip-rule="evenodd"
@@ -89,7 +93,7 @@
                      </svg>
                      <span>Setting</span>
                  </a>
-                 <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                 <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"
                          fill="none">
                          <path

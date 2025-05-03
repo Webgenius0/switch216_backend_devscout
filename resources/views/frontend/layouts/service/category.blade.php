@@ -38,7 +38,15 @@
       </div> --}}
             <div class="service-container" data-aos="fade-down">
                 @forelse ($categories as $key=> $category)
-                    <a href="{{ route('service.sub_category', [$category->id]) }}" class="item">
+                @php
+                $route = match(strtolower($category->name)) {
+                    'car' => route('service.car'),
+                    'restaurant' => route('service.restaurant'),
+                    'real estate' => route('service.real_state'),
+                    default => route('service.sub_category', [$category->id]),
+                };
+            @endphp
+                    <a href="{{ $route }}" class="item">
                         <img src="{{ asset($category->thumbnail) }}" alt="not photo find">
                         <h4 class="section-card-title mt-2 mt-xl-4">{{ $category->name ?? '' }}</h4>
                         <p class="section-card-text mt-2 mb-2">
