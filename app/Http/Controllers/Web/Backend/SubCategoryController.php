@@ -161,25 +161,33 @@ class SubCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = SubCategory::findOrFail($id);
-        // check if the category exists
-        // Prevent deletion of specific categories
-        if (in_array($data->name, ['Buy a Car', 'Rent a Car', 'Rent a Home', 'Buy a Home', 'Local Cuisine', 'Snaks', 'Pizza'])) {
+        try {
+            $data = SubCategory::findOrFail($id);
+            // check if the category exists
+            // Prevent deletion of specific categories
+            // if (in_array($data->name, ['Buy a Car', 'Rent a Car', 'Rent a Home', 'Buy a Home', 'Local Cuisine', 'Snaks', 'Pizza'])) {
+            //     return response()->json([
+            //         "success" => false,
+            //         "message" => "This Sub category cannot be deleted."
+            //     ], 403);
+            // }
+            // delete the category
+            if (!empty($data->thumbnail) && $data->thumbnail !== 'uploads/category/demo_pic.jpg') {
+                Helper::fileDelete(public_path($data->thumbnail));
+            }
+            $data->delete();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Item deleted successfully."
+            ]);
+        } catch (Exception $e) {
+            Log::error('SubCategoryController::destroy-' . $e->getMessage());
             return response()->json([
                 "success" => false,
-                "message" => "This Sub category cannot be deleted."
-            ], 403);
+                "message" => "Something went wrong."
+            ], 404);
         }
-        // delete the category
-        if (!empty($data->thumbnail) && $data->thumbnail !== 'uploads/category/demo_pic.jpg') {
-            Helper::fileDelete(public_path($data->thumbnail));
-        }
-        $data->delete();
-
-        return response()->json([
-            "success" => true,
-            "message" => "Item deleted successfully."
-        ]);
     }
 
     /**

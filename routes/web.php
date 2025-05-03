@@ -26,10 +26,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 
-// Route::get('/', function () {
-//     // return view('welcome');
-//     return view('frontend.layouts.home.index');
-// })->name('home');
 
 
 Route::get('/map-api-key', function () {
@@ -66,101 +62,6 @@ Route::get('/service-sub-category/{id}', [ServiceController::class, 'subCategory
 
 
 
-// Route::get('/about', function () {
-//     return view(view: 'frontend.layouts.about.index');
-// })->name('about');
-
-// Route::get('/contact', function () {
-//     return view(view: 'frontend.layouts.contact.index');
-// })->name('contact_us');
-
-//service all
-// Route::get('/service', function () {
-//     return view(view: 'frontend.layouts.service.index');
-// })->name('service.index');
-
-// Route::get('/service-category', function () {
-//     return view(view: 'frontend.layouts.service.category');
-// })->name('service.category');
-
-// Route::get('/service-sub-category', function () {
-//     return view(view: 'frontend.layouts.service.sub_category');
-// })->name('service.sub_category');
-
-// Route::get('/service-emergency', function () {
-//     return view(view: 'frontend.layouts.service.emergency');
-// })->name('service.emergency');
-
-
-//food service all
-// Route::get('/food', function () {
-//     return view(view: 'frontend.layouts.food_service.index');
-// })->name('food.index');
-
-// Route::get('/food-details', function () {
-//     return view(view: 'frontend.layouts.food_service.list');
-// })->name('food.details');
-
-// Route::get('/food-order', function () {
-//     return view(view: 'frontend.layouts.food_service.details');
-// })->name('food.order');
-
-
-//car service all
-// Route::get('/car', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.index');
-
-// Route::get('/car-details', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.details');
-
-// Route::get('/car-rental', function () {
-//     return view(view: 'frontend.layouts.car_service.index');
-// })->name('car.rental');
-
-//error page
-Route::get('/error-comming-soon', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('error.comming_soon');
-
-Route::get('/error-404', function () {
-    return view(view: 'frontend.layouts.about.index');
-})->name('error.404');
-
-
-//house service all
-// Route::get('/house', function () {
-//     return view(view: 'frontend.layouts.house_service.index');
-// })->name('house.index');
-
-// Route::get('/house-details', function () {
-//     return view(view: 'frontend.layouts.house_service.details');
-// })->name('house.details');
-
-// Route::get('/house-list', function () {
-//     return view(view: 'frontend.layouts.house_service.list');
-// })->name('house.list');
-
-
-//provider
-// Route::get('/provider/register', function () {
-//     return view(view: 'frontend.layouts.provider.register');
-// })->name('provider.register');
-
-// Route::get('/provider', function () {
-//     return view(view: 'frontend.layouts.provider.index');
-// })->name('provider.index');
-
-Route::get('/provider-list', function () {
-    return view(view: 'frontend.layouts.provider.index');
-})->name('provider.list');
-
-// Route::get('/provider-details', function () {
-//     return view(view: 'frontend.layouts.provider.details');
-// })->name('provider.details');
-
-
 //for customer only
 Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(function () {
     Route::get('dashboard', function () {
@@ -182,7 +83,6 @@ Route::middleware(['auth:web', 'is_customer'])->prefix('customer')->group(functi
     Route::post('/customer-booking/reschedule', [AppointmentCustomerController::class, 'reSchedule'])->name('customer.booking.reschedule');
 
     Route::post('/customer-booking/given-review', [AppointmentCustomerController::class, 'givenReview'])->name('customer.booking.review');
-
 
 });
 
@@ -212,6 +112,7 @@ Route::middleware(['auth:web', 'is_contractor'])->prefix('contractor')->group(fu
     Route::get('/my-subscription/packages', [ContractorSubscriptionController::class, 'getPakeges'])->name('contractor.subscription.packages');
     Route::get('/create-payment-intent/{pakageId}', [StripePaymentController::class, 'createPaymentIntent'])->name('contractor.subscription.create_payment_intent');
 });
+
 Route::get('stripe/payment-success', [StripePaymentController::class, 'paymentSuccess'])->name('contractor.payment.success');
 Route::get('stripe/payment-cancel', [StripePaymentController::class, 'paymentCancel'])->name('contractor.payment.cancel');
 
@@ -250,6 +151,17 @@ Route::post('/set-locale/{locale}', function ($locale) {
     }
     return response()->noContent();
 })->name('setLocale');
+
+
+Route::get('/get-locale', function () {
+    $locale = session('locale', App::getLocale());
+    Log::info('Session Local retrieved ::' . $locale);
+    return response()->json([
+        'success' => true,
+        'locale' => $locale
+    ]);
+})->name('setLocale.get');
+
 
 
 require __DIR__ . '/auth.php';

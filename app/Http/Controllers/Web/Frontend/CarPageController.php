@@ -26,10 +26,9 @@ class CarPageController extends Controller
     public function index(Request $request)
     {
         try {
+            $locations = $request->query('location') ?? null;
             $data = $this->carPageService->index();
-            // dd($carServicesSubCategorys);
-            // dd($data);
-            return view('frontend.layouts.car_service.index', compact('data'));
+            return view('frontend.layouts.car_service.index', compact('data', 'locations'));
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();

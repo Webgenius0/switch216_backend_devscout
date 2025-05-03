@@ -46,7 +46,7 @@
                     </div>
                     <div class="se--choose--plane-container">
                         @forelse ($data['realStateServiceSubCategorys'] as $carServicesSubCategory )
-                        <a href="{{route('service.real_state_list',['category' => 'Real Estate','subcategory'=> $carServicesSubCategory->name])}}" class="se-choose--plan-box" data-aos="fade-right">
+                        <a href="{{route('service.real_state_list',['category' => 'Real Estate','subcategory'=> $carServicesSubCategory->name,'location' => $locations ?? null])}}" class="se-choose--plan-box" data-aos="fade-right">
                            <img src="{{ asset($carServicesSubCategory->thumbnail ?? '') }}" alt="No Image" width="200" height="200" style="border-bottom-left-radius: 60px;">
                             <h1 class="se--plan-box-header">{{$carServicesSubCategory->name?? ''}}</h1>
                             <p class="se--plan-box-pera">{{$carServicesSubCategory->description?? ''}}</p>

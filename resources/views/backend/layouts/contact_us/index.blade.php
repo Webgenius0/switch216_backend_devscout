@@ -40,14 +40,7 @@
                             <i
                                 class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y">search</i>
                         </span>
-                        <a href="javascript:void(0)"
-                            class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg"
-                            data-bs-toggle="modal" data-bs-target="#CreateCategory">
-                            <span class="py-sm-1 d-block">
-                                <i class="ri-add-line d-none d-sm-inline-block"></i>
-                                <span>Add New Category</span>
-                            </span>
-                        </a>
+                        
                     </div>
 
                     <div class="default-table-area style-two all-products">
