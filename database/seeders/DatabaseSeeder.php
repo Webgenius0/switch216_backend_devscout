@@ -21,6 +21,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'role' => 'admin',
         ]);
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'dev-helal@dev-helal.com',
+            'password' => Hash::make('12345678'),
+            'role' => 'admin',
+        ]);
 
         User::factory()->create([
             'name' => 'User',
@@ -35,24 +41,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'customer',
         ]);
         
-        // User::factory()->create([
-        //     'name' => 'contractor',
-        //     'email' => 'contractor@contractor.com',
-        //     'password' => Hash::make('12345678'),
-        //     'role' => 'contractor',
-        // ]);
-        // User::factory()->create([
-        //     'name' => 'contractor2',
-        //     'email' => 'contractor2@contractor.com',
-        //     'password' => Hash::make('12345678'),
-        //     'role' => 'contractor',
-        // ]);
-        // User::factory()->create([
-        //     'name' => 'contractor3',
-        //     'email' => 'contractor3@contractor.com',
-        //     'password' => Hash::make('12345678'),
-        //     'role' => 'contractor',
-        // ]);
 
         //category sub_category seeder call
         $this->call(SystemSettingSeeder::class);
