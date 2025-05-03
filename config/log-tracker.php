@@ -36,7 +36,7 @@ return [
     | - 'auth': Restricts access to authenticated users only.
     |
     */
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth','role_check'],
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     | Default: false (Disables log deletion).
     |
     */
-    'allow_delete' => false,
+    'allow_delete' => true,
 
     /*
     |--------------------------------------------------------------------------
